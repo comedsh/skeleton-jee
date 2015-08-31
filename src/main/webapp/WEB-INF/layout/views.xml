@@ -8,7 +8,7 @@
 <!-- defined for education -->
 
   <definition name="education_spittle_home" extends="education.default_template">
-      <put-attribute name="body" value="/WEB-INF/views/education/home.jsp" />
+      <put-attribute name="body" value="/WEB-INF/views/education/home_body.jsp" />
   </definition>
 
   <definition name="education_spittle_view" extends="education.default_template">

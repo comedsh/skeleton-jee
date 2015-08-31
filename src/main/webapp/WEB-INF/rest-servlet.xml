@@ -25,14 +25,11 @@
 	<!-- 自动将静态资源导向 -->
 	<!-- <mvc:resources mapping="/resources/**" location="/resources/" /> -->
 
-	<bean
-		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
 
-	<bean
-		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
 
-	<bean id="viewResolver"
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/"></property>
@@ -42,15 +39,15 @@
 	<bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"></bean>
 
 	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+	
 		<property name="definitions">
 			<list>
-				<value>/WEB-INF/layout/layouts.xml</value>
+				<value>/WEB-INF/layouts.xml</value>
 			</list>
 		</property>
 
 		<!-- resolving preparer names as Spring bean definition names -->
-		<property name="preparerFactoryClass"
-			value="org.springframework.web.servlet.view.tiles3.SpringBeanPreparerFactory" />
+		<property name="preparerFactoryClass" value="org.springframework.web.servlet.view.tiles3.SpringBeanPreparerFactory" />
 
 	</bean>
 
