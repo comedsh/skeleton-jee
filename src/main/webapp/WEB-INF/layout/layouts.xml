@@ -12,13 +12,13 @@
     <put-attribute name="title" value="education tutorial homepage" />
     
     <put-attribute name="header" value="/WEB-INF/views/education/common/header.jsp" />
-
-    <put-attribute name="menu" value="/WEB-INF/views/education/common/menu.html" />
+    
+    <put-attribute name="menu" value="/WEB-INF/views/education/common/menu.jsp" />
     
     <!-- remain the body as blank, let its inheritance to fill it up -->
     <put-attribute name="body" value="" />
 
-    <put-attribute name="footer" value="/WEB-INF/views/education/common/footer.html" />
+    <put-attribute name="footer" value="/WEB-INF/views/education/common/footer.jsp" />
 
   </definition>  
   
