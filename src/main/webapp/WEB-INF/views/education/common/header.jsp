@@ -1,0 +1,1 @@
+search: <input type="text" size="20" ></input> <input type="button" value="confirm">

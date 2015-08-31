@@ -12,6 +12,8 @@
 		<servlet.version>3.1.0</servlet.version>
 		<commons-logging.version>1.2</commons-logging.version>
 		<jstl-version>1.2</jstl-version>
+		<tiles-version>3.0.5</tiles-version>
+		<velocity-version>1.7</velocity-version>
 	</properties>
 
 	<dependencies>
@@ -67,7 +69,7 @@
 		</dependency>
 
 		<!-- Spring dependencies end -->
-		
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -80,13 +82,31 @@
 			<artifactId>commons-logging</artifactId>
 			<version>${commons-logging.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>${jstl-version}</version>
 		</dependency>
+
+		<!-- apache tiles 布局管理器 -->
 		
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-extras</artifactId>
+			<version>${tiles-version}</version>
+		</dependency>
+		
+		<!-- 相关依赖 -->
+		<!-- 
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity</artifactId>
+			<version>${velocity-version}</version>
+		</dependency>
+		-->
+		<!-- apache tiles 布局管理器 -->
+	
 	</dependencies>
 
 </project>
