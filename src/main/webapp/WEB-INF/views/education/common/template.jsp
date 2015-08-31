@@ -11,7 +11,7 @@
     <title><tiles:getAsString name="title"/></title>
   </head>
   <body>
-        <table>
+    <table style="BORDER-COLLAPSE: collapse" borderColor=#000000 height=auto cellPadding=1 width=auto border=1>
       <tr>
         <td colspan="2">
           <tiles:insertAttribute name="header" />

@@ -11,11 +11,13 @@
 		<param-value>/WEB-INF/rest-servlet.xml</param-value>
 	</context-param>
 	
-
+	<!--  
+	不到万不得已，不要加此 listener；因为如果设置了它，之后设置的 TilesConfigurer 将会无效。
 	<listener>
 		<listener-class>org.apache.tiles.extras.complete.CompleteAutoloadTilesListener</listener-class>
 	</listener>
-
+ 	-->
+	
 	<servlet>
 		<servlet-name>Tiles Dispatch Servlet</servlet-name>
 		<servlet-class>org.apache.tiles.web.util.TilesDispatchServlet</servlet-class>
@@ -25,7 +27,7 @@
 		<servlet-name>Tiles Dispatch Servlet</servlet-name>
 		<url-pattern>*.tiles</url-pattern>
 	</servlet-mapping>
- 
+ 	
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>

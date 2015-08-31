@@ -22,17 +22,30 @@ import com.fenghua.auto.backend.service.education.SpittleService;
  */
 @Controller
 @RequestMapping("/spittles")
-public class SpittleRestfullController {
+public class SpittleRestfulController {
 	
 	@Autowired
 	SpittleService spittleService;
-	
+
 	@RequestMapping("/home")
 	public String home(){
 		
-		return "/WEB-INF/views/education/home";
+		// by using TilesView to render this page. the full template path should be education_spittle_home.tiles.
+		return "education_spittle_home";
 	
 	}
+	
+	/**
+	 * @deprecated uses the template instead, see {@link SpittleRestfulController#home() }
+	 * @return
+	 */
+	@RequestMapping("/home_page")
+	public String home_page(){
+		
+		return "/WEB-INF/views/education/home.jsp";
+	
+	}
+	
 	
 	/**
 	 * 
