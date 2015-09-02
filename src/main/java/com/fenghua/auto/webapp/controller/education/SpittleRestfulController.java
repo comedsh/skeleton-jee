@@ -36,18 +36,6 @@ public class SpittleRestfulController {
 	}
 	
 	/**
-	 * @deprecated uses the template instead, see {@link SpittleRestfulController#home() }
-	 * @return
-	 */
-	@RequestMapping("/home_page")
-	public String home_page(){
-		
-		return "/WEB-INF/views/education/home.jsp";
-	
-	}
-	
-	
-	/**
 	 * 
 	 * restful, 参数化的 URL 
 	 * 
