@@ -16,7 +16,7 @@ import com.fenghua.auto.backend.domain.education.Spittle;
  */
 
 public interface SpittleService {
-
+	
 	public Spittle getSpittleById(long id);
 	
 	public List<Spittle> getAllSpittles();

@@ -21,17 +21,19 @@ import com.fenghua.auto.backend.service.education.SpittleService;
  *
  */
 @Controller
-@RequestMapping("/spittles")
+@RequestMapping("/spittle")
 public class SpittleRestfulController {
 	
 	@Autowired
 	SpittleService spittleService;
 
 	@RequestMapping("/home")
-	public String home(){
+	public String home(Model model){
+		
+		model.addAttribute( "spittles", spittleService.getAllSpittles() );		
 		
 		// by using TilesView to render this page. the full template path should be education_spittle_home.tiles.
-		return "education_spittle_home";
+		return "education.spittle_home";
 	
 	}
 	
@@ -48,7 +50,7 @@ public class SpittleRestfulController {
 		
 		model.addAttribute( spittleService.getSpittleById(id) );
 		
-		return "/WEB-INF/views/education/view";
+		return "education.spittle_view";
 		
 	}
 	

@@ -17,7 +17,7 @@
 
   <body>
 
-    <table style="BORDER-COLLAPSE: collapse" borderColor=#000000 height=auto cellPadding=1 width=auto border=1 >
+    <table style="BORDER-COLLAPSE: collapse" borderColor=#000000 height=auto cellPadding=1 width=600 border=1 >
       
       <tr>
         <td colspan="2">

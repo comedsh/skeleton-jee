@@ -1,5 +1,7 @@
 package com.fenghua.auto.backend.domain.education;
 
+import java.util.Date;
+
 /**
  * Spittle 唾沫，同时也翻译为碎语
  * 
@@ -18,6 +20,8 @@ public class Spittle {
 	String username;
 	
 	String text;
+	
+	Date time;
 
 	public long getId() {
 		return id;
@@ -42,8 +46,14 @@ public class Spittle {
 	public void setText(String words) {
 		this.text = words;
 	}
-	
-	
+
+	public Date getTime() {
+		return time;
+	}
+
+	public void setTime(Date time) {
+		this.time = time;
+	}
 	
 	
 }
