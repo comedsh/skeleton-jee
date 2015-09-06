@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>HELLO ANGULAR</title>
+<script src="./resources/angular/angular.js"></script>
+</head>
+<body>
+<div align="center">HELLO ANGULAR</div>
+
+
+<div ng-app="myApp">
+    <div ng-controller="myController">
+		<div>
+            <h2>{{message}}</h2>
+            <input type="text" ng-model="message" />
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+    var app = angular.module("myApp", []);
+
+    app.controller("myController", function ($scope, $http) {
+        $scope.message = "Hello, Angular JS.";
+    });
+</script>
+</html>
