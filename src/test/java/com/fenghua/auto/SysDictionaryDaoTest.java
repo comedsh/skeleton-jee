@@ -11,7 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fenghua.auto.backend.dao.education.SysDictionaryDao;
+import com.fenghua.auto.backend.dao.SysDictionaryDao;
 import com.fenghua.auto.backend.domain.education.SysDictionary;
 import com.fenghua.auto.backend.domain.vo.education.SysDictionaryVo;
 

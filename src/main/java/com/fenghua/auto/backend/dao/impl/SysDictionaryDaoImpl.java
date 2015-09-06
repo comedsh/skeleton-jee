@@ -1,9 +1,8 @@
-package com.fenghua.auto.backend.dao.education.impl;
+package com.fenghua.auto.backend.dao.impl;
 
 import org.springframework.stereotype.Repository;
 
-import com.fenghua.auto.backend.dao.education.SysDictionaryDao;
-import com.fenghua.auto.backend.dao.impl.BaseDaoImpl;
+import com.fenghua.auto.backend.dao.SysDictionaryDao;
 import com.fenghua.auto.backend.domain.education.SysDictionary;
 
 /**
