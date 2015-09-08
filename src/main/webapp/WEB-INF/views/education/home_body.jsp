@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 
 <div style="margin:10px 10px 10px 10px">
 
@@ -22,7 +23,7 @@
 		
 				<div>
 		
-					<s:url value="/spittle/{id}" var="rest_url">
+					<s:url value="/spittle/{id}" var="spittle_rest_url">
 						<s:param name="id" value="${spittle.id}" />
 					</s:url>
 		
@@ -30,9 +31,11 @@
 		
 					<span style="color:gray;margin-right:4px">user:</span><span>${spittle.username}</span>
 					
-					<span style="margin-right:4px"> <a href="${rest_url}">查看</a></span>
+					<span style="margin-right:4px;"><a href="${rest_url}">查看</a></span>
 					
-					<span style="margin-right:4px"> 删除 </span>		
+					<span style="margin-right:4px;">
+						<sf:form method="delete" modelAttribute="spittle" action="${spittle_rest_url}"><a href="javascript:void(document.getElementById('spittle').submit())">删除</a></sf:form>
+					</span>	 
 		
 				</div>
 		

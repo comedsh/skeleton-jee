@@ -19,6 +19,8 @@ public interface SpittleService {
 	
 	public Spittle getSpittleById(long id);
 	
+	public void deleteSpittle(long id);
+	
 	public List<Spittle> getAllSpittles();
 	
 }

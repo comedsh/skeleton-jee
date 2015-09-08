@@ -77,4 +77,11 @@ public class SpittleServiceImpl implements SpittleService {
 		return mockSpittles;
 	}
 
+	@Override
+	public void deleteSpittle(long id) {
+		
+		mockSpittles.remove( this.getSpittleById(id) );
+		
+	}
+
 }
