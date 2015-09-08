@@ -9,11 +9,23 @@
 	<properties>
 		<java.version>1.7</java.version>
 		<spring.version>4.2.0.RELEASE</spring.version>
+		<spring-data-commons.version>1.10.2.RELEASE</spring-data-commons.version>
 		<servlet.version>3.1.0</servlet.version>
 		<commons-logging.version>1.2</commons-logging.version>
 		<jstl-version>1.2</jstl-version>
 		<tiles-version>3.0.5</tiles-version>
 		<velocity-version>1.7</velocity-version>
+		<mybatis-version>3.2.8</mybatis-version>
+		<mybatis-spring-version>1.2.2</mybatis-spring-version>
+		<mybatis-ehcache-version>1.0.0</mybatis-ehcache-version>
+		<mysql-version>5.1.36</mysql-version>
+		
+		<slf4j-version>1.7.6</slf4j-version>
+		<log4j-version>1.2.17</log4j-version>
+		<json-version>2.3.2</json-version>
+		<aspectj-version>1.7.4</aspectj-version>
+		
+		<junit-version>4.12</junit-version>
 	</properties>
 
 	<dependencies>
@@ -68,6 +80,11 @@
 			</exclusions>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-commons</artifactId>
+			<version>${spring-data-commons.version}</version>
+		</dependency>
 		<!-- Spring dependencies end -->
 
 		<dependency>
@@ -99,6 +116,92 @@
 		
 		<!-- apache tiles 布局管理器 -->
 	
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>${mybatis-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>${mybatis-spring-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-ehcache</artifactId>
+			<version>${mybatis-ehcache-version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit-version}</version>
+		</dependency>
+		
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${slf4j-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j-version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j-version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		
+		<!-- Spring自动处理JSON -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${json-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${json-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${json-version}</version>
+		</dependency>
+		
+		<!-- Aspectj -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${aspectj-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${aspectj-version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>
 	</dependencies>
 
 	<build>
