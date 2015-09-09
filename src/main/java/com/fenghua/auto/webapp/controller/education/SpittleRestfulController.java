@@ -1,20 +1,14 @@
 package com.fenghua.auto.webapp.controller.education;
 
-<<<<<<< HEAD
-=======
-import javax.servlet.http.HttpServletResponse;
->>>>>>> branch 'master' of http://218.244.137.212:8080/dev/fenghua.git
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.fenghua.auto.backend.domain.education.Spittle;
 import com.fenghua.auto.backend.service.education.SpittleService;
@@ -120,11 +114,7 @@ public class SpittleRestfulController {
 	 * @return
 	 */
 	@RequestMapping(method=RequestMethod.POST) // no value attribute means that uses the path /spittle
-<<<<<<< HEAD
 	// @ResponseStatus(HttpStatus.CREATED)
-=======
-	//@ResponseStatus(HttpStatus.CREATED)
->>>>>>> branch 'master' of http://218.244.137.212:8080/dev/fenghua.git
 	public String addSpittle(@Valid Spittle spittle, BindingResult result, Model model){
 		
 		if(result.hasErrors()) {
