@@ -8,9 +8,10 @@
 
 	<properties>
 		<java.version>1.7</java.version>
-		<spring.version>4.2.0.RELEASE</spring.version>
+		<spring.version>4.2.1.RELEASE</spring.version>
 		<spring-data-commons.version>1.10.2.RELEASE</spring-data-commons.version>
-		<servlet.version>3.1.0</servlet.version>
+		<javax-servlet.version>3.1.0</javax-servlet.version>
+		<javax-validation.version>1.1.0.Final</javax-validation.version>
 		<commons-logging.version>1.2</commons-logging.version>
 		<jstl-version>1.2</jstl-version>
 		<tiles-version>3.0.5</tiles-version>
@@ -79,18 +80,32 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-commons</artifactId>
 			<version>${spring-data-commons.version}</version>
 		</dependency>
 		<!-- Spring dependencies end -->
-
+		
+		<!-- for adding MVC validation rule @Valid -->
+		<dependency>
+		    <groupId>javax.validation</groupId>
+		    <artifactId>validation-api</artifactId>
+		    <version>${javax-validation.version}</version>
+		</dependency>
+		
+		<!-- hibernate-validator is the implementation for the validation-api -->
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-validator</artifactId>
+		    <version>5.0.1.Final</version>
+		</dependency>
+		<!-- for adding MVC validation rule @Valid end-->
+			
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>${servlet.version}</version>
+			<version>${javax-servlet.version}</version>
 			<scope>test</scope>
 		</dependency>
 

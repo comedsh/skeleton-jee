@@ -12,7 +12,11 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <title><tiles:getAsString name="title"/></title>
-
+    
+	<style type="text/css">
+		.error{ color:red }
+	</style>
+  
   </head>
 
   <body>

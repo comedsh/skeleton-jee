@@ -58,8 +58,11 @@
 		<property name="preparerFactoryClass" value="org.springframework.web.servlet.view.tiles3.SpringBeanPreparerFactory" />
 
 	</bean>
- 
-
+ 	
+ 	<!-- message bundle -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+	    <property name="basename" value="messages"/>
+	</bean>
 
 
 

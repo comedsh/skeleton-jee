@@ -22,5 +22,9 @@ public interface SpittleService {
 	public void deleteSpittle(long id);
 	
 	public List<Spittle> getAllSpittles();
+
+	public List<Spittle> getSpittlesByUsername(String spitterName);
+
+	public void addSpittle(Spittle spittle);
 	
 }
