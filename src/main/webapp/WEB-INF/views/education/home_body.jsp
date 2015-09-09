@@ -6,7 +6,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 
 
-<div style="margin:10px 10px 10px 10px">
+<div style="padding:20px 20px 20px 20px">
 
 	<div>hi, I'm home <span style="color:red">body</span></div>
 	
@@ -29,6 +29,9 @@
 			  </s:url>
 					  
 			  <tr>
+				<td>
+					<span style="color:gray;margin-right:4px">id:</span><span style="margin-right:20px">${spittle.id}</span>
+				</td>
 				<td>
 					<span style="color:gray;margin-right:4px">at the time:</span><span style="margin-right:20px"><fmt:formatDate value="${spittle.time}" pattern="yyyy-HH-dd hh:mm:ss"/></span>
 				</td>
@@ -71,8 +74,7 @@
 			</sf:form>	
 			
 			<div style="margin-left:16px;margin-buttom:4px;margin-top:10px">2.2 Using method PUT, </div>
-			<div style="margin-left:40px;margin-buttom:4px;margin-top:10px">PUT 主要是用于做 update 使用</div>
-			
+			<div style="margin-left:40px;margin-buttom:4px;margin-top:10px">PUT 主要是用于做 update 使用</div>			
 										
 		</div>
 		

@@ -31,7 +31,7 @@ import com.fenghua.auto.backend.domain.education.Spittle;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/spring-mybatis.xml")
+@ContextConfiguration({"/spring-context.xml", "/spring-mybatis.xml"})
 public class RestfullClientTest {
 	
 	@Test
@@ -79,6 +79,9 @@ public class RestfullClientTest {
 		Assert.assertEquals("hi, I'm zhang san~", spittle.getText());		
 	}
 	
+	/**
+	 * uses the RestTemplate for simplification.
+	 */
 	@Test
 	public void getSpittleById_simple(){
 		

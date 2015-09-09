@@ -21,7 +21,7 @@
 
   <body>
 
-    <table style="BORDER-COLLAPSE: collapse" borderColor=#000000 height=auto cellPadding=1 width=800 border=1 >
+    <table style="BORDER-COLLAPSE: collapse" borderColor=#000000 height=auto cellPadding=1 width=1000 border=1 >
       
       <tr>
         <td colspan="2">
@@ -30,7 +30,7 @@
       </tr>
       
       <tr>
-        <td>
+        <td width="10%" align=center>
           <tiles:insertAttribute name="menu" />
         </td>
         <td>
