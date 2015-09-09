@@ -71,7 +71,7 @@
 			</sf:form>	
 			
 			<div style="margin-left:16px;margin-buttom:4px;margin-top:10px">2.2 Using method PUT, </div>
-			<div style="margin-left:40px;margin-buttom:4px;margin-top:10px">PUT 不建议在 browser 端使用，用 POST 取代；将会在客户端调用时对其进行描述； </div>
+			<div style="margin-left:40px;margin-buttom:4px;margin-top:10px">PUT 主要是用于做 update 使用</div>
 			
 										
 		</div>

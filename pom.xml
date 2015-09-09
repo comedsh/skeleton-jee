@@ -20,10 +20,10 @@
 		<mybatis-spring-version>1.2.2</mybatis-spring-version>
 		<mybatis-ehcache-version>1.0.0</mybatis-ehcache-version>
 		<mysql-driver-version>5.1.36</mysql-driver-version>
-
+		<httpclient.version>4.5</httpclient.version>
 		<slf4j-version>1.7.6</slf4j-version>
 		<log4j-version>1.2.17</log4j-version>
-		<json-version>2.3.2</json-version>
+		<jackson-version>2.3.2</jackson-version>
 		<aspectj-version>1.7.4</aspectj-version>
 		
 		<junit-version>4.12</junit-version>
@@ -101,6 +101,12 @@
 		    <version>5.0.1.Final</version>
 		</dependency>
 		<!-- for adding MVC validation rule @Valid end-->
+		
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>${httpclient.version}</version>
+		</dependency>
 			
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -185,17 +191,17 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
-			<version>${json-version}</version>
+			<version>${jackson-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
-			<version>${json-version}</version>
+			<version>${jackson-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>${json-version}</version>
+			<version>${jackson-version}</version>
 		</dependency>
 		
 		<!-- Aspectj -->

@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fenghua.auto.backend.domain.education.Spittle;
 import com.fenghua.auto.backend.service.education.SpittleService;
@@ -63,6 +64,22 @@ public class SpittleRestfulController {
 
 	}
 	
+	/**
+	 * 
+	 * Accept the xml / json request, and it will returns the xml or json object back to the client
+	 * 
+	 * @ResponseBody -> will automatically translate the return object to be xml or json object.
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, 
+					headers = {"Accept=text/xml, application/json"} ) // indicates, the server only accept the xml or json request.
+	public @ResponseBody Spittle getSpittle(@PathVariable("id") long id ){
+	
+		return spittleService.getSpittleById(id);
+	
+	}	
 	/**
 	 * 
 	 * restful, 参数化的 URL,
@@ -129,5 +146,6 @@ public class SpittleRestfulController {
 		return "redirect:/spittle/home";
 		
 	}
-
+	
+	
 }
