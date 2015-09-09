@@ -2,6 +2,11 @@ package com.fenghua.auto.backend.domain.education;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 /**
  * Spittle 唾沫，同时也翻译为碎语
  * 
@@ -15,15 +20,27 @@ import java.util.Date;
 
 public class Spittle {
 
-	long id;
+	/**
+	 * to enable spring MVC Form validation, First, needs javax.validation jar; Second, needs <mvc:annotation-driven /> enabled. 
+	 */
 	
+	// allows null, if null, it will be calculated by the system automatically
+	// remember, if you want to use @valid, to use its Object
+	Long id;
+	
+	@Size(min=4, max=15)
+	@NotNull
 	String username;
 	
+	@Size(min=4, max=30)
+	@NotNull
 	String text;
 	
+	// allows empty, if empty, it will be calculated by the system automatically
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	Date time;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
