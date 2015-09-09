@@ -15,9 +15,9 @@ import org.springframework.util.Assert;
 import com.fenghua.auto.backend.core.utills.BeanUtils;
 import com.fenghua.auto.backend.core.utills.UUIDUtils;
 import com.fenghua.auto.backend.dao.BaseDao;
+import com.fenghua.auto.backend.dao.DaoException;
 import com.fenghua.auto.backend.dao.constants.SqlId;
 import com.fenghua.auto.backend.domain.DomainObject;
-import com.fenghua.auto.exception.DaoException;
 
 /**
  * 基础Dao接口实现类，实现改类的子类必须设置泛型类型
