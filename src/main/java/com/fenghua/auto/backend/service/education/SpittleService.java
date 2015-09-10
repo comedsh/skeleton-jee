@@ -23,7 +23,9 @@ public interface SpittleService {
 	
 	public List<Spittle> getAllSpittles();
 
-	public List<Spittle> getSpittlesByUsername(String spitterName);
+	public List<Spittle> getSpittlesByUsername(String username);
+	
+	public void updateSpittle(Spittle spittle);
 
 	public void addSpittle(Spittle spittle);
 	

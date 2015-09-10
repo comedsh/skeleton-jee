@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -87,9 +88,21 @@ public class SpittleServiceImpl implements SpittleService {
 	}
 
 	@Override
-	public List<Spittle> getSpittlesByUsername(String spitterName) {
+	public List<Spittle> getSpittlesByUsername(String username) {
 		
-		return null;
+		List<Spittle> spittles = new ArrayList<Spittle>(5);
+		
+		for(Spittle spittle : mockSpittles){
+			
+			if( StringUtils.equals( spittle.getUsername(), username ) ){
+				
+				spittles.add(spittle);
+				
+			}
+			
+		}
+		
+		return spittles;
 	}
 
 	@Override
@@ -102,6 +115,20 @@ public class SpittleServiceImpl implements SpittleService {
 		mockSpittles.add( spittle );
 		
 	}
+
+	@Override
+	public void updateSpittle(Spittle spittle) {
+		// TODO Auto-generated method stub
+		
+		if( ObjectUtils.isEmpty( spittle.getTime() ) ) spittle.setTime( new Date() );
+		
+		Spittle s = this.getSpittleById( spittle.getId() );
+		
+		if( !StringUtils.isEmpty(spittle.getUsername()) ) s.setUsername( spittle.getUsername() );
+		
+		if( !StringUtils.isEmpty(spittle.getText()) ) s.setText( spittle.getText() );
+		
+	}	
 	
 	private long getSpittleId(){
 		

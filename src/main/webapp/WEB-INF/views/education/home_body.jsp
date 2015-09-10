@@ -24,9 +24,13 @@
 			
 			<c:forEach var="spittle" items="${spittles}" >
 			  
-			  <s:url value="/spittle/{id}" var="spittle_rest_url">
+			  <s:url value="/spittle/{id}" var="spittle_rest_id_url">
 				 <s:param name="id" value="${spittle.id}" />
 			  </s:url>
+			  
+			  <s:url value="/spittle/{username}/spittles" var="spittle_rest_username_url">
+				 <s:param name="username" value="${spittle.username}" />
+			  </s:url>			  
 					  
 			  <tr>
 				<td>
@@ -36,14 +40,14 @@
 					<span style="color:gray;margin-right:4px">at the time:</span><span style="margin-right:20px"><fmt:formatDate value="${spittle.time}" pattern="yyyy-HH-dd hh:mm:ss"/></span>
 				</td>
 				<td>
-					<span style="color:gray;margin-right:4px">user:</span><span>${spittle.username}</span>
+					<span style="color:gray;margin-right:4px">user:</span><span><a href="${spittle_rest_username_url}" target="_blank">${spittle.username}</a></span>
 				</td>
 				<td valign="middle">	
-					<span style="margin-right:4px;"><a href="${spittle_rest_url}" target="_blank">查看</a></span>
+					<span style="margin-right:4px;"><a href="${spittle_rest_id_url}" target="_blank">查看</a></span>
 				</td>
 				<td valign="middle">	
 					<span style="margin-right:4px;">
-						<sf:form method="delete" modelAttribute="spittle" action="${spittle_rest_url}">
+						<sf:form method="delete" modelAttribute="spittle" action="${spittle_rest_id_url}">
 							<a href="javascript:void(document.getElementById('spittle').submit())">删除</a>
 						</sf:form>
 					</span>
@@ -53,9 +57,7 @@
 			
 			</table>
 			
-			<div style="border-bottom:2px solid green;margin-buttom:4px;margin-top:10px">2. To add a new Spittle, </div>
-			
-			<div style="margin-left:16px;margin-buttom:4px;margin-top:10px">2.1 Using method POST, </div>
+			<div style="border-bottom:2px solid green;margin-buttom:4px;margin-top:10px">2. To add a new Spittle -> by Using method POST </div>
 			
 			<sf:form method="POST"  action="/spittle" modelAttribute="spittle"> 
 			
@@ -73,8 +75,24 @@
 			
 			</sf:form>	
 			
-			<div style="margin-left:16px;margin-buttom:4px;margin-top:10px">2.2 Using method PUT, </div>
-			<div style="margin-left:40px;margin-buttom:4px;margin-top:10px">PUT 主要是用于做 update 使用</div>			
+			<div style="border-bottom:2px solid green;margin-buttom:4px;margin-top:10px">3. To update a Spittle -> by Using method PUT </div>
+			<div style="margin-left:18px;margin-buttom:4px;margin-top:10px">PUT 主要是用于做 update 使用</div>		
+			
+			<sf:form method="PUT"  action="/spittle/1001" modelAttribute="spittle"> 
+			<div style="margin-left:18px;margin-buttom:4px;margin-top:10px">try to update the spittle 1001, with url path /spittle/1001 </div>	
+			<table width = 700 >	
+				<tr>
+					<td align="right">Username: </td> <td><sf:input path="username" size="15" maxlength="15"/> <sf:errors path="username" cssClass="error" /></td>
+				</tr>	
+				<tr>
+					<td align="right">Add your Spittle words:</td> <td><sf:input path="text" size="30"/> <sf:errors path="text" cssClass="error" /></td>
+				</tr>				
+				<tr>
+					<td colspan=2 align="center"><input name="commit" type="submit" value="update Spittle" /></td>
+				</tr>
+			</table>	
+			
+			</sf:form>					
 										
 		</div>
 		

@@ -1,15 +1,23 @@
 package com.fenghua.auto.webapp.controller.education;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.fenghua.auto.backend.domain.education.Spittle;
 import com.fenghua.auto.backend.service.education.SpittleService;
@@ -58,13 +66,19 @@ public class SpittleRestfulController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String getSpittle(@PathVariable("id") long id, Model model) {
 
-		model.addAttribute(spittleService.getSpittleById(id));
+		List<Spittle> spittles = new ArrayList<Spittle>(1);
+		
+		spittles.add( spittleService.getSpittleById(id) );
+		
+		model.addAttribute( "spittles", spittles );
 
 		return "education.spittle_view";
 
 	}
 	
 	/**
+	 * 
+	 * for client invoke
 	 * 
 	 * Accept the xml / json request, and it will returns the xml or json object back to the client
 	 * 
@@ -88,18 +102,34 @@ public class SpittleRestfulController {
 	 * 
 	 * 注意，URL 参数不仅仅在 URL 的末尾，可以在路径的中间
 	 * 
-	 * @param spitterName
+	 * @param username
 	 * @return
 	 */
 	@RequestMapping(value = "/{username}/spittles", method = RequestMethod.GET)
-	public String spittlesForSpitter(@PathVariable("username") String spitterName, Model model) {
+	public String spittlesForSpitter(@PathVariable("username") String username, Model model) {
 		
-		model.addAttribute("spittles", spittleService.getSpittlesByUsername(spitterName) );
+		model.addAttribute("spittles", spittleService.getSpittlesByUsername(username) );
 	
 		return "education.spittle_view";
 	
 	}
-
+	
+	/**
+	 * 
+	 * for client invoke
+	 * 
+	 * @param username
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/{username}/spittles", method = RequestMethod.GET, headers = {"Accept=text/xml, application/json"})
+	public @ResponseBody List<Spittle> spittlesForSpitter(@PathVariable("username") String username) {
+		
+		return spittleService.getSpittlesByUsername(username);
+		
+	}
+	
+	
 	/**
 	 * 
 	 * restful, 参数化的 URL, 处理 DELETE 请求
@@ -123,7 +153,7 @@ public class SpittleRestfulController {
 	
 	/**
 	 * 
-	 * form submit, special case for rest, 没有参数化的 URL, 
+	 * action POST, special case for rest, 没有参数化的 URL, 
 	 * 
 	 * @param spittle
 	 * @param result
@@ -131,7 +161,6 @@ public class SpittleRestfulController {
 	 * @return
 	 */
 	@RequestMapping(method=RequestMethod.POST) // no value attribute means that uses the path /spittle
-	// @ResponseStatus(HttpStatus.CREATED)
 	public String addSpittle(@Valid Spittle spittle, BindingResult result, Model model){
 		
 		if(result.hasErrors()) {
@@ -144,6 +173,73 @@ public class SpittleRestfulController {
 		spittleService.addSpittle(spittle);
 		
 		return "redirect:/spittle/home";
+		
+	}
+	
+	/**
+	 * 
+	 * for client invoke
+	 * 
+	 * @param spittle
+	 * @param result
+	 * @throws BindException 
+	 */
+	@RequestMapping(method=RequestMethod.POST, headers="Content-Type=application/json") // no value attribute means that uses the path /spittle
+	@ResponseStatus(HttpStatus.CREATED)
+	public @ResponseBody Spittle addSpittle(@Valid @RequestBody Spittle spittle, BindingResult result, HttpServletResponse response) throws BindException{
+		
+		if( result.hasErrors() ) throw new BindException(result);
+		
+		spittleService.addSpittle(spittle);
+		
+		response.setHeader("Location", "/spittle/" + spittle.getId() );
+		
+		return spittle;
+		
+	}	
+	
+	/**
+	 * 
+	 * action PUT, 用于更新资源
+	 * 
+	 * @param spittle -> the id attribute value will be automatically set in.
+	 * @param result
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/{id}", method=RequestMethod.PUT)
+	public String updateSpittle(@Valid Spittle spittle, BindingResult result, Model model){
+		
+		if(result.hasErrors()) {
+			
+			model.addAttribute("spittles", spittleService.getAllSpittles());
+			
+	        return "education.spittle_home";
+	    }			
+		
+		spittleService.updateSpittle(spittle);
+		
+		return "redirect:/spittle/home";
+	}
+	
+	/**
+	 * 
+	 * for client invoke
+	 *
+	 *  
+	 * @param spittle -> 注意 @RequestBody 的用法，将客户端发送的数据转换成对象
+	 * @param result
+	 * @throws BindException 
+	 */
+	@RequestMapping(value = "/{id}", method=RequestMethod.PUT, headers="Content-Type=application/json" )
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public @ResponseBody Spittle updateSpittle( @Valid @RequestBody Spittle spittle, BindingResult result ) throws BindException{
+		
+		if( result.hasErrors() ) throw new BindException(result);
+		
+		spittleService.updateSpittle(spittle);
+		
+		return spittle;
 		
 	}
 	
