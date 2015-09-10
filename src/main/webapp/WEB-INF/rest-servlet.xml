@@ -60,6 +60,4 @@
 		<property name="preparerFactoryClass" value="org.springframework.web.servlet.view.tiles3.SpringBeanPreparerFactory" />
 
 	</bean>
-
-
 </beans>  
