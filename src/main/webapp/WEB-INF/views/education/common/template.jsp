@@ -12,12 +12,16 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <title><tiles:getAsString name="title"/></title>
-
+    
+	<style type="text/css">
+		.error{ color:red }
+	</style>
+  
   </head>
 
   <body>
 
-    <table style="BORDER-COLLAPSE: collapse" borderColor=#000000 height=auto cellPadding=1 width=auto border=1 >
+    <table style="BORDER-COLLAPSE: collapse" borderColor=#000000 height=auto cellPadding=1 width=1000 border=1 >
       
       <tr>
         <td colspan="2">
@@ -26,7 +30,7 @@
       </tr>
       
       <tr>
-        <td>
+        <td width="10%" align=center>
           <tiles:insertAttribute name="menu" />
         </td>
         <td>

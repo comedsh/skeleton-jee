@@ -25,8 +25,10 @@
   <definition name="default_template" template="/WEB-INF/template/default_template.jsp">
     <put-attribute name="title" value="" />
     <put-attribute name="shortcut" value="/WEB-INF/views/shortcut.jsp" />
-    <put-attribute name="menu" value="/WEB-INF/views/menu.jsp" />
-    <put-attribute name="body" value="" />
+    <put-attribute name="logo" value="/WEB-INF/views/logo.jsp" />
+    <put-attribute name="search" value="/WEB-INF/views/search.jsp" />
+    <put-attribute name="shopcat" value="/WEB-INF/views/shopcat.jsp" />
+    <put-attribute name="content" value="" />
     <put-attribute name="footer" value="/WEB-INF/views/footer.jsp" />
   </definition>  
   

@@ -94,7 +94,7 @@ a {
     cursor: pointer;position: relative;
 }
 
-#settleup {
+#shopcat {
     float: right;
     z-index: 11;
     height: 36px;
@@ -104,7 +104,7 @@ a {
     position: relative;
 }
 
-#settleup .cw-icon {
+#shopcat .cw-icon {
     width: 75px;
     height: 34px;
     border: 1px solid #DFDFDF;
@@ -139,18 +139,13 @@ a {
 	</div>
 	<div class="w">
 		<div id="logo">
-			<a href="http://www.auto007.com/" class="logo">Auto007</a>
+			<tiles:insertAttribute name="logo" />
 		</div>
 		<div id="search">
-			<div class="form">
-				<input style="color: rgb(153, 153, 153);" id="key" class="text" type="text">
-				<button class="button cw-icon"><i></i>搜索</button>
-			</div>
+			<tiles:insertAttribute name="search" />
 		</div>
-		<div id="settleup" class="dorpdown">
-			<div class="cw-icon">
-				<a target="_blank" href="http://cart.jd.com/cart/cart.html">我的购物车</a>
-			</div>
+		<div id="shopcat" class="dorpdown">
+			<tiles:insertAttribute name="shopcat" />
 		</div>
 		<span class="clr"></span>
 	</div>

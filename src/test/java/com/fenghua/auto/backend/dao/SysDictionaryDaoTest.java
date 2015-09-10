@@ -1,6 +1,7 @@
-package com.fenghua.auto;
+package com.fenghua.auto.backend.dao;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.junit.Assert;
@@ -16,7 +17,7 @@ import com.fenghua.auto.backend.domain.education.SysDictionary;
 import com.fenghua.auto.backend.domain.vo.education.SysDictionaryVo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/spring-mybatis.xml")
+@ContextConfiguration({"/spring-context.xml", "/spring-mybatis.xml"})
 @Transactional
 public class SysDictionaryDaoTest {
 	
