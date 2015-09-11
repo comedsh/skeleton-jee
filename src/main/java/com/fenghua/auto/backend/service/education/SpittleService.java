@@ -1,10 +1,19 @@
-<<<<<<< HEAD
 package com.fenghua.auto.backend.service.education;
 
 import java.util.List;
 
-import com.fenghua.auto.backend.domain.education.Spittle;
 
+import com.fenghua.auto.backend.domain.education.Spittle;
+/**
+ * 用于培训用途
+ * 
+ * @author shang yang
+ *
+ * @version 
+ *
+ * @createTime：2015年8月31日 上午9:00:03 
+ *
+ */
 /**
  * 用于培训用途
  * 
@@ -31,35 +40,3 @@ public interface SpittleService {
 	public void addSpittle(Spittle spittle);
 	
 }
-=======
-package com.fenghua.auto.backend.service.education;
-
-import java.util.List;
-
-import com.fenghua.auto.backend.domain.education.Spittle;
-
-/**
- * 用于培训用途
- * 
- * @author shang yang
- *
- * @version 
- *
- * @createTime：2015年8月31日 上午9:00:03 
- *
- */
-
-public interface SpittleService {
-	
-	public Spittle getSpittleById(long id);
-	
-	public void deleteSpittle(long id);
-	
-	public List<Spittle> getAllSpittles();
-
-	public List<Spittle> getSpittlesByUsername(String spitterName);
-
-	public void addSpittle(Spittle spittle);
-	
-}
->>>>>>> branch 'master' of http://218.244.137.212:8080/dev/fenghua.git
