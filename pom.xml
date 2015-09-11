@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.fenghua</groupId>
 	<artifactId>auto007</artifactId>
-	<version>0.1</version>
+	<version>0.1</version>   
 	<packaging>war</packaging>
 
 	<properties>
