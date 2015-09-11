@@ -57,6 +57,57 @@
 			
 			</table>
 			
+			<!-- test for ajax invoke by angularjs-->
+			
+			
+			
+			<div ng-app="spittle_app"> <!-- ng-app 表示，该 div 部分（含子标签）归 angular 接管 -->
+			
+				<script src="/resources/angular/angular.js"></script>
+
+				<script>
+				angular.module("spittle_app", [])
+					   .controller("SpittleController", function spittleController($scope, $http) {
+						   									
+						   									$scope.getSpittle = function(){
+						   										
+							   									var url="/spittle/1001";
+							   									$http.get(url).success( function(spittle) {
+							         								$scope.spittle = spittle;
+							   									});
+							   									
+						   									}
+														}
+								  );
+				</script>
+				
+				<div ng-controller="SpittleController">
+				
+				<div> <input type="button" value="ajax get 1001 by angular" ng-click="getSpittle()"/></div>
+				
+				<table>
+						  
+				  <tr>
+					<td>
+						<span style="color:gray;margin-right:4px">id:</span><span style="margin-right:20px">{{spittle.id}}</span>
+					</td>
+					<td>
+						<span style="color:gray;margin-right:4px">at the time:</span><span style="margin-right:20px">{{ spittle.time | date:"yyyy-MM-dd HH:mm:ss" }}</span>
+					</td>
+					<td>
+						<span style="color:gray;margin-right:4px">user:</span><span>{{spittle.username}}</span>
+					</td>
+				  </tr>			
+				
+				</table>
+				
+				</div>			
+			
+			</div>
+			
+
+			
+			
 			<div style="border-bottom:2px solid green;margin-buttom:4px;margin-top:10px">2. To add a new Spittle -> by Using method POST </div>
 			
 			<sf:form method="POST"  action="/spittle" modelAttribute="spittle"> 
