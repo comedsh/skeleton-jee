@@ -23,7 +23,7 @@
   </definition>
     
   <!-- 
-  		重构首页布局，注意 tiles 嵌套模板的用法，这里定义 header 模板，然后作为嵌套模板供 首页模板 default_tempalte 使用
+  		重构首页布局，注意 tiles 嵌套模板的用法，这里定义 header 模板，然后作为嵌套模板 供 首页模板 default_tempalte 使用
   		refactored by shang yang on 2015-9-12  
   -->
   <definition name="web.default_header_template" template="/WEB-INF/template/web/header_template.jsp">
