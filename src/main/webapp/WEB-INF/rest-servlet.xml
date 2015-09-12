@@ -29,7 +29,7 @@
 	<mvc:default-servlet-handler />
 	
 	<!-- 自动将静态资源导向 -->
-	<!-- <mvc:resources mapping="/resources/**" location="/resources/" /> -->
+	<mvc:resources mapping="/resources/**" location="/resources/" /> 
 	
 	<mvc:view-controller path="/" view-name="index" />
 	

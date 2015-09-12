@@ -134,59 +134,22 @@ a {
 
 </head>
 <body>
-	<div id="header-shortcut">
-		<tiles:insertAttribute name="shortcut" />
-	</div>
-	<div class="w">
-		<div id="logo">
-			<tiles:insertAttribute name="logo" />
-		</div>
-		<div id="search">
-			<tiles:insertAttribute name="search" />
-		</div>
-		<div id="shopcat" class="dorpdown">
-			<tiles:insertAttribute name="shopcat" />
-		</div>
-		<span class="clr"></span>
+	
+	<div id="header">
+		<tiles:insertAttribute name="header" />
 	</div>
 	
-	<div id="nav-menu">
-		<div class="w">
-		    <div style="line-height: 44px; text-align: center; background: red; font-size: 30px;">导航&菜单</div>
-		</div>
+	<div>
+		<tiles:insertAttribute name="menu" />
 	</div>
 	
-	<div class="w">
-		<div id="focus">
-			<div style="line-height: 200px; text-align: center; background: yellow; font-size: 30px;">首页左侧菜单，图片轮番</div>
-		</div>
+	<div id="body">
+		<tiles:insertAttribute name="body" />
 	</div>
-	
-	<div class="w">
-		<div id="content">
-			<div style="line-height: 200px; text-align: center; background: blue; font-size: 30px;">首页内容页面</div>
-		</div>
-	</div>
-	
+
 	<div id="footer">
 		<tiles:insertAttribute name="footer" />
 	</div>
 	
-	
-<%-- 
-	<div>
-		<div>
-			<tiles:insertAttribute name="header" />
-		</div>
-		<div>
-			<tiles:insertAttribute name="menu" />
-		</div>
-		<div>
-			<tiles:insertAttribute name="body" />
-		</div>
-		<div>
-			<tiles:insertAttribute name="footer" />
-		</div>
-	</div> --%>
 </body>
 </html>

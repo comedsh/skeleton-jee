@@ -20,16 +20,36 @@
 
     <put-attribute name="footer" value="/WEB-INF/views/education/common/footer.jsp" />
 
-  </definition>  
+  </definition>
+    
+  <!-- 
+  		重构首页布局，注意 tiles 嵌套模板的用法，这里定义 header 模板，然后作为嵌套模板供 首页模板 default_tempalte 使用
+  		refactored by shang yang on 2015-9-12  
+  -->
+  <definition name="web.default_header_template" template="/WEB-INF/template/web/header_template.jsp">
   
-  <definition name="default_template" template="/WEB-INF/template/default_template.jsp">
+    <put-attribute name="shortcut" value="/WEB-INF/views/web/common/shortcut.jsp" />
+ 
+    <put-attribute name="logo" value="/WEB-INF/views/web/common/logo.jsp" />
+ 
+    <put-attribute name="search" value="/WEB-INF/views/web/common/search.jsp" />
+ 
+    <put-attribute name="shopcat" value="/WEB-INF/views/web/common/shopcat.jsp" />
+  
+  </definition> 
+  
+  <definition name="web.default_template" template="/WEB-INF/template/web/default_template.jsp">
+    
     <put-attribute name="title" value="" />
-    <put-attribute name="shortcut" value="/WEB-INF/views/shortcut.jsp" />
-    <put-attribute name="logo" value="/WEB-INF/views/logo.jsp" />
-    <put-attribute name="search" value="/WEB-INF/views/search.jsp" />
-    <put-attribute name="shopcat" value="/WEB-INF/views/shopcat.jsp" />
-    <put-attribute name="content" value="" />
-    <put-attribute name="footer" value="/WEB-INF/views/footer.jsp" />
+    
+   	<put-attribute name="header" value="web.default_header_template" /> <!-- 调用 header_template 的实现 -->
+   	
+   	<put-attribute name="menu" value="/WEB-INF/views/web/common/menu.jsp" /> 
+    
+    <put-attribute name="body" value="" />
+    
+    <put-attribute name="footer" value="/WEB-INF/views/web/common/footer.jsp" />
+    
   </definition>  
   
 </tiles-definitions>

@@ -17,9 +17,12 @@
 
 <!-- defined for education -->
   
-  <definition name="index" extends="default_template">
+  <definition name="web.index_view" extends="web.default_template">
+  
       <put-attribute name="title" value="AUTO007汽车配件配送中心" />
-      <put-attribute name="body" value="/WEB-INF/views/index.jsp" />
+
+      <put-attribute name="body" value="/WEB-INF/views/web/index_body.jsp" />  
+      
   </definition>
   
 </tiles-definitions>

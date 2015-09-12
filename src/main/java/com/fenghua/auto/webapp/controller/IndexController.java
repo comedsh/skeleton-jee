@@ -10,10 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class IndexController {
+	
 	@RequestMapping(value = "/")
 	public String index(HttpServletRequest request) throws Exception {
 
-		return "index";
+		return "web.index_view";
 	}
 
 	public static void main(String[] agrs) {
