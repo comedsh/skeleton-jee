@@ -9,6 +9,49 @@
 <div style="padding:20px 20px 20px 20px">
 
 	<div>hi, I'm home <span style="color:red">body</span></div>
+
+	<!-- ========== start for restless introduction ============ -->
+
+	<div>&nbsp;</div>
+
+	<div style="margin-buttom:4px"> This part is addressed for the <span style="font-weight:600;color:red">Restless, &nbsp;&nbsp;&nbsp;&nbsp;该方式在我们的项目中是严格禁止使用的</span> </div>
+	
+	<div>
+		
+		<div style="border:2px solid green;padding:10px 10px 10px 10px">
+				
+			<div style="border-bottom:2px solid green;margin-buttom:4px">1. all spittles are listed as below, </div>	
+			
+			<table>
+			
+			<c:forEach var="spittle" items="${spittles}" >
+					  
+			  <tr>
+				<td>
+					<span style="color:gray;margin-right:4px">id:</span><span style="margin-right:20px">${spittle.id}</span>
+				</td>
+				<td>
+					<span style="color:gray;margin-right:4px">at the time:</span><span style="margin-right:20px"><fmt:formatDate value="${spittle.time}" pattern="yyyy-HH-dd hh:mm:ss"/></span>
+				</td>
+				<td>
+					<span style="color:gray;margin-right:4px">user:</span><span>${spittle.username}</span>
+				</td>
+				<td valign="middle">	
+					<span style="margin-right:4px;"><a href="/spittle/getSpittle?id=${spittle.id}" target="_blank">查看</a></span>
+				</td>
+				<td valign="middle">	
+					<span style="margin-right:4px;"><a href="/spittle/deleteSpittle?id=${spittle.id}">删除</a></span>
+				</td>		
+			  </tr>			
+			</c:forEach>
+			<!-- == PUT( Update ) 和 CREATE( Create ) 大致相同，这里不再赘述 -->
+			</table>
+		
+		</div>
+		
+	</div>		
+	
+	<!-- ========== start for restful education ============ -->
 	
 	<div>&nbsp;</div>
 	
@@ -59,8 +102,6 @@
 			
 			<!-- test for ajax invoke by angularjs-->
 			
-			
-			
 			<div ng-app="spittle_app"> <!-- ng-app 表示，该 div 部分（含子标签）归 angular 接管 -->
 			
 				<script src="/resources/angular/angular.js"></script>
@@ -73,6 +114,7 @@
 						   										
 							   									var url="/spittle/1001";
 							   									$http.get(url).success( function(spittle) {
+							   										if(!spittle) alert("spittle 1001 get deleted ~, no information responsed")
 							         								$scope.spittle = spittle;
 							   									});
 							   									
@@ -83,7 +125,7 @@
 				
 				<div ng-controller="SpittleController">
 				
-				<div> <input type="button" value="ajax get 1001 by angular" ng-click="getSpittle()"/></div>
+				<div> <input type="button" value="ajax get 1001 by angular" ng-click="getSpittle()"/> </div>
 				
 				<table>
 						  
@@ -103,10 +145,7 @@
 				
 				</div>			
 			
-			</div>
-			
-
-			
+			</div>			
 			
 			<div style="border-bottom:2px solid green;margin-buttom:4px;margin-top:10px">2. To add a new Spittle -> by Using method POST </div>
 			
