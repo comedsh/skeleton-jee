@@ -24,6 +24,7 @@ public class BeanUtils {
 			return map;
 		}
 		BeanMap beanMap = new BeanMap(obj);
+		@SuppressWarnings("unchecked")
 		Iterator<String> it = beanMap.keyIterator();
 		while (it.hasNext()) {
 			String name = it.next();
