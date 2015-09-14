@@ -1,4 +1,4 @@
-package com.fenghua.auto.backend.dao;
+package com.fenghua.auto.backend.education;
 
 import java.util.ArrayList;
 
