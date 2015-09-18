@@ -40,25 +40,24 @@
     </bean>  
   
     <!-- AOP配置事物 -->  
-    <tx:advice id="transactionAdvice" transaction-manager="transactionManager">  
-        <tx:attributes>  
-            <tx:method name="query*" read-only="true" propagation="REQUIRED" />  
-            <tx:method name="delete*"  propagation="REQUIRED" />  
-            <tx:method name="update*" propagation="REQUIRED" />  
-            <tx:method name="insert*" propagation="REQUIRED" />  
-            <tx:method name="*" propagation="REQUIRED" />  
-        </tx:attributes>  
-    </tx:advice>  
+	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="query*" read-only="true" propagation="REQUIRED" />
+			<tx:method name="delete*"  propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="insert*" propagation="REQUIRED" />
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
       
     <!-- 配置AOP切面 -->  
     <aop:config>  
-        <aop:pointcut id="transactionPointcut" expression="execution(* com.fenghua.auto.dao.*.*(..))"/>  
+        <aop:pointcut id="transactionPointcut" expression="execution(* com.fenghua.auto.backend.service.education.*.*(..))"/>  
         <aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice"/>  
     </aop:config>  
-      
   
     <!-- 使用annotation注解方式配置事务 -->  
-    <tx:annotation-driven transaction-manager="transactionManager" />  
+    <tx:annotation-driven transaction-manager="transactionManager"/>  
   
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
         <property name="dataSource" ref="dataSource" />  
