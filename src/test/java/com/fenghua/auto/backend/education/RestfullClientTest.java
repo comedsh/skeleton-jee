@@ -35,7 +35,7 @@ import com.fenghua.auto.backend.domain.education.Spittle;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/spring-context.xml", "/spring-mybatis.xml"})
 public class RestfullClientTest {
-//	TODO 持续集成环境中 junit测试步骤暂时不考试设计web交付的内容
+//	TODO 持续集成环境中 junit测试步骤暂时不考试涉及web交付的内容
 //	/**
 //	 * 
 //	 * 该测试用例，要重点掌握的是，是如何通过不同的请求的类型，分发到不同的 SpittleRestfulController 对应的 GET 方法
