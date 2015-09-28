@@ -159,4 +159,8 @@ public class SysDictionaryDaoTest {
 		Assert.assertEquals(null, dicVo);
 	}
 
+	@Test
+	public void testFail(){
+		Assert.fail();
+	}
 }
