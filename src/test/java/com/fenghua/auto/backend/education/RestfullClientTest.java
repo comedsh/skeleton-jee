@@ -11,6 +11,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicHeader;
 import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
@@ -35,7 +36,7 @@ import com.fenghua.auto.backend.domain.education.Spittle;
 @ContextConfiguration({"/spring-context.xml", "/spring-mybatis.xml"})
 public class RestfullClientTest {
 	 
-//	@Test
+	@Test
 	public void getSpittleById_default() throws ClientProtocolException, IOException{
 		
 		long spittleid = 1001;		
@@ -64,7 +65,7 @@ public class RestfullClientTest {
 	/**
 	 * uses the RestTemplate for simplification.
 	 */
-//	@Test
+	@Test
 	public void getSpittleById_simple(){
 		
 		// sufficiently replace the web service or some other RPC calls.
@@ -76,7 +77,7 @@ public class RestfullClientTest {
 		
 	}
 	
-//	@Test
+	@Test
 	public void getSpittleByUsername(){
 		
 		// sufficiently replace the web service or some other RPC calls.
@@ -89,7 +90,7 @@ public class RestfullClientTest {
 		}
 	}
 	
-//	@Test
+	@Test
 	public void addSpittle(){
 		
 		Spittle spittle = new Spittle();
@@ -123,7 +124,7 @@ public class RestfullClientTest {
 		Assert.assertEquals("/spittle/"+sp.getId(), url.toString());
 	}
 	
-//	@Test
+	@Test
 	public void updateSpittle(){
 
 		Spittle spittle = new Spittle();
@@ -138,7 +139,7 @@ public class RestfullClientTest {
 		
 	}
 	
-//	@Test
+	@Test
 	public void deleteSpittle(){
 		
 		new RestTemplate().delete("http://localhost:8080/spittle/{id}", 1001L );
