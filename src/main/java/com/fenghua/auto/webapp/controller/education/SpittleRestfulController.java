@@ -24,7 +24,7 @@ import com.fenghua.auto.backend.service.education.SpittleService;
 
 /**
  * 
- * 用于培训用途，这类应用是项目中需要的，严格要求的  
+ * 用于培训用途，这类应用是项目中需要的，严格要求的
  * 
  * @author shang yang
  *
