@@ -45,7 +45,7 @@ public class RestfullClientTest {
 		
 		HttpClient httpClient = HttpClientBuilder.create().build(); // Notice: DefaultHttpClient is deprecated
 		
-		String url = "http://127.0.0.1:8080/spittle/" + spittleid;
+		String url = "http://127.0.0.1:8080/spittle/" + spittleid; 
 		
 		HttpGet getRequest = new HttpGet(url);
 		
