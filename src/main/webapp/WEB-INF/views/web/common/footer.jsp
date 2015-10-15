@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <style>
 .footer-bottom {
     text-align: center;
@@ -48,26 +49,28 @@ a {
 			<ul class="menu-bottom inline flc">
 
 									<li class="menu-bottom__item">
-				<a class="menu-bottom__caption" href="/about/company/">关于我们</a>
+				<a class="menu-bottom__caption" href="/about/company/">
+					<spring:message code="index.aboutus"/>
+				</a>
 			</li>
 								<li class="menu-bottom__item">
-				<a class="menu-bottom__caption" href="/message/">联系我们</a>
+				<a class="menu-bottom__caption" href="/message/"><spring:message code="index.contactus"/></a>
 			</li>
 								<li class="menu-bottom__item">
-				<a class="menu-bottom__caption" href="/merchants_settled.html">商家入驻</a>
+				<a class="menu-bottom__caption" href="/merchants_settled.html"><spring:message code="index.checkin"/></a>
 			</li>
 								<li class="menu-bottom__item">
-				<a class="menu-bottom__caption" href="/sitemap.html">友情链接</a>
+				<a class="menu-bottom__caption" href="/sitemap.html"><spring:message code="index.links"/></a>
 			</li>
 								<li class="menu-bottom__item">
-				<a class="menu-bottom__caption" href="/marketing_alliance.html">销售联盟</a>
+				<a class="menu-bottom__caption" href="/marketing_alliance.html"><spring:message code="index.saleshome"/></a>
 			</li>
 								<li class="menu-bottom__item">
-				<a class="menu-bottom__caption" href="/forum.html">论坛</a>
+				<a class="menu-bottom__caption" href="/forum.html"><spring:message code="index.bbs"/></a>
 			</li>
 			
 </ul>			<div class="copyright-china">
-				备案号： 新ICP备12057998号-1 新疆丰华神州汽车配件有限公司版权所有
+				<spring:message code="index.beian"/>
 			</div>
 		</div>
 	</div>
