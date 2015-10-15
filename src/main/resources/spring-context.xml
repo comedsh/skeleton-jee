@@ -18,12 +18,38 @@
         http://www.springframework.org/schema/context   
         http://www.springframework.org/schema/context/spring-context-4.0.xsd">  
   	
+  	<!-- 数据库配置文件位置 -->  
+    <context:property-placeholder location="classpath:/config/auto007.properties" />  
+    
   	<context:annotation-config />
 	<context:component-scan base-package="com.fenghua.auto" />
+	
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
 	
  	<!-- message bundle -->
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 	    <property name="basename" value="config/messages"/>
 	</bean> 
         
+	<bean id="performanceTimeThreshold" class="java.lang.Long">
+        <constructor-arg type="String" value="${auto007.performance.timeThreshold}"/> 
+    </bean>  
+	<bean id="performanceReceiver" class="java.lang.String">
+        <constructor-arg type="String" value="${auto007.performance.receiver}"/> 
+    </bean>     
+	<bean id="performanceCclist" class="java.lang.String">
+        <constructor-arg type="String" value="${auto007.performance.cclist}"/> 
+    </bean>       
+	<bean id="smtpHost" class="java.lang.String">
+        <constructor-arg type="String" value="${auto007.smtp.host}"/> 
+    </bean>      
+	<bean id="smtpPort" class="java.lang.String">
+        <constructor-arg type="String" value="${auto007.smtp.port}"/> 
+    </bean>       
+	<bean id="mailSender" class="java.lang.String">
+        <constructor-arg type="String" value="${auto007.mail.sender}"/> 
+    </bean>       
+	<bean id="mailPwd" class="java.lang.String">
+        <constructor-arg type="String" value="${auto007.mail.pwd}"/> 
+    </bean>     
 </beans>        
