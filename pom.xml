@@ -13,7 +13,6 @@
 		<javax-servlet.version>3.1.0</javax-servlet.version>
 		<javax-validation.version>1.1.0.Final</javax-validation.version>
 		<commons-logging.version>1.2</commons-logging.version>
-		<commons-lang.version>2.6</commons-lang.version>
 		<jstl-version>1.2</jstl-version>
 		<tiles-version>3.0.5</tiles-version>
 		<velocity-version>1.7</velocity-version>
@@ -27,6 +26,8 @@
 		<jackson-version>2.3.2</jackson-version>
 		<aspectj-version>1.7.4</aspectj-version>
 		<dbcp-version>1.4</dbcp-version>
+		
+		<mail-version>1.5.0-b01</mail-version>
 		
 		<junit-version>4.12</junit-version>
 	</properties>
@@ -121,12 +122,6 @@
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<version>${commons-logging.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<version>${commons-lang.version}</version>
 		</dependency>
 
 		<dependency>
@@ -228,6 +223,12 @@
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
 			<version>${dbcp-version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>${mail-version}</version>
 		</dependency>
 	</dependencies>
 
