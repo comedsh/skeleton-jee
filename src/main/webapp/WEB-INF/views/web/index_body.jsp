@@ -3,7 +3,8 @@
 <div class="w">
 	<div id="focus">
 		<div style="line-height: 200px; text-align: center; background: yellow; font-size: 30px;">
-			<spring:message code="index.banner" />
+			<!--<spring:message code="index.banner" />-->
+			<%=request.getAttribute("index.banner") %>
 		</div>
 	</div>
 </div>
