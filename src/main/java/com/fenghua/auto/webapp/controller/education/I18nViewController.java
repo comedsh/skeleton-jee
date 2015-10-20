@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * @author nn
+ * @author 王直元
+ * 
+ * 测试根据语言变换模版
  *
  */
 @Controller
