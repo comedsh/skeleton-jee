@@ -5,12 +5,14 @@ import static org.junit.Assert.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.HandlerExecutionChain;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,16 +30,18 @@ import com.alibaba.fastjson.JSON;
  * @date 2015年10月20日
  *
  */
-
+@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/spring-context.xml", "/spring-mybatis.xml"})
-public class AbstractControllerTest extends AbstractTest {
+public class AbstractControllerTest {
 	
 	protected MockHttpServletRequest request;
 
 	protected MockHttpServletResponse response;
 	
+	@Autowired
 	protected RequestMappingHandlerAdapter handlerAdapter;
 	
+	@Autowired
 	protected RequestMappingHandlerMapping handlerMapping;  
 	
 	@Before
@@ -48,10 +52,9 @@ public class AbstractControllerTest extends AbstractTest {
 		
 		response = new MockHttpServletResponse();
 
-	    handlerMapping = applicationContext.getBean(RequestMappingHandlerMapping.class);  	    
-	    assertNotNull(handlerMapping);
 	    
-        handlerAdapter = applicationContext.getBean(RequestMappingHandlerAdapter.class);
+	    assertNotNull(handlerMapping);
+
         assertNotNull(handlerAdapter); 
 	}
 	
@@ -61,11 +64,6 @@ public class AbstractControllerTest extends AbstractTest {
 	@Test
 	public void testRun(){
 		
-	}
-	
-	@After
-	public void releaseApplicationContext(){
-		reacoveApplicationContext();
 	}
 
 	/**

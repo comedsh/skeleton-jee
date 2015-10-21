@@ -6,9 +6,9 @@ import static org.springframework.test.web.ModelAndViewAssert.assertViewName;
 
 import org.easymock.EasyMock;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fenghua.auto.backend.core.utills.SpringApplicationContext;
 import com.fenghua.auto.demo.domain.DemoObj;
 import com.fenghua.auto.demo.service.DemoService;
 import com.fenghua.auto.demo.web.DemoController;
@@ -25,6 +25,9 @@ import com.fenghua.auto.test.AbstractControllerTest;
   */
 public class DemoControllerMockTest extends AbstractControllerTest{
 	
+	@Autowired
+	private DemoController demoController;
+	
 	/**
 	 * 使用Mock模拟 Service对象
 	 * 
@@ -32,6 +35,8 @@ public class DemoControllerMockTest extends AbstractControllerTest{
 	 */
 	@Test
 	public void saveMock() throws Exception{
+		
+		assertNotNull(demoController);
 		
 		//设置请求方法和URI以及参数
 		jsonPostInit();
@@ -45,7 +50,6 @@ public class DemoControllerMockTest extends AbstractControllerTest{
 	    EasyMock.replay(demoService);
 	    
 	    //获取demoController
-	    DemoController demoController =  SpringApplicationContext.getBean("demoController");
 	    demoController.setDemoService(demoService);
 	  
 	    //执行DemoController.saveMock() 方法
@@ -65,6 +69,8 @@ public class DemoControllerMockTest extends AbstractControllerTest{
    
 	@Test
 	public void testGetAll() throws Exception {	
+		assertNotNull(demoController);
+		
 		//初始化请求方式 
 		jsonGetInit();
 		
@@ -79,7 +85,9 @@ public class DemoControllerMockTest extends AbstractControllerTest{
 	
 	
 	@Test
-	public void testGetInfoById() throws Exception{		
+	public void testGetInfoById() throws Exception{	
+		assertNotNull(demoController);
+		
 		jsonGetInit();
 		request.setRequestURI("/demo_test/{id}");
 		request.setParameter("id", "1");
@@ -91,7 +99,9 @@ public class DemoControllerMockTest extends AbstractControllerTest{
 	}
 
 	@Test
-    public void testSave() throws Exception{		
+    public void testSave() throws Exception{	
+		assertNotNull(demoController);
+		
 		DemoObj obj = new DemoObj();
 	    obj.setId("1");
 	    obj.setName("test");
@@ -118,6 +128,7 @@ public class DemoControllerMockTest extends AbstractControllerTest{
 	
 	@Test
 	public void delete() throws Exception{	
+		assertNotNull(demoController);
 		
 		jsonDelInit();
 		request.setRequestURI("/demo_test/{id}");

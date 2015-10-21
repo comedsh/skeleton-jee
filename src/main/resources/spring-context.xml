@@ -105,5 +105,5 @@
 		  </list>
 		 </property>      
     </bean>
-    <bean id="springContext" class="com.fenghua.auto.backend.core.utills.SpringApplicationContext"></bean>
+    
 </beans>        
