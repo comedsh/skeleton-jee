@@ -91,4 +91,19 @@
     <!-- 
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
      -->
+    <bean id="requestMappingHandlerMapping" class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"></bean> 
+    <bean id="requestMappingHandlerAdapter" class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name='messageConverters'>
+		  <list>
+		   <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+		   <bean class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter"/>
+		   <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+		   <bean class="org.springframework.http.converter.StringHttpMessageConverter"></bean>
+		   <bean class="org.springframework.http.converter.ResourceHttpMessageConverter"></bean>
+		   <bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter"></bean>
+		   <bean class="org.springframework.http.converter.xml.XmlAwareFormHttpMessageConverter"></bean>
+		  </list>
+		 </property>      
+    </bean>
+    <bean id="springContext" class="com.fenghua.auto.backend.core.utills.SpringApplicationContext"></bean>
 </beans>        

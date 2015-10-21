@@ -32,6 +32,9 @@
 		<mail-version>1.5.0-b01</mail-version>
 		
 		<junit-version>4.12</junit-version>
+		
+		<easymock-version>3.3</easymock-version>
+		<fastjson-version>1.1.41</fastjson-version>
 	</properties>
 
 	<dependencies>
@@ -231,6 +234,20 @@
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 			<version>${mail-version}</version>
+		</dependency>
+		
+		 <!-- easymock -->
+		 <dependency>
+			<groupId>org.easymock</groupId>
+			<artifactId>easymock</artifactId>
+			<version>${easymock-version}</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>${fastjson-version}</version>
 		</dependency>
 	</dependencies>
 
