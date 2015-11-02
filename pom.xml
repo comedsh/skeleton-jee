@@ -35,6 +35,10 @@
 		
 		<easymock-version>3.3</easymock-version>
 		<fastjson-version>1.1.41</fastjson-version>
+		<spring-security-version>4.0.3.CI-SNAPSHOT</spring-security-version>
+		<spring-security-test-viersion>4.0.2.RELEASE</spring-security-test-viersion>
+	
+		<lucene-version>5.3.1</lucene-version>
 	</properties>
 
 	<dependencies>
@@ -248,6 +252,65 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>${fastjson-version}</version>
+		</dependency>
+		
+		 <!-- spring security -->
+		 <dependency>
+		      <groupId>org.springframework.security</groupId>
+		      <artifactId>spring-security-core</artifactId>
+		      <version>${spring-security-version}</version>
+		 </dependency>
+		 
+		  <dependency>
+		      <groupId>org.springframework.security</groupId>
+		      <artifactId>spring-security-config</artifactId>
+		      <version>${spring-security-version}</version>
+		      <scope>runtime</scope>
+		   </dependency>
+		   <dependency>
+		      <groupId>org.springframework.security</groupId>
+		      <artifactId>spring-security-taglibs</artifactId>
+		      <version>${spring-security-version}</version>
+		      <scope>runtime</scope>
+		   </dependency>
+		   <dependency>
+		      <groupId>org.springframework.security</groupId>
+		      <artifactId>spring-security-web</artifactId>
+		      <version>${spring-security-version}</version>
+		      <scope>runtime</scope>
+		   </dependency>
+		
+		   <dependency> 
+		        <groupId>org.springframework.security</groupId> 
+		        <artifactId>spring-security-test</artifactId> 
+		        <version>${spring-security-test-viersion}</version> 
+		        
+            </dependency> 
+		   <!-- end -->
+		   
+		
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
+			<version>${lucene-version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-analyzers-common</artifactId>
+			<version>${lucene-version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-queryparser</artifactId>
+			<version>${lucene-version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-highlighter</artifactId>
+			<version>${lucene-version}</version>
 		</dependency>
 	</dependencies>
 

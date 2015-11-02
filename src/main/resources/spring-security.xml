@@ -1,23 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>  
-<beans xmlns="http://www.springframework.org/schema/beans"  
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"  
-    xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"  
-    xmlns:jpa="http://www.springframework.org/schema/data/jpa"  
-    xmlns:security="http://www.springframework.org/schema/security"  
-    xsi:schemaLocation="  
-        http://www.springframework.org/schema/aop   
-        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd  
-        http://www.springframework.org/schema/security   
-        http://www.springframework.org/schema/security/spring-security-3.2.xsd  
-        http://www.springframework.org/schema/beans   
-        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
-        http://www.springframework.org/schema/data/jpa   
-        http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd  
-        http://www.springframework.org/schema/tx   
-        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd  
-        http://www.springframework.org/schema/context   
-        http://www.springframework.org/schema/context/spring-context-4.0.xsd">  
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"  
+    xmlns="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">  
 
-<!-- TODO: implement the configuration -->
-        
-</beans>        
+  <global-method-security pre-post-annotations="enabled"/>
+  <http pattern="/login.jsp*" security="none"></http>
+  
+  <http entry-point-ref="loginUrlAuthenticationEntryPoint"> 
+  
+    <!-- 需要ssl认证的url start -->
+    <intercept-url pattern="/ssl/test" requires-channel="https"/>
+    <!-- end -->
+    <!-- 表单登录过滤器 -->
+    <custom-filter position="FORM_LOGIN_FILTER" ref="customUsernamePasswordAuthenticationFilter" />
+    <!-- 自定义过滤器 -->
+    <custom-filter ref="customSecurityFilter" before="FILTER_SECURITY_INTERCEPTOR" />
+    <!-- 需要认证的url -->
+    <intercept-url pattern="/**" access="permitAll"/>
+    
+    <logout success-handler-ref="logoutAuthenticationSuccessHandler" delete-cookies="JSESSIONID"/>
+		
+	<!-- session 管理中 有一些关于用户登录的策略 -->
+  	<session-management invalid-session-url="/secure/session/invalid">
+			<concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
+     </session-management>
+  </http>
+  
+  <!-- 加密方式，密码长度60位, -->
+  <beans:bean id="encoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+  
+  <authentication-manager alias="authenticationManager">
+		<authentication-provider user-service-ref="userDetailService">
+			<password-encoder ref="encoder" />
+	     </authentication-provider>
+  </authentication-manager>
+
+	<beans:bean id="userDetailService"
+		class="com.fenghua.auto.backend.service.security.CustomUserDetailService"></beans:bean>
+
+
+
+   <!-- 定义登录界面-->
+  <beans:bean id="loginUrlAuthenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<beans:constructor-arg name="loginFormUrl" value="/login.jsp"></beans:constructor-arg>
+  </beans:bean>
+  
+  <!-- 登录表单Filter -->
+  <beans:bean id="customUsernamePasswordAuthenticationFilter" class="com.fenghua.auto.backend.core.security.CustomUsernamePasswordAuthenticationFilter">
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+		<beans:property name="authenticationFailureHandler" ref="simpleUrlAuthenticationFailureHandler" />
+		<beans:property name="authenticationSuccessHandler" ref="loginAuthenticationSuccessHandler" />
+	</beans:bean>
+   
+    <!-- 登出成功跳转URL-->
+    <beans:bean id="logoutAuthenticationSuccessHandler"
+		class="org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler">
+		<beans:property name="defaultTargetUrl" value="/secure/logout"></beans:property>
+	</beans:bean>
+
+    <!-- 认证成功跳转URL -->
+	<beans:bean id="loginAuthenticationSuccessHandler"
+		class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+		<beans:property name="defaultTargetUrl" value="/secure/home"></beans:property>
+	</beans:bean>
+
+    <!-- 认证失败跳转URL -->
+	<beans:bean id="simpleUrlAuthenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+		<beans:property name="defaultFailureUrl" value="/secure/failure"></beans:property>
+	</beans:bean>
+
+    <!-- 资源管理类 -->
+    <beans:bean id="customSecurityMetadataSource" init-method="loadResourceDefine" class="com.fenghua.auto.backend.service.security.InvocationSecurityMetadataSourceService"></beans:bean>
+
+    <!-- 访问决策类 -->
+	<beans:bean id="accessDecisionManager"	class="com.fenghua.auto.backend.core.security.CustomAccessDecisionManager"></beans:bean>
+	
+	<beans:bean id="customSecurityFilter" class="com.fenghua.auto.backend.core.security.CustomFilterSecurityInterceptor">
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+		<!-- 访问决策器，决定用户是否有权限去访问某个资源 -->
+		<beans:property name="accessDecisionManager" ref="accessDecisionManager" />
+		<beans:property name="securityMetadataSource" ref="customSecurityMetadataSource" />
+	</beans:bean>
+   <beans:bean class="com.fenghua.auto.backend.core.security.DefaultRolesPrefixPostProcessor"/>
+</beans:beans>       
