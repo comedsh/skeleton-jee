@@ -38,6 +38,7 @@
 		<spring-security-version>4.0.3.CI-SNAPSHOT</spring-security-version>
 		<spring-security-test-viersion>4.0.2.RELEASE</spring-security-test-viersion>
 	
+
 		<lucene-version>5.3.1</lucene-version>
 	</properties>
 
