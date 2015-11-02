@@ -1,5 +1,5 @@
 
-package com.fenghua.auto.webapp.controller.security;
+package com.fenghua.auto.backend.webapp.controller.security;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
