@@ -9,9 +9,9 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
 /**
- * @author ÍõÖ±Ôª
+ * @author ç‹ç›´å…ƒ
  * 
- * À©Õ¹ÊÓÍ¼´¦ÀíÆ÷£¬Í¨¹ı¸Ä±äviewNameÀ´ÊµÏÖ¸ù¾İ²»Í¬ÓïÑÔÏÔÊ¾²»Í¬µÄÄ£°æ
+ * æ‰©å±•è§†å›¾å¤„ç†å™¨ï¼Œé€šè¿‡æ”¹å˜viewNameæ¥å®ç°æ ¹æ®ä¸åŒè¯­è¨€æ˜¾ç¤ºä¸åŒçš„æ¨¡ç‰ˆ
  *
  */
 public class FHTilesViewResolver extends TilesViewResolver {

@@ -16,7 +16,7 @@ public class IndexController {
 	@RequestMapping(value = "/")
 	public String index(HttpServletRequest request, Model model) throws Exception {
 		
-		//从后台代码获取国际化信息
+		//浠庡悗鍙颁唬鐮佽幏鍙栧浗闄呭寲淇℃伅
         RequestContext requestContext = new RequestContext(request);
         model.addAttribute("index.banner", requestContext.getMessage("index.banner"));
 		
