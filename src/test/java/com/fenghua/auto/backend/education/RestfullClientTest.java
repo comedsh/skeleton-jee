@@ -11,6 +11,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicHeader;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,7 @@ import com.fenghua.auto.backend.domain.education.Spittle;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/spring-context.xml", "/spring-mybatis.xml"})
+@Ignore //持续集成忽略此测试，不要删除此注解
 public class RestfullClientTest {
 	
 	/**
