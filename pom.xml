@@ -35,11 +35,11 @@
 		
 		<easymock-version>3.3</easymock-version>
 		<fastjson-version>1.1.41</fastjson-version>
-		<spring-security-version>4.0.3.CI-SNAPSHOT</spring-security-version>
+		<spring-security-version>4.0.3.RELEASE</spring-security-version>
 		<spring-security-test-viersion>4.0.2.RELEASE</spring-security-test-viersion>
-	
 
 		<lucene-version>5.3.1</lucene-version>
+		<jedis-version>2.7.3</jedis-version>
 	</properties>
 
 	<dependencies>
@@ -191,13 +191,11 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>${slf4j-version}</version>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>${log4j-version}</version>
-			<scope>runtime</scope>
 		</dependency>
 		
 		<!-- Spring自动处理JSON -->
@@ -266,29 +264,24 @@
 		      <groupId>org.springframework.security</groupId>
 		      <artifactId>spring-security-config</artifactId>
 		      <version>${spring-security-version}</version>
-		      <scope>runtime</scope>
 		   </dependency>
 		   <dependency>
 		      <groupId>org.springframework.security</groupId>
 		      <artifactId>spring-security-taglibs</artifactId>
 		      <version>${spring-security-version}</version>
-		      <scope>runtime</scope>
 		   </dependency>
 		   <dependency>
 		      <groupId>org.springframework.security</groupId>
 		      <artifactId>spring-security-web</artifactId>
 		      <version>${spring-security-version}</version>
-		      <scope>runtime</scope>
 		   </dependency>
 		
 		   <dependency> 
 		        <groupId>org.springframework.security</groupId> 
 		        <artifactId>spring-security-test</artifactId> 
 		        <version>${spring-security-test-viersion}</version> 
-		        
             </dependency> 
 		   <!-- end -->
-		   
 		
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
@@ -312,6 +305,12 @@
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-highlighter</artifactId>
 			<version>${lucene-version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>${jedis-version}</version>
 		</dependency>
 	</dependencies>
 
