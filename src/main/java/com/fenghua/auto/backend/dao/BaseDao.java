@@ -29,7 +29,7 @@ public interface BaseDao<T extends DomainObject> {
 
 	/**
 	 * 查询对象列表
-	 * @param query 查询参数，如果未null则查询所有，相当于调用方法{@link com.viathink.frame.core.dao.BaseDao.selectAll }
+	 * @param query 查询参数，如果未null则查询所有
 	 * @return 结果对象列表
 	 */
 	public <V extends T> List<V> selectList(T query);
