@@ -37,9 +37,9 @@
 		<fastjson-version>1.1.41</fastjson-version>
 		<spring-security-version>4.0.3.RELEASE</spring-security-version>
 		<spring-security-test-viersion>4.0.2.RELEASE</spring-security-test-viersion>
-	
 
 		<lucene-version>5.3.1</lucene-version>
+		<jedis-version>2.7.3</jedis-version>
 	</properties>
 
 	<dependencies>
@@ -282,10 +282,8 @@
 		        <groupId>org.springframework.security</groupId> 
 		        <artifactId>spring-security-test</artifactId> 
 		        <version>${spring-security-test-viersion}</version> 
-		        
             </dependency> 
 		   <!-- end -->
-		   
 		
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
@@ -309,6 +307,12 @@
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-highlighter</artifactId>
 			<version>${lucene-version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>${jedis-version}</version>
 		</dependency>
 	</dependencies>
 
