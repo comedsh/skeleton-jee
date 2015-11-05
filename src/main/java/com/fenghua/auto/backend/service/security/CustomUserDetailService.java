@@ -7,6 +7,7 @@ import java.util.Iterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -52,6 +53,7 @@ public class CustomUserDetailService implements UserDetailsService{
 			logger.error(message);
 			throw new UsernameNotFoundException(message);
 		}
+		
 		String password =encoder.encode(account.getPassword());//对密码家吗
 
 		// 获得用户的角色

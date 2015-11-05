@@ -8,8 +8,8 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -30,7 +30,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
 
 import com.fenghua.auto.backend.domain.securtity.Account;
 import com.fenghua.auto.backend.domain.securtity.Resource;
@@ -87,7 +86,7 @@ public class SecureControllerTest  extends AbstractControllerTest {
 	@Before
 	public void setUp() {				
 		 super.setUp();
-	
+		 
 		 assertNotNull(context);
 		 assertNotNull(springSecurityFilterChain);
 		 //创建webapp 上下文
@@ -168,8 +167,7 @@ public class SecureControllerTest  extends AbstractControllerTest {
 		 invocationSecurityMetadataSourceService.loadResourceDefine();
 		 
 		 customUserDetailService.setAccountService(accountService);
-		 
-		 
+	
 		 
 	}
 
@@ -184,7 +182,7 @@ public class SecureControllerTest  extends AbstractControllerTest {
 				.andExpect(status().isFound())
 				.andExpect(redirectedUrl("/secure/home"))
 				.andExpect(authenticated().withUsername("test1"));
-
+		 
 	}
 	
 	/**
@@ -194,8 +192,8 @@ public class SecureControllerTest  extends AbstractControllerTest {
  	@Test
 	public void authenticationFailed() throws Exception {
 		mocMvc.perform(formLogin("/login").user("username", "test1").password("password", "invalid password"))
-				.andExpect(status().isFound())
-				.andExpect(redirectedUrl("/secure/failure"))
+				.andExpect(status().isOk())
+				.andExpect(forwardedUrl("/secure/failure"))
 				.andExpect(unauthenticated());
 	}
 	
