@@ -1,8 +1,8 @@
-package com.fenghua.auto.backend.service.register;
+package com.fenghua.auto.backend.service.user;
 
 import java.util.List;
 
-import com.fenghua.auto.backend.domain.register.Personal;
+import com.fenghua.auto.backend.domain.user.User;
 
 /**
  * 个人注册service
@@ -11,7 +11,7 @@ import com.fenghua.auto.backend.domain.register.Personal;
  * @createTime 2015.11.2
  *
  */
-public interface PersonalRegisService {
+public interface UserService {
 	/**
 	 * 通过id注销个人用户
 	 * @param id
@@ -21,21 +21,21 @@ public interface PersonalRegisService {
 	 * 修改一个个人用户
 	 * @param personal
 	 */
-	public void update(Personal personal);
+	public void update(User personal);
 	/**
 	 * 增加一个个人用户
 	 * @param personal
 	 */
-	public void insert(Personal personal);
+	public void insert(User personal);
 	/**
 	 * 通过id获取一个个人用户信息
 	 * @param id
 	 * @return
 	 */
-	public Personal getPersonalById(Long id);
+	public User getPersonalById(Long id);
 	/**
 	 * 获取所有的个人用户信息
 	 * @return
 	 */
-	public List<Personal> getAll();
+	public List<User> getAll();
 }
