@@ -6,7 +6,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import com.fenghua.auto.backend.core.utills.MD5Encoder;
-
+/**
+ * 短信发送接口
+ * @author chengbin
+ *
+ */
 public class SMSMessage {
 
 	private static final String addr = "http://api.sms.cn/mt/";
