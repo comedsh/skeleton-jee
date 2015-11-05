@@ -1,9 +1,9 @@
-package com.fenghua.auto.backend.dao.register;
+package com.fenghua.auto.backend.dao.user;
 
 import org.springframework.stereotype.Repository;
 
 import com.fenghua.auto.backend.dao.BaseDao;
-import com.fenghua.auto.backend.domain.register.Personal;
+import com.fenghua.auto.backend.domain.user.User;;
 /**
  * 个人注册dao
  * @author chengbin
@@ -11,6 +11,6 @@ import com.fenghua.auto.backend.domain.register.Personal;
  *
  */
 @Repository
-public interface PersonalDao extends BaseDao<Personal> {
+public interface UserDao extends BaseDao<User> {
 
 }
