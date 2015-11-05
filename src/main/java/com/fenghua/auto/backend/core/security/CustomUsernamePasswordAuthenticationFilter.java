@@ -2,12 +2,14 @@ package com.fenghua.auto.backend.core.security;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.security.authentication.AuthenticationServiceException;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.util.StringUtils;
 
 
 /** 
@@ -34,6 +36,9 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 					"Authentication method not supported: " + request.getMethod());
 		}
 		
+	
+		checkInfo(request);
+		
 		String username = obtainUsername(request);
 		String password = obtainPassword(request);
 
@@ -55,4 +60,48 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 
 		return this.getAuthenticationManager().authenticate(authRequest);		
     }
+	
+	
+	private void checkInfo(HttpServletRequest request) throws AuthenticationException{
+		checkCode(request);
+		checkLimitLogin(request);
+	}
+	/**
+	 * 检查验证码
+	 */
+	private void checkCode(HttpServletRequest request) throws AuthenticationException{
+		String vCode = request.getParameter("vCode");
+		if(StringUtils.isEmpty(vCode))
+			return;
+		//验证验证码 AuthenticationCodeException
+		//比对保存在session中的验证码
+		String sCode = (String) request.getSession().getAttribute("V_CODE");
+		if(!vCode.equals(sCode)){
+			throw new AuthenticationCodeException("invalid code");
+		}
+		   
+	}
+	
+	/**
+	 * 检查用户登录次数
+	 */
+	private void checkLimitLogin(HttpServletRequest request) throws AuthenticationException{
+		HttpSession s = request.getSession(false);
+		if(s == null)
+			return;
+		
+		Object limitCounts = s.getAttribute("_t");
+		if(limitCounts == null){
+			limitCounts = 0;
+		}
+		int count = (int) limitCounts+1;
+		s.setAttribute("_t", count);
+	
+		if(count > 3){
+			throw new AuthenticationLimitException("locked account");
+		}
+		
+	}
+	
+	
 }
