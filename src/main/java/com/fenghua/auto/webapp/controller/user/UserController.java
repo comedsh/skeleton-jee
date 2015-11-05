@@ -1,4 +1,4 @@
-package com.fenghua.auto.webapp.controller.register;
+package com.fenghua.auto.webapp.controller.user;
 
 import java.util.List;
 
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.fenghua.auto.backend.domain.register.Personal;
-import com.fenghua.auto.backend.service.register.PersonalRegisService;
+import com.fenghua.auto.backend.domain.user.User;
+import com.fenghua.auto.backend.service.user.UserService;
 
 /**
  * 个人注册功能模块
@@ -22,10 +22,10 @@ import com.fenghua.auto.backend.service.register.PersonalRegisService;
  * @createTime 2015.11.2
  */
 @Controller
-@RequestMapping("/personalRegis")
-public class PersonalRegisController {
+@RequestMapping("/UserRegis")
+public class UserController {
 	@Autowired
-	private PersonalRegisService personalRegisService;
+	private UserService userService;
 	/**
 	 * @author chengbin
 	 * 增加一个用户注册
@@ -33,8 +33,8 @@ public class PersonalRegisController {
 	 * @createTime 2015.11.4
 	 */
 	@RequestMapping(method=RequestMethod.POST)
-	public String addPersonal(@Valid Personal personal, Model model) {
-		personalRegisService.insert(personal);
+	public String addUser(@Valid User user, Model model) {
+		userService.insert(user);
 		return "";
 	}
 	
@@ -43,8 +43,8 @@ public class PersonalRegisController {
 	 * @return
 	 */
 	@RequestMapping(method=RequestMethod.GET)
-	public List<Personal> getAllPersonal(Model model) {
-		return personalRegisService.getAll();
+	public List<User> getAllUser(Model model) {
+		return userService.getAll();
 	}
 	/**
 	 * 通过用户id查找对应的用户注册信息
@@ -53,18 +53,18 @@ public class PersonalRegisController {
 	 * @return
 	 */
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
-	public Personal getPersonalById(@PathVariable("id") Long id, Model model) {
-		return personalRegisService.getPersonalById(id);
+	public User getUserById(@PathVariable("id") Long id, Model model) {
+		return userService.getUserById(id);
 	}
 	/**
 	 * 
-	 * @param personal
+	 * @param User
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}",method=RequestMethod.PUT)
-	public String updatePersonal(@Valid Personal personal, Model model) {
-		personalRegisService.update(personal);
+	public String updateUser(@Valid User user, Model model) {
+		userService.update(user);
 		return "";
 	}
 	/**
@@ -74,8 +74,8 @@ public class PersonalRegisController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}",method=RequestMethod.DELETE)
-	public String deletePersonal(@PathVariable Long id, Model model) {
-		personalRegisService.delete(id);
+	public String deleteUser(@PathVariable Long id, Model model) {
+		userService.delete(id);
 		return "";
 	}
 }
