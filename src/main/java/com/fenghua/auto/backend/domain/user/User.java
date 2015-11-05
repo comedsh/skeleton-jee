@@ -8,7 +8,7 @@ import com.fenghua.auto.backend.domain.DomainObject;
  * @author chengbin
  * @createTime 2015.11.5
  */
-public class user implements DomainObject {
+public class User implements DomainObject {
 	
 	private static final long serialVersionUID = 1L;
 
