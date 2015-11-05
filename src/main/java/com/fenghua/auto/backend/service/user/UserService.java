@@ -32,7 +32,7 @@ public interface UserService {
 	 * @param id
 	 * @return
 	 */
-	public User getPersonalById(Long id);
+	public User getUserById(Long id);
 	/**
 	 * 获取所有的个人用户信息
 	 * @return

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fenghua.auto.backend.dao.user.UserDao;
 import com.fenghua.auto.backend.domain.user.User;
 
 /**
@@ -35,7 +36,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getPersonalById(Long id) {
+	public User getUserById(Long id) {
 		return userDao.selectById(id);
 	}
 
