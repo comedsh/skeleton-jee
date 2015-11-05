@@ -1,5 +1,6 @@
 package com.fenghua.auto.backend.dao;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +26,7 @@ public interface BaseDao<T extends DomainObject> {
 	 * @param id 主键，不能为null
 	 * @return  结果对象，如果未找到返回null
 	 */
-	public <V extends T> V selectById(String id);
+	public <V extends T> V selectById(Serializable id);
 
 	/**
 	 * 查询对象列表
@@ -109,7 +110,7 @@ public interface BaseDao<T extends DomainObject> {
 	 * @param id  要删除的ID，不能为null
 	 * @return int 受影响结果数
 	 */
-	public int deleteById(String id);
+	public int deleteById(Serializable id);
 
 	/**
 	 * 删除所有

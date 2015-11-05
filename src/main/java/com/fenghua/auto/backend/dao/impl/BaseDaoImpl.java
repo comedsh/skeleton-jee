@@ -1,5 +1,6 @@
 package com.fenghua.auto.backend.dao.impl;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -86,7 +87,7 @@ public abstract class BaseDaoImpl<T extends DomainObject> implements BaseDao<T> 
 	}
 
 	@Override
-	public <V extends T> V selectById(String id) {
+	public <V extends T> V selectById(Serializable id) {
 		Assert.notNull(id);
 		try {
 			return sqlSessionTemplate.selectOne(getSqlName(SqlId.SQL_SELECT_BY_ID), id);
@@ -223,7 +224,7 @@ public abstract class BaseDaoImpl<T extends DomainObject> implements BaseDao<T> 
 	}
 
 	@Override
-	public int deleteById(String id) {
+	public int deleteById(Serializable id) {
 		Assert.notNull(id);
 		try {
 			return sqlSessionTemplate.delete(getSqlName(SqlId.SQL_DELETE_BY_ID), id);

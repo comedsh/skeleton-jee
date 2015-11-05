@@ -6,8 +6,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import com.fenghua.auto.backend.core.utills.MD5Encoder;
-
-public class SMSTest {
+/**
+ * 短信发送接口
+ * @author chengbin
+ *
+ */
+public class SMSMessage {
 
 	private static final String addr = "http://api.sms.cn/mt/";
 	private static final String userId = "liting6604006";
