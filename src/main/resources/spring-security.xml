@@ -21,7 +21,7 @@
     <intercept-url pattern="/**" access="permitAll"/>
     
     <logout success-handler-ref="logoutAuthenticationSuccessHandler" delete-cookies="JSESSIONID"/>
-		
+    <csrf request-matcher-ref="csrfSecurityRequestMatcher"/>
 	<!-- session 管理中 有一些关于用户登录的策略 -->
   	<session-management session-authentication-strategy-ref="sas"/>
   </http>
@@ -146,8 +146,17 @@
 				<beans:constructor-arg ref="sessionRegistry"/>
 			</beans:bean>
 		</beans:list>
-    </beans:constructor-arg>
-</beans:bean>
+   	 </beans:constructor-arg>
+	</beans:bean>
+
+	<beans:bean id="csrfSecurityRequestMatcher" class="com.fenghua.auto.backend.core.security.CsrfSecurityRequestMatcher">
+         <!-- 不需要crsf认证的页面 -->
+         <beans:property name="execludeUrls">
+             <beans:list>
+                 <beans:value>/rest/</beans:value>
+             </beans:list>
+         </beans:property>
+     </beans:bean>
 	
  
 </beans:beans>       
