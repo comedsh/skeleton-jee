@@ -1,7 +1,7 @@
 /*==============================================================*/
 /* Database name:  Auto007                                      */
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2015-11-06 14:22:46                          */
+/* Created on:     2015-11-10 17:47:26                          */
 /*==============================================================*/
 
 
@@ -28,7 +28,7 @@ create table City_Area
    Available            boolean not null,
    primary key (ID)
 )
-type = ISAM;
+ENGINE=InnoDB;
 
 /*==============================================================*/
 /* Index: City_Code_idx                                         */
@@ -62,7 +62,7 @@ create table Company
    Last_Modified_By     varchar(30),
    primary key (ID)
 )
-type = ISAM;
+ENGINE=InnoDB;
 
 /*==============================================================*/
 /* Index: Company_Name_idx                                      */
@@ -95,7 +95,7 @@ create table Payment_Type
    Last_Modified_By     varchar(30),
    primary key (ID)
 )
-type = ISAM;
+ENGINE=InnoDB;
 
 /*==============================================================*/
 /* Table: Role                                                  */
@@ -111,7 +111,7 @@ create table Role
    Last_Modified_By     varchar(30),
    primary key (ID)
 )
-type = ISAM;
+ENGINE=InnoDB;
 
 /*==============================================================*/
 /* Index: Name_idx                                              */
@@ -134,7 +134,7 @@ create table Sys_Config
    Last_Modified_TS     varchar(30),
    primary key (Config_Name)
 )
-type = ISAM;
+ENGINE=InnoDB;
 
 /*==============================================================*/
 /* Table: User                                                  */
@@ -160,12 +160,12 @@ create table User
    primary key (ID),
    key AK_User_Company (Company)
 )
-type = ISAM;
+ENGINE=InnoDB;
 
 /*==============================================================*/
 /* Index: QQ_Number_idx                                         */
 /*==============================================================*/
-create index QQ_Number_idx on User
+create unique index QQ_Number_idx on User
 (
    QQ_Number
 );
@@ -173,9 +173,33 @@ create index QQ_Number_idx on User
 /*==============================================================*/
 /* Index: Wechat_idx                                            */
 /*==============================================================*/
-create index Wechat_idx on User
+create unique index Wechat_idx on User
 (
    WeChat
+);
+
+/*==============================================================*/
+/* Index: Name_idx                                              */
+/*==============================================================*/
+create unique index Name_idx on User
+(
+   Name
+);
+
+/*==============================================================*/
+/* Index: Email_idx                                             */
+/*==============================================================*/
+create unique index Email_idx on User
+(
+   Email
+);
+
+/*==============================================================*/
+/* Index: MobilePhone_idx                                       */
+/*==============================================================*/
+create unique index MobilePhone_idx on User
+(
+   MobilePhone
 );
 
 /*==============================================================*/
@@ -197,7 +221,7 @@ create table User_Address
    last_Modified_by     varchar(30),
    primary key (ID)
 )
-type = ISAM;
+ENGINE=InnoDB;
 
 /*==============================================================*/
 /* Index: UserID_idx                                            */
@@ -222,7 +246,7 @@ create table User_Level
    Last_Modified_By     varchar(30),
    primary key (ID)
 )
-type = ISAM;
+ENGINE=InnoDB;
 
 /*==============================================================*/
 /* Table: User_Payment_Type                                     */
@@ -240,7 +264,7 @@ create table User_Payment_Type
    Last_Modified_By     varchar(30),
    primary key (PaymentType_ID, User_ID)
 )
-type = ISAM;
+ENGINE=InnoDB;
 
 /*==============================================================*/
 /* Index: UserID_idx                                            */
