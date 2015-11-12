@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="test.dao.user_payment_typeMapper" >
-  <resultMap id="BaseResultMap" type="test.model.user_payment_type" >
+<mapper namespace="com.fenghua.auto.backend.domain.user.User_payment_type" >
+  <resultMap id="BaseResultMap" type="com.fenghua.auto.backend.domain.vo.user.User_payment_typeVo" >
     <id column="PaymentType_ID" property="paymenttypeId" jdbcType="BIGINT" />
     <id column="User_ID" property="userId" jdbcType="BIGINT" />
     <result column="Status" property="status" jdbcType="INTEGER" />
@@ -16,14 +16,14 @@
     PaymentType_ID, User_ID, Status, Duration, Debt_Limit, Created_TS, Created_By, Last_Modified_TS, 
     Last_Modified_By
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="test.model.user_payment_typeKey" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.fenghua.auto.backend.domain.user.User_payment_type" >
     select 
     <include refid="Base_Column_List" />
     from user_payment_type
     where PaymentType_ID = #{paymenttypeId,jdbcType=BIGINT}
       and User_ID = #{userId,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="test.model.user_payment_typeKey" >
+  <delete id="deleteByPrimaryKey" parameterType="com.fenghua.auto.backend.domain.user.User_payment_type" >
     delete from user_payment_type
     where PaymentType_ID = #{paymenttypeId,jdbcType=BIGINT}
       and User_ID = #{userId,jdbcType=BIGINT}
