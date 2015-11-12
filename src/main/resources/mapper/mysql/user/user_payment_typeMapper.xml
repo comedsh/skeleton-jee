@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="test.dao.user_payment_typeMapper" >
+  <resultMap id="BaseResultMap" type="test.model.user_payment_type" >
+    <id column="PaymentType_ID" property="paymenttypeId" jdbcType="BIGINT" />
+    <id column="User_ID" property="userId" jdbcType="BIGINT" />
+    <result column="Status" property="status" jdbcType="INTEGER" />
+    <result column="Duration" property="duration" jdbcType="INTEGER" />
+    <result column="Debt_Limit" property="debtLimit" jdbcType="DECIMAL" />
+    <result column="Created_TS" property="createdTs" jdbcType="TIMESTAMP" />
+    <result column="Created_By" property="createdBy" jdbcType="VARCHAR" />
+    <result column="Last_Modified_TS" property="lastModifiedTs" jdbcType="TIMESTAMP" />
+    <result column="Last_Modified_By" property="lastModifiedBy" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PaymentType_ID, User_ID, Status, Duration, Debt_Limit, Created_TS, Created_By, Last_Modified_TS, 
+    Last_Modified_By
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="test.model.user_payment_typeKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_payment_type
+    where PaymentType_ID = #{paymenttypeId,jdbcType=BIGINT}
+      and User_ID = #{userId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="test.model.user_payment_typeKey" >
+    delete from user_payment_type
+    where PaymentType_ID = #{paymenttypeId,jdbcType=BIGINT}
+      and User_ID = #{userId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="test.model.user_payment_type" >
+    insert into user_payment_type (PaymentType_ID, User_ID, Status, 
+      Duration, Debt_Limit, Created_TS, 
+      Created_By, Last_Modified_TS, Last_Modified_By
+      )
+    values (#{paymenttypeId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, 
+      #{duration,jdbcType=INTEGER}, #{debtLimit,jdbcType=DECIMAL}, #{createdTs,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR}, #{lastModifiedTs,jdbcType=TIMESTAMP}, #{lastModifiedBy,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="test.model.user_payment_type" >
+    insert into user_payment_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="paymenttypeId != null" >
+        PaymentType_ID,
+      </if>
+      <if test="userId != null" >
+        User_ID,
+      </if>
+      <if test="status != null" >
+        Status,
+      </if>
+      <if test="duration != null" >
+        Duration,
+      </if>
+      <if test="debtLimit != null" >
+        Debt_Limit,
+      </if>
+      <if test="createdTs != null" >
+        Created_TS,
+      </if>
+      <if test="createdBy != null" >
+        Created_By,
+      </if>
+      <if test="lastModifiedTs != null" >
+        Last_Modified_TS,
+      </if>
+      <if test="lastModifiedBy != null" >
+        Last_Modified_By,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="paymenttypeId != null" >
+        #{paymenttypeId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null" >
+        #{duration,jdbcType=INTEGER},
+      </if>
+      <if test="debtLimit != null" >
+        #{debtLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="createdTs != null" >
+        #{createdTs,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifiedTs != null" >
+        #{lastModifiedTs,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifiedBy != null" >
+        #{lastModifiedBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="test.model.user_payment_type" >
+    update user_payment_type
+    <set >
+      <if test="status != null" >
+        Status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null" >
+        Duration = #{duration,jdbcType=INTEGER},
+      </if>
+      <if test="debtLimit != null" >
+        Debt_Limit = #{debtLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="createdTs != null" >
+        Created_TS = #{createdTs,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        Created_By = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifiedTs != null" >
+        Last_Modified_TS = #{lastModifiedTs,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifiedBy != null" >
+        Last_Modified_By = #{lastModifiedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PaymentType_ID = #{paymenttypeId,jdbcType=BIGINT}
+      and User_ID = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="test.model.user_payment_type" >
+    update user_payment_type
+    set Status = #{status,jdbcType=INTEGER},
+      Duration = #{duration,jdbcType=INTEGER},
+      Debt_Limit = #{debtLimit,jdbcType=DECIMAL},
+      Created_TS = #{createdTs,jdbcType=TIMESTAMP},
+      Created_By = #{createdBy,jdbcType=VARCHAR},
+      Last_Modified_TS = #{lastModifiedTs,jdbcType=TIMESTAMP},
+      Last_Modified_By = #{lastModifiedBy,jdbcType=VARCHAR}
+    where PaymentType_ID = #{paymenttypeId,jdbcType=BIGINT}
+      and User_ID = #{userId,jdbcType=BIGINT}
+  </update>
+</mapper>

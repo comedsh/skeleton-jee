@@ -38,4 +38,24 @@ public interface UserService {
 	 * @return
 	 */
 	public List<User> getAll();
+	/**
+	 * 通过name查询对应的实体
+	 * @return
+	 */
+	public List<User> getUserByName(String name);
+	/**
+	 * 通过email查询对应的实体
+	 * @return
+	 */
+	public List<User> getUserByEmail(String email);
+	/**
+	 * 通过telephone查询对应的实体
+	 * @return
+	 */
+	public List<User> getUserByTelephone(String telephone);
+	/**
+	 * 通过fixed查询对应的实体
+	 * @return
+	 */
+	public List<User> getUserByFixed(String fixed);
 }

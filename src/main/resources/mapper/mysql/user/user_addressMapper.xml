@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="test.dao.user_addressMapper" >
+  <resultMap id="BaseResultMap" type="test.model.user_address" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="User_ID" property="userId" jdbcType="BIGINT" />
+    <result column="Area_Code" property="areaCode" jdbcType="INTEGER" />
+    <result column="Alias" property="alias" jdbcType="VARCHAR" />
+    <result column="Detail_Addr" property="detailAddr" jdbcType="VARCHAR" />
+    <result column="Receiver_Name" property="receiverName" jdbcType="VARCHAR" />
+    <result column="Receiver_Mobile" property="receiverMobile" jdbcType="VARCHAR" />
+    <result column="Default_addr" property="DefaultAddr" jdbcType="BIT" />
+    <result column="created_ts" property="createdTs" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_Modified_ts" property="lastModifiedTs" jdbcType="TIMESTAMP" />
+    <result column="last_Modified_by" property="lastModifiedBy" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, User_ID, Area_Code, Alias, Detail_Addr, Receiver_Name, Receiver_Mobile, Default_addr, 
+    created_ts, created_by, last_Modified_ts, last_Modified_by
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_address
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_address
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="test.model.user_address" >
+    insert into user_address (ID, User_ID, Area_Code, 
+      Alias, Detail_Addr, Receiver_Name, 
+      Receiver_Mobile, Default_addr, created_ts, 
+      created_by, last_Modified_ts, last_Modified_by
+      )
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{areaCode,jdbcType=INTEGER}, 
+      #{alias,jdbcType=VARCHAR}, #{detailAddr,jdbcType=VARCHAR}, #{receiverName,jdbcType=VARCHAR}, 
+      #{receiverMobile,jdbcType=VARCHAR}, #{DefaultAddr,jdbcType=BIT}, #{createdTs,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR}, #{lastModifiedTs,jdbcType=TIMESTAMP}, #{lastModifiedBy,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="test.model.user_address" >
+    insert into user_address
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="userId != null" >
+        User_ID,
+      </if>
+      <if test="areaCode != null" >
+        Area_Code,
+      </if>
+      <if test="alias != null" >
+        Alias,
+      </if>
+      <if test="detailAddr != null" >
+        Detail_Addr,
+      </if>
+      <if test="receiverName != null" >
+        Receiver_Name,
+      </if>
+      <if test="receiverMobile != null" >
+        Receiver_Mobile,
+      </if>
+      <if test="DefaultAddr != null" >
+        Default_addr,
+      </if>
+      <if test="createdTs != null" >
+        created_ts,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastModifiedTs != null" >
+        last_Modified_ts,
+      </if>
+      <if test="lastModifiedBy != null" >
+        last_Modified_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=INTEGER},
+      </if>
+      <if test="alias != null" >
+        #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="detailAddr != null" >
+        #{detailAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverName != null" >
+        #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverMobile != null" >
+        #{receiverMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="DefaultAddr != null" >
+        #{DefaultAddr,jdbcType=BIT},
+      </if>
+      <if test="createdTs != null" >
+        #{createdTs,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifiedTs != null" >
+        #{lastModifiedTs,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifiedBy != null" >
+        #{lastModifiedBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="test.model.user_address" >
+    update user_address
+    <set >
+      <if test="userId != null" >
+        User_ID = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="areaCode != null" >
+        Area_Code = #{areaCode,jdbcType=INTEGER},
+      </if>
+      <if test="alias != null" >
+        Alias = #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="detailAddr != null" >
+        Detail_Addr = #{detailAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverName != null" >
+        Receiver_Name = #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverMobile != null" >
+        Receiver_Mobile = #{receiverMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="DefaultAddr != null" >
+        Default_addr = #{DefaultAddr,jdbcType=BIT},
+      </if>
+      <if test="createdTs != null" >
+        created_ts = #{createdTs,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifiedTs != null" >
+        last_Modified_ts = #{lastModifiedTs,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifiedBy != null" >
+        last_Modified_by = #{lastModifiedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="test.model.user_address" >
+    update user_address
+    set User_ID = #{userId,jdbcType=BIGINT},
+      Area_Code = #{areaCode,jdbcType=INTEGER},
+      Alias = #{alias,jdbcType=VARCHAR},
+      Detail_Addr = #{detailAddr,jdbcType=VARCHAR},
+      Receiver_Name = #{receiverName,jdbcType=VARCHAR},
+      Receiver_Mobile = #{receiverMobile,jdbcType=VARCHAR},
+      Default_addr = #{DefaultAddr,jdbcType=BIT},
+      created_ts = #{createdTs,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_Modified_ts = #{lastModifiedTs,jdbcType=TIMESTAMP},
+      last_Modified_by = #{lastModifiedBy,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
