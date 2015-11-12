@@ -1,7 +1,7 @@
 /*==============================================================*/
 /* Database name:  Auto007                                      */
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2015-11-10 17:47:26                          */
+/* Created on:     2015-11-12 15:49:41                          */
 /*==============================================================*/
 
 
@@ -214,7 +214,7 @@ create table User_Address
    Detail_Addr          varchar(200) not null,
    Receiver_Name        varchar(40) not null,
    Receiver_Mobile      varchar(20) not null,
-   "Default"            boolean not null,
+   Default_Addr         boolean not null,
    created_ts           timestamp,
    created_by           varchar(30),
    last_Modified_ts     timestamp,
