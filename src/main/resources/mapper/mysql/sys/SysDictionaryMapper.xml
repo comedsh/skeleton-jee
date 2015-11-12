@@ -60,7 +60,7 @@
 	</select>
 	
 	<!-- 根据ID查询 -->
-	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String">
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />
 		from sys_dictionary
@@ -68,7 +68,7 @@
 	</select>
 	
 	<!-- 根据ID删除 -->
-	<delete id="deleteById" parameterType="java.lang.String">
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
 		delete from sys_dictionary
 		where dic_id = #{dicId}
 	</delete>
@@ -101,7 +101,7 @@
 	
 	
 	<!-- 通过ID更新 -->
-	<update id="updateByIdSelective" parameterType="com.fenghua.auto.backend.domain.education.SysDictionary">
+	<update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.backend.domain.education.SysDictionary">
 		update sys_dictionary
 		<set>
 			<if test="dicName != null">dic_name = #{dicName},</if>
@@ -113,7 +113,7 @@
 		where dic_id = #{dicId}
 	</update>
 	
-	<update id="updateById" parameterType="com.fenghua.auto.backend.domain.education.SysDictionary">
+	<update id="updateByPrimaryKey" parameterType="com.fenghua.auto.backend.domain.education.SysDictionary">
 		update sys_dictionary
 		set dic_name = #{dicName},
 		dic_value = #{dicValue},
