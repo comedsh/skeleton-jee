@@ -46,7 +46,7 @@
 	</sql>
 	
 	<!-- 查询总数 -->
-	<select id="selectCount" resultType="java.lang.Long" parameterType="java.util.Map">
+	<select id="selectCount" resultType="java.lang.Long" parameterType="java.util.Map" useCache="false">
 		select count(dic_id) from sys_dictionary
 		<include refid="Base_Where_Clause" />
 	</select>
