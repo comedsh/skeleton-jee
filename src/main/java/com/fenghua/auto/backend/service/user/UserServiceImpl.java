@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.fenghua.auto.backend.dao.user.UserDao;
+import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.User;
 
 /**
@@ -67,7 +68,7 @@ public class UserServiceImpl implements UserService {
 		return userDao.selectByTelephone(telephone);
 	}
 	@Override
-	public List<User> getUserByFixed(String fixed) {
+	public List<Company> getUserByFixed(String fixed) {
 		return userDao.selectByFixed(fixed);
 	}
 	

@@ -232,4 +232,10 @@
       Last_Modified_By = #{lastModifiedBy,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=BIGINT}
   </update>
+  <select id="selectByFixed" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from company
+    where Contacts_Phone = #{contactsPhone,jdbcType=VARCHAR}
+  </select>
 </mapper>

@@ -10,6 +10,7 @@ import com.fenghua.auto.backend.dao.DaoException;
 import com.fenghua.auto.backend.dao.constants.SqlId;
 import com.fenghua.auto.backend.dao.impl.BaseDaoImpl;
 import com.fenghua.auto.backend.dao.user.UserDao;
+import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.User;
 /**
  * 个人注册dao实现
@@ -55,14 +56,14 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 		return user;
 	}
 	@Override
-	public List<User> selectByFixed(String fixed) {
+	public List<Company> selectByFixed(String fixed) {
 		Assert.notNull(fixed);
-		List<User> user = new ArrayList<User>();
+		List<Company> company = new ArrayList<Company>();
 		try {
-			user = sqlSessionTemplate.selectList(getSqlName(SqlId.SQL_SELECT_BY_FIXED), fixed);
+			company = sqlSessionTemplate.selectList(getSqlName(SqlId.SQL_SELECT_BY_FIXED), fixed);
 		} catch (Exception e) {
-			throw new DaoException(String.format("根据Telephone查询对象出错！语句：%s", getSqlName(SqlId.SQL_SELECT_BY_FIXED)), e);
+			throw new DaoException(String.format("根据Fixed查询对象出错！语句：%s", getSqlName(SqlId.SQL_SELECT_BY_FIXED)), e);
 		}
-		return user;
+		return company;
 	}
 }

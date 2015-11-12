@@ -2,6 +2,7 @@ package com.fenghua.auto.backend.service.user;
 
 import java.util.List;
 
+import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.User;
 
 /**
@@ -57,5 +58,5 @@ public interface UserService {
 	 * 通过fixed查询对应的实体
 	 * @return
 	 */
-	public List<User> getUserByFixed(String fixed);
+	public List<Company> getUserByFixed(String fixed);
 }

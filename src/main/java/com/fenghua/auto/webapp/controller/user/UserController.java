@@ -77,16 +77,6 @@ public class UserController {
 		return userService.getUserByTelephone(telephone);
 	}
 	/**
-	 * 通过固定电话查询
-	 * @param email
-	 * @param req
-	 * @param res
-	 */
-	@RequestMapping(value = "/validateFixed", method = RequestMethod.POST)
-	public @ResponseBody List<User> validateFixed(@RequestParam String fixed,  HttpServletRequest req, HttpServletResponse res) {
-		return userService.getUserByFixed(fixed);
-	}
-	/**
 	 * 通过email查询
 	 * @param email
 	 * @param req
