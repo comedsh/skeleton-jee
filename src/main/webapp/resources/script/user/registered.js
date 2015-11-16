@@ -231,7 +231,7 @@ $(function() {
     });
     
     //下拉框选择
-    /*$('.input_select').on('click',function(){
+    $('.input_select').on('click',function(){
         $(this).children('ul').show();
     });
     $('.input_select ul').hover(function(){
@@ -239,9 +239,44 @@ $(function() {
     },function(){
         $(this).hide()
     });
-    $('.input_select ul li').on('click',function(){
-        $(this).parent().parent().children('span').html($(this).html());
-    });*/
+  //页面加载就加载省
+    $.ajax({
+        type: "POST",
+        url: '/Auto007/cityArea/selectProvince',
+        dataType: "json",
+        success: function (data) {
+        	for (var i = 0; i < data.length; i++) {
+				$(".select_province ul").append("<li onclick='selectCity("+data[i].id+")' value='"+data[i].id+"'>"+data[i].name+"</li>");
+			}
+        }
+    });
+    
+    $('.input_select ul li').live("click",function(){
+    	$(this).parent().parent().children('.user_error2').hide();
+        $(this).parent().parent().children('.user_error3').hide();
+    	$(this).parent().parent().children('span').html($(this).html());
+    	
+    	var str = $(this).parent().prev().attr("class");
+    	if(str=="sub_select_province" || str=="sub_select_city" || str=="sub_select_area"){
+    		if(str=="sub_select_area"){
+    			if($(str).val()!=""){
+    				$(this).parent().parent().children('span').attr("value",$(this).val());
+    				
+    				$(this).parent().parent().css({
+    					border:'1px solid #2FA840'
+    				});
+    				$(this).parent().parent().parent().children('.sub_select_Num').val('0');
+    				$(this).parent().parent().parent().children('.user_error3').show();
+    			}
+    		} 
+    	} else {
+    		$(this).parent().parent().css({
+                border:'1px solid #2FA840'
+            });
+    		$(this).parent().parent().parent().children('.sub_select_Num').val('0');
+    		$(this).parent().parent().parent().children('.user_error3').show();
+    	}
+    });
     //固定电话的验证
     $('.Fixed_telephone').blur(function(){
     	var str = $(this).parent();
@@ -266,7 +301,7 @@ $(function() {
         }else{
         	$.ajax({
                 type: "POST",
-                url: '/Auto007/user/validateFixed',
+                url: '/Auto007/company/validateFixed',
                 data: {"fixed":$(this).val()},
                 dataType: "json",
                 success: function (data) {
@@ -294,8 +329,8 @@ $(function() {
             });
         }
     });
-    //手机验证
-    $(".telephone").blur(function(event) {
+    //个人手机验证
+    $(".border_div1 .telephone").blur(function(event) {
     	var str = $(this).parent();
         $(this).parent().parent().children('.user_error1').hide();
         $(this).parent().parent().children('.user_error3').hide();
@@ -347,6 +382,60 @@ $(function() {
                 }
             });
         }
+    });
+    //企业手机验证
+    $(".border_div .telephone").blur(function(event) {
+    	var str = $(this).parent();
+    	$(this).parent().parent().children('.user_error1').hide();
+    	$(this).parent().parent().children('.user_error3').hide();
+    	if($(this).val() == ""){
+    		$(this).parent().css({
+    			border:'1px solid red'
+    		});
+    		$(this).parent().parent().children('.user_error2').show().html("手机号不能为空");
+    		$(this).parent().parent().children('.sub_tel').val('1');
+    		return false;
+    	}
+    	var re =/^1{1}[34578]{1}[0-9]{9}$/;
+    	if(!re.test($(this).val())){
+    		$(this).parent().css({
+    			border:'1px solid red'
+    		});
+    		$(this).parent().parent().children('.user_error2').show().html("手机号格式不正确");
+    		$(this).parent().parent().children('.sub_tel').val('1');
+    		return false;
+    	}else{
+    		$.ajax({
+    			type: "POST",
+    			url: '/Auto007/company/validateTelephone',
+    			data: {"telephone":$(this).val()},
+    			dataType: "json",
+    			success: function (data) {
+    				if(data.length != 0) {
+    					$(str).css({
+    						border:'1px solid red'
+    					});
+    					$(str).parent().children('.user_error2').show().html("该手机号码已经被注册，请更换手机号码");
+    					$(str).parent().children('.sub_tel').val('1');
+    				} else {
+    					$(str).css({
+    						border:'1px solid #2FA840'
+    					});
+    					$(str).parent().children('.sub_tel').val('0');
+    					$(str).parent().children('.user_error2').hide();
+    					$(str).parent().children('.user_error3').show();
+    					$('#validateTel').bind('click','validateTel()');
+    					
+    					//失去焦点时，隐藏X图标
+    					var as= $(str).parent().children('.user_error3').css('display');
+    					if(as=='block'){
+    						$(str).parent().children('.remove_d').hide();
+    						
+    					}
+    				}
+    			}
+    		});
+    	}
     });
   //获取验证码 按钮状态
     $('.button_a').on('click',function(){
@@ -407,8 +496,8 @@ $(function() {
             return false;
         }
     });
-    //邮箱验证
-    $(".email_e").blur(function(event) {
+    //个人邮箱验证
+    $(".border_div1 .email_e").blur(function(event) {
     	var str = $(this).parent();
         $(this).parent().parent().children('.user_error1').hide();
         $(this).parent().parent().children('.user_error3').hide();
@@ -460,6 +549,59 @@ $(function() {
             });
         }
     });
+    //企业邮箱验证
+    $(".border_div .email_e").blur(function(event) {
+    	var str = $(this).parent();
+    	$(this).parent().parent().children('.user_error1').hide();
+    	$(this).parent().parent().children('.user_error3').hide();
+    	if($(this).val() == ""){
+    		$(this).parent().css({
+    			border:'1px solid red'
+    		});
+    		$(this).parent().parent().children('.user_error2').show().html("邮箱不能为空");
+    		$(this).parent().parent().children('.sub_email').val('1');
+    		return false;
+    	}
+    	var re = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    	if(!re.test($(this).val())){
+    		$(this).parent().css({
+    			border:'1px solid red'
+    		});
+    		$(this).parent().parent().children('.user_error2').show().html("邮箱格式不正确");
+    		$(this).parent().parent().children('.sub_email').val('1');
+    		return false;
+    	}else{
+    		$.ajax({
+    			type: "POST",
+    			url: '/Auto007/company/validateEmail',
+    			data: {"email":$(this).val()},
+    			dataType: "json",
+    			success: function (data) {
+    				if(data.length != 0) {
+    					$(str).css({
+    						border:'1px solid red'
+    					});
+    					$(str).parent().children('.user_error2').show().html("该邮箱已经被注册，请更换邮箱");
+    					$(str).parent().children('.sub_email').val('1');
+    				} else {
+    					$(str).css({
+    						border:'1px solid #2FA840'
+    					});
+    					$(str).parent().children('.sub_email').val('0');
+    					$(str).parent().children('.user_error2').hide();
+    					$(str).parent().children('.user_error3').show();
+    					
+    					//失去焦点时，隐藏X图标
+    					var as= $(str).parent().children('.user_error3').css('display');
+    					if(as=='block'){
+    						$(str).parent().children('.remove_d').hide();
+    						
+    					}
+    				}
+    			}
+    		});
+    	}
+    });
     //公司名称验证	
     $(".company").blur(function(event) {
         $(this).parent().parent().children('.user_error1').hide();
@@ -469,6 +611,7 @@ $(function() {
                 border:'1px solid red'
             });
             $(this).parent().parent().children('.user_error2').show().html("公司名称不能为空");
+            $(this).parent().parent().children('.sub_company').val('1');
             return false;
         }else{
             $(this).parent().css({
@@ -476,6 +619,7 @@ $(function() {
             });
             $(this).parent().parent().children('.user_error2').hide();
             $(this).parent().parent().children('.user_error3').show();
+            $(this).parent().parent().children('.sub_company').val('0');
         }
     });
     //公司address验证
@@ -487,6 +631,7 @@ $(function() {
                 border:'1px solid red'
             });
             $(this).parent().parent().children('.user_error2').show().html("公司地址不能为空");
+            $(this).parent().parent().children('.sub_address').val('1');
             return false;
         }else{
             $(this).parent().css({
@@ -494,6 +639,7 @@ $(function() {
             });
             $(this).parent().parent().children('.user_error2').hide();
             $(this).parent().parent().children('.user_error3').show();
+            $(this).parent().parent().children('.sub_address').val('0');
         }
     });
     //支付方式
@@ -611,6 +757,32 @@ $(function() {
     });
 
 });
+function selectCity(obj) {
+	$.ajax({
+        type: "POST",
+        url: '/Auto007/cityArea/selectCity',
+        data: {"parentId":obj},
+        dataType: "json",
+        success: function (data) {
+        	for (var i = 0; i < data.length; i++) {
+				$(".select_city ul").append("<li onclick='selectArea("+data[i].id+")' value='"+data[i].id+"'>"+data[i].name+"</li>");
+			}
+        }
+    });
+}
+function selectArea(obj) {
+	$.ajax({
+		type: "POST",
+		url: '/Auto007/cityArea/selectArea',
+		data: {"parentId":obj},
+		dataType: "json",
+		success: function (data) {
+			for (var i = 0; i < data.length; i++) {
+				$(".select_area ul").append("<li value='"+data[i].id+"'>"+data[i].name+"</li>");
+			}
+		}
+	});
+}
 var Registered_app=angular.module('Registered_app',[]);
 Registered_app.directive('enter',function(){
     return function(scope,element,attrs){
@@ -640,9 +812,9 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
         telcode:'',
         code:''
     };
-    //手机验证码
-    $scope.validateTel = function() {
-    	if($("#userError1").css('display')=='block') {
+    //个人手机验证码
+    $scope.validateTelOne = function(s) {
+    	if($("#"+s).css('display')=='block') {
     		$http.post(
     				'/Auto007/user/validateTel/',
     				{
@@ -669,7 +841,7 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
         		&& $('.border_div1 .sub_email').val()==0 && $('.border_div1 .sub_tel').val()==0 && $('.border_div1 .sub_tel_code').val()==0
         		&& $('.border_div1 .sub_code').val()==0 && $('.border_div1 .radio_r1').attr('data')==0){
 			 $http.post(
-				'/Auto007/user/regis/', 
+				'/Auto007/user/regisUser/', 
 				{
 					'name' : $scope.Individual.name,
 					'password' : $scope.Individual.pwd,
@@ -699,22 +871,88 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
         pwd:'',
         agin:'',
         username:'',
+        contactsDept:'',
         Fixed_telephone:'',
         telephone:'',
         telephone_code:'',
         email_e:'',
         company:'',
+        address:'',
+        num:'',
+        areaCode:'',
+        type_name:''
     };
+  //企业手机验证码
+    $scope.validateTelTwo = function(s) {
+    	if($("#"+s).css('display')=='block') {
+    		$http.post(
+    				'/Auto007/user/validateTel/',
+    				{
+    					'mobilephone' : $scope.Enterprise.telephone
+    				},
+    				{
+    					headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+    					transformRequest: function(data){
+    						return $.param(data);
+    					}
+    				}
+    		)
+    		.success(function(data){
+    			$(".telephone_code_rep").val(data);
+    		})
+    		.error(function(data){
+    			
+    		})
+    	}
+    }
     $scope.submit_two=function(){
-        if($('.border_div .sub').val()==0 && $('.border_div .radio_r1').attr('data')==0){
-            //$http.post('',{name:$scope.Individual.name,pwd:$scope.Individual.pwd,agin:$scope.Individual.agin,
-            //    email:$scope.Individual.email,telephone:$scope.Individual.telephone,telcode:$scope.Individual.telcode,code:$scope.Individual.code})
-            //    .success(function(rep){
-            //
-            //    })
-            //    .error(function(rep){
-            //
-            //    })
+    	if($('.Remember_pwd').val()==0){
+    		//支付方式
+    		$scope.Enterprise.type_name=$(".type_name").children(".radio_r2").attr('data');
+    	}
+    	//给企业人数赋值
+    	$scope.Enterprise.num=$('.sub_num').text();
+    	//公司部门赋值
+    	$scope.Enterprise.contactsDept=$('.sub_contactsDept').text();
+    	//areaCode
+    	$scope.Enterprise.areaCode=$('.sub_select_area').val();
+        
+    	if($('.border_div .sub_name').val()==0 && $('.border_div .sub_pws').val()==0 && $('.border_div .sub_pwsa').val()==0 
+    			&& $('.border_div .sub_username').val()==0 && $('.border_div .sub_select_Num1').val()==0 && $('.border_div .sub_select_Num2').val()==0 
+    			&& $('.border_div .sub_select_Num3').val()==0 && $('.border_div .sub_email').val()==0 && $('.border_div .sub_tel').val()==0 
+    			//&& $('.border_div .sub_tel_code').val()==0
+        		&& $('.border_div .sub_code').val()==0 && $('.border_div .sub_fixed').val()==0 && $('.border_div .sub_company').val()==0 
+        		&& $('.border_div .sub_address').val()==0 && $('.border_div .sub_agree').attr('data')==0){
+        	$http.post(
+    				'/Auto007/user/regisUserCompany/', 
+    				{
+    					'name' : $scope.Enterprise.name,
+    					'password' : $scope.Enterprise.pwd,
+    					'contactsName' : $scope.Enterprise.username,
+    					'contactsDept' : $scope.Enterprise.contactsDept,
+    					'contactsPhone' : $scope.Enterprise.Fixed_telephone,
+    					'contactsMobile' : $scope.Enterprise.telephone,
+    					'contactsEmail' : $scope.Enterprise.email_e,
+    					'compnayName' : $scope.Enterprise.company,
+    					'areaCode' : $scope.Enterprise.areaCode,
+    					'detailAddress' : $scope.Enterprise.address,
+    					'taxpayerNumber' : $scope.Enterprise.num,
+    					'typename' : $scope.Enterprise.type_name
+    				},
+    				{
+    				    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+    				    transformRequest: function(data){
+    				        return $.param(data);
+    				    }
+    				}
+    			)
+                .success(function(data){
+                	 window.location.href = "/Auto007/user/ulogin";
+                })
+                .error(function(data){
+
+                })
+            
         }else{
             alert('请完善资料')
         }
