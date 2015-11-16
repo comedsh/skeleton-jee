@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 
 import com.fenghua.auto.backend.dao.user.CompanyDao;
 import com.fenghua.auto.backend.dao.user.PaymentTypeDao;
+import com.fenghua.auto.backend.dao.user.RoleDao;
 import com.fenghua.auto.backend.dao.user.UserDao;
 import com.fenghua.auto.backend.dao.user.UserPaymentTypeDao;
 import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.Payment_type;
+import com.fenghua.auto.backend.domain.user.Role;
 import com.fenghua.auto.backend.domain.user.User;
 import com.fenghua.auto.backend.domain.user.User_payment_type;
 
@@ -27,6 +29,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private RoleDao roleDao;
 	
 	@Autowired
 	private PaymentTypeDao paymentTypeDao;
@@ -53,12 +58,25 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void insert(User personal) {
+		Role role = new Role();
+		role.setName("个人买家");
+		role.setCreatedTs(new Date());
+		role.setLastModifiedTs(new Date());
+		Long roleId = roleDao.getIdInsert(role);
+		
 		String passWord = encoder.encode( personal.getPassword());
 		personal.setPassword(passWord);
+		personal.setRole(roleId);
 		userDao.insert(personal);
 	}
 	@Override
 	public void insert(User personal, Company company, Payment_type payment) {
+		//录入角色
+		Role role = new Role();
+		role.setName("企业买家");
+		role.setCreatedTs(new Date());
+		role.setLastModifiedTs(new Date());
+		Long roleId = roleDao.getIdInsert(role);
 		//企业数据
 		Long companyId = companyDao.getCompanyId(company);
 		//支付数据
@@ -75,6 +93,7 @@ public class UserServiceImpl implements UserService {
 		String passWord = encoder.encode( personal.getPassword());
 		personal.setPassword(passWord);
 		personal.setCompany(companyId);
+		personal.setRole(roleId);
 		Long userId = userDao.getPaymentId(personal);
 		//user与支付关系数据
 		User_payment_type payment_type = new User_payment_type();

@@ -44,7 +44,10 @@ app.controller('login_ctr',['$scope','$http',function($scope,$http){
     $scope.logins=function(){
         var name=$scope.user.name;
         var pwd=$scope.user.pwd;
+        alert(name)
+        alert(pwd)
         var num=$('.Remember_pwd').attr("data");
+        alert(num)
         if(name==''|| pwd=='' || name==null || pwd==null){
             $('.error').show().html('用户名或密码必填');
         }else if(pwd.length>100){
@@ -53,33 +56,26 @@ app.controller('login_ctr',['$scope','$http',function($scope,$http){
             return false;
         } else{
             $('.error').hide();
-            //$http.post('',{name:name,pwd:pwd,num:num})
-            //    .success(function(rep){
-            //        //登录成功时跳转到主页
-            //        if(num==1){
-            //            if(rep.success){
-            //                window.location.href='';
-            //            }
-            //        }else{
-            //            if(rep.success){
-            //                window.location.href='';
-            //            }
-            //        }
-            //    })
-            //    .error(function(){
-            //        //判断是用户名错误还是密码错误
-            //        if(a){
-            //            //用户名错误
-            //            $('.input_li input').val('').focus();
-            //            $('.error').show().html('用户名错误');
-            //            return false;
-            //        }else{
-            //            //密码错误
-            //            $('.pwd input').val('').focus();
-            //            $('.error').show().html('密码错误');
-            //            return false;
-            //        }
-            //    });
+            $.ajax({  
+      		  url: "/Auto007/login",
+      		  type:'POST',
+      		  dataType:'json',
+      		  data:{'username':name,'password':pwd,'autoLogin':num},
+      		  success: function(data,textStatus){
+      		    
+      			if(data.message.success){
+      				alert(data.message.msg);
+      		       window.location.href='/desktop';
+      				
+      			}else{
+      				$('#loadinfo').text('');
+      				info.text(data.message.msg);
+      				
+      			}
+      		  },
+      		  error:function(data){
+      			  alert(data);
+      		  }});
         }
     };
 }]);

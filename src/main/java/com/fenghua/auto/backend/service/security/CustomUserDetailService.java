@@ -3,21 +3,23 @@ package com.fenghua.auto.backend.service.security;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter;
 
 import com.fenghua.auto.backend.domain.securtity.Account;
-import com.fenghua.auto.backend.domain.securtity.Role;
-import com.fenghua.auto.backend.service.security.AccountService;
+import com.fenghua.auto.backend.domain.user.Role;
+import com.fenghua.auto.backend.domain.user.User;
+import com.fenghua.auto.backend.service.user.RoleService;
+import com.fenghua.auto.backend.service.user.UserService;
 
 
 
@@ -37,7 +39,10 @@ public class CustomUserDetailService implements UserDetailsService{
 	private AccountService accountService;
 	
 	@Autowired
-	private BCryptPasswordEncoder encoder;
+	private UserService userService;
+	
+	@Autowired
+	private RoleService roleService;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -46,22 +51,23 @@ public class CustomUserDetailService implements UserDetailsService{
 		
 		Collection<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
 		// 取得用户的密码
-		Account account = accountService.getAccountByName(username);
+		List<User> users = userService.getUserByName(username);
 
-		if (account == null) {
+		if (users.size() == 0) {
 			String message = "用户" + username + "不存在";
 			logger.error(message);
 			throw new UsernameNotFoundException(message);
 		}
 		
-		String password =encoder.encode(account.getPassword());//对密码家吗
+		String password =users.get(0).getPassword();
 
 		// 获得用户的角色
-		Iterator<Role> roles = account.getRoleSet().iterator();
+		Long roleId = users.get(0).getRole();
+		Iterator<Role> roles = roleService.getRoleById(roleId).iterator();
 		while (roles.hasNext()) {
 			Role role = roles.next();		
 			SimpleGrantedAuthority grantedAuthorityImpl = new SimpleGrantedAuthority(role.getName());
-			logger.debug("用户：[" + account.getName() + "]拥有角色：["+ role.getName() + "],即spring security中的access");
+			logger.debug("用户：[" + users.get(0).getName() + "]拥有角色：["+ role.getName() + "],即spring security中的access");
 			auths.add(grantedAuthorityImpl);
 		}
 

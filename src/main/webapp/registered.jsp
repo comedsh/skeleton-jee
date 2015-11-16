@@ -27,7 +27,7 @@
     <script type="text/javascript" src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <!--[if lte IE 7]>
-    <script src="../js/json2.js"></script>
+    <script src="./resources/javaScript/jQuery/json2.js"></script>
     <![endif]-->
     <!--[if IE 6]>
     <script type="text/javascript">

@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +33,7 @@ import com.fenghua.auto.backend.core.utills.graphValidate.PictureCheckCode;
 import com.fenghua.auto.backend.core.utills.message.SMSMessage;
 import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.Payment_type;
+import com.fenghua.auto.backend.domain.user.Role;
 import com.fenghua.auto.backend.domain.user.User;
 import com.fenghua.auto.backend.service.user.UserService;
 
@@ -57,7 +59,19 @@ public class UserController {
 	@RequestMapping(value = "/regisUser", method = RequestMethod.POST)
 	public String addUser(@Valid User user, Model model,HttpServletRequest request) {
 		userService.insert(user);
-		return "/WEB-INF/views/user/login";
+		return "/login";
+	}
+	/**
+	 * 进入个人中心
+	 * @param user
+	 * @param model
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/userCenter", method = RequestMethod.POST)
+	public String userCenter(HttpServletRequest request) {
+		SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return "/WEB-INF/views/user/userCenter";
 	}
 	/**
 	 * @author chengbin
@@ -80,7 +94,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/ulogin")
 	public String showLoginPage(@Valid User user, Model model,HttpServletRequest request) {
-		return "/WEB-INF/views/user/login";
+		return "/login";
 	}
 	/**
 	 * 通过name查询

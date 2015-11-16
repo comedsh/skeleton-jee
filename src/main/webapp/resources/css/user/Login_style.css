@@ -44,10 +44,10 @@
     border:1px solid #eee;
     margin-bottom: 15px;
     padding-left: 40px;
-    background: url("../imgs/email.jpg") no-repeat 6px 10px;
+    background: url("../../../resources/imgs/email.jpg") no-repeat 6px 10px;
 }
 .pwd{
-    background: url("../imgs/pwd.png") no-repeat 6px 5px;
+    background: url("../../../resources/imgs/pwd.png") no-repeat 6px 5px;
 }
 .input_li input{
     width: 230px;
@@ -70,10 +70,10 @@
     font-size: 12px;
     color:#333;
     cursor: pointer;
-    background: url('../imgs/as.png') no-repeat -2px 12px;
+    background: url('../../../resources/imgs/as.png') no-repeat -2px 12px;
 }
 .Remember_pwd1{
-    background: url('../imgs/as1.jpg') no-repeat -2px 12px
+    background: url('../../../resources/imgs/as1.jpg') no-repeat -2px 12px
 }
 .Keep_div a{
     float: right;
@@ -128,7 +128,7 @@
     font-size: 12px;
     color:red;
     text-indent:3em;
-    background:url("../imgs/eeror.png") no-repeat -1px 0;
+    background:url("../../../resources/imgs/eeror.png") no-repeat -1px 0;
     display: none;
 }
 .login_btn{

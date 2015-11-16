@@ -23,7 +23,7 @@
     delete from role
     where ID = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.fenghua.auto.backend.domain.user.Role" >
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.fenghua.auto.backend.domain.user.Role" >
     insert into role (ID, Name, Description, 
       Created_TS, Created_By, Last_Modified_TS, 
       Last_Modified_By)
@@ -31,7 +31,7 @@
       #{createdTs,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{lastModifiedTs,jdbcType=TIMESTAMP}, 
       #{lastModifiedBy,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.fenghua.auto.backend.domain.user.Role" >
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.fenghua.auto.backend.domain.user.Role" >
     insert into role
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

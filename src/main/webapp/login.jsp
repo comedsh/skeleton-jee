@@ -14,16 +14,24 @@
     <meta name="keywords" content="" />
     <meta name="description" content=""/>
     <!--<meta http-equiv="X-UA-Compatible" content="IE=7"/>-->
-    <link rel="stylesheet" href="../css/Common_top_tail.css"/>
-    <link rel="stylesheet" href="../css/Login_style.css"/>
+    <link rel="stylesheet" href="./resources/css/common/Common_top_tail.css"/>
+    <link rel="stylesheet" href="./resources/css/user/Login_style.css"/>
     <link rel="icon" href=""/>
+    <script type="text/javascript" src="./resources/javaScript/jQuery/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="./resources/javaScript/angular/angular.min.js"></script>
+	<script type="text/javascript" src="./resources/javaScript/jQuery/json2.js"></script>
+	<script type="text/javascript" src="./resources/script/user/placeholder.js"></script>
+	<script type="text/javascript" src="./resources/script/user/login.js"></script>
+	<script type="text/javascript">
+	
+	</script>
     <!--<link rel="icon" href="http://www.jd.com/favicon.ico" mce_href="http://www.jd.com/favicon.ico" type="image/x-icon">-->
     <!--[if lt IE 9]>
     <script type="text/javascript" src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script type="text/javascript" src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <!--[if lte IE 7]>
-    <script src="../js/json2.js"></script>
+    <script src="./resources/javaScript/jQuery/json2.js"></script>
     <![endif]-->
     <!--[if IE 6]>
     <script type="text/javascript">
@@ -43,7 +51,7 @@
 <div class="header_login">
     <div class="header_ul clearfix">
         <ul class="header_ul_left clearfix">
-            <li class="city_div clearfix"><label>所在地 :<span>成都</span></label><img src="../imgs/arrow.png"/>
+            <li class="city_div clearfix"><label>所在地 :<span>成都</span></label><img src="./resources/imgs/arrow.png"/>
                 <div id="show_div">
                     <ul class="clearfix">
                         <li><a href="javascript:void(0)">四川</a></li>
@@ -75,14 +83,14 @@
     <div class="logo_div">
         <div class="logo_img clearfix">
            <a href="" class="clearfix">
-               <img src="../imgs/icon.png" alt=""/>
+               <img src="./resources/imgs/icon.png" alt=""/>
            </a>
         </div>
     </div>
 </div>
 <div class="content_login clearfix" ng-controller="login_ctr">
     <div class="img_login clearfix">
-        <img src="../imgs/img_login.png" alt=""/>
+        <img src="./resources/imgs/img_login.png" alt=""/>
     </div>
     <div class="right_login">
         <h1>欢迎登录<span>还没有账号？<a href="">免费注册</a></span></h1>
@@ -101,7 +109,7 @@
         </div>
         <div class="code_d">
             <input type="text">
-            <!--<img  src="../imgs/code.png" alt="" title="换一张" class="img_code"/>-->
+            <!--<img  src="./resources/imgs/code.png" alt="" title="换一张" class="img_code"/>-->
             <img title="换一张" class="img_code" src="https://authcode.jd.com/verify/image?a=0&amp;
 acid=feaaa1e7-e645-4dff-b702-679e5ebf70a2&amp;
 uid=feaaa1e7-e645-4dff-b702-679e5ebf70a2&amp;
@@ -133,14 +141,5 @@ yys=1444790929987"
        <p>备案号： 新ICP备12057998号-1 新疆丰华神州汽车配件有限公司版权所有</p>
    </div>
 </div>
-
-<script type="text/javascript" src="../js/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="../js/angular.min.js"></script>
-<script type="text/javascript" src="../js/json2.js"></script>
-<script type="text/javascript" src="../js/placeholder.js"></script>
-<script type="text/javascript" src="../js/login.js"></script>
-<script type="text/javascript">
-
-</script>
 </body>
 </html>
