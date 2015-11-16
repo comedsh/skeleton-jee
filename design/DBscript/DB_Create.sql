@@ -1,7 +1,7 @@
 /*==============================================================*/
 /* Database name:  Auto007                                      */
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2015-11-10 17:47:26                          */
+/* Created on:     2015-11-16 14:25:01                          */
 /*==============================================================*/
 
 
@@ -28,7 +28,7 @@ create table City_Area
    Available            boolean not null,
    primary key (ID)
 )
-ENGINE=InnoDB;
+type = InnoDB type = ISAM;
 
 /*==============================================================*/
 /* Index: City_Code_idx                                         */
@@ -62,7 +62,7 @@ create table Company
    Last_Modified_By     varchar(30),
    primary key (ID)
 )
-ENGINE=InnoDB;
+type = InnoDB type = ISAM;
 
 /*==============================================================*/
 /* Index: Company_Name_idx                                      */
@@ -95,7 +95,7 @@ create table Payment_Type
    Last_Modified_By     varchar(30),
    primary key (ID)
 )
-ENGINE=InnoDB;
+type = InnoDB type = ISAM;
 
 /*==============================================================*/
 /* Table: Role                                                  */
@@ -111,7 +111,7 @@ create table Role
    Last_Modified_By     varchar(30),
    primary key (ID)
 )
-ENGINE=InnoDB;
+type = InnoDB type = ISAM;
 
 /*==============================================================*/
 /* Index: Name_idx                                              */
@@ -134,33 +134,32 @@ create table Sys_Config
    Last_Modified_TS     varchar(30),
    primary key (Config_Name)
 )
-ENGINE=InnoDB;
+type = InnoDB type = ISAM;
 
 /*==============================================================*/
 /* Table: User                                                  */
 /*==============================================================*/
 create table User
 (
-   ID                   bigint not null auto_increment,
+   ID                   bigint not null,
    Name                 varchar(30) not null,
    Password             varchar(100),
    Email                varchar(100),
    MobilePhone          varchar(20),
    QQ_Number            varchar(15),
    WeChat               varchar(20),
-   Role                 int,
-   Level                int,
-   Company              bigint,
+   Role_ID              int,
+   User_Level_ID        int,
+   Company_ID           bigint,
    Failed_Login_Times   smallint not null default 0,
    Available            boolean not null,
    Created_TS           timestamp,
    Created_By           varchar(30),
    Last_Modified_TS     timestamp,
    Last_Modified_By     varchar(30),
-   primary key (ID),
-   key AK_User_Company (Company)
+   primary key (ID)
 )
-ENGINE=InnoDB;
+type = InnoDB type = ISAM;
 
 /*==============================================================*/
 /* Index: QQ_Number_idx                                         */
@@ -214,14 +213,14 @@ create table User_Address
    Detail_Addr          varchar(200) not null,
    Receiver_Name        varchar(40) not null,
    Receiver_Mobile      varchar(20) not null,
-   "Default"            boolean not null,
+   Default_Addr         boolean not null,
    created_ts           timestamp,
    created_by           varchar(30),
    last_Modified_ts     timestamp,
    last_Modified_by     varchar(30),
    primary key (ID)
 )
-ENGINE=InnoDB;
+type = InnoDB type = ISAM;
 
 /*==============================================================*/
 /* Index: UserID_idx                                            */
@@ -246,7 +245,7 @@ create table User_Level
    Last_Modified_By     varchar(30),
    primary key (ID)
 )
-ENGINE=InnoDB;
+type = InnoDB type = ISAM;
 
 /*==============================================================*/
 /* Table: User_Payment_Type                                     */
@@ -264,7 +263,7 @@ create table User_Payment_Type
    Last_Modified_By     varchar(30),
    primary key (PaymentType_ID, User_ID)
 )
-ENGINE=InnoDB;
+type = InnoDB type = ISAM;
 
 /*==============================================================*/
 /* Index: UserID_idx                                            */
@@ -280,13 +279,13 @@ alter table City_Area add constraint FK_City_Parent_FK foreign key (Parent_ID)
 alter table Company add constraint FK_Company_City_FK foreign key (Area_Code)
       references City_Area (ID) on delete restrict on update restrict;
 
-alter table User add constraint FK_User_Company_FK foreign key (ID)
+alter table User add constraint FK_User_Company foreign key (Company_ID)
       references Company (ID) on delete restrict on update restrict;
 
-alter table User add constraint FK_User_Role_FK foreign key (Role)
+alter table User add constraint FK_User_Role_FK foreign key (Role_ID)
       references Role (ID) on delete restrict on update restrict;
 
-alter table User add constraint FK_User_UserLev_FK foreign key (Level)
+alter table User add constraint FK_User_UserLev_FK foreign key (User_Level_ID)
       references User_Level (ID) on delete restrict on update restrict;
 
 alter table User_Address add constraint FK_User_Addr_City_FK foreign key (Area_Code)
