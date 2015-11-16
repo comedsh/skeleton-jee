@@ -1006,7 +1006,7 @@ function changePicture() {
 }
 function ajaxFileUpload() {
 	$.ajaxFileUpload({
-		url : '/theme/upload',
+		url : '/Auto007/user/upload/',
 		secureuri : false,
 		fileElementId : 'themePicture',
 		dataType : 'json',
