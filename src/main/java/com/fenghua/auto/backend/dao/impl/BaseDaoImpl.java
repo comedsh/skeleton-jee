@@ -90,9 +90,9 @@ public abstract class BaseDaoImpl<T extends DomainObject> implements BaseDao<T> 
 	public <V extends T> V selectById(Serializable id) {
 		Assert.notNull(id);
 		try {
-			return sqlSessionTemplate.selectOne(getSqlName(SqlId.SQL_SELECT_BY_ID), id);
+			return sqlSessionTemplate.selectOne(getSqlName(SqlId.SQL_SELECT_PRIMARY_KEY), id);
 		} catch (Exception e) {
-			throw new DaoException(String.format("根据ID查询对象出错！语句：%s", getSqlName(SqlId.SQL_SELECT_BY_ID)), e);
+			throw new DaoException(String.format("根据ID查询对象出错！语句：%s", getSqlName(SqlId.SQL_SELECT_PRIMARY_KEY)), e);
 		}
 	}
 
@@ -227,9 +227,9 @@ public abstract class BaseDaoImpl<T extends DomainObject> implements BaseDao<T> 
 	public int deleteById(Serializable id) {
 		Assert.notNull(id);
 		try {
-			return sqlSessionTemplate.delete(getSqlName(SqlId.SQL_DELETE_BY_ID), id);
+			return sqlSessionTemplate.delete(getSqlName(SqlId.SQL_DELETE_PRIMARY_KEY), id);
 		} catch (Exception e) {
-			throw new DaoException(String.format("根据ID删除对象出错！语句：%s", getSqlName(SqlId.SQL_DELETE_BY_ID)), e);
+			throw new DaoException(String.format("根据ID删除对象出错！语句：%s", getSqlName(SqlId.SQL_DELETE_PRIMARY_KEY)), e);
 		}
 	}
 
@@ -246,9 +246,9 @@ public abstract class BaseDaoImpl<T extends DomainObject> implements BaseDao<T> 
 	public int updateById(T entity) {
 		Assert.notNull(entity);
 		try {
-			return sqlSessionTemplate.update(getSqlName(SqlId.SQL_UPDATE_BY_ID), entity);
+			return sqlSessionTemplate.update(getSqlName(SqlId.SQL_UPDATE_PRIMARY_KEY), entity);
 		} catch (Exception e) {
-			throw new DaoException(String.format("根据ID更新对象出错！语句：%s", getSqlName(SqlId.SQL_UPDATE_BY_ID)), e);
+			throw new DaoException(String.format("根据ID更新对象出错！语句：%s", getSqlName(SqlId.SQL_UPDATE_PRIMARY_KEY)), e);
 		}
 	}
 
@@ -257,9 +257,9 @@ public abstract class BaseDaoImpl<T extends DomainObject> implements BaseDao<T> 
 	public int updateByIdSelective(T entity) {
 		Assert.notNull(entity);
 		try {
-			return sqlSessionTemplate.update(getSqlName(SqlId.SQL_UPDATE_BY_ID_SELECTIVE), entity);
+			return sqlSessionTemplate.update(getSqlName(SqlId.SQL_UPDATE_PRIMARY_KEY_SELECTIVE), entity);
 		} catch (Exception e) {
-			throw new DaoException(String.format("根据ID更新对象某些属性出错！语句：%s", getSqlName(SqlId.SQL_UPDATE_BY_ID_SELECTIVE)),
+			throw new DaoException(String.format("根据ID更新对象某些属性出错！语句：%s", getSqlName(SqlId.SQL_UPDATE_PRIMARY_KEY_SELECTIVE)),
 					e);
 		}
 	}

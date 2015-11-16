@@ -2,6 +2,8 @@ package com.fenghua.auto.backend.service.user;
 
 import java.util.List;
 
+import com.fenghua.auto.backend.domain.user.Company;
+import com.fenghua.auto.backend.domain.user.Payment_type;
 import com.fenghua.auto.backend.domain.user.User;
 
 /**
@@ -28,6 +30,11 @@ public interface UserService {
 	 */
 	public void insert(User personal);
 	/**
+	 * 增加一个企业用户
+	 * @param personal
+	 */
+	public void insert(User personal,Company company,Payment_type paymenttype);
+	/**
 	 * 通过id获取一个个人用户信息
 	 * @param id
 	 * @return
@@ -38,4 +45,24 @@ public interface UserService {
 	 * @return
 	 */
 	public List<User> getAll();
+	/**
+	 * 通过name查询对应的实体
+	 * @return
+	 */
+	public List<User> getUserByName(String name);
+	/**
+	 * 通过email查询对应的实体
+	 * @return
+	 */
+	public List<User> getUserByEmail(String email);
+	/**
+	 * 通过telephone查询对应的实体
+	 * @return
+	 */
+	public List<User> getUserByTelephone(String telephone);
+	/**
+	 * 通过fixed查询对应的实体
+	 * @return
+	 */
+	public List<Company> getUserByFixed(String fixed);
 }

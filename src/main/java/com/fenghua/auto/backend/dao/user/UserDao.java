@@ -1,8 +1,11 @@
 package com.fenghua.auto.backend.dao.user;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.fenghua.auto.backend.dao.BaseDao;
+import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.User;;
 /**
  * 个人注册dao
@@ -12,5 +15,39 @@ import com.fenghua.auto.backend.domain.user.User;;
  */
 @Repository
 public interface UserDao extends BaseDao<User> {
-
+	/**
+	 * 通过用户name查询对应数据
+	 * @param name
+	 * @return
+	 */
+	public List<User> selectByName(String name);
+	/**
+	 * 企业注册
+	 * @param user
+	 * @param company
+	 */
+	public void insert(User user);
+	/**
+	 * 返回主键id
+	 * @param user
+	 */
+	public Long getPaymentId(User user); 
+	/**
+	 * 通过用户email查询对应数据
+	 * @param email
+	 * @return
+	 */
+	public List<User> selectByEmail(String email); 
+	/**
+	 * 通过用户telephone查询对应数据
+	 * @param telephone
+	 * @return
+	 */
+	public List<User> selectByTelephone(String telephone); 
+	/**
+	 * 通过用户Fixed查询对应数据
+	 * @param Fixed
+	 * @return
+	 */
+	public List<Company> selectByFixed(String fixed); 
 }

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fenghua.auto.backend.domain.user.User" >
 
-  <cache eviction="LRU" type="com.fenghua.auto.backend.dao.cache.MybatisRedisCache" /> 
+  <!-- <cache eviction="LRU" type="com.fenghua.auto.backend.dao.cache.MybatisRedisCache" />  -->
   <resultMap id="BaseResultMap" type="com.fenghua.auto.backend.domain.vo.user.UserVo" >
     <id column="ID" property="id" jdbcType="BIGINT" />
     <result column="Name" property="name" jdbcType="VARCHAR" />
@@ -30,17 +30,40 @@
 	<include refid="Base_Column_List" />
 	from user
   </select>
+  
   <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from user
     where ID = #{id,jdbcType=BIGINT}
   </select>
+  
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where Name = #{name}
+  </select>
+  
+  <select id="selectByEmail" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where Email = #{email}
+  </select>
+  
+  <select id="selectByTelephone" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where Mobilephone = #{mobilephone}
+  </select>
+  
   <delete id="deleteById" parameterType="java.lang.Long" >
     delete from user
     where ID = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.fenghua.auto.backend.domain.user.User" >
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.fenghua.auto.backend.domain.user.User" >
     insert into user (ID, Name, Password, 
       Email, MobilePhone, QQ_Number, 
       WeChat, Role, Level, 
@@ -54,7 +77,7 @@
       #{createdTs,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{lastModifiedTs,jdbcType=TIMESTAMP}, 
       #{lastModifiedBy,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.fenghua.auto.backend.domain.user.User" >
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.fenghua.auto.backend.domain.user.User" >
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
