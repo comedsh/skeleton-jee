@@ -114,4 +114,22 @@
       Available = #{available,jdbcType=BIT}
     where ID = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectByProvince" resultMap="BaseResultMap" parameterType="java.lang.Short" >
+    select 
+    <include refid="Base_Column_List" />
+    from city_area
+    where Level = #{level,jdbcType=SMALLINT}
+  </select>
+  <select id="selectByCity" resultMap="BaseResultMap" parameterType="com.fenghua.auto.backend.domain.user.City_area" >
+    select 
+    <include refid="Base_Column_List" />
+    from city_area
+    where Level = #{level,jdbcType=SMALLINT} and Parent_ID = #{parentId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByArea" resultMap="BaseResultMap" parameterType="com.fenghua.auto.backend.domain.user.City_area" >
+   	select 
+    <include refid="Base_Column_List" />
+    from city_area
+    where Level = #{level,jdbcType=SMALLINT} and Parent_ID = #{parentId,jdbcType=INTEGER}
+  </select>
 </mapper>

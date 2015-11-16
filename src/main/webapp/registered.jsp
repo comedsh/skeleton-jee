@@ -21,6 +21,7 @@
 	<script type="text/javascript" src="./resources/javaScript/jQuery/json2.js"></script>
 	<script type="text/javascript" src="./resources/script/user/placeholder.js"></script>
 	<script type="text/javascript" src="./resources/script/user/registered.js"></script>
+	<script type="text/javascript" src="./resources/javaScript/uploadify/ajaxfileupload.js"></script>
     <!--[if lt IE 9]>
     <script type="text/javascript" src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script type="text/javascript" src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
@@ -51,6 +52,17 @@
 <body>
 <!--头部-->
 <div class="header_login">
+
+    <div class="uploadImg rfloat">
+                        <div class="imgarea">
+                            <img src="common/images/noimg.png" alt="背景图片" id="bg-picture" name="bg-picture">
+                        </div>
+                        <div style="display: none;">
+                        	<input type="file" id="themePicture" name="themePicture" onchange="changePicture()"  accept="image/*">
+                        </div>
+                        <button class="blueBtn btnPadding" onclick="document.getElementById('themePicture').click()">上传图片</button>
+                    </div>
+	
     <div class="header_ul clearfix">
         <ul class="header_ul_left clearfix">
             <li class="city_div clearfix"><label>所在地 :<span>成都</span></label><img src="./resources/imgs/arrow.png"/>
@@ -182,19 +194,33 @@
                 </div>
             </div>
             <div class="clearfix chren_div">
-            	<input type="hidden" class="sub_contactsDept" value="1">
+            	<input type="hidden" class="sub_select_Num sub_select_Num1" value="1">
                 <label><span style="color:red">*</span>所在部门</label>
-                <div class="input_d">
-                    <input type="text" class="contactsDept"  placeholder="请输入所在部门"/>
-                </div>
-                <div class="remove_d">
-                    <img src="./resources/imgs/remove.jpg"/>
-                </div>
-                <div class="user_error1">
-                
+                <div class="input_d input_select">
+                    <span class="sub_contactsDept">请选择</span>
+                    <ul>
+                        <li>
+                                                                                      研发部
+                        </li>
+                        <li>
+                                                                                      设计部
+                        </li>
+                        <li>
+                                                                                     质量部
+                        </li>
+                        <li>
+                                                                                     测试部
+                        </li>
+                        <li>
+                                                                                    应用开发部
+                        </li>
+                        <li>
+                                                                                     其它
+                        </li>
+                    </ul>
                 </div>
                 <div class="user_error2">
-                 
+                    请输入用户名请输入用户名请输入用户名请输入用户名
                 </div>
                 <div class="user_error3">
                     输入正确
@@ -239,14 +265,16 @@
                 </div>
             </div>
             <div class="clearfix chren_div">
+            	<input type="hidden" class="sub_tel_code" value="1">
                 <label><span style="color:red">*</span>短信验证码</label>
                 <div class="input_d" style="width: 150px">
+                	<input type="hidden" class="telephone_code_rep" value=""/>
                     <input type="text" class="telephone_code" ng-model="Enterprise.telephone_code"  placeholder="请输入短信验证码"/>
                 </div>
                 <div class="remove_d" style="left: 235px;">
                     <img src="./resources/imgs/remove.jpg"/>
                 </div>
-                <a class="button_a" ng-click="validateTel()">获取手机验证码</a>
+                <a class="button_a" ng-click='validateTelTwo("userError0")'>获取手机验证码</a>
                 <div class="user_error1">
                     请输入短信验证码
                 </div>
@@ -258,6 +286,7 @@
                 </div>
             </div>
             <div class="clearfix chren_div">
+            	<input type="hidden" class="sub_email" value="1">
                 <label><span style="color:red"></span>联系人邮箱</label>
                 <div class="input_d">
                     <input type="text" class="email_e" ng-model="Enterprise.email_e"  placeholder="请输入邮箱"/>
@@ -279,6 +308,7 @@
         <h3>公司信息</h3>
         <div class="name_pwd" style="height:460px">
             <div class="clearfix chren_div">
+        		<input type="hidden" class="sub_company" value="1">
                 <label><span style="color:red">*</span>公司名称</label>
                 <div class="input_d" style="width: 330px">
                     <input style="width: 300px" type="text" class="company" ng-model="Enterprise.company"  placeholder="公司名称和营业执照名称一致，否则审核不通过"/>
@@ -297,63 +327,41 @@
                 </div>
             </div>
             <div class="clearfix chren_div company_d">
+            	<input type="hidden" class="sub_select_Num sub_select_Num2" value="1">
                 <label><span style="color:red">*</span>公司所在地</label>
                 <div class="input_d input_select select_province">
-                    <span>请选择</span>
+                    <span class="sub_select_province">请选择</span>
                     <ul>
-                        <li>
-                            四川省
-                        </li>
-                        <li>
-                            12321321
-                        </li>
-                        <li>
-                            aaaaaaaa
-                        </li>
+                        
                     </ul>
                 </div>
                 <p>省</p>
                 <div class="input_d input_select select_city" >
-                    <span>请选择</span>
+                    <span class="sub_select_city">请选择</span>
                     <ul>
-                        <li>
-                            上海市
-                        </li>
-                        <li>
-                            12321321
-                        </li>
-                        <li>
-                            aaaaaaaa
-                        </li>
+                        
                     </ul>
                 </div>
                 <p>市</p>
                 <div class="input_d input_select select_area" >
-                    <span>请选择</span>
+                    <span class="sub_select_area">请选择</span>
                     <ul>
-                        <li>
-                            武侯区
-                        </li>
-                        <li>
-                            12321321
-                        </li>
-                        <li>
-                            aaaaaaaa
-                        </li>
+                        
                     </ul>
                 </div>
                 <p>区</p>
                 <div class="user_error2">
-                    请输入用户名请输入用户名请输入用户名请输入用户名
+                    请把省市县填写完
                 </div>
                 <div class="user_error3">
                     输入正确
                 </div>
             </div>
             <div class="clearfix chren_div">
+            	<input type="hidden" class="sub_address" value="1">
                 <label><span style="color:red">*</span>公司地址</label>
                 <div class="input_d" style="width: 330px">
-                    <input style="width: 300px" type="text" class="address"  placeholder="公司地址和营业执照地址一致，否则审核不通过"/>
+                    <input style="width: 300px" type="text" class="address" ng-model="Enterprise.address"   placeholder="公司地址和营业执照地址一致，否则审核不通过"/>
                 </div>
                 <div class="remove_d" style="left: 415px;">
                     <img src="./resources/imgs/remove.jpg"/>
@@ -370,14 +378,15 @@
                 </div>
             </div>
             <div class="clearfix chren_div">
+            	<input type="hidden" class="sub_select_Num sub_select_Num3" value="1">
                 <label><span style="color:red">*</span>公司人数</label>
-                <div class="input_d input_select">
-                    <span>请选择</span>
+                <div class="input_d input_select select_Num" >
+                    <span class="sub_num">请选择</span>
                     <ul>
                         <li>
-                            1-49
+                           1-49
                         </li>
-                        <li>
+                        <li >
                             50-99
                         </li>
                         <li>
@@ -392,7 +401,7 @@
                     </ul>
                 </div>
                 <div class="user_error2">
-                    请输入用户名请输入用户名请输入用户名请输入用户名
+                    请选择公司人数
                 </div>
                 <div class="user_error3">
                     输入正确
@@ -408,6 +417,7 @@
                     图片限定大小
                 </div>
             </div>
+            <input type="file"/>
             <div class="clearfix chren_div">
                 <label>&nbsp;</label>
                 <div class="input_d file_div">
@@ -427,7 +437,7 @@
                     申请账期支付<span>需要平台审核，验证资质后，可使用此支付方式</span>
                 </div>
             </div>
-            <div class="clearfix chren_div radio_div" style="margin-top: 15px">
+            <div class="clearfix chren_div radio_div type_name" style="margin-top: 15px">
                 <label>&nbsp;</label>
                 <div class="input_d check_radio1 radio_r radio_r1 radio_r2" data="0">
                     月结
@@ -458,7 +468,7 @@
             </div>
             <div class="clearfix chren_div" style="margin-top: 15px">
                 <label>&nbsp;</label>
-                <div class="input_d radio_r radio_r1 radio_r2" data="0">
+                <div class="input_d radio_r radio_r1 radio_r2 sub_agree" data="0">
                     我已阅读并同意
                 </div>
                 <div class="input_d radio_r radio_r3">
@@ -468,7 +478,7 @@
             <!-- <input type="hidden" value="1"> -->
             <div class="clearfix chren_div" style="margin-top: 15px">
                 <label>&nbsp;</label>
-                <div class="input_d submit_btn" ng-click="submit_two">
+                <div class="input_d submit_btn" ng-click="submit_two()">
                     立即注册
                 </div>
 
@@ -583,7 +593,7 @@
                 <div class="remove_d" style="left: 235px;">
                     <img src="./resources/imgs/remove.jpg"/>
                 </div>
-                <a class="button_a" ng-click="validateTel()">获取手机验证码</a>
+                <a class="button_a" ng-click='validateTelOne("userError1")'>获取手机验证码</a>
                 <div class="user_error1">
                     请输入短信验证码
                 </div>
@@ -829,45 +839,21 @@
                 <div class="input_d input_select select_province">
                     <span>请选择</span>
                     <ul>
-                        <li>
-                            四川省
-                        </li>
-                        <li>
-                            12321321
-                        </li>
-                        <li>
-                            aaaaaaaa
-                        </li>
+                        
                     </ul>
                 </div>
                 <p>省</p>
                 <div class="input_d input_select select_city" >
                     <span>请选择</span>
                     <ul>
-                        <li>
-                            上海市
-                        </li>
-                        <li>
-                            12321321
-                        </li>
-                        <li>
-                            aaaaaaaa
-                        </li>
+                        
                     </ul>
                 </div>
                 <p>市</p>
                 <div class="input_d input_select select_area" >
                     <span>请选择</span>
                     <ul>
-                        <li>
-                            武侯区
-                        </li>
-                        <li>
-                            12321321
-                        </li>
-                        <li>
-                            aaaaaaaa
-                        </li>
+                    
                     </ul>
                 </div>
                 <p>区</p>
@@ -1014,3 +1000,23 @@
 </div>
 </body>
 </html>
+<script type="text/javascript">
+function changePicture() {
+	ajaxFileUpload();
+}
+function ajaxFileUpload() {
+	$.ajaxFileUpload({
+		url : '/theme/upload',
+		secureuri : false,
+		fileElementId : 'themePicture',
+		dataType : 'json',
+		success : function(data, status) {
+			$("#bg-picture").attr("src", data.filePath);
+		},
+		error : function(data, status, e) {
+			alert(e);
+		}
+	});
+	return false;
+}
+</script>

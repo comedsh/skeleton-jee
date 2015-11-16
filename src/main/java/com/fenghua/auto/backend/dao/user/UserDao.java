@@ -20,7 +20,18 @@ public interface UserDao extends BaseDao<User> {
 	 * @param name
 	 * @return
 	 */
-	public List<User> selectByName(String name); 
+	public List<User> selectByName(String name);
+	/**
+	 * 企业注册
+	 * @param user
+	 * @param company
+	 */
+	public void insert(User user);
+	/**
+	 * 返回主键id
+	 * @param user
+	 */
+	public Long getPaymentId(User user); 
 	/**
 	 * 通过用户email查询对应数据
 	 * @param email

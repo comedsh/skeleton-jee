@@ -24,4 +24,12 @@ public class CompanyServiceImpl implements CompanyService {
 	public List<Company> getUserByFixed(String fixed) {
 		return companyDao.selectByFixed(fixed);
 	}
+	@Override
+	public List<Company> getContactsTelephone(String telephone) {
+		return companyDao.selectByTelephone(telephone);
+	}
+	@Override
+	public List<Company> getCompanyByEmail(String email) {
+		return companyDao.selectByEmail(email);
+	}
 }

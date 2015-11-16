@@ -19,5 +19,13 @@ public interface CompanyDao extends BaseDao<Company> {
 	 * @param Fixed
 	 * @return
 	 */
-	public List<Company> selectByFixed(String fixed); 
+	public List<Company> selectByFixed(String fixed);
+	
+	public List<Company> selectByTelephone(String telephone);
+	
+	public List<Company> selectByEmail(String email);
+
+	public Long getCompanyId(Company company);
+	
+	
 }

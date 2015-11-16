@@ -24,4 +24,13 @@ public interface SqlId {
 	
 	//company模块
 	public String SQL_SELECT_BY_FIXED = "selectByFixed";
+	public String SQL_SELECT_BY_CONTACTSTELEPHONE = "selectByContactsTelephone";
+	public String SQL_SELECT_BY_CONTACTSEMAIL = "selectByContactsEmail";
+	
+	//cityArea模块获取省份
+	public String SQL_SELECT_BY_PROVINCE = "selectByProvince";
+	//cityArea模块获取市级
+	public String SQL_SELECT_BY_CITY = "selectByCity";
+	//cityArea模块获取县级
+	public String SQL_SELECT_BY_AREA = "selectByArea";
 }

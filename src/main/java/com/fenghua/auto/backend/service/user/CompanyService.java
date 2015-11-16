@@ -17,4 +17,14 @@ public interface CompanyService {
 	 * @return
 	 */
 	public List<Company> getUserByFixed(String fixed);
+	/**
+	 * 通过ContactsTelephone查询对应的实体
+	 * @return
+	 */
+	public List<Company> getContactsTelephone(String telephone);
+	/**
+	 * 通过ContactsTelephone查询对应的实体
+	 * @return
+	 */
+	public List<Company> getCompanyByEmail(String email);
 }

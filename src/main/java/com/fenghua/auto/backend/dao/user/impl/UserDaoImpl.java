@@ -33,6 +33,28 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 	}
 	
 	@Override
+	public void insert(User user) {
+		Assert.notNull(user);
+		try {
+			sqlSessionTemplate.insert(getSqlName(SqlId.SQL_INSERT), user);
+		} catch (Exception e) {
+			throw new DaoException(String.format("添加对象出错！语句：%s", getSqlName(SqlId.SQL_INSERT)), e);
+		}
+	}
+	@Override
+	public Long getPaymentId(User user) {
+		Assert.notNull(user);
+		Long str = null;
+		try {
+			sqlSessionTemplate.insert(getSqlName(SqlId.SQL_INSERT), user);
+			str = user.getId();
+		} catch (Exception e) {
+			throw new DaoException(String.format("添加对象出错！语句：%s", getSqlName(SqlId.SQL_INSERT)), e);
+		}
+		return str;
+	}
+	
+	@Override
 	public List<User> selectByEmail(String email) {
 		Assert.notNull(email);
 		List<User> user = new ArrayList<User>();

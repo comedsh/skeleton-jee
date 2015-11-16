@@ -3,6 +3,7 @@ package com.fenghua.auto.backend.service.user;
 import java.util.List;
 
 import com.fenghua.auto.backend.domain.user.Company;
+import com.fenghua.auto.backend.domain.user.Payment_type;
 import com.fenghua.auto.backend.domain.user.User;
 
 /**
@@ -28,6 +29,11 @@ public interface UserService {
 	 * @param personal
 	 */
 	public void insert(User personal);
+	/**
+	 * 增加一个企业用户
+	 * @param personal
+	 */
+	public void insert(User personal,Company company,Payment_type paymenttype);
 	/**
 	 * 通过id获取一个个人用户信息
 	 * @param id

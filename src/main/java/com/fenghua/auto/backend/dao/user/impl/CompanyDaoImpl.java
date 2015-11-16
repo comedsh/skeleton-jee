@@ -30,4 +30,41 @@ public class CompanyDaoImpl extends BaseDaoImpl<Company> implements CompanyDao {
 		}
 		return company;
 	}
+	
+	@Override
+	public List<Company> selectByTelephone(String contactsMobile) {
+		Assert.notNull(contactsMobile);
+		List<Company> company = new ArrayList<Company>();
+		try {
+			company = sqlSessionTemplate.selectList(getSqlName(SqlId.SQL_SELECT_BY_CONTACTSTELEPHONE), contactsMobile);
+		} catch (Exception e) {
+			throw new DaoException(String.format("根据Fixed查询对象出错！语句：%s", getSqlName(SqlId.SQL_SELECT_BY_CONTACTSTELEPHONE)), e);
+		}
+		return company;
+	}
+	
+	@Override
+	public List<Company> selectByEmail(String contactsEmail) {
+		Assert.notNull(contactsEmail);
+		List<Company> company = new ArrayList<Company>();
+		try {
+			company = sqlSessionTemplate.selectList(getSqlName(SqlId.SQL_SELECT_BY_CONTACTSEMAIL), contactsEmail);
+		} catch (Exception e) {
+			throw new DaoException(String.format("根据Fixed查询对象出错！语句：%s", getSqlName(SqlId.SQL_SELECT_BY_CONTACTSEMAIL)), e);
+		}
+		return company;
+	}
+
+	@Override
+	public Long getCompanyId(Company company) {
+		Assert.notNull(company);
+		Long str = null;
+		try {
+			sqlSessionTemplate.insert(getSqlName(SqlId.SQL_INSERT_SELECTIVE), company);
+			str = company.getId();
+		} catch (Exception e) {
+			throw new DaoException(String.format("添加对象出错！语句：%s", getSqlName(SqlId.SQL_INSERT)), e);
+		}
+		return str;
+	}
 }
