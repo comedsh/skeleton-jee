@@ -55,7 +55,7 @@
 
     <div class="uploadImg rfloat">
                         <div class="imgarea">
-                            <img src="common/images/noimg.png" alt="背景图片" id="bg-picture" name="bg-picture">
+                            <img src="./resources/javaScript/uploadify/noimg.png" alt="背景图片" id="bg-picture" name="bg-picture">
                         </div>
                         <div style="display: none;">
                         	<input type="file" id="themePicture" name="themePicture" onchange="changePicture()"  accept="image/*">
