@@ -1,8 +1,8 @@
 package com.fenghua.auto.backend.domain.vo.user;
 
-import com.fenghua.auto.backend.domain.user.User_level;
+import com.fenghua.auto.backend.domain.user.CityArea;
 
-public class User_levelVo extends User_level {
+public class CityAreaVo extends CityArea {
 
 	/**
 	 * 

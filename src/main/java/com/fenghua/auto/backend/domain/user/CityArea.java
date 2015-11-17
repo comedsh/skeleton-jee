@@ -6,7 +6,7 @@ import com.fenghua.auto.backend.domain.DomainObject;
  * @author chengbin
  *
  */
-public class City_area implements DomainObject {
+public class CityArea implements DomainObject {
 	
 	private static final long serialVersionUID = 1L;
 

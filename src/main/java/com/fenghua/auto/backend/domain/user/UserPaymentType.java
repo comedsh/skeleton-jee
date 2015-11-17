@@ -1,23 +1,23 @@
 package com.fenghua.auto.backend.domain.user;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import com.fenghua.auto.backend.domain.DomainObject;
 /**
- * 付款方式
- * @author thinkpad
+ * 支付方式
+ * @author chengbin
  *
  */
-public class Payment_type implements DomainObject {
+public class UserPaymentType extends UserPaymentTypeKey  implements DomainObject {
 	
 	private static final long serialVersionUID = 1L;
-    private Long id;
+	
+    private Integer status;
 
-    private String typename;
+    private Integer duration;
 
-    private String description;
-
-    private String needapprove;
+    private BigDecimal debtLimit;
 
     private Date createdTs;
 
@@ -27,36 +27,28 @@ public class Payment_type implements DomainObject {
 
     private String lastModifiedBy;
 
-    public Long getId() {
-        return id;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
-    public String getTypename() {
-        return typename;
+    public Integer getDuration() {
+        return duration;
     }
 
-    public void setTypename(String typename) {
-        this.typename = typename == null ? null : typename.trim();
+    public void setDuration(Integer duration) {
+        this.duration = duration;
     }
 
-    public String getDescription() {
-        return description;
+    public BigDecimal getDebtLimit() {
+        return debtLimit;
     }
 
-    public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
-    }
-
-    public String getNeedapprove() {
-        return needapprove;
-    }
-
-    public void setNeedapprove(String needapprove) {
-        this.needapprove = needapprove == null ? null : needapprove.trim();
+    public void setDebtLimit(BigDecimal debtLimit) {
+        this.debtLimit = debtLimit;
     }
 
     public Date getCreatedTs() {

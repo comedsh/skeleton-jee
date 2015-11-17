@@ -13,15 +13,15 @@
     <meta name="keywords" content="" />
     <meta name="description" content=""/>
     <!--<meta http-equiv="X-UA-Compatible" content="IE=7"/>-->
-    <link rel="stylesheet" href="./resources/css/common/Common_top_tail.css"/>
-    <link rel="stylesheet" href="./resources/css/common/Common_top_tail2.css"/>
-    <link rel="stylesheet" href="./resources/css/common/User_style.css"/>
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/common/Common_top_tail.css"/>
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/common/Common_top_tail2.css"/>
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/user/User_style.css"/>
     <link rel="icon" href=""/>
-    <script type="text/javascript" src="./resources/javaScript/jQuery/jquery-1.8.3.min.js"></script>
-	<script type="text/javascript" src="./resources/javaScript/angular/angular.min.js"></script>
-	<script type="text/javascript" src="./resources/javaScript/jQuery/json2.js"></script>
-	<script type="text/javascript" src="./resources/script/user/placeholder.js"></script>
-	<script type="text/javascript" src="./resources/script/user/login.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath() %>/resources/javaScript/jQuery/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/javaScript/angular/angular.min.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/javaScript/jQuery/json2.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/script/user/placeholder.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/script/user/login.js"></script>
 	<script type="text/javascript">
 	
 	</script>
@@ -31,7 +31,7 @@
     <script type="text/javascript" src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <!--[if lte IE 7]>
-    <script src="./resources/javaScript/jQuery/json2.js"></script>
+    <script src="<%=request.getContextPath() %>/resources/javaScript/jQuery/json2.js"></script>
     <![endif]-->
     <!--[if IE 6]>
     <script type="text/javascript">
@@ -54,7 +54,7 @@
 <div class="header_login">
     <div class="header_ul clearfix">
         <ul class="header_ul_left clearfix">
-            <li class="city_div clearfix"><label>所在地 :<span>成都</span></label><img src="./resources/imgs/arrow.png"/>
+            <li class="city_div clearfix"><label>所在地 :<span>成都</span></label><img src="<%=request.getContextPath() %>/resources/imgs/arrow.png"/>
                 <div id="show_div">
                     <ul class="clearfix">
                         <li><a href="javascript:void(0)">四川</a></li>
@@ -91,7 +91,7 @@
     </div>
     <div class="logo_div">
         <div class="logo_img">
-            <img src="./resources/imgs/icon.png" alt=""/>
+            <img src="<%=request.getContextPath() %>/resources/imgs/icon.png" alt=""/>
             <div class="search_div clearfix">
                 <div class="input_div">
                     <input type="text" placeholder="商品名称/VIN编号/OE编号/品牌"/>
@@ -288,7 +288,7 @@
             </div>
             <!--没有数据显示-->
             <div class="No_data">
-                <img src="./resources/images/no_data.png"/>
+                <img src="<%=request.getContextPath() %>/resources/images/no_data.png"/>
                 <p>您买的东西太少了,这里都是空空的,快去挑选合适的商品吧!</p>
             </div>
         </div>

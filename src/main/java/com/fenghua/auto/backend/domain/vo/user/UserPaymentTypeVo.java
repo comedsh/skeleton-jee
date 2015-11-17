@@ -1,8 +1,8 @@
 package com.fenghua.auto.backend.domain.vo.user;
 
-import com.fenghua.auto.backend.domain.user.User_address;
+import com.fenghua.auto.backend.domain.user.UserPaymentType;
 
-public class User_addressVo extends User_address {
+public class UserPaymentTypeVo extends UserPaymentType {
 
 	/**
 	 * 

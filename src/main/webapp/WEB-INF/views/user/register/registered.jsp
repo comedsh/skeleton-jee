@@ -13,21 +13,21 @@
     <meta charset="UTF-8">
     <meta name="keywords" content="" />
     <meta name="description" content=""/>
-    <link rel="stylesheet" href="./resources/css/common/Common_top_tail.css"/>
-    <link rel="stylesheet" href="./resources/css/user/Registered_style.css"/>
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/common/Common_top_tail.css"/>
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/user/Registered_style.css"/>
     <link rel="icon" href=""/>
-    <script type="text/javascript" src="./resources/javaScript/jQuery/jquery-1.8.3.min.js"></script>
-	<script type="text/javascript" src="./resources/javaScript/angular/angular.min.js"></script>
-	<script type="text/javascript" src="./resources/javaScript/jQuery/json2.js"></script>
-	<script type="text/javascript" src="./resources/script/user/placeholder.js"></script>
-	<script type="text/javascript" src="./resources/script/user/registered.js"></script>
-	<script type="text/javascript" src="./resources/javaScript/uploadify/ajaxfileupload.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath() %>/resources/javaScript/jQuery/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/javaScript/angular/angular.min.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/javaScript/jQuery/json2.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/script/user/placeholder.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/script/user/registered.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/javaScript/uploadify/ajaxfileupload.js"></script>
     <!--[if lt IE 9]>
     <script type="text/javascript" src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script type="text/javascript" src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <!--[if lte IE 7]>
-    <script src="./resources/javaScript/jQuery/json2.js"></script>
+    <script src="<%=request.getContextPath() %>/resources/javaScript/jQuery/json2.js"></script>
     <![endif]-->
     <!--[if IE 6]>
     <script type="text/javascript">
@@ -53,19 +53,11 @@
 <!--头部-->
 <div class="header_login">
 
-    <div class="uploadImg rfloat">
-                        <div class="imgarea">
-                            <img src="./resources/javaScript/uploadify/noimg.png" alt="背景图片" id="bg-picture" name="bg-picture">
-                        </div>
-                        <div style="display: none;">
-                        	<input type="file" id="themePicture" name="themePicture" onchange="changePicture()"  accept="image/*">
-                        </div>
-                        <button class="blueBtn btnPadding" onclick="document.getElementById('themePicture').click()">上传图片</button>
-                    </div>
+    
 	
     <div class="header_ul clearfix">
         <ul class="header_ul_left clearfix">
-            <li class="city_div clearfix"><label>所在地 :<span>成都</span></label><img src="./resources/imgs/arrow.png"/>
+            <li class="city_div clearfix"><label>所在地 :<span>成都</span></label><img src="<%=request.getContextPath() %>/resources/imgs/arrow.png"/>
                 <div id="show_div">
                     <ul class="clearfix">
                         <li><a href="javascript:void(0)">四川</a></li>
@@ -97,7 +89,7 @@
     <div class="logo_div">
         <div class="logo_img clearfix">
             <a href="" class="clearfix">
-                <img src="./resources/imgs/icon.png" alt=""/>
+                <img src="<%=request.getContextPath() %>/resources/imgs/icon.png" alt=""/>
             </a>
         </div>
     </div>
@@ -121,7 +113,7 @@
                     <input type="text" class="name" ng-model="Enterprise.name"  placeholder="请输入用户名"/>
                 </div>
                 <div class="remove_d">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <div class="user_error1">
                     4-20位字符，支持汉子、字母、数字的组合,不能以数字开头
@@ -140,7 +132,7 @@
                     <input type="password" class="pwd" ng-model="Enterprise.pwd" placeholder="请输入密码"/>
                 </div>
                 <div class="remove_d">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <div class="user_error1">
                     6-20位字符,以字母开头,只包含字符、数字和下划线
@@ -159,7 +151,7 @@
                     <input type="password" class="pwd_agin" ng-model="Enterprise.agin"  placeholder="请再次输入密码"/>
                 </div>
                 <div class="remove_d">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <div class="user_error1">
                     请确认输入密码
@@ -181,7 +173,7 @@
                     <input type="text" class="username" ng-model="Enterprise.username"  placeholder="请输入联系人姓名"/>
                 </div>
                 <div class="remove_d">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <div class="user_error1">
                     4-20位字符，支持汉字、字母、数字的组合,不能以数字开头
@@ -233,7 +225,7 @@
                     <input type="text" class="Fixed_telephone" ng-model="Enterprise.Fixed_telephone"  placeholder="请输入固定电话"/>
                 </div>
                 <div class="remove_d">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <div class="user_error1">
                     请输入固定电话
@@ -252,7 +244,7 @@
                     <input type="text" class="telephone telephone_t" ng-model="Enterprise.telephone" placeholder="请输入手机号"/>
                 </div>
                 <div class="remove_d">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <div class="user_error1">
                     请输入手机号
@@ -272,7 +264,7 @@
                     <input type="text" class="telephone_code" ng-model="Enterprise.telephone_code"  placeholder="请输入短信验证码"/>
                 </div>
                 <div class="remove_d" style="left: 235px;">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <a class="button_a" ng-click='validateTelTwo("userError0")'>获取手机验证码</a>
                 <div class="user_error1">
@@ -292,7 +284,7 @@
                     <input type="text" class="email_e" ng-model="Enterprise.email_e"  placeholder="请输入邮箱"/>
                 </div>
                 <div class="remove_d remove_r">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <div class="user_error1">
                     请输入邮箱
@@ -314,7 +306,7 @@
                     <input style="width: 300px" type="text" class="company" ng-model="Enterprise.company"  placeholder="公司名称和营业执照名称一致，否则审核不通过"/>
                 </div>
                 <div class="remove_d" style="left: 415px;">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <div class="user_error1">
                     公司名称不能空
@@ -364,7 +356,7 @@
                     <input style="width: 300px" type="text" class="address" ng-model="Enterprise.address"   placeholder="公司地址和营业执照地址一致，否则审核不通过"/>
                 </div>
                 <div class="remove_d" style="left: 415px;">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <div class="user_error1">
                     <!--含有汉字、数字、字母、下划线-->
@@ -407,25 +399,42 @@
                     输入正确
                 </div>
             </div>
-            <div class="clearfix chren_div">
+            <div class="clearfix chren_divs licence">
                 <label>&nbsp;</label>
                 <div class="input_d file_div">
-                    营业执照上传
-                    <input type="file"/>
+              		营业执照上传
+                  	<div style="display: none;">
+			        	<input type="file" id="houseMaps" name="houseMaps" onchange="changePicture()"/> 
+			    	</div> 
+			        <input type="button" style='' value="营业执照上传" onclick="document.getElementById('houseMaps').click()"/>
                 </div>
-                <div class="user_error1" style="display:block">
-                    图片限定大小
+                <div class="user_error1" style="display: block">
+                   	 图片限定大小
+                </div>
+                <div class="user_error2">
+                   	上传失败
+                </div>
+                <div class="user_error3">
+                   	上传成功
                 </div>
             </div>
-            <input type="file"/>
-            <div class="clearfix chren_div">
+            <div class="clearfix chren_divs taxpayer">
                 <label>&nbsp;</label>
                 <div class="input_d file_div">
-                    纳税人资格证上传
-                    <input type="file"/>
+              		纳税人资格证上传
+                  	<div style="display: none;">
+			        	<input type="file" id="houseMapss" name="houseMapss" onchange="changePictures()"/> 
+			    	</div> 
+			        <input type="button" style='' value="纳税人资格证上传" onclick="document.getElementById('houseMapss').click()"/>
                 </div>
                 <div class="user_error1" style="display:block">
-                    图片限定大小
+                   	 图片限定大小
+                </div>
+                <div class="user_error2">
+                   	上传失败
+                </div>
+                <div class="user_error3">
+                   	上传成功
                 </div>
             </div>
         </div>
@@ -495,7 +504,7 @@
                     <input type="text" class="name" ng-model="Individual.name"  placeholder="请输入用户名"/>
                 </div>
                 <div class="remove_d">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <div class="user_error1">
                     4-20位字符，支持汉子、字母、数字的组合,不能以数字开头
@@ -514,7 +523,7 @@
                     <input type="password" class="pwd" ng-model="Individual.pwd" placeholder="请输入密码"/>
                 </div>
                 <div class="remove_d">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <div class="user_error1">
                     6-20位字符,以字母开头,只包含字符、数字和下划线
@@ -533,7 +542,7 @@
                     <input type="password" class="pwd_agin" ng-model="Individual.agin" placeholder="请再次输入密码"/>
                 </div>
                 <div class="remove_d">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <div class="user_error1">
                     请确认输入密码
@@ -552,7 +561,7 @@
                     <input type="text" class="email_e" ng-model="Individual.email" placeholder="请输入邮箱"/>
                 </div>
                 <div class="remove_d remove_r">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <div class="user_error1">
                     请输入邮箱
@@ -571,7 +580,7 @@
                     <input type="text" class="telephone telephone_t" ng-model="Individual.telephone" placeholder="请输入手机号"/>
                 </div>
                 <div class="remove_d">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <div class="user_error1">
                     请输入手机号
@@ -591,7 +600,7 @@
                     <input type="text" class="telephone_code" ng-model="Individual.telcode" placeholder="请输入短信验证码"/>
                 </div>
                 <div class="remove_d" style="left: 235px;">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <a class="button_a" ng-click='validateTelOne("userError1")'>获取手机验证码</a>
                 <div class="user_error1">
@@ -653,7 +662,7 @@
                     <input type="text" class="name"  placeholder="请输入用户名"/>
                 </div>
                 <div class="remove_d">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <div class="user_error1">
                     不能以数字开头、限制为4-16个字符
@@ -671,7 +680,7 @@
                     <input type="password" class="pwd" placeholder="请输入密码"/>
                 </div>
                 <div class="remove_d">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <div class="user_error1">
                     以字母开头，6-20位字符，包含字符、数字和下划线
@@ -689,7 +698,7 @@
                     <input type="password" class="pwd_agin"  placeholder="请再次输入密码"/>
                 </div>
                 <div class="remove_d">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <div class="user_error1">
                     请确认输入密码
@@ -710,7 +719,7 @@
                     <input type="text" class="username"  placeholder="请输入联系人姓名"/>
                 </div>
                 <div class="remove_d">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <div class="user_error1">
                     不能以数字开头、限制为4-16个字符
@@ -728,7 +737,7 @@
                     <input type="text" class="input_select"  placeholder="请输入所在部门"/>
                 </div>
                 <div class="remove_d">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <div class="user_error1">
                     不能以数字开头、限制为4-16个字符
@@ -746,7 +755,7 @@
                     <input type="text" class="Fixed_telephone"  placeholder="请输入固定电话"/>
                 </div>
                 <div class="remove_d">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <div class="user_error1">
                     请输入固定电话
@@ -764,7 +773,7 @@
                     <input type="text" class="telephone"  placeholder="请输入手机号"/>
                 </div>
                 <div class="remove_d">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <a class="button_a" href="javascript:void(0)">获取手机验证码</a>
                 <div class="user_error1">
@@ -783,7 +792,7 @@
                     <input type="text" class="telephone_code"  placeholder="请输入短信验证码"/>
                 </div>
                 <div class="remove_d" style="left: 235px;">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <div class="user_error1">
                     请输入短信验证码
@@ -801,7 +810,7 @@
                     <input type="text" class="email_e"  placeholder="请输入邮箱"/>
                 </div>
                 <div class="remove_d remove_r">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <div class="user_error1">
                     请输入邮箱
@@ -822,7 +831,7 @@
                     <input style="width: 300px" type="text" class="company"  placeholder="公司名称和营业执照名称一致，否则审核不通过"/>
                 </div>
                 <div class="remove_d" style="left: 415px;">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <div class="user_error1">
                     不能以数字开头、限制为4-16个字符
@@ -870,7 +879,7 @@
                     <input style="width: 300px" type="text" class="address"  placeholder="公司地址和营业执照地址一致，否则审核不通过"/>
                 </div>
                 <div class="remove_d" style="left: 415px;">
-                    <img src="./resources/imgs/remove.jpg"/>
+                    <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
                 <div class="user_error1">
                     <!--含有汉字、数字、字母、下划线-->
@@ -937,7 +946,7 @@
                 <div class="input_d" style="width: 115px">
                     <input type="text" class="code" ng-model="code" style="width: 95px"/>
                 </div>
-                <img  src="./resources/imgs/code.png" alt="" title="换一张" class="img_code"/>
+                <img  src="<%=request.getContextPath() %>/resources/imgs/code.png" alt="" title="换一张" class="img_code"/>
                 <span class="hun_span">看不清楚？<a href="javascript:void(0)">换一张</a></span>
                 <div class="user_error1">
                     不能为空
@@ -989,7 +998,7 @@
 <div class="Pop_up">
     <p class="clearfix">
         <label>Auto007用户协议</label>
-        <img src="./resources/imgs/close.png" class="close_img" title="关闭"/>
+        <img src="<%=request.getContextPath() %>/resources/imgs/close.png" class="close_img" title="关闭"/>
     </p>
     <div class="content_d">
         sadsadsadsadsadsadsadsadsadsaddnsfdhs年第三方vdsffjdsf仿佛看见回复肯定是会计师对回复
@@ -1001,22 +1010,51 @@
 </body>
 </html>
 <script type="text/javascript">
-function changePicture() {
-	ajaxFileUpload();
-}
-function ajaxFileUpload() {
-	$.ajaxFileUpload({
-		url : '/Auto007/user/upload/',
-		secureuri : false,
-		fileElementId : 'themePicture',
-		dataType : 'json',
-		success : function(data, status) {
-			$("#bg-picture").attr("src", data.filePath);
-		},
-		error : function(data, status, e) {
-			alert(e);
-		}
-	});
-	return false;
-}
+	function changePicture() {
+		ajaxFileUpload();
+	}
+	function ajaxFileUpload() {
+		$.ajaxFileUpload({
+			url : '/Auto007/user/upload/', //需要链接到服务器地址
+			secureuri : false,
+			fileElementId : 'houseMaps', //文件选择框的id属性
+			dataType : 'json', //服务器返回的格式，可以是json, xml
+			success : function(data, status) //相当于java中try语句块的用法
+			{
+				$('.licence .user_error3').show();
+				$('.licence .user_error1').hide();
+				$('.licence .user_error2').hide();
+			},
+			error : function(data, status, e) //相当于java中catch语句块的用法
+			{
+				$('.licence user_error2').show();
+				$('.licence user_error1').hide();
+				$('.licence user_error3').hide();
+			}
+		});
+	}
+	function changePictures() {
+		ajaxFileUploads();
+	}
+	function ajaxFileUploads() {
+		$.ajaxFileUpload({
+			url : '/Auto007/user/uploads/', //需要链接到服务器地址
+			secureuri : false,
+			fileElementId : 'houseMapss', //文件选择框的id属性
+			dataType : 'json', //服务器返回的格式，可以是json, xml
+			success : function(data, status) //相当于java中try语句块的用法
+			{
+				$('.taxpayer .user_error3').show();
+				$('.taxpayer .user_error1').hide();
+				$('.taxpayer .user_error2').hide();
+			},
+			error : function(data, status, e) //相当于java中catch语句块的用法
+			{
+				$('.taxpayer user_error2').show();
+				$('.taxpayer user_error1').hide();
+				$('.taxpayer user_error3').hide();
+			}
+		});
+	}
 </script>
+		

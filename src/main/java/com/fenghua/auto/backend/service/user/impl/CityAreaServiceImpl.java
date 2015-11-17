@@ -1,4 +1,4 @@
-package com.fenghua.auto.backend.service.user;
+package com.fenghua.auto.backend.service.user.impl;
 
 import java.util.List;
 
@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fenghua.auto.backend.dao.user.CityAreaDao;
-import com.fenghua.auto.backend.domain.user.City_area;
+import com.fenghua.auto.backend.domain.user.CityArea;
+import com.fenghua.auto.backend.service.user.CityAreaService;
 
 /**
  * CityArea接口实现
@@ -21,15 +22,15 @@ public class CityAreaServiceImpl implements CityAreaService {
 	private CityAreaDao cityAreaDao;
 	
 	@Override
-	public List<City_area> selectProvince() {
+	public List<CityArea> selectProvince() {
 		return cityAreaDao.selectProvince();
 	}
 	@Override
-	public List<City_area> selectCity(Integer parentId) {
+	public List<CityArea> selectCity(Integer parentId) {
 		return cityAreaDao.selectCity(parentId);
 	}
 	@Override
-	public List<City_area> selectArea(Integer parentId) {
+	public List<CityArea> selectArea(Integer parentId) {
 		return cityAreaDao.selectArea(parentId);
 	}
 }

@@ -1,26 +1,26 @@
 /*==============================================================*/
-/* Database name:  auto007db                                    */
+/* Database name:  Auto007                                      */
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2015-11-17 15:07:41                          */
+/* Created on:     2015-11-16 14:25:01                          */
 /*==============================================================*/
 
 
-drop database if exists auto007db;
+drop database if exists Auto007;
 
 /*==============================================================*/
-/* Database: auto007db                                          */
+/* Database: Auto007                                            */
 /*==============================================================*/
-create database auto007db;
+create database Auto007;
 
-use auto007db;
+use Auto007;
 
 /*==============================================================*/
 /* Table: City_Area                                             */
 /*==============================================================*/
 create table City_Area
 (
-   ID                   bigint not null,
-   Parent_ID            bigint,
+   ID                   int not null,
+   Parent_ID            varchar(6),
    Name                 varchar(20) not null,
    Level                smallint not null,
    Full_Path            varchar(50) not null,
@@ -28,7 +28,7 @@ create table City_Area
    Available            boolean not null,
    primary key (ID)
 )
-Engine = InnoDB;
+type = InnoDB type = ISAM;
 
 /*==============================================================*/
 /* Index: City_Code_idx                                         */
@@ -44,8 +44,8 @@ create unique index City_Code_idx on City_Area
 create table Company
 (
    ID                   bigint not null auto_increment,
-   Compnay_Name         varchar(200) not null,
-   City_Area_ID         bigint,
+   Compnay_Name         varchar(0) not null,
+   Area_Code            varchar(6),
    Detail_Address       varchar(200) not null,
    Headcount            int,
    Business_Licence     varchar(200) not null,
@@ -62,7 +62,7 @@ create table Company
    Last_Modified_By     varchar(30),
    primary key (ID)
 )
-Engine = InnoDB;
+type = InnoDB type = ISAM;
 
 /*==============================================================*/
 /* Index: Company_Name_idx                                      */
@@ -95,7 +95,7 @@ create table Payment_Type
    Last_Modified_By     varchar(30),
    primary key (ID)
 )
-Engine = InnoDB;
+type = InnoDB type = ISAM;
 
 /*==============================================================*/
 /* Table: Role                                                  */
@@ -111,7 +111,7 @@ create table Role
    Last_Modified_By     varchar(30),
    primary key (ID)
 )
-Engine = InnoDB;
+type = InnoDB type = ISAM;
 
 /*==============================================================*/
 /* Index: Name_idx                                              */
@@ -134,7 +134,7 @@ create table Sys_Config
    Last_Modified_TS     varchar(30),
    primary key (Config_Name)
 )
-Engine = InnoDB;
+type = InnoDB type = ISAM;
 
 /*==============================================================*/
 /* Table: User                                                  */
@@ -159,7 +159,7 @@ create table User
    Last_Modified_By     varchar(30),
    primary key (ID)
 )
-Engine = InnoDB;
+type = InnoDB type = ISAM;
 
 /*==============================================================*/
 /* Index: QQ_Number_idx                                         */
@@ -208,7 +208,7 @@ create table User_Address
 (
    ID                   bigint not null auto_increment,
    User_ID              bigint not null,
-   City_Area_ID         bigint,
+   Area_Code            varchar(6),
    Alias                varchar(20) not null,
    Detail_Addr          varchar(200) not null,
    Receiver_Name        varchar(40) not null,
@@ -220,7 +220,7 @@ create table User_Address
    last_Modified_by     varchar(30),
    primary key (ID)
 )
-Engine = InnoDB;
+type = InnoDB type = ISAM;
 
 /*==============================================================*/
 /* Index: UserID_idx                                            */
@@ -245,7 +245,7 @@ create table User_Level
    Last_Modified_By     varchar(30),
    primary key (ID)
 )
-Engine = InnoDB;
+type = InnoDB type = ISAM;
 
 /*==============================================================*/
 /* Table: User_Payment_Type                                     */
@@ -263,7 +263,7 @@ create table User_Payment_Type
    Last_Modified_By     varchar(30),
    primary key (PaymentType_ID, User_ID)
 )
-Engine = InnoDB;
+type = InnoDB type = ISAM;
 
 /*==============================================================*/
 /* Index: UserID_idx                                            */
@@ -276,10 +276,10 @@ create index UserID_idx on User_Payment_Type
 alter table City_Area add constraint FK_City_Parent_FK foreign key (Parent_ID)
       references City_Area (ID) on delete restrict on update restrict;
 
-alter table Company add constraint FK_Company_City_FK foreign key (City_Area_ID)
+alter table Company add constraint FK_Company_City_FK foreign key (Area_Code)
       references City_Area (ID) on delete restrict on update restrict;
 
-alter table User add constraint FK_Reference_22 foreign key (Company_ID)
+alter table User add constraint FK_User_Company foreign key (Company_ID)
       references Company (ID) on delete restrict on update restrict;
 
 alter table User add constraint FK_User_Role_FK foreign key (Role_ID)
@@ -288,7 +288,7 @@ alter table User add constraint FK_User_Role_FK foreign key (Role_ID)
 alter table User add constraint FK_User_UserLev_FK foreign key (User_Level_ID)
       references User_Level (ID) on delete restrict on update restrict;
 
-alter table User_Address add constraint FK_User_Addr_City_FK foreign key (City_Area_ID)
+alter table User_Address add constraint FK_User_Addr_City_FK foreign key (Area_Code)
       references City_Area (ID) on delete restrict on update restrict;
 
 alter table User_Address add constraint FK_User_Addr_User_FK foreign key (User_ID)

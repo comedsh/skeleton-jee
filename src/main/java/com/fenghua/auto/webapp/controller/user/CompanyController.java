@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.fenghua.auto.backend.domain.user.Company;
-import com.fenghua.auto.backend.domain.user.User;
 import com.fenghua.auto.backend.service.user.CompanyService;
 /**
  * 企业

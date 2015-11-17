@@ -13,7 +13,7 @@ import com.fenghua.auto.backend.dao.user.UserDao;
 import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.User;
 /**
- * 个人注册dao实现
+ * 用户的dao实现
  * @author chengbin
  *
  */
@@ -41,6 +41,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 			throw new DaoException(String.format("添加对象出错！语句：%s", getSqlName(SqlId.SQL_INSERT)), e);
 		}
 	}
+	
 	@Override
 	public Long getPaymentId(User user) {
 		Assert.notNull(user);
@@ -77,15 +78,5 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 		}
 		return user;
 	}
-	@Override
-	public List<Company> selectByFixed(String fixed) {
-		Assert.notNull(fixed);
-		List<Company> company = new ArrayList<Company>();
-		try {
-			company = sqlSessionTemplate.selectList(getSqlName(SqlId.SQL_SELECT_BY_FIXED), fixed);
-		} catch (Exception e) {
-			throw new DaoException(String.format("根据Fixed查询对象出错！语句：%s", getSqlName(SqlId.SQL_SELECT_BY_FIXED)), e);
-		}
-		return company;
-	}
+	
 }

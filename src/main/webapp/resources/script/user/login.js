@@ -44,10 +44,7 @@ app.controller('login_ctr',['$scope','$http',function($scope,$http){
     $scope.logins=function(){
         var name=$scope.user.name;
         var pwd=$scope.user.pwd;
-        alert(name)
-        alert(pwd)
         var num=$('.Remember_pwd').attr("data");
-        alert(num)
         if(name==''|| pwd=='' || name==null || pwd==null){
             $('.error').show().html('用户名或密码必填');
         }else if(pwd.length>100){
@@ -62,15 +59,11 @@ app.controller('login_ctr',['$scope','$http',function($scope,$http){
       		  dataType:'json',
       		  data:{'username':name,'password':pwd,'autoLogin':num},
       		  success: function(data,textStatus){
-      		    
       			if(data.message.success){
-      				alert(data.message.msg);
-      		       window.location.href='/desktop';
+      		        window.location.href='/Auto007/secure/main';
       				
       			}else{
-      				$('#loadinfo').text('');
-      				info.text(data.message.msg);
-      				
+      				window.location.href='错误页面';
       			}
       		  },
       		  error:function(data){

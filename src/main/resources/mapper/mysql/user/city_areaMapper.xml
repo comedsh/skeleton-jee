@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fenghua.auto.backend.domain.user.City_area" >
-  <resultMap id="BaseResultMap" type="com.fenghua.auto.backend.domain.vo.user.City_areaVo" >
+<mapper namespace="com.fenghua.auto.backend.domain.user.CityArea" >
+  <resultMap id="BaseResultMap" type="com.fenghua.auto.backend.domain.vo.user.CityAreaVo" >
     <id column="ID" property="id" jdbcType="INTEGER" />
     <result column="Parent_ID" property="parentId" jdbcType="INTEGER" />
     <result column="Name" property="name" jdbcType="VARCHAR" />
@@ -23,7 +23,7 @@
     delete from city_area
     where ID = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.fenghua.auto.backend.domain.user.City_area" >
+  <insert id="insert" parameterType="com.fenghua.auto.backend.domain.user.CityArea" >
     insert into city_area (ID, Parent_ID, Name, 
       Level, Full_Path, Full_Name, 
       Available)
@@ -31,7 +31,7 @@
       #{level,jdbcType=SMALLINT}, #{fullPath,jdbcType=VARCHAR}, #{fullName,jdbcType=VARCHAR}, 
       #{available,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.fenghua.auto.backend.domain.user.City_area" >
+  <insert id="insertSelective" parameterType="com.fenghua.auto.backend.domain.user.CityArea" >
     insert into city_area
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -80,7 +80,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.backend.domain.user.City_area" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.backend.domain.user.CityArea" >
     update city_area
     <set >
       <if test="parentId != null" >
@@ -104,7 +104,7 @@
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.backend.domain.user.City_area" >
+  <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.backend.domain.user.CityArea" >
     update city_area
     set Parent_ID = #{parentId,jdbcType=INTEGER},
       Name = #{name,jdbcType=VARCHAR},
@@ -120,13 +120,13 @@
     from city_area
     where Level = #{level,jdbcType=SMALLINT}
   </select>
-  <select id="selectByCity" resultMap="BaseResultMap" parameterType="com.fenghua.auto.backend.domain.user.City_area" >
+  <select id="selectByCity" resultMap="BaseResultMap" parameterType="com.fenghua.auto.backend.domain.user.CityArea" >
     select 
     <include refid="Base_Column_List" />
     from city_area
     where Level = #{level,jdbcType=SMALLINT} and Parent_ID = #{parentId,jdbcType=INTEGER}
   </select>
-  <select id="selectByArea" resultMap="BaseResultMap" parameterType="com.fenghua.auto.backend.domain.user.City_area" >
+  <select id="selectByArea" resultMap="BaseResultMap" parameterType="com.fenghua.auto.backend.domain.user.CityArea" >
    	select 
     <include refid="Base_Column_List" />
     from city_area

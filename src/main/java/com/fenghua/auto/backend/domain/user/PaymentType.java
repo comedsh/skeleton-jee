@@ -1,23 +1,23 @@
 package com.fenghua.auto.backend.domain.user;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import com.fenghua.auto.backend.domain.DomainObject;
 /**
- * 支付方式
- * @author chengbin
+ * 付款方式
+ * @author thinkpad
  *
  */
-public class User_payment_type extends User_payment_typeKey  implements DomainObject {
+public class PaymentType implements DomainObject {
 	
 	private static final long serialVersionUID = 1L;
-	
-    private Integer status;
+    private Long id;
 
-    private Integer duration;
+    private String typename;
 
-    private BigDecimal debtLimit;
+    private String description;
+
+    private String needapprove;
 
     private Date createdTs;
 
@@ -27,28 +27,36 @@ public class User_payment_type extends User_payment_typeKey  implements DomainOb
 
     private String lastModifiedBy;
 
-    public Integer getStatus() {
-        return status;
+    public Long getId() {
+        return id;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Integer getDuration() {
-        return duration;
+    public String getTypename() {
+        return typename;
     }
 
-    public void setDuration(Integer duration) {
-        this.duration = duration;
+    public void setTypename(String typename) {
+        this.typename = typename == null ? null : typename.trim();
     }
 
-    public BigDecimal getDebtLimit() {
-        return debtLimit;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDebtLimit(BigDecimal debtLimit) {
-        this.debtLimit = debtLimit;
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
+    }
+
+    public String getNeedapprove() {
+        return needapprove;
+    }
+
+    public void setNeedapprove(String needapprove) {
+        this.needapprove = needapprove == null ? null : needapprove.trim();
     }
 
     public Date getCreatedTs() {

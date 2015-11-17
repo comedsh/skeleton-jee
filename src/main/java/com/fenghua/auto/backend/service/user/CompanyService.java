@@ -13,17 +13,17 @@ import com.fenghua.auto.backend.domain.user.Company;
  */
 public interface CompanyService {
 	/**
-	 * 通过fixed查询对应的实体
+	 * 通过fixed查询company
 	 * @return
 	 */
 	public List<Company> getUserByFixed(String fixed);
 	/**
-	 * 通过ContactsTelephone查询对应的实体
+	 * 通过telephone查询对应的实体
 	 * @return
 	 */
 	public List<Company> getContactsTelephone(String telephone);
 	/**
-	 * 通过ContactsTelephone查询对应的实体
+	 * 通过email查询对应的实体
 	 * @return
 	 */
 	public List<Company> getCompanyByEmail(String email);

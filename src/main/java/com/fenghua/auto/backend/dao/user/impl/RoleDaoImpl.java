@@ -12,7 +12,7 @@ import com.fenghua.auto.backend.dao.impl.BaseDaoImpl;
 import com.fenghua.auto.backend.dao.user.RoleDao;
 import com.fenghua.auto.backend.domain.user.Role;
 /**
- * 个人注册dao实现
+ * 用户角色的dao实现
  * @author chengbin
  *
  */
@@ -43,6 +43,4 @@ public class RoleDaoImpl extends BaseDaoImpl<Role> implements RoleDao {
 		}
 		return str;
 	}
-	
-	
 }

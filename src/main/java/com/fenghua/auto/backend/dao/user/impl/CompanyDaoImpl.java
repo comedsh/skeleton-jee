@@ -12,7 +12,7 @@ import com.fenghua.auto.backend.dao.impl.BaseDaoImpl;
 import com.fenghua.auto.backend.dao.user.CompanyDao;
 import com.fenghua.auto.backend.domain.user.Company;
 /**
- * 个人注册dao实现
+ * 企业信息dao实现
  * @author chengbin
  *
  */

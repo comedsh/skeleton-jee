@@ -856,7 +856,7 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
 				}
 			)
             .success(function(data){
-            	 window.location.href = "/Auto007/user/ulogin";
+            	 window.location.href = "/Auto007/secure/fowardLogin";
             })
             .error(function(data){
 
@@ -920,7 +920,7 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     	if($('.border_div .sub_name').val()==0 && $('.border_div .sub_pws').val()==0 && $('.border_div .sub_pwsa').val()==0 
     			&& $('.border_div .sub_username').val()==0 && $('.border_div .sub_select_Num1').val()==0 && $('.border_div .sub_select_Num2').val()==0 
     			&& $('.border_div .sub_select_Num3').val()==0 && $('.border_div .sub_email').val()==0 && $('.border_div .sub_tel').val()==0 
-    			&& $('.border_div .sub_tel_code').val()==0
+    			//&& $('.border_div .sub_tel_code').val()==0
         		&& $('.border_div .sub_code').val()==0 && $('.border_div .sub_fixed').val()==0 && $('.border_div .sub_company').val()==0 
         		&& $('.border_div .sub_address').val()==0 && $('.border_div .sub_agree').attr('data')==0){
         	$http.post(
@@ -947,7 +947,7 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     				}
     			)
                 .success(function(data){
-                	 window.location.href = "/Auto007/user/ulogin";
+                	 window.location.href = "/Auto007/secure/fowardLogin";
                 })
                 .error(function(data){
 
