@@ -1,7 +1,7 @@
 /*==============================================================*/
 /* Database name:  auto007db                                    */
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2015-11-17 18:40:26                          */
+/* Created on:     2015-11-17 22:30:33                          */
 /*==============================================================*/
 
 
@@ -148,8 +148,8 @@ create table User
    MobilePhone          varchar(20),
    QQ_Number            varchar(15),
    WeChat               varchar(20),
-   Role_ID              int,
-   User_Level_ID        int,
+   Role_ID              bigint,
+   User_Level_ID        bigint,
    Company_ID           bigint,
    Failed_Login_Times   smallint not null default 0,
    Available            boolean not null,
@@ -236,7 +236,7 @@ create index UserID_idx on User_Address
 create table User_Level
 (
    ID                   bigint not null auto_increment,
-   Previous_ID          int,
+   Previous_ID          bigint,
    Name                 varchar(20) not null,
    Description          varchar(100),
    Created_TS           timestamp,
