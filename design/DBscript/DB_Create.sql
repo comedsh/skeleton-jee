@@ -44,7 +44,7 @@ create unique index City_Code_idx on City_Area
 create table Company
 (
    ID                   bigint not null auto_increment,
-   Compnay_Name         varchar(0) not null,
+   Compnay_Name         varchar(200) not null,
    City_Area_ID         bigint,
    Detail_Address       varchar(200) not null,
    Headcount            int,
