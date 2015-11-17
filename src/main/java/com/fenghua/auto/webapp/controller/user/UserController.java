@@ -83,7 +83,7 @@ public class UserController {
 	
 	@RequestMapping(value = "/main")
 	public String main(Model model,HttpServletRequest request) {
-		return "/WEB-INF/views/user/userCenter";
+		return "/WEB-INF/views/user/userCenter/userCenter";
 	}
 
 	/**
