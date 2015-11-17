@@ -1,7 +1,7 @@
 /*==============================================================*/
 /* Database name:  auto007db                                    */
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2015-11-17 18:40:26                          */
+/* Created on:     2015-11-17 22:26:34                          */
 /*==============================================================*/
 
 
@@ -148,8 +148,8 @@ create table User
    MobilePhone          varchar(20),
    QQ_Number            varchar(15),
    WeChat               varchar(20),
-   Role_ID              int,
-   User_Level_ID        int,
+   Role_ID              bigint,
+   User_Level_ID        bigint,
    Company_ID           bigint,
    Failed_Login_Times   smallint not null default 0,
    Available            boolean not null,
