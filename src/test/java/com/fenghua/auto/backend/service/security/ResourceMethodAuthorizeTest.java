@@ -15,7 +15,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.test.context.ContextConfiguration;
 
 import com.fenghua.auto.backend.service.security.ResourceService;
 import com.fenghua.auto.test.AbstractControllerTest;
@@ -27,7 +26,6 @@ import com.fenghua.auto.test.AbstractControllerTest;
  * @date 2015年10月28日
  * @version
  */
-@ContextConfiguration({ "/spring-security.xml" })
 public class ResourceMethodAuthorizeTest extends AbstractControllerTest {
 
 	@Autowired

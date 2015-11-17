@@ -21,7 +21,7 @@ import com.fenghua.auto.backend.domain.vo.education.SysDictionaryVo;
 import com.fenghua.auto.backend.service.education.SysDictionaryService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/spring-context.xml", "/spring-mybatis.xml"})
+@ContextConfiguration({"/spring-context.xml", "/spring-mybatis.xml","/spring-security.xml"})
 //@Transactional
 public class SysDictionaryDaoTest {
 	

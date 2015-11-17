@@ -31,7 +31,7 @@ import com.alibaba.fastjson.JSON;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/spring-context.xml", "/spring-mybatis.xml"})
+@ContextConfiguration({"/spring-context.xml", "/spring-mybatis.xml","/spring-security.xml"})
 public class AbstractControllerTest {
 	
 	protected MockHttpServletRequest request;
