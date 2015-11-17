@@ -1,7 +1,7 @@
 /*==============================================================*/
 /* Database name:  auto007db                                    */
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2015-11-17 12:06:32                          */
+/* Created on:     2015-11-17 15:07:41                          */
 /*==============================================================*/
 
 
@@ -19,8 +19,8 @@ use auto007db;
 /*==============================================================*/
 create table City_Area
 (
-   ID                   int not null,
-   Parent_ID            varchar(6),
+   ID                   bigint not null,
+   Parent_ID            bigint,
    Name                 varchar(20) not null,
    Level                smallint not null,
    Full_Path            varchar(50) not null,
@@ -45,7 +45,7 @@ create table Company
 (
    ID                   bigint not null auto_increment,
    Compnay_Name         varchar(200) not null,
-   Area_Code            varchar(6),
+   City_Area_ID         bigint,
    Detail_Address       varchar(200) not null,
    Headcount            int,
    Business_Licence     varchar(200) not null,
@@ -208,7 +208,7 @@ create table User_Address
 (
    ID                   bigint not null auto_increment,
    User_ID              bigint not null,
-   Area_Code            varchar(6),
+   City_Area_ID         bigint,
    Alias                varchar(20) not null,
    Detail_Addr          varchar(200) not null,
    Receiver_Name        varchar(40) not null,
@@ -276,7 +276,7 @@ create index UserID_idx on User_Payment_Type
 alter table City_Area add constraint FK_City_Parent_FK foreign key (Parent_ID)
       references City_Area (ID) on delete restrict on update restrict;
 
-alter table Company add constraint FK_Company_City_FK foreign key (Area_Code)
+alter table Company add constraint FK_Company_City_FK foreign key (City_Area_ID)
       references City_Area (ID) on delete restrict on update restrict;
 
 alter table User add constraint FK_Reference_22 foreign key (Company_ID)
@@ -288,7 +288,7 @@ alter table User add constraint FK_User_Role_FK foreign key (Role_ID)
 alter table User add constraint FK_User_UserLev_FK foreign key (User_Level_ID)
       references User_Level (ID) on delete restrict on update restrict;
 
-alter table User_Address add constraint FK_User_Addr_City_FK foreign key (Area_Code)
+alter table User_Address add constraint FK_User_Addr_City_FK foreign key (City_Area_ID)
       references City_Area (ID) on delete restrict on update restrict;
 
 alter table User_Address add constraint FK_User_Addr_User_FK foreign key (User_ID)
