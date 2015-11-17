@@ -1,3 +1,5 @@
+use auto007db;
+
 INSERT INTO `city_area_stage` 
 VALUES 
 (110000,NULL,'北京市',1,'110000','北京市',1),
