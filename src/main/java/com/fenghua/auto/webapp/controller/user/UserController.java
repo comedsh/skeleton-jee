@@ -34,7 +34,7 @@ import com.fenghua.auto.backend.core.utills.ScaleImg;
 import com.fenghua.auto.backend.core.utills.graphValidate.PictureCheckCode;
 import com.fenghua.auto.backend.core.utills.message.SMSMessage;
 import com.fenghua.auto.backend.domain.user.Company;
-import com.fenghua.auto.backend.domain.user.Payment_type;
+import com.fenghua.auto.backend.domain.user.PaymentType;
 import com.fenghua.auto.backend.domain.user.User;
 import com.fenghua.auto.backend.service.user.UserService;
 import com.fenghua.auto.webapp.view.Result;
@@ -93,7 +93,7 @@ public class UserController {
 	 * @createTime 2015.11.4
 	 */
 	@RequestMapping(value = "/regisUserCompany", method = RequestMethod.POST)
-	public String addUserAndCompany(@Valid User user, @Valid Company company, @Valid Payment_type paymenttype, Model model,HttpServletRequest request) {
+	public String addUserAndCompany(@Valid User user, @Valid Company company, @Valid PaymentType paymenttype, Model model,HttpServletRequest request) {
 		String licence = request.getSession().getAttribute("licence").toString();
 		company.setBusinessLicence(licence);
 		userService.insert(user,company,paymenttype);

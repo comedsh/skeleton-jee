@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 import com.fenghua.auto.backend.dao.BaseDao;
-import com.fenghua.auto.backend.domain.user.City_area;;
+import com.fenghua.auto.backend.domain.user.Cityarea;;
 /**
  * CityArea dao
  * @author chengbin
@@ -12,23 +12,23 @@ import com.fenghua.auto.backend.domain.user.City_area;;
  *
  */
 @Repository
-public interface CityAreaDao extends BaseDao<City_area> {
+public interface CityAreaDao extends BaseDao<Cityarea> {
 	/**
 	 * 获取省份
 	 * @param Fixed
 	 * @return
 	 */
-	public List<City_area> selectProvince(); 
+	public List<Cityarea> selectProvince(); 
 	/**
 	 * 通过父节点id获取市级
 	 * @param Fixed
 	 * @return
 	 */
-	public List<City_area> selectCity(Integer parentId); 
+	public List<Cityarea> selectCity(Integer parentId); 
 	/**
 	 * 通过父节点id获取县级
 	 * @param Fixed
 	 * @return
 	 */
-	public List<City_area> selectArea(Integer parentId); 
+	public List<Cityarea> selectArea(Integer parentId); 
 }

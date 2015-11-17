@@ -7,17 +7,17 @@ import com.fenghua.auto.backend.dao.DaoException;
 import com.fenghua.auto.backend.dao.constants.SqlId;
 import com.fenghua.auto.backend.dao.impl.BaseDaoImpl;
 import com.fenghua.auto.backend.dao.user.UserPaymentTypeDao;
-import com.fenghua.auto.backend.domain.user.User_payment_type;
+import com.fenghua.auto.backend.domain.user.UserPaymentType;
 /**
  * 用户与支付方式的dao实现
  * @author chengbin
  *
  */
 @Repository
-public class UserPaymentTypeDaoImpl extends BaseDaoImpl<User_payment_type> implements UserPaymentTypeDao {
+public class UserPaymentTypeDaoImpl extends BaseDaoImpl<UserPaymentType> implements UserPaymentTypeDao {
 
 	@Override
-	public void insert(User_payment_type payment) {
+	public void insert(UserPaymentType payment) {
 		Assert.notNull(payment);
 		try {
 			sqlSessionTemplate.insert(getSqlName(SqlId.SQL_INSERT), payment);

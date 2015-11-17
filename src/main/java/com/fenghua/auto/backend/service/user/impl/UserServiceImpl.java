@@ -12,9 +12,9 @@ import com.fenghua.auto.backend.dao.user.PaymentTypeDao;
 import com.fenghua.auto.backend.dao.user.UserDao;
 import com.fenghua.auto.backend.dao.user.UserPaymentTypeDao;
 import com.fenghua.auto.backend.domain.user.Company;
-import com.fenghua.auto.backend.domain.user.Payment_type;
+import com.fenghua.auto.backend.domain.user.PaymentType;
 import com.fenghua.auto.backend.domain.user.User;
-import com.fenghua.auto.backend.domain.user.User_payment_type;
+import com.fenghua.auto.backend.domain.user.UserPaymentType;
 import com.fenghua.auto.backend.service.user.UserService;
 
 /**
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
 		userDao.insert(personal);
 	}
 	@Override
-	public void insert(User personal, Company company, Payment_type payment) {
+	public void insert(User personal, Company company, PaymentType payment) {
 //		//录入角色
 //		Role role = new Role();
 //		role.setName("企业买家");
@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
 		personal.setRole(Long.parseLong("2"));
 		Long userId = userDao.getPaymentId(personal);
 		//user与支付关系数据
-		User_payment_type payment_type = new User_payment_type();
+		UserPaymentType payment_type = new UserPaymentType();
 		payment_type.setUserId(userId);
 		payment_type.setStatus(0);
 		payment_type.setPaymenttypeId(paymentId);

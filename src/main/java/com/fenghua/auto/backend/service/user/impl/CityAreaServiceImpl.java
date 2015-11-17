@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fenghua.auto.backend.dao.user.CityAreaDao;
-import com.fenghua.auto.backend.domain.user.City_area;
+import com.fenghua.auto.backend.domain.user.Cityarea;
 import com.fenghua.auto.backend.service.user.CityAreaService;
 
 /**
@@ -22,15 +22,15 @@ public class CityAreaServiceImpl implements CityAreaService {
 	private CityAreaDao cityAreaDao;
 	
 	@Override
-	public List<City_area> selectProvince() {
+	public List<Cityarea> selectProvince() {
 		return cityAreaDao.selectProvince();
 	}
 	@Override
-	public List<City_area> selectCity(Integer parentId) {
+	public List<Cityarea> selectCity(Integer parentId) {
 		return cityAreaDao.selectCity(parentId);
 	}
 	@Override
-	public List<City_area> selectArea(Integer parentId) {
+	public List<Cityarea> selectArea(Integer parentId) {
 		return cityAreaDao.selectArea(parentId);
 	}
 }

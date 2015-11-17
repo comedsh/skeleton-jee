@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fenghua.auto.backend.domain.user.City_area;
+import com.fenghua.auto.backend.domain.user.Cityarea;
 import com.fenghua.auto.backend.service.user.CityAreaService;
 /**
  * 城市
@@ -31,7 +31,7 @@ public class CityAreaController {
 	 * @param res
 	 */
 	@RequestMapping(value = "/selectProvince", method = RequestMethod.POST)
-	public @ResponseBody List<City_area> selectProvince(HttpServletRequest req, HttpServletResponse res) {
+	public @ResponseBody List<Cityarea> selectProvince(HttpServletRequest req, HttpServletResponse res) {
 		return cityAreaService.selectProvince();
 	}
 	/**
@@ -40,7 +40,7 @@ public class CityAreaController {
 	 * @param res
 	 */
 	@RequestMapping(value = "/selectCity", method = RequestMethod.POST)
-	public @ResponseBody List<City_area> selectCity(@RequestParam Integer parentId, HttpServletRequest req, HttpServletResponse res) {
+	public @ResponseBody List<Cityarea> selectCity(@RequestParam Integer parentId, HttpServletRequest req, HttpServletResponse res) {
 		return cityAreaService.selectCity(parentId);
 	}
 	/**
@@ -49,7 +49,7 @@ public class CityAreaController {
 	 * @param res
 	 */
 	@RequestMapping(value = "/selectArea", method = RequestMethod.POST)
-	public @ResponseBody List<City_area> selectArea(@RequestParam Integer parentId, HttpServletRequest req, HttpServletResponse res) {
+	public @ResponseBody List<Cityarea> selectArea(@RequestParam Integer parentId, HttpServletRequest req, HttpServletResponse res) {
 		return cityAreaService.selectArea(parentId);
 	}
 }

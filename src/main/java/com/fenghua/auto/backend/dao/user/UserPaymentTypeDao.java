@@ -3,7 +3,7 @@ package com.fenghua.auto.backend.dao.user;
 import org.springframework.stereotype.Repository;
 
 import com.fenghua.auto.backend.dao.BaseDao;
-import com.fenghua.auto.backend.domain.user.User_payment_type;;
+import com.fenghua.auto.backend.domain.user.UserPaymentType;;
 /**
  * 用户支付关系dao
  * @author chengbin
@@ -11,10 +11,10 @@ import com.fenghua.auto.backend.domain.user.User_payment_type;;
  *
  */
 @Repository
-public interface UserPaymentTypeDao extends BaseDao<User_payment_type> {
+public interface UserPaymentTypeDao extends BaseDao<UserPaymentType> {
 	/**
 	 * 插入一条用户与支付的关系数据
 	 */
-	public void insert(User_payment_type payment); 
+	public void insert(UserPaymentType payment); 
 	
 }

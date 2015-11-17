@@ -2,7 +2,7 @@ package com.fenghua.auto.backend.service.user;
 
 import java.util.List;
 
-import com.fenghua.auto.backend.domain.user.City_area;
+import com.fenghua.auto.backend.domain.user.Cityarea;
 
 /**
  * 地区service
@@ -16,15 +16,15 @@ public interface CityAreaService {
 	 * 获取省份
 	 * @return
 	 */
-	public List<City_area> selectProvince();
+	public List<Cityarea> selectProvince();
 	/**
 	 * 通过父节点id获取市级城市
 	 * @return
 	 */
-	public List<City_area> selectCity(Integer parentId);
+	public List<Cityarea> selectCity(Integer parentId);
 	/**
 	 * 通过父节点id获取县级城市
 	 * @return
 	 */
-	public List<City_area> selectArea(Integer parentId);
+	public List<Cityarea> selectArea(Integer parentId);
 }
