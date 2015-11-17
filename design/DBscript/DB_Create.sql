@@ -21,10 +21,10 @@ create table City_Area
 (
    ID                   bigint not null,
    Parent_ID            bigint,
-   Name                 varchar(20) not null,
+   Name                 varchar(100) not null,
    Level                smallint not null,
    Full_Path            varchar(50) not null,
-   Full_Name            varchar(60) not null,
+   Full_Name            varchar(200) not null,
    Available            boolean not null,
    primary key (ID)
 )

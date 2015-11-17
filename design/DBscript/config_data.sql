@@ -1,6 +1,6 @@
 use auto007db;
 
-INSERT INTO `City_Area` 
+INSERT INTO `City_Area`(ID,Parent_ID,Name,Level,Full_Path,Full_Name,Available) 
 VALUES 
 (110000,NULL,'北京市',1,'110000','北京市',1),
 (110101,110000,'东城区',2,'110000,110101','北京市,东城区',1),
