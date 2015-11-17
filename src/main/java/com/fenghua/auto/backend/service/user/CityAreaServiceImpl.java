@@ -1,4 +1,4 @@
-package com.fenghua.auto.backend.service.user.impl;
+package com.fenghua.auto.backend.service.user;
 
 import java.util.List;
 
@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.fenghua.auto.backend.dao.user.CityAreaDao;
 import com.fenghua.auto.backend.domain.user.City_area;
-import com.fenghua.auto.backend.service.user.CityAreaService;
 
 /**
  * CityArea接口实现

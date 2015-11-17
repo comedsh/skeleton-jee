@@ -44,7 +44,7 @@
     height:117px;
     margin-bottom: 20px;
     background-color: #fff;
-    background:url('../images/hang.png') no-repeat 0 center;
+    background:url('../../../resources/images/hang.png') no-repeat 0 center;
 }
 .order{
     width: 1050px;
@@ -259,7 +259,7 @@ color:#666;
     height: 102px;
     margin-left: 5px;
     margin-top: 8px;
-    background:url('../images/buyers.png') no-repeat center;
+    background:url('../../../resources/images/buyers.png') no-repeat center;
 }
 .buyers p{
     width: 200px;
@@ -281,12 +281,12 @@ color:#666;
     height: 27px;
     text-align: center;
     line-height: 27px;
-    background: url('../images/buyers1.png') no-repeat center;
+    background: url('../../../resources/images/buyers1.png') no-repeat center;
     font-size: 14px;
 }
 .buyers div .span_active{
     color: #0782d8;
-    background: url('../images/buyers2.png') no-repeat 1px 2px;
+    background: url('../../../resources/images/buyers2.png') no-repeat 1px 2px;
 }
 .buyers div a{
     display: inline-block;

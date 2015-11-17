@@ -79,7 +79,7 @@
     width: 900px;
     height: 250px;
 }
-.name_pwd .chren_div{
+.name_pwd .chren_div,.name_pwd .chren_divs {
     width: 750px;
     height: 35px;
     line-height: 35px;
@@ -88,7 +88,7 @@
     float: left;
     position: relative;
 }
-.name_pwd .chren_div label{
+.name_pwd .chren_div label,.name_pwd .chren_divs label{
     float: left;
     width: 90px;
     height: 36px;
@@ -96,7 +96,7 @@
     text-align: right;
     margin-right: 15px;
 }
-.name_pwd .chren_div .input_d{
+.name_pwd .chren_div .input_d,.name_pwd .chren_divs .input_d{
     float: left;
     height: 34px;
     line-height: 34px;
@@ -234,7 +234,7 @@
     overflow:hidden;
     cursor: pointer;
 }
-.name_pwd .chren_div .file_div input{
+.name_pwd .chren_divs .file_div input{
     position: absolute;
     top:0;
     left: 0;

@@ -25,7 +25,7 @@
 .header_ul .header_ul_right .user_center{
     padding-right: 18px;
     text-align: left;
-    background: url("../images/usercenter.png") no-repeat 2px 10px;
+    background: url("../../../resources/images/usercenter.png") no-repeat 2px 10px;
 }
 .input_div input{
     width: 336px;
@@ -56,5 +56,5 @@
     text-align: center;
     border-radius:4px;
     cursor: pointer;
-    background:#fff url('../images/shopping.png') no-repeat 0 center;
+    background:#fff url('../../../resources/images/shopping.png') no-repeat 0 center;
 }
