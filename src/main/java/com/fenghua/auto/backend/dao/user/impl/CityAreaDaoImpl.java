@@ -10,18 +10,18 @@ import com.fenghua.auto.backend.dao.DaoException;
 import com.fenghua.auto.backend.dao.constants.SqlId;
 import com.fenghua.auto.backend.dao.impl.BaseDaoImpl;
 import com.fenghua.auto.backend.dao.user.CityAreaDao;
-import com.fenghua.auto.backend.domain.user.Cityarea;
+import com.fenghua.auto.backend.domain.user.CityArea;
 /**
  * 省份城市dao实现
  * @author chengbin
  *
  */
 @Repository
-public class CityAreaDaoImpl extends BaseDaoImpl<Cityarea> implements CityAreaDao {
+public class CityAreaDaoImpl extends BaseDaoImpl<CityArea> implements CityAreaDao {
 	
 	@Override
-	public List<Cityarea> selectProvince() {
-		List<Cityarea> cityArea = new ArrayList<Cityarea>();
+	public List<CityArea> selectProvince() {
+		List<CityArea> cityArea = new ArrayList<CityArea>();
 		try {
 			cityArea = sqlSessionTemplate.selectList(getSqlName(SqlId.SQL_SELECT_BY_PROVINCE),Short.parseShort("1"));
 		} catch (Exception e) {
@@ -31,10 +31,10 @@ public class CityAreaDaoImpl extends BaseDaoImpl<Cityarea> implements CityAreaDa
 	}
 	
 	@Override
-	public List<Cityarea> selectCity(Integer parentId) {
+	public List<CityArea> selectCity(Integer parentId) {
 		Assert.notNull(parentId);
-		List<Cityarea> cityArea = new ArrayList<Cityarea>();
-		Cityarea city_area = new Cityarea();
+		List<CityArea> cityArea = new ArrayList<CityArea>();
+		CityArea city_area = new CityArea();
 		city_area.setParentId(parentId);
 		city_area.setLevel(Short.parseShort("2"));
 		try {
@@ -46,10 +46,10 @@ public class CityAreaDaoImpl extends BaseDaoImpl<Cityarea> implements CityAreaDa
 	}
 	
 	@Override
-	public List<Cityarea> selectArea(Integer parentId) {
+	public List<CityArea> selectArea(Integer parentId) {
 		Assert.notNull(parentId);
-		List<Cityarea> cityArea = new ArrayList<Cityarea>();
-		Cityarea city_area = new Cityarea();
+		List<CityArea> cityArea = new ArrayList<CityArea>();
+		CityArea city_area = new CityArea();
 		city_area.setParentId(parentId);
 		city_area.setLevel(Short.parseShort("3"));
 		try {

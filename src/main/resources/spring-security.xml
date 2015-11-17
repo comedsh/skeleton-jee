@@ -73,7 +73,7 @@
     <!-- 认证成功跳转URL -->
 	<beans:bean id="loginAuthenticationSuccessHandler"
 		class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
-		<beans:property name="defaultTargetUrl" value="/user/userCenter"></beans:property>
+		<beans:property name="defaultTargetUrl" value="/secure/userCenter"></beans:property>
 		<beans:property name="redirectStrategy" ref="defaultForwardStrategy"></beans:property>		
 	</beans:bean>
 

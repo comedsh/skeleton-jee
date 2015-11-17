@@ -1021,14 +1021,12 @@
 			dataType : 'json', //服务器返回的格式，可以是json, xml
 			success : function(data, status) //相当于java中try语句块的用法
 			{
-				alert("ffffffff")
 				$('.licence .user_error3').show();
 				$('.licence .user_error1').hide();
 				$('.licence .user_error2').hide();
 			},
 			error : function(data, status, e) //相当于java中catch语句块的用法
 			{
-				alert("eeeee")
 				$('.licence user_error2').show();
 				$('.licence user_error1').hide();
 				$('.licence user_error3').hide();

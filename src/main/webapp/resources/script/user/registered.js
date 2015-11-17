@@ -856,7 +856,7 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
 				}
 			)
             .success(function(data){
-            	 window.location.href = "/Auto007/user/ulogin";
+            	 window.location.href = "/Auto007/secure/fowardLogin";
             })
             .error(function(data){
 
@@ -947,7 +947,7 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     				}
     			)
                 .success(function(data){
-                	 window.location.href = "/Auto007/user/ulogin";
+                	 window.location.href = "/Auto007/secure/fowardLogin";
                 })
                 .error(function(data){
 

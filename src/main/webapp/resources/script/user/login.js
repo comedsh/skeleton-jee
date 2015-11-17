@@ -60,7 +60,7 @@ app.controller('login_ctr',['$scope','$http',function($scope,$http){
       		  data:{'username':name,'password':pwd,'autoLogin':num},
       		  success: function(data,textStatus){
       			if(data.message.success){
-      		        window.location.href='/Auto007/user/main';
+      		        window.location.href='/Auto007/secure/main';
       				
       			}else{
       				window.location.href='错误页面';

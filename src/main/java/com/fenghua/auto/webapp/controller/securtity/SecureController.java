@@ -11,6 +11,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -58,18 +59,39 @@ public class SecureController {
 	}
 		
 	/**
-	 * 系统主界面入口
+	 * 登录调用接口
+	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value="/home",method=RequestMethod.POST)
-	public ModelAndView home(HttpServletRequest request) {
-      
-		HashMap<String,Result> model = new HashMap<String,Result>();
+	@RequestMapping(value = "/userCenter", method = RequestMethod.POST)
+	public @ResponseBody Map<String,Result> userCenter(HttpServletRequest request) {
+		Map<String,Result> model = new HashMap<String,Result>();
 		Result msg = new Result(true,"登录成功");
 		model.put("message", msg);
-		logger.debug("{}",request.getParameter("username"),msg.getMsg());
-		//根据认证信息跳转不同主页
-		return new ModelAndView("/home",model);
+		return model;
+	}
+	
+	/**
+	 * 登录成功后，跳转到用户中心
+	 * @param model
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/main")
+	public String main(Model model,HttpServletRequest request) {
+		return "/WEB-INF/views/user/userCenter/userCenter";
+	}
+	
+	/**
+	 * 跳转到登录页面
+	 * @param user
+	 * @param model
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/fowardLogin")
+	public String showLoginPage() {
+		return "/login";
 	}
 	
 	/**
