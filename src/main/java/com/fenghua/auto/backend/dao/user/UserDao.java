@@ -8,7 +8,7 @@ import com.fenghua.auto.backend.dao.BaseDao;
 import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.User;;
 /**
- * 个人注册dao
+ * 用户dao
  * @author chengbin
  * @createtime 2015.11.2
  *
@@ -22,9 +22,8 @@ public interface UserDao extends BaseDao<User> {
 	 */
 	public List<User> selectByName(String name);
 	/**
-	 * 企业注册
+	 * 增加用户
 	 * @param user
-	 * @param company
 	 */
 	public void insert(User user);
 	/**
@@ -44,10 +43,4 @@ public interface UserDao extends BaseDao<User> {
 	 * @return
 	 */
 	public List<User> selectByTelephone(String telephone); 
-	/**
-	 * 通过用户Fixed查询对应数据
-	 * @param Fixed
-	 * @return
-	 */
-	public List<Company> selectByFixed(String fixed); 
 }

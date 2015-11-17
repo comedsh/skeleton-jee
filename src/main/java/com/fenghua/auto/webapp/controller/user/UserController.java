@@ -6,7 +6,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,10 +17,10 @@ import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,14 +35,14 @@ import com.fenghua.auto.backend.core.utills.graphValidate.PictureCheckCode;
 import com.fenghua.auto.backend.core.utills.message.SMSMessage;
 import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.Payment_type;
-import com.fenghua.auto.backend.domain.user.Role;
 import com.fenghua.auto.backend.domain.user.User;
 import com.fenghua.auto.backend.service.user.UserService;
+import com.fenghua.auto.webapp.view.Result;
 
 import net.sf.json.JSONObject;
 
 /**
- * 个人注册功能模块
+ * 用户功能模块
  * 
  * @author chengbin
  * @createTime 2015.11.2
@@ -48,6 +50,7 @@ import net.sf.json.JSONObject;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+	
 	@Autowired
 	private UserService userService;
 	/**
@@ -69,10 +72,20 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/userCenter", method = RequestMethod.POST)
-	public String userCenter(HttpServletRequest request) {
-		SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	@ResponseBody
+	public Map<String,Result> userCenter(HttpServletRequest request) {
+		
+		//User user =   SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Map<String,Result> objMap = new HashMap<String,Result>();
+		objMap.put("message", new Result());
+		return objMap;
+	}
+	
+	@RequestMapping(value = "/main")
+	public String main(Model model,HttpServletRequest request) {
 		return "/WEB-INF/views/user/userCenter";
 	}
+
 	/**
 	 * @author chengbin
 	 * 增加一个企业用户注册
@@ -81,8 +94,10 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/regisUserCompany", method = RequestMethod.POST)
 	public String addUserAndCompany(@Valid User user, @Valid Company company, @Valid Payment_type paymenttype, Model model,HttpServletRequest request) {
+		String licence = request.getSession().getAttribute("licence").toString();
+		company.setBusinessLicence(licence);
 		userService.insert(user,company,paymenttype);
-		return "/WEB-INF/views/user/login";
+		return "/login";
 	}
 	
 	/**
@@ -93,7 +108,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/ulogin")
-	public String showLoginPage(@Valid User user, Model model,HttpServletRequest request) {
+	public String showLoginPage() {
 		return "/login";
 	}
 	/**
@@ -218,11 +233,11 @@ public class UserController {
 		userService.delete(id);
 		return "";
 	}
-	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public void upload(@RequestParam(value = "themePicture") MultipartFile picture,
+	@RequestMapping(value = "/upload")
+	public @ResponseBody void upload(@RequestParam(value = "houseMaps") MultipartFile picture,
 			HttpServletResponse response,
 			HttpServletRequest request){
-		response.setContentType("application/json");
+		response.setContentType("text/html");
 		JSONObject json = new JSONObject();
 		if(!picture.isEmpty()) {
 			
@@ -334,7 +349,9 @@ public class UserController {
 							e.printStackTrace();
 						}
 		            }
-		        }  
+		        }
+		        HttpSession session = request.getSession(true);  
+		        session.setAttribute("licence", name);
 			}
 	        //验证失败
 	        else{
@@ -355,6 +372,11 @@ public class UserController {
 				e.printStackTrace();
 			}
 		}
-		
+	}
+	@RequestMapping(value = "/uploads")
+	public @ResponseBody void uploads(@RequestParam(value = "houseMapss") MultipartFile picture,
+			HttpServletResponse response,
+			HttpServletRequest request){
+		upload(picture, response, request); 
 	}
 }

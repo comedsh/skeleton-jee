@@ -22,6 +22,7 @@ import com.fenghua.auto.backend.service.user.CityAreaService;
 @Controller
 @RequestMapping("/cityArea")
 public class CityAreaController {
+	
 	@Autowired
 	private CityAreaService cityAreaService;
 	/**

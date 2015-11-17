@@ -3,7 +3,6 @@ package com.fenghua.auto.backend.dao.user;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
-
 import com.fenghua.auto.backend.dao.BaseDao;
 import com.fenghua.auto.backend.domain.user.City_area;;
 /**
@@ -21,13 +20,13 @@ public interface CityAreaDao extends BaseDao<City_area> {
 	 */
 	public List<City_area> selectProvince(); 
 	/**
-	 * 获取市级
+	 * 通过父节点id获取市级
 	 * @param Fixed
 	 * @return
 	 */
 	public List<City_area> selectCity(Integer parentId); 
 	/**
-	 * 获取县级
+	 * 通过父节点id获取县级
 	 * @param Fixed
 	 * @return
 	 */

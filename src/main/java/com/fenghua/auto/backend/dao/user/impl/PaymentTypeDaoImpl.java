@@ -9,7 +9,7 @@ import com.fenghua.auto.backend.dao.impl.BaseDaoImpl;
 import com.fenghua.auto.backend.dao.user.PaymentTypeDao;
 import com.fenghua.auto.backend.domain.user.Payment_type;
 /**
- * 个人注册dao实现
+ * 支付方式dao实现
  * @author chengbin
  *
  */
