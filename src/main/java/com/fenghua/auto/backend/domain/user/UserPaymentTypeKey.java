@@ -6,7 +6,7 @@ import com.fenghua.auto.backend.domain.DomainObject;
  * @author chengbin
  *
  */
-public class User_payment_typeKey implements DomainObject {
+public class UserPaymentTypeKey implements DomainObject {
 	
 	private static final long serialVersionUID = 1L;
 	
