@@ -1,18 +1,18 @@
 /*==============================================================*/
-/* Database name:  Auto007                                      */
+/* Database name:  auto007db                                    */
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2015-11-17 17:58:48                          */
+/* Created on:     2015-11-17 18:40:26                          */
 /*==============================================================*/
 
 
-drop database if exists Auto007;
+drop database if exists auto007db;
 
 /*==============================================================*/
-/* Database: Auto007                                            */
+/* Database: auto007db                                          */
 /*==============================================================*/
-create database Auto007;
+create database auto007db;
 
-use Auto007;
+use auto007db;
 
 /*==============================================================*/
 /* Table: City_Area                                             */
