@@ -7,8 +7,7 @@
 
   <global-method-security pre-post-annotations="enabled"/>
   <http pattern="/login.jsp*" security="none"></http>
-  <http pattern="/user/userCenter" security="none"></http>
-  
+
   <http entry-point-ref="loginUrlAuthenticationEntryPoint"> 
   
     <!-- 需要ssl认证的url start -->
@@ -68,12 +67,14 @@
     <beans:bean id="logoutAuthenticationSuccessHandler"
 		class="org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler">
 		<beans:property name="defaultTargetUrl" value="/secure/logout"></beans:property>
+		<beans:property name="redirectStrategy" ref="defaultForwardStrategy"></beans:property>
 	</beans:bean>
 
     <!-- 认证成功跳转URL -->
 	<beans:bean id="loginAuthenticationSuccessHandler"
 		class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
 		<beans:property name="defaultTargetUrl" value="/user/userCenter"></beans:property>
+		<beans:property name="redirectStrategy" ref="defaultForwardStrategy"></beans:property>		
 	</beans:bean>
 
     <!-- 认证失败跳转URL -->
@@ -159,5 +160,6 @@
          </beans:property>
      </beans:bean>
 	
+	<beans:bean id="defaultForwardStrategy" class="com.fenghua.auto.backend.core.security.DefaultForwardStrategy"></beans:bean>
  
 </beans:beans>       
