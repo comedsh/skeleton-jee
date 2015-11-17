@@ -28,7 +28,7 @@ create table City_Area
    Available            boolean not null,
    primary key (ID)
 )
-Engine = InnoDB;
+Engine = InnoDB DEFAULT CHARSET=utf8;
 
 /*==============================================================*/
 /* Index: City_Code_idx                                         */
@@ -62,7 +62,7 @@ create table Company
    Last_Modified_By     varchar(30),
    primary key (ID)
 )
-Engine = InnoDB;
+Engine = InnoDB DEFAULT CHARSET=utf8;
 
 /*==============================================================*/
 /* Index: Company_Name_idx                                      */
@@ -95,7 +95,7 @@ create table Payment_Type
    Last_Modified_By     varchar(30),
    primary key (ID)
 )
-Engine = InnoDB;
+Engine = InnoDB DEFAULT CHARSET=utf8;
 
 /*==============================================================*/
 /* Table: Role                                                  */
@@ -111,7 +111,7 @@ create table Role
    Last_Modified_By     varchar(30),
    primary key (ID)
 )
-Engine = InnoDB;
+Engine = InnoDB DEFAULT CHARSET=utf8;
 
 /*==============================================================*/
 /* Index: Name_idx                                              */
@@ -134,7 +134,7 @@ create table Sys_Config
    Last_Modified_TS     varchar(30),
    primary key (Config_Name)
 )
-Engine = InnoDB;
+Engine = InnoDB DEFAULT CHARSET=utf8;
 
 /*==============================================================*/
 /* Table: User                                                  */
@@ -159,7 +159,7 @@ create table User
    Last_Modified_By     varchar(30),
    primary key (ID)
 )
-Engine = InnoDB;
+Engine = InnoDB DEFAULT CHARSET=utf8;
 
 /*==============================================================*/
 /* Index: QQ_Number_idx                                         */
@@ -220,7 +220,7 @@ create table User_Address
    last_Modified_by     varchar(30),
    primary key (ID)
 )
-Engine = InnoDB;
+Engine = InnoDB DEFAULT CHARSET=utf8;
 
 /*==============================================================*/
 /* Index: UserID_idx                                            */
@@ -245,7 +245,7 @@ create table User_Level
    Last_Modified_By     varchar(30),
    primary key (ID)
 )
-Engine = InnoDB;
+Engine = InnoDB DEFAULT CHARSET=utf8;
 
 /*==============================================================*/
 /* Table: User_Payment_Type                                     */
@@ -263,7 +263,7 @@ create table User_Payment_Type
    Last_Modified_By     varchar(30),
    primary key (PaymentType_ID, User_ID)
 )
-Engine = InnoDB;
+Engine = InnoDB DEFAULT CHARSET=utf8;
 
 /*==============================================================*/
 /* Index: UserID_idx                                            */
