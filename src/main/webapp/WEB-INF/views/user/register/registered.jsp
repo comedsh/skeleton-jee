@@ -48,13 +48,12 @@
             height: 100%;
         }
     </style>
+    <% String path = request.getContextPath();%>
 </head>
 <body>
 <!--头部-->
 <div class="header_login">
-
-    
-	
+	<input class="login_hidden" type="hidden" value="<%=path %>">
     <div class="header_ul clearfix">
         <ul class="header_ul_left clearfix">
             <li class="city_div clearfix"><label>所在地 :<span>成都</span></label><img src="<%=request.getContextPath() %>/resources/imgs/arrow.png"/>

@@ -1,3 +1,4 @@
+var path = $(".login_hidden").val();
 $(function() {
     //城市切换
     $('.city_div').hover(function () {
@@ -92,7 +93,7 @@ $(function() {
         }else{
         	$.ajax({
                 type: "POST",
-                url: '/Auto007/user/validateName',
+                url: path+'/user/validateName',
                 data: {"name":$(this).val()},
                 dataType: "json",
                 success: function (data) {
@@ -242,7 +243,7 @@ $(function() {
   //页面加载就加载省
     $.ajax({
         type: "POST",
-        url: '/Auto007/cityArea/selectProvince',
+        url: path+'/cityArea/selectProvince',
         dataType: "json",
         success: function (data) {
         	for (var i = 0; i < data.length; i++) {
@@ -301,7 +302,7 @@ $(function() {
         }else{
         	$.ajax({
                 type: "POST",
-                url: '/Auto007/company/validateFixed',
+                url: path+'/company/validateFixed',
                 data: {"fixed":$(this).val()},
                 dataType: "json",
                 success: function (data) {
@@ -353,7 +354,7 @@ $(function() {
         }else{
         	$.ajax({
                 type: "POST",
-                url: '/Auto007/user/validateTelephone',
+                url: path+'/user/validateTelephone',
                 data: {"telephone":$(this).val()},
                 dataType: "json",
                 success: function (data) {
@@ -407,7 +408,7 @@ $(function() {
     	}else{
     		$.ajax({
     			type: "POST",
-    			url: '/Auto007/company/validateTelephone',
+    			url: path+'/company/validateTelephone',
     			data: {"telephone":$(this).val()},
     			dataType: "json",
     			success: function (data) {
@@ -520,7 +521,7 @@ $(function() {
         }else{
         	$.ajax({
                 type: "POST",
-                url: '/Auto007/user/validateEmail',
+                url: path+'/user/validateEmail',
                 data: {"email":$(this).val()},
                 dataType: "json",
                 success: function (data) {
@@ -573,7 +574,7 @@ $(function() {
     	}else{
     		$.ajax({
     			type: "POST",
-    			url: '/Auto007/company/validateEmail',
+    			url: path+'/company/validateEmail',
     			data: {"email":$(this).val()},
     			dataType: "json",
     			success: function (data) {
@@ -726,10 +727,10 @@ $(function() {
     //图片验证码请求
     $('.validatePicCheck').on('click',function(){
     	var str = $(this);
-    	$(this).parent().parent().find(".pictureCheckCode").attr('src','/Auto007/user/validatePicCheck?'+Math.random());
+    	$(this).parent().parent().find(".pictureCheckCode").attr('src',path+'/user/validatePicCheck?'+Math.random());
     	$.ajax({
             type: "POST",
-            url: '/Auto007/user/validatePicCheckValue',
+            url: path+'/user/validatePicCheckValue',
             dataType: "text",
             success: function (data) {
                 $(str).parent().parent().find(".verifyCode").val(data);
@@ -760,7 +761,7 @@ $(function() {
 function selectCity(obj) {
 	$.ajax({
         type: "POST",
-        url: '/Auto007/cityArea/selectCity',
+        url: path+'/cityArea/selectCity',
         data: {"parentId":obj},
         dataType: "json",
         success: function (data) {
@@ -773,7 +774,7 @@ function selectCity(obj) {
 function selectArea(obj) {
 	$.ajax({
 		type: "POST",
-		url: '/Auto007/cityArea/selectArea',
+		url: path+'/cityArea/selectArea',
 		data: {"parentId":obj},
 		dataType: "json",
 		success: function (data) {
@@ -816,7 +817,7 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     $scope.validateTelOne = function(s) {
     	if($("#"+s).css('display')=='block') {
     		$http.post(
-    				'/Auto007/user/validateTel/',
+    				path+'/user/validateTel/',
     				{
     					'mobilephone' : $scope.Individual.telephone
     				},
@@ -841,7 +842,7 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
         		&& $('.border_div1 .sub_email').val()==0 && $('.border_div1 .sub_tel').val()==0 && $('.border_div1 .sub_tel_code').val()==0
         		&& $('.border_div1 .sub_code').val()==0 && $('.border_div1 .radio_r1').attr('data')==0){
 			 $http.post(
-				'/Auto007/user/regisUser/', 
+					 path+'/user/regisUser/', 
 				{
 					'name' : $scope.Individual.name,
 					'password' : $scope.Individual.pwd,
@@ -856,7 +857,7 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
 				}
 			)
             .success(function(data){
-            	 window.location.href = "/Auto007/secure/fowardLogin";
+            	 window.location.href = path+"/secure/fowardLogin";
             })
             .error(function(data){
 
@@ -886,7 +887,7 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     $scope.validateTelTwo = function(s) {
     	if($("#"+s).css('display')=='block') {
     		$http.post(
-    				'/Auto007/user/validateTel/',
+    				path+'/user/validateTel/',
     				{
     					'mobilephone' : $scope.Enterprise.telephone
     				},
@@ -924,7 +925,7 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
         		&& $('.border_div .sub_code').val()==0 && $('.border_div .sub_fixed').val()==0 && $('.border_div .sub_company').val()==0 
         		&& $('.border_div .sub_address').val()==0 && $('.border_div .sub_agree').attr('data')==0){
         	$http.post(
-    				'/Auto007/user/regisUserCompany/', 
+        			path+'/user/regisUserCompany/', 
     				{
     					'name' : $scope.Enterprise.name,
     					'password' : $scope.Enterprise.pwd,
@@ -947,7 +948,7 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     				}
     			)
                 .success(function(data){
-                	 window.location.href = "/Auto007/secure/fowardLogin";
+                	 window.location.href = path+"/secure/fowardLogin";
                 })
                 .error(function(data){
 
