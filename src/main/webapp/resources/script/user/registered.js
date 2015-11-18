@@ -1,4 +1,3 @@
-var path = $(".login_hidden").val();
 $(function() {
     //城市切换
     $('.city_div').hover(function () {
@@ -71,6 +70,7 @@ $(function() {
     });
     //user_name验证
     $('.name').blur(function(){
+    	var path = $(".login_hidden").val();
     	var str = $(this).parent();
         $(this).parent().parent().children('.user_error1').hide();
         $(this).parent().parent().children('.user_error3').hide();
@@ -243,7 +243,7 @@ $(function() {
   //页面加载就加载省
     $.ajax({
         type: "POST",
-        url: path+'/cityArea/selectProvince',
+        url: $(".login_hidden").val()+'/cityArea/selectProvince',
         dataType: "json",
         success: function (data) {
         	for (var i = 0; i < data.length; i++) {
@@ -280,6 +280,7 @@ $(function() {
     });
     //固定电话的验证
     $('.Fixed_telephone').blur(function(){
+    	var path = $(".login_hidden").val();
     	var str = $(this).parent();
         $(this).parent().parent().children('.user_error1').hide();
         $(this).parent().parent().children('.user_error3').hide();
@@ -332,6 +333,7 @@ $(function() {
     });
     //个人手机验证
     $(".border_div1 .telephone").blur(function(event) {
+    	var path = $(".login_hidden").val();
     	var str = $(this).parent();
         $(this).parent().parent().children('.user_error1').hide();
         $(this).parent().parent().children('.user_error3').hide();
@@ -386,6 +388,7 @@ $(function() {
     });
     //企业手机验证
     $(".border_div .telephone").blur(function(event) {
+    	var path = $(".login_hidden").val();
     	var str = $(this).parent();
     	$(this).parent().parent().children('.user_error1').hide();
     	$(this).parent().parent().children('.user_error3').hide();
@@ -499,6 +502,7 @@ $(function() {
     });
     //个人邮箱验证
     $(".border_div1 .email_e").blur(function(event) {
+    	var path = $(".login_hidden").val();
     	var str = $(this).parent();
         $(this).parent().parent().children('.user_error1').hide();
         $(this).parent().parent().children('.user_error3').hide();
@@ -552,6 +556,7 @@ $(function() {
     });
     //企业邮箱验证
     $(".border_div .email_e").blur(function(event) {
+    	var path = $(".login_hidden").val();
     	var str = $(this).parent();
     	$(this).parent().parent().children('.user_error1').hide();
     	$(this).parent().parent().children('.user_error3').hide();
@@ -726,6 +731,7 @@ $(function() {
   
     //图片验证码请求
     $('.validatePicCheck').on('click',function(){
+    	var path = $(".login_hidden").val();
     	var str = $(this);
     	$(this).parent().parent().find(".pictureCheckCode").attr('src',path+'/user/validatePicCheck?'+Math.random());
     	$.ajax({
@@ -759,6 +765,7 @@ $(function() {
 
 });
 function selectCity(obj) {
+	var path = $(".login_hidden").val();
 	$.ajax({
         type: "POST",
         url: path+'/cityArea/selectCity',
@@ -772,6 +779,7 @@ function selectCity(obj) {
     });
 }
 function selectArea(obj) {
+	var path = $(".login_hidden").val();
 	$.ajax({
 		type: "POST",
 		url: path+'/cityArea/selectArea',
@@ -815,6 +823,7 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     };
     //个人手机验证码
     $scope.validateTelOne = function(s) {
+    	var path = $(".login_hidden").val();
     	if($("#"+s).css('display')=='block') {
     		$http.post(
     				path+'/user/validateTel/',
@@ -838,6 +847,7 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     }
     //注册功能
     $scope.submit_one=function(){
+    	var path = $(".login_hidden").val();
         if($('.border_div1 .sub_name').val()==0 && $('.border_div1 .sub_pws').val()==0 && $('.border_div1 .sub_pwsa').val()==0 
         		&& $('.border_div1 .sub_email').val()==0 && $('.border_div1 .sub_tel').val()==0 && $('.border_div1 .sub_tel_code').val()==0
         		&& $('.border_div1 .sub_code').val()==0 && $('.border_div1 .radio_r1').attr('data')==0){
@@ -885,6 +895,7 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     };
   //企业手机验证码
     $scope.validateTelTwo = function(s) {
+    	var path = $(".login_hidden").val();
     	if($("#"+s).css('display')=='block') {
     		$http.post(
     				path+'/user/validateTel/',
@@ -907,6 +918,7 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     	}
     }
     $scope.submit_two=function(){
+    	var path = $(".login_hidden").val();
     	if($('.Remember_pwd').val()==0){
     		//支付方式
     		$scope.Enterprise.type_name=$(".type_name").children(".radio_r2").attr('data');
