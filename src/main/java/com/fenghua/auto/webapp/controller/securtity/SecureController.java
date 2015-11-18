@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.WebAttributes;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,12 +51,12 @@ public class SecureController {
 	 * 退出系统
 	 * @return
 	 */
-	@RequestMapping(value="/logout",method=RequestMethod.POST)
+	@RequestMapping(value="/logout")
 	public ModelAndView logout() {
 		HashMap<String,Result> model = new HashMap<String,Result>();
 		Result msg = new Result(true,"退出成功");
 		model.put("message", msg);
-		return new ModelAndView("/logout",model);
+		return new ModelAndView("/login",model);
 	}
 		
 	/**
@@ -101,7 +102,7 @@ public class SecureController {
 	@RequestMapping(value="/failure",method=RequestMethod.POST)
 	@ResponseBody
 	public  Map<String,Result> failure(HttpServletRequest request) {
-
+		
 		Exception e = (Exception)request.getSession().getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
 			
 		

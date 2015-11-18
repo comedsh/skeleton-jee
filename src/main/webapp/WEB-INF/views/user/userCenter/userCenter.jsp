@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <!DOCTYPE html>
@@ -80,7 +81,7 @@
             <li class="li">|</li>
             <li><a href="">品牌件</a></li>
             <li class="li">|</li>
-            <li><span>欢迎您</span><a href="" style="color: #0782d8">用户名登录</a><a href="">, 退出</a></li>
+            <li><span>欢迎您</span><a href="#" style="color: #0782d8"><sec:authentication property="name"></sec:authentication></a><a href="<c:url value="/logout" />">, 退出</a></li>
             <li class="li">|</li>
             <li><a href="">订单记录</a></li>
             <li class="li">|</li>

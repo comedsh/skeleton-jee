@@ -12,11 +12,14 @@
   
     <!-- 需要ssl认证的url start -->
     <intercept-url pattern="/ssl/test" requires-channel="https"/>
+    <intercept-url pattern="/secure/main" access="authenticated"/>
     <!-- end -->
     <!-- 表单登录过滤器 -->
     <custom-filter position="FORM_LOGIN_FILTER" ref="customUsernamePasswordAuthenticationFilter" />
+    <custom-filter position="CONCURRENT_SESSION_FILTER" ref="concurrencyFilter" />
     <!-- 自定义过滤器 -->
     <custom-filter ref="customSecurityFilter" before="FILTER_SECURITY_INTERCEPTOR" />
+    <custom-filter ref="rememberMeFilter" position="REMEMBER_ME_FILTER"></custom-filter>
     <!-- 需要认证的url -->
     <intercept-url pattern="/**" access="permitAll"/>
     <csrf disabled="true"/>
@@ -141,7 +144,7 @@
 			<beans:bean class="org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy">
 				<beans:constructor-arg ref="sessionRegistry"/>
 				<beans:property name="maximumSessions" value="1" />
-				<beans:property name="exceptionIfMaximumExceeded" value="true" />
+				<beans:property name="exceptionIfMaximumExceeded" value="false" />
 			</beans:bean>
 			<beans:bean class="org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy"/>
 			<beans:bean class="org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy">

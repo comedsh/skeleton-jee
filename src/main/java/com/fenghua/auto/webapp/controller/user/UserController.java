@@ -49,6 +49,15 @@ public class UserController {
 	}
 	
 	/**
+	 * 跳转到注册页面
+	 * @return
+	 */
+	@RequestMapping(value = "/fowardRegister")
+	public String farwordRegister(HttpServletRequest request,HttpServletResponse response) {
+		return "/WEB-INF/views/user/register/registered";
+	}
+	
+	/**
 	 * @author chengbin
 	 * 增加一个企业用户注册
 	 * @return 
