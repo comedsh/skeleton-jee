@@ -38,7 +38,7 @@ public class SMSMessage {
 		// 组建请求
 		@SuppressWarnings("deprecation")
 		String straddr = addr + "?uid=" + userId + "&pwd=" + pwd + "&mobile=" + mobile + "&encode=" + encode
-				+ "&content=" + java.net.URLEncoder.encode("您的验证码是"+code+"。请在页面中提交验证码完成验证。【Auto007】");
+				+ "&content=" + java.net.URLEncoder.encode("您的验证码是"+code+"。请在页面中提交验证码完成验证。【Auto007】",encode);
 		StringBuffer sb = new StringBuffer(straddr);
 		System.out.println("URL:" + sb);
 
