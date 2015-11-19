@@ -852,7 +852,7 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
         		&& $('.border_div1 .sub_email').val()==0 && $('.border_div1 .sub_tel').val()==0 && $('.border_div1 .sub_tel_code').val()==0
         		&& $('.border_div1 .sub_code').val()==0 && $('.border_div1 .radio_r1').attr('data')==0){
 			 $http.post(
-					 path+'/user/regisUser/', 
+					 '/user/regisUser/', 
 				{
 					'name' : $scope.Individual.name,
 					'password' : $scope.Individual.pwd,

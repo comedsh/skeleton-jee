@@ -94,9 +94,9 @@
         <img src="<%=request.getContextPath() %>/resources/imgs/img_login.png" alt=""/>
     </div>
     <div class="right_login">
-        <h1>欢迎登录<span>还没有账号？<a href="<%=path %>>/user/fowardRegister">免费注册</a></span></h1>
+        <h1>欢迎登录<span>还没有账号？<a href="<%=path %>/user/fowardRegister">免费注册</a></span></h1>
         <div class="error1">
-            <div class="error">手机账号错误</div>
+            <div class="error">手机账号错误</div>	
         </div>
         <div class="input_li">
             <input ng-model="user.name" type="text" class="name" placeholder="用户名/手机/邮箱号"/>
