@@ -461,7 +461,7 @@
                 <div class="input_d" style="width: 115px">
                     <input type="text" class="code" ng-model="code" style="width: 95px"/>
                 </div>
-                <img style="float: left;" class="pictureCheckCode" src="/Auto007/user/validatePicCheck" alt="" title="换一张" class="img_code"/>
+                <img style="float: left;" class="pictureCheckCode" src="<%=request.getContextPath() %>/user/validatePicCheck" alt="" title="换一张" class="img_code"/>
                 <span class="hun_span">看不清楚？<a class="validatePicCheck">换一张</a></span>
                 
                 <div class="user_error1">
@@ -618,7 +618,7 @@
                 <div class="input_d" style="width: 115px">
                     <input type="text" class="code" ng-model="Individual.code" style="width: 95px"/>
                 </div>
-                <img style="float: left;" class="pictureCheckCode"  src="/Auto007/user/validatePicCheck" alt="" title="换一张" class="img_code"/>
+                <img style="float: left;" class="pictureCheckCode"  src="<%=request.getContextPath() %>/user/validatePicCheck" alt="" title="换一张" class="img_code"/>
                 <input type="hidden" class="verifyCode" value="">
                 <span class="hun_span">看不清楚？<a class="validatePicCheck">换一张</a></span>
                 <!--<div class="user_error1">-->
@@ -1014,7 +1014,7 @@
 	}
 	function ajaxFileUpload() {
 		$.ajaxFileUpload({
-			url : '/Auto007/user/upload/', //需要链接到服务器地址
+			url : $(".login_hidden").val()+'/user/upload/', //需要链接到服务器地址
 			secureuri : false,
 			fileElementId : 'houseMaps', //文件选择框的id属性
 			dataType : 'json', //服务器返回的格式，可以是json, xml
@@ -1037,7 +1037,7 @@
 	}
 	function ajaxFileUploads() {
 		$.ajaxFileUpload({
-			url : '/Auto007/user/uploads/', //需要链接到服务器地址
+			url : $(".login_hidden").val()+'/user/uploads/', //需要链接到服务器地址
 			secureuri : false,
 			fileElementId : 'houseMapss', //文件选择框的id属性
 			dataType : 'json', //服务器返回的格式，可以是json, xml

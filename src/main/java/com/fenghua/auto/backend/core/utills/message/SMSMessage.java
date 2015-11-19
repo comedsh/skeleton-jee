@@ -8,8 +8,6 @@ import java.net.URL;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.ui.Model;
-
 import com.fenghua.auto.backend.core.utills.MD5Encoder;
 /**
  * 短信发送接口
@@ -36,9 +34,8 @@ public class SMSMessage {
 	public static String send(String mobile, HttpServletRequest req, HttpServletResponse res) throws Exception {
 		int code = (int)((Math.random()*9+1)*100000);
 		// 组建请求
-		@SuppressWarnings("deprecation")
 		String straddr = addr + "?uid=" + userId + "&pwd=" + pwd + "&mobile=" + mobile + "&encode=" + encode
-				+ "&content=" + java.net.URLEncoder.encode("您的验证码是"+code+"。请在页面中提交验证码完成验证。【Auto007】");
+				+ "&content=" + java.net.URLEncoder.encode("您的验证码是"+code+"。请在页面中提交验证码完成验证。【Auto007】",encode);
 		StringBuffer sb = new StringBuffer(straddr);
 		System.out.println("URL:" + sb);
 
