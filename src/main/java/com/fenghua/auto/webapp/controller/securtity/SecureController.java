@@ -52,11 +52,8 @@ public class SecureController {
 	 * @return
 	 */
 	@RequestMapping(value="/logout")
-	public ModelAndView logout() {
-		HashMap<String,Result> model = new HashMap<String,Result>();
-		Result msg = new Result(true,"退出成功");
-		model.put("message", msg);
-		return new ModelAndView("/login",model);
+	public String logout() {
+		return "redirect:/login";
 	}
 		
 	/**
@@ -64,7 +61,7 @@ public class SecureController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/userCenter", method = RequestMethod.POST)
+	@RequestMapping(value = "/userCenter")
 	public @ResponseBody Map<String,Result> userCenter(HttpServletRequest request) {
 		Map<String,Result> model = new HashMap<String,Result>();
 		Result msg = new Result(true,"登录成功");
@@ -80,7 +77,7 @@ public class SecureController {
 	 */
 	@RequestMapping(value = "/main")
 	public String main(Model model,HttpServletRequest request) {
-		return "/WEB-INF/views/user/userCenter/userCenter";
+		return "/user/userCenter/userCenter";
 	}
 	
 	/**

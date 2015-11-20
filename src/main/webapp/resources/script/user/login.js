@@ -44,7 +44,6 @@ app.controller('login_ctr',['$scope','$http',function($scope,$http){
     $scope.logins=function(){
         var name=$scope.user.name;
         var pwd=$scope.user.pwd;
-        var path = $(".login_hidden").val();
         var num=$('.Remember_pwd').attr("data");
         if(name==''|| pwd=='' || name==null || pwd==null){
             $('.error').show().html('用户名或密码必填');
@@ -55,13 +54,13 @@ app.controller('login_ctr',['$scope','$http',function($scope,$http){
         } else{
             $('.error').hide();
             $.ajax({  
-      		  url: path+"/login",
+      		  url: "/login",
       		  type:'POST',
       		  dataType:'json',
       		  data:{'username':name,'password':pwd,'autoLogin':num},
       		  success: function(data,textStatus){
       			if(data.message.success){
-      		        window.location.href=path+'/secure/main';
+      		        window.location.href='/secure/main';
       				
       			}else{
       				window.location.href='错误页面';

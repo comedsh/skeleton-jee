@@ -54,8 +54,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/fowardRegister")
 	public String farwordRegister(HttpServletRequest request,HttpServletResponse response) {
-		System.out.println("wo jin ru le ");
-		return "/WEB-INF/views/user/register/registered";
+		return "/user/register/registered";
 	}
 	
 	/**

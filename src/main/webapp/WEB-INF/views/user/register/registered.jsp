@@ -48,12 +48,10 @@
             height: 100%;
         }
     </style>
-    <% String path = request.getContextPath();%>
 </head>
 <body>
 <!--头部-->
 <div class="header_login">
-	<input class="login_hidden" type="hidden" value="<%=path %>">
     <div class="header_ul clearfix">
         <ul class="header_ul_left clearfix">
             <li class="city_div clearfix"><label>所在地 :<span>成都</span></label><img src="<%=request.getContextPath() %>/resources/imgs/arrow.png"/>
@@ -1014,7 +1012,7 @@
 	}
 	function ajaxFileUpload() {
 		$.ajaxFileUpload({
-			url : $(".login_hidden").val()+'/user/upload/', //需要链接到服务器地址
+			url : '/user/upload/', //需要链接到服务器地址
 			secureuri : false,
 			fileElementId : 'houseMaps', //文件选择框的id属性
 			dataType : 'json', //服务器返回的格式，可以是json, xml
@@ -1037,7 +1035,7 @@
 	}
 	function ajaxFileUploads() {
 		$.ajaxFileUpload({
-			url : $(".login_hidden").val()+'/user/uploads/', //需要链接到服务器地址
+			url : '/user/uploads/', //需要链接到服务器地址
 			secureuri : false,
 			fileElementId : 'houseMapss', //文件选择框的id属性
 			dataType : 'json', //服务器返回的格式，可以是json, xml
