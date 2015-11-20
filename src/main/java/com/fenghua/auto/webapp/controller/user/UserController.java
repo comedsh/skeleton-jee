@@ -1,7 +1,10 @@
 package com.fenghua.auto.webapp.controller.user;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +25,8 @@ import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.PaymentType;
 import com.fenghua.auto.backend.domain.user.User;
 import com.fenghua.auto.backend.service.user.UserService;
+import com.fenghua.auto.webapp.view.Result;
+
 import net.sf.json.JSONObject;
 
 /**
@@ -43,9 +48,12 @@ public class UserController {
 	 * @createTime 2015.11.4
 	 */
 	@RequestMapping(value = "/regisUser", method = RequestMethod.POST)
-	public String addUser(@Valid User user, Model model,HttpServletRequest request) {
+	public @ResponseBody Map<String,Result> addUser(@Valid User user, HttpServletRequest request) {
 		userService.insert(user);
-		return "/login";
+		Map<String,Result> model = new HashMap<String,Result>();
+		Result msg = new Result(true,"登录成功");
+		model.put("message", msg);
+		return model;
 	}
 	
 	/**
@@ -64,11 +72,14 @@ public class UserController {
 	 * @createTime 2015.11.4
 	 */
 	@RequestMapping(value = "/regisUserCompany", method = RequestMethod.POST)
-	public String addUserAndCompany(@Valid User user, @Valid Company company, @Valid PaymentType paymenttype, Model model,HttpServletRequest request) {
+	public Map<String,Result> addUserAndCompany(@Valid User user, @Valid Company company, @Valid PaymentType paymenttype,HttpServletRequest request) {
 		String licence = request.getSession().getAttribute("licence").toString();
 		company.setBusinessLicence(licence);
 		userService.insert(user,company,paymenttype);
-		return "/login";
+		Map<String,Result> model = new HashMap<String,Result>();
+		Result msg = new Result(true,"登录成功");
+		model.put("message", msg);
+		return model;
 	}
 	
 	/**

@@ -10,13 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.WebAttributes;
-import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.fenghua.auto.backend.core.security.AuthenticationCodeException;
 import com.fenghua.auto.backend.core.security.AuthenticationLimitException;
@@ -52,8 +52,8 @@ public class SecureController {
 	 * @return
 	 */
 	@RequestMapping(value="/logout")
-	public String logout() {
-		return "redirect:/login";
+	public ModelAndView logout() {
+		return new ModelAndView(new RedirectView("/login.jsp"));
 	}
 		
 	/**
@@ -88,8 +88,8 @@ public class SecureController {
 	 * @return
 	 */
 	@RequestMapping(value = "/fowardLogin")
-	public String showLoginPage() {
-		return "/login";
+	public ModelAndView showLoginPage() {
+		return new ModelAndView(new RedirectView("/login.jsp"));
 	}
 	
 	/**
