@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,8 +89,11 @@ public class SecureController {
 	 * @return
 	 */
 	@RequestMapping(value = "/fowardLogin")
-	public ModelAndView showLoginPage() {
-		return new ModelAndView(new RedirectView("/login.jsp"));
+	public ModelAndView showLoginPage(HttpServletRequest req, HttpServletResponse res, Model model) {
+		Map<String,String> map = new HashMap<String, String>();
+		map.put("userName", req.getParameter("userName"));
+		map.put("password", req.getParameter("password"));
+		return new ModelAndView("/user/register/successRegister",map);
 	}
 	
 	/**

@@ -93,7 +93,7 @@
         <img src="<%=request.getContextPath() %>/resources/imgs/img_login.png" alt=""/>
     </div>
     <div class="right_login">
-        <h1>欢迎登录<span>还没有账号？<a href="/user/fowardRegister">免费注册</a></span></h1>
+        <h1>欢迎登录<span>还没有账号？<a href="/registered.jsp">免费注册</a></span></h1>
         <div class="error1">
             <div class="error">手机账号错误</div>	
         </div>

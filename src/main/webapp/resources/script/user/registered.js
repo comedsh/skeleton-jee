@@ -91,7 +91,7 @@ $(function() {
             return false;
         }else{
         	$.ajax({
-                type: "POST",
+                type: "GET",
                 url: '/user/validateName',
                 data: {"name":$(this).val()},
                 dataType: "json",
@@ -352,7 +352,7 @@ $(function() {
             return false;
         }else{
         	$.ajax({
-                type: "POST",
+                type: "GET",
                 url: '/user/validateTelephone',
                 data: {"telephone":$(this).val()},
                 dataType: "json",
@@ -406,7 +406,7 @@ $(function() {
     		return false;
     	}else{
     		$.ajax({
-    			type: "POST",
+    			type: "GET",
     			url: '/company/validateTelephone',
     			data: {"telephone":$(this).val()},
     			dataType: "json",
@@ -519,7 +519,7 @@ $(function() {
             return false;
         }else{
         	$.ajax({
-                type: "POST",
+                type: "GET",
                 url: '/user/validateEmail',
                 data: {"email":$(this).val()},
                 dataType: "json",
@@ -572,7 +572,7 @@ $(function() {
     		return false;
     	}else{
     		$.ajax({
-    			type: "POST",
+    			type: "GET",
     			url: '/company/validateEmail',
     			data: {"email":$(this).val()},
     			dataType: "json",
@@ -728,7 +728,7 @@ $(function() {
     	var str = $(this);
     	$(this).parent().parent().find(".pictureCheckCode").attr('src','/user/validatePicCheck?'+Math.random());
     	$.ajax({
-            type: "POST",
+            type: "GET",
             url: '/user/validatePicCheckValue',
             dataType: "text",
             success: function (data) {
@@ -798,7 +798,7 @@ Registered_app.directive('enter',function(){
             } else{
                 $('.error').hide();
             }
-        })
+        });
     }
 });
 Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$http){
@@ -832,7 +832,7 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     		})
     		.error(function(data){
     			
-    		})
+    		});
     	}
     }
     //注册功能
@@ -856,10 +856,17 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
 				}
 			)
             .success(function(data){
-            	 window.location.href = "/secure/fowardLogin";
+            	if(data.message.success) {
+            		var str = data.message.code;
+                	var name = str.split("&")[0];
+                	var password = str.split("&")[1];
+            		window.location.href = "/secure/fowardLogin?userName='"+name+"'&password='"+password+"'";
+            	} else {
+            		alert("您输入的手机验证码已过期，请重新获取手机验证码");
+            	}
             })
             .error(function(data){
-
+            	
             })
         }else{
             alert('请完善资料')
@@ -902,7 +909,7 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     		})
     		.error(function(data){
     			
-    		})
+    		});
     	}
     }
     $scope.submit_two=function(){
@@ -920,7 +927,7 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     	if($('.border_div .sub_name').val()==0 && $('.border_div .sub_pws').val()==0 && $('.border_div .sub_pwsa').val()==0 
     			&& $('.border_div .sub_username').val()==0 && $('.border_div .sub_select_Num1').val()==0 && $('.border_div .sub_select_Num2').val()==0 
     			&& $('.border_div .sub_select_Num3').val()==0 && $('.border_div .sub_email').val()==0 && $('.border_div .sub_tel').val()==0 
-    			//&& $('.border_div .sub_tel_code').val()==0
+    			&& $('.border_div .sub_tel_code').val()==0
         		&& $('.border_div .sub_code').val()==0 && $('.border_div .sub_fixed').val()==0 && $('.border_div .sub_company').val()==0 
         		&& $('.border_div .sub_address').val()==0 && $('.border_div .sub_agree').attr('data')==0){
         	$http.post(
@@ -947,14 +954,18 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     				}
     			)
                 .success(function(data){
-                	 window.location.href = "/secure/fowardLogin";
+                	 if(data.message.success) {
+                 		window.location.href = "/secure/fowardLogin";
+                 	} else {
+                 		alert("您输入的手机验证码已过期，请重新获取手机验证码");
+                 	}
                 })
                 .error(function(data){
 
                 })
             
         }else{
-            alert('请完善资料')
+            alert('请完善资料');
         }
     }
 }]);
