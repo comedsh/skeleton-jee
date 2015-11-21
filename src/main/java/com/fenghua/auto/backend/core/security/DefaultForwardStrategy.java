@@ -27,7 +27,7 @@ public class DefaultForwardStrategy implements RedirectStrategy {
 	private static final Log logger = LogFactory.getLog(RedirectStrategy.class);
 
 
-	private boolean contextRelative = true;
+	private boolean contextRelative = false;
    
 
     public void sendRedirect(HttpServletRequest request, HttpServletResponse response, String url) throws IOException {

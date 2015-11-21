@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import net.sf.json.JSONObject;
 
 public class uploadPicture {
-	public static JSONObject upload(MultipartFile picture,HttpServletResponse response,HttpServletRequest request){
+	public static JSONObject upload(MultipartFile picture,HttpServletResponse response,HttpServletRequest request, String sessionName){
 		response.setContentType("text/html");
 		JSONObject json = new JSONObject();
 		if(!picture.isEmpty()) {
@@ -127,7 +127,7 @@ public class uploadPicture {
 		            }
 		        }
 		        HttpSession session = request.getSession(true);  
-		        session.setAttribute("licence", name);
+		        session.setAttribute(sessionName, name);
 			}
 	        //验证失败
 	        else{

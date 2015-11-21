@@ -70,14 +70,12 @@
     <beans:bean id="logoutAuthenticationSuccessHandler"
 		class="org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler">
 		<beans:property name="defaultTargetUrl" value="/secure/logout"></beans:property>
-		<beans:property name="redirectStrategy" ref="defaultForwardStrategy"></beans:property>
 	</beans:bean>
 
     <!-- 认证成功跳转URL -->
 	<beans:bean id="loginAuthenticationSuccessHandler"
 		class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
-		<beans:property name="defaultTargetUrl" value="/secure/userCenter"></beans:property>
-		<beans:property name="redirectStrategy" ref="defaultForwardStrategy"></beans:property>		
+		<beans:property name="defaultTargetUrl" value="/secure/userCenter"></beans:property>	
 	</beans:bean>
 
     <!-- 认证失败跳转URL -->

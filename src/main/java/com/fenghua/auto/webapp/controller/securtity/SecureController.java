@@ -4,19 +4,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.WebAttributes;
-import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.fenghua.auto.backend.core.security.AuthenticationCodeException;
 import com.fenghua.auto.backend.core.security.AuthenticationLimitException;
@@ -53,10 +54,7 @@ public class SecureController {
 	 */
 	@RequestMapping(value="/logout")
 	public ModelAndView logout() {
-		HashMap<String,Result> model = new HashMap<String,Result>();
-		Result msg = new Result(true,"退出成功");
-		model.put("message", msg);
-		return new ModelAndView("/login",model);
+		return new ModelAndView(new RedirectView("/login.jsp"));
 	}
 		
 	/**
@@ -64,7 +62,7 @@ public class SecureController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/userCenter", method = RequestMethod.POST)
+	@RequestMapping(value = "/userCenter")
 	public @ResponseBody Map<String,Result> userCenter(HttpServletRequest request) {
 		Map<String,Result> model = new HashMap<String,Result>();
 		Result msg = new Result(true,"登录成功");
@@ -80,7 +78,7 @@ public class SecureController {
 	 */
 	@RequestMapping(value = "/main")
 	public String main(Model model,HttpServletRequest request) {
-		return "/WEB-INF/views/user/userCenter/userCenter";
+		return "/user/userCenter/userCenter";
 	}
 	
 	/**
@@ -91,8 +89,11 @@ public class SecureController {
 	 * @return
 	 */
 	@RequestMapping(value = "/fowardLogin")
-	public String showLoginPage() {
-		return "/login";
+	public ModelAndView showLoginPage(HttpServletRequest req, HttpServletResponse res, Model model) {
+		Map<String,String> map = new HashMap<String, String>();
+		map.put("userName", req.getParameter("userName"));
+		map.put("password", req.getParameter("password"));
+		return new ModelAndView("/user/register/successRegister",map);
 	}
 	
 	/**

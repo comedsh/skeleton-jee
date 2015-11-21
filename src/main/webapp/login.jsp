@@ -25,7 +25,6 @@
 	<script type="text/javascript">
 	
 	</script>
-	<% String path = request.getContextPath();%>
     <!--<link rel="icon" href="http://www.jd.com/favicon.ico" mce_href="http://www.jd.com/favicon.ico" type="image/x-icon">-->
     <!--[if lt IE 9]>
     <script type="text/javascript" src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -94,7 +93,7 @@
         <img src="<%=request.getContextPath() %>/resources/imgs/img_login.png" alt=""/>
     </div>
     <div class="right_login">
-        <h1>欢迎登录<span>还没有账号？<a href="<%=path %>/user/fowardRegister">免费注册</a></span></h1>
+        <h1>欢迎登录<span>还没有账号？<a href="/registered.jsp">免费注册</a></span></h1>
         <div class="error1">
             <div class="error">手机账号错误</div>	
         </div>
@@ -121,7 +120,6 @@ yys=1444790929987"
                  onclick="this.src= document.location.protocol +'//authcode.jd.com/verify/image?a=0&amp;acid=feaaa1e7-e645-4dff-b702-679e5ebf70a2&amp;uid=feaaa1e7-e645-4dff-b702-679e5ebf70a2&amp;srcid=reg&amp;is=e69a14665f94d73d9ceb265005b78452&amp;yys='+new Date().getTime()" ver_colorofnoisepoint="#888888" id="JD_Verification1">
             <a href="javascript:void(0)">看不清楚换一张</a>
         </div>
-        <input class="login_hidden" type="hidden" value="<%=path %>">
         <button class="login_btn" enter ng-click="logins()">登 录</button>
         <div class="san_d">
             <label>使用合作网站账号登录</label>

@@ -1,10 +1,14 @@
 package com.fenghua.auto.webapp.controller.user;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +26,8 @@ import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.PaymentType;
 import com.fenghua.auto.backend.domain.user.User;
 import com.fenghua.auto.backend.service.user.UserService;
+import com.fenghua.auto.webapp.view.Result;
+
 import net.sf.json.JSONObject;
 
 /**
@@ -43,19 +49,20 @@ public class UserController {
 	 * @createTime 2015.11.4
 	 */
 	@RequestMapping(value = "/regisUser", method = RequestMethod.POST)
-	public String addUser(@Valid User user, Model model,HttpServletRequest request) {
-		userService.insert(user);
-		return "/login";
-	}
-	
-	/**
-	 * 跳转到注册页面
-	 * @return
-	 */
-	@RequestMapping(value = "/fowardRegister")
-	public String farwordRegister(HttpServletRequest request,HttpServletResponse response) {
-		System.out.println("wo jin ru le ");
-		return "/WEB-INF/views/user/register/registered";
+	public @ResponseBody Map<String,Result> addUser(@Valid User user, HttpServletRequest request) {
+		Map<String,Result> model = new HashMap<String,Result>();
+		Result msg = new Result();
+		if(request.getSession(false) == null) {
+			msg.setSuccess(false);
+			msg.setMsg("注册失败");
+		} else {
+			userService.insert(user);
+			msg.setSuccess(true);
+			msg.setMsg("注册成功");
+			msg.setCode(user.getName()+"&"+user.getPassword());
+		}
+		model.put("message", msg);
+		return model;
 	}
 	
 	/**
@@ -65,11 +72,21 @@ public class UserController {
 	 * @createTime 2015.11.4
 	 */
 	@RequestMapping(value = "/regisUserCompany", method = RequestMethod.POST)
-	public String addUserAndCompany(@Valid User user, @Valid Company company, @Valid PaymentType paymenttype, Model model,HttpServletRequest request) {
+	public Map<String,Result> addUserAndCompany(@Valid User user, @Valid Company company, @Valid PaymentType paymenttype,HttpServletRequest request) {
+		Map<String,Result> model = new HashMap<String,Result>();
+		Result msg = null;
 		String licence = request.getSession().getAttribute("licence").toString();
-		company.setBusinessLicence(licence);
-		userService.insert(user,company,paymenttype);
-		return "/login";
+		String certificate = request.getSession().getAttribute("certificate").toString();
+		if(licence.equals("") && licence != null && certificate.equals("") && certificate != null) {
+			company.setBusinessLicence(licence);
+			company.setBusinessLicence(certificate);
+			userService.insert(user,company,paymenttype);
+			msg = new Result(true,"注册成功");
+		} else {
+			msg = new Result(false,"注册失败");
+		}
+		model.put("message", msg);
+		return model;
 	}
 	
 	/**
@@ -78,7 +95,7 @@ public class UserController {
 	 * @param req
 	 * @param res
 	 */
-	@RequestMapping(value = "/validateName", method = RequestMethod.POST)
+	@RequestMapping(value = "/validateName", method = RequestMethod.GET)
 	public @ResponseBody List<User> validateName(@RequestParam String name,  HttpServletRequest req, HttpServletResponse res) {
 		return userService.getUserByName(name);
 	}
@@ -88,7 +105,7 @@ public class UserController {
 	 * @param req
 	 * @param res
 	 */
-	@RequestMapping(value = "/validateTelephone", method = RequestMethod.POST)
+	@RequestMapping(value = "/validateTelephone", method = RequestMethod.GET)
 	public @ResponseBody List<User> validateTelephone(@RequestParam String telephone,  HttpServletRequest req, HttpServletResponse res) {
 		return userService.getUserByTelephone(telephone);
 	}
@@ -98,7 +115,7 @@ public class UserController {
 	 * @param req
 	 * @param res
 	 */
-	@RequestMapping(value = "/validateEmail", method = RequestMethod.POST)
+	@RequestMapping(value = "/validateEmail", method = RequestMethod.GET)
 	public @ResponseBody List<User> validateEmail(@RequestParam String email,  HttpServletRequest req, HttpServletResponse res) {
 		return userService.getUserByEmail(email);
 	}
@@ -108,7 +125,7 @@ public class UserController {
 	 * @param req
 	 * @param res
 	 */
-	@RequestMapping(value = "/validatePicCheck")
+	@RequestMapping(value = "/validatePicCheck", method = RequestMethod.GET)
 	public void validatePicCheck(HttpServletRequest req, HttpServletResponse res) {
 		try {
 			PictureCheckCode.validatePicCheck(req,res);
@@ -124,7 +141,7 @@ public class UserController {
 	 * @param req
 	 * @param res
 	 */
-	@RequestMapping(value = "/validatePicCheckValue",method = RequestMethod.POST)
+	@RequestMapping(value = "/validatePicCheckValue",method = RequestMethod.GET)
 	@ResponseBody
 	public String validatePicCheckValue(HttpServletRequest req, HttpServletResponse res) {
 		String str = null;
@@ -149,6 +166,11 @@ public class UserController {
 		String str = null;	
 		try {
 				str = SMSMessage.send(mobilephone,req,res);
+				if(str!=null){
+					 HttpSession session = req.getSession();
+					 session.setMaxInactiveInterval(60);
+					 session.setAttribute("validateTel", str);
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -200,10 +222,11 @@ public class UserController {
 	 * @param response
 	 * @param request
 	 */
-	@RequestMapping(value = "/upload")
+	@RequestMapping(value = "/upload",method=RequestMethod.GET)
 	public @ResponseBody void upload(@RequestParam(value = "houseMaps") MultipartFile picture, HttpServletResponse response, HttpServletRequest request){
+		String name = "licence";
 		response.setContentType("text/html");
-		JSONObject json = uploadPicture.upload(picture, response, request);
+		JSONObject json = uploadPicture.upload(picture, response, request, name);
 		try {
 			response.getWriter().write(json.toString());
 		} catch (IOException e) {
@@ -222,10 +245,11 @@ public class UserController {
 	 * @param response
 	 * @param request
 	 */
-	@RequestMapping(value = "/uploads")
+	@RequestMapping(value = "/uploads",method=RequestMethod.GET)
 	public @ResponseBody void uploads(@RequestParam(value = "houseMapss") MultipartFile picture, HttpServletResponse response,HttpServletRequest request){
+		String name = "certificate";
 		response.setContentType("text/html");
-		JSONObject json = uploadPicture.upload(picture, response, request);
+		JSONObject json = uploadPicture.upload(picture, response, request, name);
 		try {
 			response.getWriter().write(json.toString());
 		} catch (IOException e) {

@@ -70,7 +70,6 @@ $(function() {
     });
     //user_name验证
     $('.name').blur(function(){
-    	var path = $(".login_hidden").val();
     	var str = $(this).parent();
         $(this).parent().parent().children('.user_error1').hide();
         $(this).parent().parent().children('.user_error3').hide();
@@ -92,8 +91,8 @@ $(function() {
             return false;
         }else{
         	$.ajax({
-                type: "POST",
-                url: path+'/user/validateName',
+                type: "GET",
+                url: '/user/validateName',
                 data: {"name":$(this).val()},
                 dataType: "json",
                 success: function (data) {
@@ -243,7 +242,7 @@ $(function() {
   //页面加载就加载省
     $.ajax({
         type: "POST",
-        url: $(".login_hidden").val()+'/cityArea/selectProvince',
+        url: '/cityArea/selectProvince',
         dataType: "json",
         success: function (data) {
         	for (var i = 0; i < data.length; i++) {
@@ -280,7 +279,6 @@ $(function() {
     });
     //固定电话的验证
     $('.Fixed_telephone').blur(function(){
-    	var path = $(".login_hidden").val();
     	var str = $(this).parent();
         $(this).parent().parent().children('.user_error1').hide();
         $(this).parent().parent().children('.user_error3').hide();
@@ -303,7 +301,7 @@ $(function() {
         }else{
         	$.ajax({
                 type: "POST",
-                url: path+'/company/validateFixed',
+                url: '/company/validateFixed',
                 data: {"fixed":$(this).val()},
                 dataType: "json",
                 success: function (data) {
@@ -333,7 +331,6 @@ $(function() {
     });
     //个人手机验证
     $(".border_div1 .telephone").blur(function(event) {
-    	var path = $(".login_hidden").val();
     	var str = $(this).parent();
         $(this).parent().parent().children('.user_error1').hide();
         $(this).parent().parent().children('.user_error3').hide();
@@ -355,8 +352,8 @@ $(function() {
             return false;
         }else{
         	$.ajax({
-                type: "POST",
-                url: path+'/user/validateTelephone',
+                type: "GET",
+                url: '/user/validateTelephone',
                 data: {"telephone":$(this).val()},
                 dataType: "json",
                 success: function (data) {
@@ -388,7 +385,6 @@ $(function() {
     });
     //企业手机验证
     $(".border_div .telephone").blur(function(event) {
-    	var path = $(".login_hidden").val();
     	var str = $(this).parent();
     	$(this).parent().parent().children('.user_error1').hide();
     	$(this).parent().parent().children('.user_error3').hide();
@@ -410,8 +406,8 @@ $(function() {
     		return false;
     	}else{
     		$.ajax({
-    			type: "POST",
-    			url: path+'/company/validateTelephone',
+    			type: "GET",
+    			url: '/company/validateTelephone',
     			data: {"telephone":$(this).val()},
     			dataType: "json",
     			success: function (data) {
@@ -502,7 +498,6 @@ $(function() {
     });
     //个人邮箱验证
     $(".border_div1 .email_e").blur(function(event) {
-    	var path = $(".login_hidden").val();
     	var str = $(this).parent();
         $(this).parent().parent().children('.user_error1').hide();
         $(this).parent().parent().children('.user_error3').hide();
@@ -524,8 +519,8 @@ $(function() {
             return false;
         }else{
         	$.ajax({
-                type: "POST",
-                url: path+'/user/validateEmail',
+                type: "GET",
+                url: '/user/validateEmail',
                 data: {"email":$(this).val()},
                 dataType: "json",
                 success: function (data) {
@@ -556,7 +551,6 @@ $(function() {
     });
     //企业邮箱验证
     $(".border_div .email_e").blur(function(event) {
-    	var path = $(".login_hidden").val();
     	var str = $(this).parent();
     	$(this).parent().parent().children('.user_error1').hide();
     	$(this).parent().parent().children('.user_error3').hide();
@@ -578,8 +572,8 @@ $(function() {
     		return false;
     	}else{
     		$.ajax({
-    			type: "POST",
-    			url: path+'/company/validateEmail',
+    			type: "GET",
+    			url: '/company/validateEmail',
     			data: {"email":$(this).val()},
     			dataType: "json",
     			success: function (data) {
@@ -731,12 +725,11 @@ $(function() {
   
     //图片验证码请求
     $('.validatePicCheck').on('click',function(){
-    	var path = $(".login_hidden").val();
     	var str = $(this);
-    	$(this).parent().parent().find(".pictureCheckCode").attr('src',path+'/user/validatePicCheck?'+Math.random());
+    	$(this).parent().parent().find(".pictureCheckCode").attr('src','/user/validatePicCheck?'+Math.random());
     	$.ajax({
-            type: "POST",
-            url: path+'/user/validatePicCheckValue',
+            type: "GET",
+            url: '/user/validatePicCheckValue',
             dataType: "text",
             success: function (data) {
                 $(str).parent().parent().find(".verifyCode").val(data);
@@ -765,10 +758,9 @@ $(function() {
 
 });
 function selectCity(obj) {
-	var path = $(".login_hidden").val();
 	$.ajax({
         type: "POST",
-        url: path+'/cityArea/selectCity',
+        url: '/cityArea/selectCity',
         data: {"parentId":obj},
         dataType: "json",
         success: function (data) {
@@ -779,10 +771,9 @@ function selectCity(obj) {
     });
 }
 function selectArea(obj) {
-	var path = $(".login_hidden").val();
 	$.ajax({
 		type: "POST",
-		url: path+'/cityArea/selectArea',
+		url: '/cityArea/selectArea',
 		data: {"parentId":obj},
 		dataType: "json",
 		success: function (data) {
@@ -807,7 +798,7 @@ Registered_app.directive('enter',function(){
             } else{
                 $('.error').hide();
             }
-        })
+        });
     }
 });
 Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$http){
@@ -823,10 +814,9 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     };
     //个人手机验证码
     $scope.validateTelOne = function(s) {
-    	var path = $(".login_hidden").val();
     	if($("#"+s).css('display')=='block') {
     		$http.post(
-    				path+'/user/validateTel/',
+    				'/user/validateTel/',
     				{
     					'mobilephone' : $scope.Individual.telephone
     				},
@@ -842,12 +832,11 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     		})
     		.error(function(data){
     			
-    		})
+    		});
     	}
     }
     //注册功能
     $scope.submit_one=function(){
-    	var path = $(".login_hidden").val();
         if($('.border_div1 .sub_name').val()==0 && $('.border_div1 .sub_pws').val()==0 && $('.border_div1 .sub_pwsa').val()==0 
         		&& $('.border_div1 .sub_email').val()==0 && $('.border_div1 .sub_tel').val()==0 && $('.border_div1 .sub_tel_code').val()==0
         		&& $('.border_div1 .sub_code').val()==0 && $('.border_div1 .radio_r1').attr('data')==0){
@@ -867,10 +856,17 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
 				}
 			)
             .success(function(data){
-            	 window.location.href = path+"/secure/fowardLogin";
+            	if(data.message.success) {
+            		var str = data.message.code;
+                	var name = str.split("&")[0];
+                	var password = str.split("&")[1];
+            		window.location.href = "/secure/fowardLogin?userName='"+name+"'&password='"+password+"'";
+            	} else {
+            		alert("您输入的手机验证码已过期，请重新获取手机验证码");
+            	}
             })
             .error(function(data){
-
+            	
             })
         }else{
             alert('请完善资料')
@@ -895,10 +891,9 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     };
   //企业手机验证码
     $scope.validateTelTwo = function(s) {
-    	var path = $(".login_hidden").val();
     	if($("#"+s).css('display')=='block') {
     		$http.post(
-    				path+'/user/validateTel/',
+    				'/user/validateTel/',
     				{
     					'mobilephone' : $scope.Enterprise.telephone
     				},
@@ -914,11 +909,10 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     		})
     		.error(function(data){
     			
-    		})
+    		});
     	}
     }
     $scope.submit_two=function(){
-    	var path = $(".login_hidden").val();
     	if($('.Remember_pwd').val()==0){
     		//支付方式
     		$scope.Enterprise.type_name=$(".type_name").children(".radio_r2").attr('data');
@@ -933,11 +927,11 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     	if($('.border_div .sub_name').val()==0 && $('.border_div .sub_pws').val()==0 && $('.border_div .sub_pwsa').val()==0 
     			&& $('.border_div .sub_username').val()==0 && $('.border_div .sub_select_Num1').val()==0 && $('.border_div .sub_select_Num2').val()==0 
     			&& $('.border_div .sub_select_Num3').val()==0 && $('.border_div .sub_email').val()==0 && $('.border_div .sub_tel').val()==0 
-    			//&& $('.border_div .sub_tel_code').val()==0
+    			&& $('.border_div .sub_tel_code').val()==0
         		&& $('.border_div .sub_code').val()==0 && $('.border_div .sub_fixed').val()==0 && $('.border_div .sub_company').val()==0 
         		&& $('.border_div .sub_address').val()==0 && $('.border_div .sub_agree').attr('data')==0){
         	$http.post(
-        			path+'/user/regisUserCompany/', 
+        			'/user/regisUserCompany/', 
     				{
     					'name' : $scope.Enterprise.name,
     					'password' : $scope.Enterprise.pwd,
@@ -960,14 +954,18 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     				}
     			)
                 .success(function(data){
-                	 window.location.href = path+"/secure/fowardLogin";
+                	 if(data.message.success) {
+                 		window.location.href = "/secure/fowardLogin";
+                 	} else {
+                 		alert("您输入的手机验证码已过期，请重新获取手机验证码");
+                 	}
                 })
                 .error(function(data){
 
                 })
             
         }else{
-            alert('请完善资料')
+            alert('请完善资料');
         }
     }
 }]);
