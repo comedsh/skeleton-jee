@@ -11,7 +11,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicHeader;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.http.ResponseEntity;
@@ -34,8 +33,8 @@ import com.fenghua.auto.backend.domain.education.Spittle;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/spring-context.xml", "/spring-mybatis.xml"})
-@Ignore //持续集成忽略此测试，不要删除此注解
+@ContextConfiguration({"/spring-context.xml", "/spring-security.xml", "/spring-mybatis.xml"})
+// @Ignore //持续集成忽略此测试，不要删除此注解
 public class RestfullClientTest {
 	
 	/**
@@ -138,6 +137,26 @@ public class RestfullClientTest {
 		url = new RestTemplate().postForLocation( "http://localhost:8080/spittle", spittle );
 		
 		Assert.assertEquals("/spittle/"+sp.getId(), url.toString());
+	}
+	
+	@Test
+	public void addSpittleNegative(){
+		
+		Spittle spittle = new Spittle();
+		
+		spittle.setUsername("S");
+		
+		spittle.setText("hi, I'm Spittler ~");		
+		
+		// scenario 1: postForObject
+			
+		Spittle s = new RestTemplate().postForObject( "http://localhost:8080/spittle", spittle, Spittle.class );
+		
+		Assert.assertNotNull( s.getErrors() );
+		
+		Assert.assertTrue( s.getErrors().get(0).getField().equals("username"));
+		
+	
 	}
 	
 	@Test

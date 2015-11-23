@@ -202,7 +202,15 @@ public class SpittleRestfulController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public @ResponseBody Spittle addSpittle(@Valid @RequestBody Spittle spittle, BindingResult result, HttpServletResponse response) throws BindException{
 		
-		if( result.hasErrors() ) throw new BindException(result);
+		// if( result.hasErrors() ) throw new BindException(result);
+		
+		if(result.hasErrors()){
+			
+			spittle.addErrors( result.getFieldErrors() );
+			
+			return spittle;
+			
+		}
 		
 		spittleService.addSpittle(spittle);
 		
