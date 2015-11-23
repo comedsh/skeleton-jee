@@ -98,7 +98,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 		s.setAttribute("_t", count);
 	
 		if(count > 3){
-			//throw new AuthenticationLimitException("locked account");
+			throw new AuthenticationLimitException("locked account");
 		}
 		
 	}
