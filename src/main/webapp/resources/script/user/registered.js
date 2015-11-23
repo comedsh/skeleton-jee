@@ -241,7 +241,7 @@ $(function() {
     });
   //页面加载就加载省
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: '/cityArea/selectProvince',
         dataType: "json",
         success: function (data) {
@@ -759,7 +759,7 @@ $(function() {
 });
 function selectCity(obj) {
 	$.ajax({
-        type: "POST",
+        type: "GET",
         url: '/cityArea/selectCity',
         data: {"parentId":obj},
         dataType: "json",
@@ -772,7 +772,7 @@ function selectCity(obj) {
 }
 function selectArea(obj) {
 	$.ajax({
-		type: "POST",
+		type: "GET",
 		url: '/cityArea/selectArea',
 		data: {"parentId":obj},
 		dataType: "json",
