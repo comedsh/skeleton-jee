@@ -39,22 +39,4 @@ public class PictureCheckCode{
         int w = 85, h = 35;  
         VerifyCodeUtils.outputImage(w, h, response.getOutputStream(), verifyCode); 
     } 
-    /**
-     * 返回图形验证码的值
-     * @param request
-     * @param response
-     * @return
-     * @throws ServletException
-     * @throws IOException
-     */
-    public static String validatePicCheckValue(HttpServletRequest request, HttpServletResponse response)  
-    		throws ServletException, IOException {  
-    	response.setHeader("Pragma", "No-cache");  
-    	response.setHeader("Cache-Control", "no-cache");  
-    	response.setDateHeader("Expires", 0);  
-    	response.setContentType("image/jpeg");  
-//      存入会话session  
-    	String verifyCode = request.getSession().getAttribute("rand").toString(); 
-    	return verifyCode;
-    }  
 }  

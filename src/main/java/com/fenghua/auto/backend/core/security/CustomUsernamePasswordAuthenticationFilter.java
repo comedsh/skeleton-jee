@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.security.authentication.AuthenticationServiceException;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -37,7 +36,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 		}
 		
 	
-		checkInfo(request);
+		checkValidateCode(request);
 		
 		String username = obtainUsername(request);
 		String password = obtainPassword(request);
@@ -58,25 +57,29 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 		// Allow subclasses to set the "details" property
 		setDetails(request, authRequest);
 
-		return this.getAuthenticationManager().authenticate(authRequest);		
+		try{
+			
+			Authentication authentication = this.getAuthenticationManager().authenticate(authRequest);	
+			removeInputVCode(request);
+			return authentication;
+		}catch(AuthenticationException e){
+			checkLimitLogin(request);
+			throw e;
+		}
     }
 	
 	
-	private void checkInfo(HttpServletRequest request) throws AuthenticationException{
-		checkCode(request);
-		checkLimitLogin(request);
-	}
 	/**
 	 * 检查验证码
 	 */
-	private void checkCode(HttpServletRequest request) throws AuthenticationException{
+	private void checkValidateCode(HttpServletRequest request) throws AuthenticationException{
 		String vCode = request.getParameter("vCode");
 		if(StringUtils.isEmpty(vCode))
 			return;
 		//验证验证码 AuthenticationCodeException
 		//比对保存在session中的验证码
-		String sCode = (String) request.getSession().getAttribute("V_CODE");
-		if(!vCode.equals(sCode)){
+		String verifyCode = (String) request.getSession().getAttribute("rand");
+		if(!vCode.equals(verifyCode)){
 			throw new AuthenticationCodeException("invalid code");
 		}
 		   
@@ -98,9 +101,13 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 		s.setAttribute("_t", count);
 	
 		if(count > 3){
-			throw new AuthenticationLimitException("locked account");
-		}
-		
+			//throw new AuthenticationLimitException("locked account");
+			request.setAttribute("showVCode", true);
+		}	
+	}
+	
+	private void removeInputVCode(HttpServletRequest request){
+		request.removeAttribute("showVCode");
 	}
 	
 	

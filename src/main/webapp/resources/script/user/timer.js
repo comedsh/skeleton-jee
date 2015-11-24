@@ -6,7 +6,7 @@ $(function() {
         i--;
         if(i == -1) {
         	clearInterval(time);
-        	
+        	window.location.href='/secure/main';
         }
     },1000);
 });

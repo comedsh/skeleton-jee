@@ -3,6 +3,7 @@ package com.fenghua.auto.webapp.controller.user;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -26,6 +27,7 @@ import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.PaymentType;
 import com.fenghua.auto.backend.domain.user.User;
 import com.fenghua.auto.backend.service.user.UserService;
+import com.fenghua.auto.webapp.controller.securtity.SecureController;
 import com.fenghua.auto.webapp.view.Result;
 
 import net.sf.json.JSONObject;
@@ -49,17 +51,30 @@ public class UserController {
 	 * @createTime 2015.11.4
 	 */
 	@RequestMapping(value = "/regisUser", method = RequestMethod.POST)
-	public @ResponseBody Map<String,Result> addUser(@Valid User user, HttpServletRequest request) {
+	public @ResponseBody Map<String,Result> addUser(@Valid User user, @RequestParam String telcode, @RequestParam String code, HttpServletRequest request,Locale locale) {
 		Map<String,Result> model = new HashMap<String,Result>();
 		Result msg = new Result();
-		if(request.getSession(false) == null) {
+		String validateTel = (String) request.getSession().getAttribute("validateTel");
+		String verifyCode = (String) request.getSession().getAttribute("rand");
+		if(validateTel == null || validateTel.equals("")) {
 			msg.setSuccess(false);
-			msg.setMsg("注册失败");
-		} else {
+			msg.setMsg("您输入的验证码已过期");
+		} else if(validateTel.equals(telcode) && verifyCode.equals(code)) {
+			String userPwd = user.getPassword();
 			userService.insert(user);
 			msg.setSuccess(true);
+			msg.setCode(user.getName());
 			msg.setMsg("注册成功");
-			msg.setCode(user.getName()+"&"+user.getPassword());
+			//把用户名和密码存入安全的session中
+			userService.autoLogin(user.getName(), userPwd, locale, request);
+		} else {
+			if(!validateTel.equals(telcode)) {
+				msg.setSuccess(false);
+				msg.setMsg("您输入的手机验证码有误");
+			} else {
+				msg.setSuccess(false);
+				msg.setMsg("您输入的图形验证码有误");
+			}
 		}
 		model.put("message", msg);
 		return model;
@@ -72,18 +87,29 @@ public class UserController {
 	 * @createTime 2015.11.4
 	 */
 	@RequestMapping(value = "/regisUserCompany", method = RequestMethod.POST)
-	public Map<String,Result> addUserAndCompany(@Valid User user, @Valid Company company, @Valid PaymentType paymenttype,HttpServletRequest request) {
+	public Map<String,Result> addUserAndCompany(@Valid User user, @Valid Company company, @RequestParam String telcode, @Valid PaymentType paymenttype,HttpServletRequest request, Locale locale) {
 		Map<String,Result> model = new HashMap<String,Result>();
-		Result msg = null;
+		Result msg = new Result();
+		String validateTel = (String) request.getSession().getAttribute("validateTel");
 		String licence = request.getSession().getAttribute("licence").toString();
 		String certificate = request.getSession().getAttribute("certificate").toString();
-		if(licence.equals("") && licence != null && certificate.equals("") && certificate != null) {
-			company.setBusinessLicence(licence);
-			company.setBusinessLicence(certificate);
-			userService.insert(user,company,paymenttype);
-			msg = new Result(true,"注册成功");
+		if(licence != null && !licence.equals("")  && certificate != null && !certificate.equals("") ) {
+			if(validateTel == null || validateTel.equals("")) {
+				msg.setSuccess(false);
+				msg.setMsg("您输入的验证码已过期");
+			}else if(validateTel.equals(telcode)) {
+				company.setBusinessLicence(licence);
+				company.setBusinessLicence(certificate);
+				userService.insert(user,company,paymenttype);
+				msg.setSuccess(true);
+				msg.setMsg("注册成功");
+			} else {
+				msg.setSuccess(false);
+				msg.setMsg("您输入的手机验证码有误");
+			}
 		} else {
-			msg = new Result(false,"注册失败");
+			msg.setSuccess(false);
+			msg.setMsg("您的图片没有上传成功");
 		}
 		model.put("message", msg);
 		return model;
@@ -134,25 +160,6 @@ public class UserController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	/**
-	 * 获取验证码code值
-	 * @param email
-	 * @param req
-	 * @param res
-	 */
-	@RequestMapping(value = "/validatePicCheckValue",method = RequestMethod.GET)
-	@ResponseBody
-	public String validatePicCheckValue(HttpServletRequest req, HttpServletResponse res) {
-		String str = null;
-		try {
-			str = PictureCheckCode.validatePicCheckValue(req,res);
-		} catch (ServletException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return str;
 	}
 	/**
 	 * 获取手机验证码

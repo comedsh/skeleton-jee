@@ -480,20 +480,13 @@ $(function() {
             $(this).parent().parent().children('.user_error2').show().html("短信验证码格式不正确");
             $(this).parent().parent().children('.sub_tel_code').val('1');
             return false;
-        }else if($(this).val() == $(".telephone_code_rep").val()){
+        }else {
             $(this).parent().css({
                 border:'1px solid #2FA840'
             });
             $(this).parent().parent().children('.user_error2').hide();
             $(this).parent().parent().children('.user_error3').show();
             $(this).parent().parent().children('.sub_tel_code').val('0');
-        } else {
-        	$(this).parent().css({
-                border:'1px solid red'
-            });
-            $(this).parent().parent().children('.user_error2').show().html("输入的验证码不正确");
-            $(this).parent().parent().children('.sub_tel_code').val('1');
-            return false;
         }
     });
     //个人邮箱验证
@@ -669,21 +662,21 @@ $(function() {
             $(this).parent().parent().children('.user_error2').show().html("图形验证码格式不正确");
             $(this).parent().parent().children('.sub_code').val('1');
             return false;
-        }else if($(this).val() == $(this).parent().parent().find(".verifyCode").val()){
+        }else/* if($(this).val() == $(this).parent().parent().find(".verifyCode").val())*/{
             $(this).parent().css({
                 border:'1px solid #2FA840'
             });
             $(this).parent().parent().children('.user_error2').hide();
             $(this).parent().parent().children('.user_error3').show();
             $(this).parent().parent().children('.sub_code').val('0');
-        } else {
+        } /*else {
         	$(this).parent().css({
                 border:'1px solid red'
             });
             $(this).parent().parent().children('.user_error2').show().html("图形验证码输入有误");
             $(this).parent().parent().children('.sub_code').val('1');
             return false;
-        }
+        }*/
     });
     //同意协议
     var i=0;
@@ -727,14 +720,14 @@ $(function() {
     $('.validatePicCheck').on('click',function(){
     	var str = $(this);
     	$(this).parent().parent().find(".pictureCheckCode").attr('src','/user/validatePicCheck?'+Math.random());
-    	$.ajax({
-            type: "GET",
-            url: '/user/validatePicCheckValue',
-            dataType: "text",
-            success: function (data) {
-                $(str).parent().parent().find(".verifyCode").val(data);
-            }
-        });
+//    	$.ajax({
+//            type: "GET",
+//            url: '/user/validatePicCheckValue',
+//            dataType: "text",
+//            success: function (data) {
+//                $(str).parent().parent().find(".verifyCode").val(data);
+//            }
+//        });
     });
   //所有input失去焦点的状态
     $('.chren_div .input_d input').blur(function(event){
@@ -847,6 +840,8 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
 					'password' : $scope.Individual.pwd,
 					'email' : $scope.Individual.email,
 					'mobilephone' : $scope.Individual.telephone,
+					'telcode' : $scope.Individual.telcode,
+					'code' : $scope.Individual.code,
 				},
 				{
 				    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
@@ -857,12 +852,10 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
 			)
             .success(function(data){
             	if(data.message.success) {
-            		var str = data.message.code;
-                	var name = str.split("&")[0];
-                	var password = str.split("&")[1];
-            		window.location.href = "/secure/fowardLogin?userName='"+name+"'&password='"+password+"'";
+            		var name = data.message.code;
+            		window.location.href = "/secure/fowardLogin?userName='"+name+"'";
             	} else {
-            		alert("您输入的手机验证码已过期，请重新获取手机验证码");
+            		alert(data.message.success);
             	}
             })
             .error(function(data){
@@ -954,11 +947,12 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     				}
     			)
                 .success(function(data){
-                	 if(data.message.success) {
-                 		window.location.href = "/secure/fowardLogin";
-                 	} else {
-                 		alert("您输入的手机验证码已过期，请重新获取手机验证码");
-                 	}
+                	if(data.message.success) {
+                		var name = data.message.code;
+                		window.location.href = "/secure/fowardLogin?userName='"+name+"'";
+                	} else {
+                		alert(data.message.success);
+                	}
                 })
                 .error(function(data){
 
