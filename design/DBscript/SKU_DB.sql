@@ -38,11 +38,9 @@ drop table if exists stock_lock;
 
 drop table if exists supplier;
 
-drop table if exists t_order;
 
 drop table if exists vehicle_oe_sku;
 
-drop table if exists ÏµÍ³;
 
 /*==============================================================*/
 /* Table: catalog                                               */
@@ -117,7 +115,7 @@ create table sale_area
 (
    id                   bigint not null auto_increment,
    sale_id              bigint not null,
-   type                 int comment '1.°üº¬£¬ 2 ²»°üº¬',
+   type                 int comment '1.ï¿½ï¿½ 2 ï¿½ï¿½ï¿½ï¿½',
    primary key (id)
 );
 
@@ -131,10 +129,10 @@ create table sku
    code                 varchar(20) not null,
    name                 varchar(200),
    title                varchar(200),
-   url                  text comment 'ÉÌÆ·ËõÂÔÍ¼',
+   url                  text comment 'ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½Í¼',
    introduce            text,
-   status               bit comment '1,´ýÉÏ¼Ü£¬2.ÒÑÉÏ¼Ü 3¡£ÒÑÏÂ¼Ü£¬Ä¬ÈÏ ´ýÉÏ¼Ü',
-   type                 bit comment '1.Æ·ÅÆ¼þ , 2 Ô­³§¼þ',
+   status               bit comment '1,ï¿½ï¿½ï¿½Ï¼Ü£ï¿½2.ï¿½ï¿½ï¿½Ï¼ï¿½ 3ï¿½ï¿½ï¿½ï¿½ï¿½Â¼Ü£ï¿½Ä¬ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¼ï¿½',
+   type                 bit comment '1.Æ·ï¿½Æ¼ï¿½ , 2 Ô­ï¿½ï¿½ï¿½ï¿½',
    shelf_time           datetime default CURRENT_TIMESTAMP,
    under_time           datetime,
    produce_time         date,
@@ -142,7 +140,7 @@ create table sku
    min_quantity         int,
    gross_weight         double(7,2),
    weight               double(7,2),
-   unit                 varchar(10) comment '¼þ£¬Ì¨£¬Ö§,¸ö',
+   unit                 varchar(10) comment 'ï¿½ï¿½ï¿½ï¿½Ì¨ï¿½ï¿½Ö§,ï¿½ï¿½',
    brand                varchar(100),
    score                int,
    supplier_id          bigint,
@@ -176,11 +174,11 @@ create table sku_comment
    sku_id               bigint,
    order_id             bigint,
    order_detail_id      bigint,
-   star                 bit comment '1µ½5¸öÐÇ£¬>=4,ºÃÆÀ  £¬3< ²îÆÀ£¬3 ÖÐÆÀ',
+   star                 bit comment '1ï¿½ï¿½5ï¿½ï¿½ï¿½Ç£ï¿½>=4,ï¿½ï¿½ï¿½ï¿½  ï¿½ï¿½3< ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½3 ï¿½ï¿½ï¿½ï¿½',
    comtent              text,
    user_id              varchar(20),
    create_time          datetime,
-   status               int default 1 comment '1 ÏÔÊ¾£¬2²»ÏÔÊ¾£¬Ä¬ÈÏÏÔÊ¾',
+   status               int default 1 comment '1 ï¿½ï¿½Ê¾ï¿½ï¿½2ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Ä¬ï¿½ï¿½ï¿½ï¿½Ê¾',
    comment_origin       bit comment '0, pc ,1.android 2. iphone  ;',
    primary key (id)
 );
@@ -281,14 +279,6 @@ create table supplier
    unique key supplier_code (code)
 );
 
-/*==============================================================*/
-/* Table: t_order                                               */
-/*==============================================================*/
-create table t_order
-(
-   id                   bigint not null,
-   primary key (id)
-);
 
 /*==============================================================*/
 /* Table: vehicle_oe_sku                                        */
@@ -307,13 +297,6 @@ create table vehicle_oe_sku
    primary key (id)
 );
 
-/*==============================================================*/
-/* Table: ÏµÍ³                                                    */
-/*==============================================================*/
-create table ÏµÍ³
-(
-   id                   bigint
-);
 
 alter table catalog add constraint FK_fk_pid foreign key (parent_id)
       references catalog (id) on delete restrict on update restrict;
