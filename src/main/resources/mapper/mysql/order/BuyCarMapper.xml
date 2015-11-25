@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fenghua.auto.order.domain.BuyCar" >
+  <resultMap id="BaseResultMap" type="com.fenghua.auto.order.domain.BuyCar" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="buyer_id" property="buyerId" jdbcType="BIGINT" />
+    <result column="sku_id" property="skuId" jdbcType="BIGINT" />
+    <result column="original_price" property="originalPrice" jdbcType="DECIMAL" />
+    <result column="sale_price" property="salePrice" jdbcType="DECIMAL" />
+    <result column="current_price" property="currentPrice" jdbcType="DECIMAL" />
+    <result column="discount_strategy_desc" property="discountStrategyDesc" jdbcType="VARCHAR" />
+    <result column="qty" property="qty" jdbcType="INTEGER" />
+    <result column="last_price_time" property="lastPriceTime" jdbcType="TIMESTAMP" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, buyer_id, sku_id, original_price, sale_price, current_price, discount_strategy_desc, 
+    qty, last_price_time, add_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from buy_car
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from buy_car
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.fenghua.auto.order.domain.BuyCar" >
+    insert into buy_car (ID, buyer_id, sku_id, 
+      original_price, sale_price, current_price, 
+      discount_strategy_desc, qty, last_price_time, 
+      add_time)
+    values (#{id,jdbcType=BIGINT}, #{buyerId,jdbcType=BIGINT}, #{skuId,jdbcType=BIGINT}, 
+      #{originalPrice,jdbcType=DECIMAL}, #{salePrice,jdbcType=DECIMAL}, #{currentPrice,jdbcType=DECIMAL}, 
+      #{discountStrategyDesc,jdbcType=VARCHAR}, #{qty,jdbcType=INTEGER}, #{lastPriceTime,jdbcType=TIMESTAMP}, 
+      #{addTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fenghua.auto.order.domain.BuyCar" >
+    insert into buy_car
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="buyerId != null" >
+        buyer_id,
+      </if>
+      <if test="skuId != null" >
+        sku_id,
+      </if>
+      <if test="originalPrice != null" >
+        original_price,
+      </if>
+      <if test="salePrice != null" >
+        sale_price,
+      </if>
+      <if test="currentPrice != null" >
+        current_price,
+      </if>
+      <if test="discountStrategyDesc != null" >
+        discount_strategy_desc,
+      </if>
+      <if test="qty != null" >
+        qty,
+      </if>
+      <if test="lastPriceTime != null" >
+        last_price_time,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="buyerId != null" >
+        #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="skuId != null" >
+        #{skuId,jdbcType=BIGINT},
+      </if>
+      <if test="originalPrice != null" >
+        #{originalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="salePrice != null" >
+        #{salePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="currentPrice != null" >
+        #{currentPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="discountStrategyDesc != null" >
+        #{discountStrategyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="lastPriceTime != null" >
+        #{lastPriceTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.order.domain.BuyCar" >
+    update buy_car
+    <set >
+      <if test="buyerId != null" >
+        buyer_id = #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="skuId != null" >
+        sku_id = #{skuId,jdbcType=BIGINT},
+      </if>
+      <if test="originalPrice != null" >
+        original_price = #{originalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="salePrice != null" >
+        sale_price = #{salePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="currentPrice != null" >
+        current_price = #{currentPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="discountStrategyDesc != null" >
+        discount_strategy_desc = #{discountStrategyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        qty = #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="lastPriceTime != null" >
+        last_price_time = #{lastPriceTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.order.domain.BuyCar" >
+    update buy_car
+    set buyer_id = #{buyerId,jdbcType=BIGINT},
+      sku_id = #{skuId,jdbcType=BIGINT},
+      original_price = #{originalPrice,jdbcType=DECIMAL},
+      sale_price = #{salePrice,jdbcType=DECIMAL},
+      current_price = #{currentPrice,jdbcType=DECIMAL},
+      discount_strategy_desc = #{discountStrategyDesc,jdbcType=VARCHAR},
+      qty = #{qty,jdbcType=INTEGER},
+      last_price_time = #{lastPriceTime,jdbcType=TIMESTAMP},
+      add_time = #{addTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
