@@ -96,7 +96,7 @@ $(function() {
                 data: {"name":$(this).val()},
                 dataType: "json",
                 success: function (data) {
-                    if(data.length != 0) {
+                    if(data != null) {
                     	$(str).css({
                             border:'1px solid red'
                         });
@@ -245,9 +245,11 @@ $(function() {
         url: '/cityArea/selectProvince',
         dataType: "json",
         success: function (data) {
-        	for (var i = 0; i < data.length; i++) {
-				$(".select_province ul").append("<li onclick='selectCity("+data[i].id+")' value='"+data[i].id+"'>"+data[i].name+"</li>");
-			}
+        	if(data != null) {
+        		for (var i = 0; i < data.length; i++) {
+        			$(".select_province ul").append("<li onclick='selectCity("+data[i].id+")' value='"+data[i].id+"'>"+data[i].name+"</li>");
+        		}
+        	}
         }
     });
     
@@ -305,7 +307,7 @@ $(function() {
                 data: {"fixed":$(this).val()},
                 dataType: "json",
                 success: function (data) {
-                    if(data.length != 0) {
+                    if(data != null) {
                     	$(str).css({
                             border:'1px solid red'
                         });
@@ -357,7 +359,7 @@ $(function() {
                 data: {"telephone":$(this).val()},
                 dataType: "json",
                 success: function (data) {
-                    if(data.length != 0) {
+                    if(data != null) {
                     	$(str).css({
                             border:'1px solid red'
                         });
@@ -411,7 +413,7 @@ $(function() {
     			data: {"telephone":$(this).val()},
     			dataType: "json",
     			success: function (data) {
-    				if(data.length != 0) {
+    				if(data != null) {
     					$(str).css({
     						border:'1px solid red'
     					});
@@ -517,7 +519,7 @@ $(function() {
                 data: {"email":$(this).val()},
                 dataType: "json",
                 success: function (data) {
-                    if(data.length != 0) {
+                    if(data != null) {
                     	$(str).css({
                             border:'1px solid red'
                         });
@@ -570,7 +572,7 @@ $(function() {
     			data: {"email":$(this).val()},
     			dataType: "json",
     			success: function (data) {
-    				if(data.length != 0) {
+    				if(data != null) {
     					$(str).css({
     						border:'1px solid red'
     					});
@@ -757,9 +759,11 @@ function selectCity(obj) {
         data: {"parentId":obj},
         dataType: "json",
         success: function (data) {
-        	for (var i = 0; i < data.length; i++) {
-				$(".select_city ul").append("<li onclick='selectArea("+data[i].id+")' value='"+data[i].id+"'>"+data[i].name+"</li>");
-			}
+        	if (data != null) {
+        		for (var i = 0; i < data.length; i++) {
+        			$(".select_city ul").append("<li onclick='selectArea("+data[i].id+")' value='"+data[i].id+"'>"+data[i].name+"</li>");
+        		}
+        	}
         }
     });
 }
@@ -770,8 +774,10 @@ function selectArea(obj) {
 		data: {"parentId":obj},
 		dataType: "json",
 		success: function (data) {
-			for (var i = 0; i < data.length; i++) {
-				$(".select_area ul").append("<li value='"+data[i].id+"'>"+data[i].name+"</li>");
+			if (data != null) {
+				for (var i = 0; i < data.length; i++) {
+					$(".select_area ul").append("<li value='"+data[i].id+"'>"+data[i].name+"</li>");
+				}
 			}
 		}
 	});

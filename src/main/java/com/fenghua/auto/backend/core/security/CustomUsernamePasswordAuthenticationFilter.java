@@ -1,7 +1,5 @@
 package com.fenghua.auto.backend.core.security;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -10,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.util.StringUtils;
 
@@ -100,11 +97,11 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 	 */
 	private void checkLimitLogin(HttpServletRequest request,AuthenticationException e,String name) throws AuthenticationException{
 		//用户名存在，更新入库
-		List<User> user = service.getUserByName(name);
+		User user = service.getUserByName(name);
 		int count = 0;
-		if(user.size() > 0) {
-			if(user.get(0).getFailedLoginTimes() != null) {
-				count = user.get(0).getFailedLoginTimes();
+		if(user!= null) {
+			if(user.getFailedLoginTimes() != null) {
+				count = user.getFailedLoginTimes();
 			}
 			service.updateFailTimes(name,(short)(count+1));
 			if(count > 1) {
@@ -131,9 +128,9 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 	
 	private void removeInputVCode(HttpServletRequest request,String name){
 		request.removeAttribute("showVCode");
-		List<User> user = service.getUserByName(name);
-		if(user.size() > 0) {
-			if(user.get(0).getFailedLoginTimes() != null) {
+		User user = service.getUserByName(name);
+		if(user!=null) {
+			if(user.getFailedLoginTimes() != null) {
 				service.updateFailTimes(name,(short)(0));
 			}
 		} 

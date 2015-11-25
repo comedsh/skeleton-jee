@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.fenghua.auto.backend.dao.BaseDao;
-import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.User;;
 /**
  * 用户dao

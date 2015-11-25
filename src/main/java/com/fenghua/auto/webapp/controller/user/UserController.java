@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -100,7 +101,7 @@ public class UserController {
 		String licence = request.getSession().getAttribute("licence").toString();
 		String certificate = request.getSession().getAttribute("certificate").toString();
 		if(licence != null && !licence.equals("")  && certificate != null && !certificate.equals("") ) {
-			if(validateTel == null || validateTel.equals("")) {
+			if(new Date().getTime() - OLD_DATE.getTime()  > 1000*120) {
 				msg.setSuccess(false);
 				msg.setMsg("您输入的验证码已过期");
 			}else if(validateTel.equals(telcode)) {
@@ -128,7 +129,7 @@ public class UserController {
 	 * @param res
 	 */
 	@RequestMapping(value = "/validateName", method = RequestMethod.GET)
-	public @ResponseBody List<User> validateName(@RequestParam String name,  HttpServletRequest req, HttpServletResponse res) {
+	public @ResponseBody User validateName(@RequestParam String name,  HttpServletRequest req, HttpServletResponse res) {
 		return userService.getUserByName(name);
 	}
 	/**
@@ -151,10 +152,24 @@ public class UserController {
 				}
 			}
 		} else {
-			List<User> user = userService.getUserByName(name);
-			if(user.size() > 0) {
-				if(user.get(0).getFailedLoginTimes() != null){
-					if(user.get(0).getFailedLoginTimes() >= 3) {
+			String regex_tel ="^((13[0-9])|(15[^4,\\D])|(18[0-9]))\\d{8}$";
+			String regex_email ="^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
+			String regex_name ="^[a-zA-Z\\u4e00-\\u9fa5][a-zA-Z0-9\\u4e00-\\u9fa5]{3,19}$";
+			User user = null;
+			if(Pattern.compile(regex_tel).matcher(name).matches()) {
+				user = userService.getUserByTelephone(name);
+			}
+			if(Pattern.compile(regex_email).matcher(name).matches()) {
+				
+				user = userService.getUserByEmail(name);
+			}
+			if(Pattern.compile(regex_name).matcher(name).matches()) {
+				
+				user = userService.getUserByName(name);
+			}
+			if(user!= null) {
+				if(user.getFailedLoginTimes() != null){
+					if(user.getFailedLoginTimes() >= 3) {
 						//显示图形验证码
 						result.setSuccess(false);
 					}
@@ -171,7 +186,7 @@ public class UserController {
 	 * @param res
 	 */
 	@RequestMapping(value = "/validateTelephone", method = RequestMethod.GET)
-	public @ResponseBody List<User> validateTelephone(@RequestParam String telephone,  HttpServletRequest req, HttpServletResponse res) {
+	public @ResponseBody User validateTelephone(@RequestParam String telephone,  HttpServletRequest req, HttpServletResponse res) {
 		return userService.getUserByTelephone(telephone);
 	}
 	/**
@@ -181,7 +196,7 @@ public class UserController {
 	 * @param res
 	 */
 	@RequestMapping(value = "/validateEmail", method = RequestMethod.GET)
-	public @ResponseBody List<User> validateEmail(@RequestParam String email,  HttpServletRequest req, HttpServletResponse res) {
+	public @ResponseBody User validateEmail(@RequestParam String email,  HttpServletRequest req, HttpServletResponse res) {
 		return userService.getUserByEmail(email);
 	}
 	/**

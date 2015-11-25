@@ -3,7 +3,6 @@ package com.fenghua.auto.backend.service.security;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
@@ -14,9 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter;
 
-import com.fenghua.auto.backend.domain.securtity.Account;
 import com.fenghua.auto.backend.domain.user.Role;
 import com.fenghua.auto.backend.domain.user.User;
 import com.fenghua.auto.backend.service.user.RoleService;
@@ -36,6 +33,7 @@ public class CustomUserDetailService implements UserDetailsService{
 	private static final Logger logger = LoggerFactory
 			.getLogger(CustomUserDetailService.class);
 
+	@SuppressWarnings("unused")
 	@Autowired
 	private AccountService accountService;
 	
@@ -45,6 +43,7 @@ public class CustomUserDetailService implements UserDetailsService{
 	@Autowired
 	private RoleService roleService;
 	
+	@SuppressWarnings("null")
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -55,7 +54,7 @@ public class CustomUserDetailService implements UserDetailsService{
 		String regex_tel ="^((13[0-9])|(15[^4,\\D])|(18[0-9]))\\d{8}$";
 		String regex_email ="^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
 		String regex_name ="^[a-zA-Z\\u4e00-\\u9fa5][a-zA-Z0-9\\u4e00-\\u9fa5]{3,19}$";
-		List<User> users = null;
+		User users = null;
 		if(Pattern.compile(regex_tel).matcher(username).matches()) {
 			users = userService.getUserByTelephone(username);
 		}
@@ -68,21 +67,21 @@ public class CustomUserDetailService implements UserDetailsService{
 			users = userService.getUserByName(username);
 		}
 
-		if (users.size() == 0) {
+		if (users != null) {
 			String message = "用户" + username + "不存在";
 			logger.error(message);
 			throw new UsernameNotFoundException(message);
 		} 
-		username = users.get(0).getName();
-		String password =users.get(0).getPassword();
+		username = users.getName();
+		String password =users.getPassword();
 		
 		// 获得用户的角色
-		Long roleId = users.get(0).getRole();
+		Long roleId = users.getRole();
 		Iterator<Role> roles = roleService.getRoleById(roleId).iterator();
 		while (roles.hasNext()) {
 			Role role = roles.next();		
 			SimpleGrantedAuthority grantedAuthorityImpl = new SimpleGrantedAuthority(role.getName());
-			logger.debug("用户：[" + users.get(0).getName() + "]拥有角色：["+ role.getName() + "],即spring security中的access");
+			logger.debug("用户：[" + users.getName() + "]拥有角色：["+ role.getName() + "],即spring security中的access");
 			auths.add(grantedAuthorityImpl);
 		}
 

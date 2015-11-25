@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -87,6 +86,7 @@ public class UserServiceImpl implements UserService {
 	}
 	@Override
 	public void insert(User personal, Company company, PaymentType payment) {
+		
 //		//录入角色
 //		Role role = new Role();
 //		role.setName("企业买家");
@@ -132,18 +132,33 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> getUserByName(String name) {
-		return userDao.selectByName(name);
+	public User getUserByName(String name) {
+		List<User> user = userDao.selectByName(name);
+		if (user != null && user.equals("")) {
+			return user.get(0);
+		} else {
+			return null;
+		}
 	}
 	
 	@Override
-	public List<User> getUserByEmail(String email) {
-		return userDao.selectByEmail(email);
+	public User getUserByEmail(String email) {
+		List<User> user = userDao.selectByEmail(email);
+		if (user != null && user.equals("")) {
+			return user.get(0);
+		} else {
+			return null;
+		}
 	}
 	
 	@Override
-	public List<User> getUserByTelephone(String telephone) {
-		return userDao.selectByTelephone(telephone);
+	public User getUserByTelephone(String telephone) {
+		List<User> user = userDao.selectByTelephone(telephone);
+		if (user != null && user.equals("")) {
+			return user.get(0);
+		} else {
+			return null;
+		}
 	}
 	
 	@Override
