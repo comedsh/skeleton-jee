@@ -2,11 +2,22 @@ package com.fenghua.auto.backend.service.user.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Service;
 
+import com.fenghua.auto.backend.core.security.CustomUsernamePasswordAuthenticationToken;
 import com.fenghua.auto.backend.dao.user.CompanyDao;
 import com.fenghua.auto.backend.dao.user.PaymentTypeDao;
 import com.fenghua.auto.backend.dao.user.UserDao;
@@ -40,6 +51,10 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private BCryptPasswordEncoder encoder;
+	
+	@Autowired
+    @Qualifier("org.springframework.security.authenticationManager")//编辑软件会提示错误
+    private AuthenticationManager authenticationManager;
 
 	@Override
 	public void delete(Long id) {
@@ -49,6 +64,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void update(User personal) {
 		userDao.updateById(personal);
+	}
+	
+	@Override
+	public void updateFailTimes(String name,short count) {
+		userDao.updateFailTimes(name,count);
 	}
 
 	@Override
@@ -66,6 +86,7 @@ public class UserServiceImpl implements UserService {
 	}
 	@Override
 	public void insert(User personal, Company company, PaymentType payment) {
+		
 //		//录入角色
 //		Role role = new Role();
 //		role.setName("企业买家");
@@ -123,5 +144,41 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> getUserByTelephone(String telephone) {
 		return userDao.selectByTelephone(telephone);
+	}
+	@Override
+	public Long updatePasswordByPhone(String pwdNew,String phone) {
+		User user=new User();
+		String passWord = encoder.encode(pwdNew);
+		user.setPassword(passWord);
+		user.setMobilephone(phone);
+		return userDao.updatePasswordByPhone(user);
+	}
+
+	@Override
+	public Long updatePasswordByUserId(String pwdNew, Long UserId) {
+		User user=new User();
+		String passWord = encoder.encode(pwdNew);
+		user.setPassword(passWord);
+		user.setId(UserId);
+		return userDao.updatePasswordByUserId(user);	}
+
+	@Override
+	public User getUserByuserId(Long userId) {
+		return userDao.selectByUserId(userId);
+	}
+	
+	@Override
+	public void autoLogin(String userName, String passWord, Locale locale,HttpServletRequest request){
+		CustomUsernamePasswordAuthenticationToken token = new CustomUsernamePasswordAuthenticationToken(userName, passWord);
+		try {
+			token.setDetails(new WebAuthenticationDetails(request));
+			Authentication authenticatedUser = authenticationManager.authenticate(token);
+			SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
+			request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+					SecurityContextHolder.getContext());
+		} catch (AuthenticationException e) {
+			e.printStackTrace();
+			System.out.println("Authentication failed: " + e.getMessage());
+		}
 	}
 }

@@ -2,6 +2,9 @@ package com.fenghua.auto.backend.domain.user;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import com.fenghua.auto.backend.domain.DomainObject;
 /**
  * 用户实体类
@@ -13,7 +16,8 @@ public class User implements DomainObject {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-
+	@Size(min=6, max=20)
+	@NotNull
 	private String name;
 
 	private String password;

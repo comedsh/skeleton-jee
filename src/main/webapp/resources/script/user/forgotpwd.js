@@ -1,4 +1,16 @@
-/**
+$(document).ready(function(){
+   
+	    	var str =  $('.validatePicCheck');
+	    	$(this).parent().parent().find(".pictureCheckCode").attr('src','/user/validatePicCheck?'+Math.random());
+	    	$.ajax({
+	            type: "GET",
+	            url: '/user/validatePicCheckValue',
+	            dataType: "text",
+	            success: function (data) {
+	                $(str).parent().parent().find(".verifyCode").val(data);
+	            }
+	        });
+});/**
  * Created by think on 2015/11/2.
  */
 $(function() {
@@ -41,22 +53,45 @@ $(function() {
     });
     //手机验证
     $("#mobile").blur(function(event) {
+    	var str = $(this).parent();
         if($(this).val() == ""){
             $('.mobile_error img').show();
             $(".mobile_error span").html("手机号码不能为空");
-            $('input[type=hidden]').val('1');
+            $("#sub_tel").val(1);
             return false;
         }
         var re = /^1{1}[34578]{1}[0-9]{9}$/;
         if(!re.test($(this).val())){
             $('.mobile_error img').show();
             $(".mobile_error span").html("手机号码格式不正确");
-            $('input[type=hidden]').val('1');
+            $("#sub_tel").val(1);           
             return false;
         }else{
-            $('.mobile_error img').hide();
-            $(".mobile_error span").html("");
-            $('input[type=hidden]').val('0')
+        	$.ajax({
+                type: "GET",
+                url: '/user/validateTelephone',
+                data: {"telephone":$(this).val()},
+                dataType: "json",
+                success: function (data) {
+                    if(data.length == 0) {
+                    	$('.mobile_error img').show();
+                        $(".mobile_error span").html("该手机号码未被注册");
+                        $("#sub_tel").val(1);
+                    } else {
+                    	
+                    	$("#sub_tel").val(0);
+                        $('.mobile_error img').hide();
+                        $(".mobile_error span").html("输入正确");
+                        $('#validateTel').bind('click','validateTel()');
+                      //失去焦点时，隐藏X图标
+//                        var as= $(str).parent().children('.user_error3').css('display');
+//                        if(as=='block'){
+//                            $(str).parent().children('.remove_d').hide();
+//                        
+//                        }
+                    }
+                }
+            });
         }
     });
     //图形验证码
@@ -64,40 +99,62 @@ $(function() {
         if($(this).val() == ""){
             $('.code_error img').show();
             $(".code_error span").html("验证码不能为空");
-            $('input[type=hidden]').val('1');
+            $("#sub_code").val(1);
             return false;
         }
-        var re = /^[A-Za-z]{4}$/;
+        var re = /^[A-Za-z0-9]{4}$/;
         if(!re.test($(this).val())){
             $('.code_error img').show();
             $(".code_error span").html("验证码格式不正确");
-            $('input[type=hidden]').val('1');
+           $("#sub_code").val(1);
             return false;
-        }else{
+        }else if($(this).val() == $(this).parent().parent().find(".verifyCode").val()){
+           
             $('.code_error img').hide();
-            $(".code_error span").html("");
-            $('input[type=hidden]').val('0');
+            $(".code_error span").html(" 输入正确");
+            $("#sub_code").val(0);
+        }else{
+        	$(".code_error span").html("图形验证码输入有误");
+        	 $("#sub_code").val(1);
             return false;
         }
+    });
+    //图片验证码请求
+    $('.validatePicCheck').on('click',function(){
+    	var str = $(this);
+    	$(this).parent().parent().find(".pictureCheckCode").attr('src','/user/validatePicCheck?'+Math.random());
+    	$.ajax({
+            type: "GET",
+            url: '/user/validatePicCheckValue',
+            dataType: "text",
+            success: function (data) {
+                $(str).parent().parent().find(".verifyCode").val(data);
+            }
+        });
     });
     //手机短信验证码
     $(".iPhone_code").blur(function(event) {
         if($(this).val() == ""){
             $('.iPhone_code_error img').show();
             $(".iPhone_code_error span").html("手机验证码不能为空");
-            $('input[type=hidden]').val('1');
+            $("#sub_tel_code").val(1);
             return false;
         }
         var re = /^[0-9]{6}$/;
         if(!re.test($(this).val())){
             $('.iPhone_code_error img').show();
             $(".iPhone_code_error span").html("手机验证码格式不正确");
-            $('input[type=hidden]').val('1');
+            $("#sub_tel_code").val(1);
             return false;
-        }else{
+        }else if($(this).val() == $(".telephone_code_rep").val()){
+           
             $('.iPhone_code_error img').hide();
-            $(".iPhone_code_error span").html("");
-            $('input[type=hidden]').val('0');
+            $(".iPhone_code_error span").html("输入正确");
+            $("#sub_tel_code").val(0);
+        }else{
+        	$('.iPhone_code_error img').show();
+            $(".iPhone_code_error span").html("输入的验证码不正确");
+            $("#sub_tel_code").val(1);
             return false;
         }
     });
@@ -172,10 +229,31 @@ $(function() {
             $('.boolen1').val('1');
             return false;
         }else{
-            $('.email_error img').hide();
-            $(".email_error span").html("");
-            $('.boolen1').val('0');
-            return false;
+        	$.ajax({
+                type: "GET",
+                url: '/user/validateEmail',
+                data: {"email":$(this).val()},
+                dataType: "json",
+                success: function (data) {
+                    if(data.length == 0) {
+                    	 $(".email_error span").show().html("该邮箱未被注册");
+                    	 $('.boolen1').val('1');
+                    } else {
+                    	$('.boolen1').val('0');
+                    	$('.email_error img').hide();
+                        $(".email_error span").html("");
+                        
+//                        //失去焦点时，隐藏X图标
+//                        var as= $(str).parent().children('.user_error3').css('display');
+//                        if(as=='block'){
+//                            $(str).parent().children('.remove_d').hide();
+//                        
+//                        }
+                    }
+                }
+            });
+        	
+
         }
     });
     //邮箱修改密码验证
@@ -222,9 +300,11 @@ $(function() {
         }
     });
 });
-var forgotpwd_app=angular.module('forgotpwd',[]);
+
+    
+var forgotpwd_app=angular.module('forgotpwd_app',[]);
 //手机找回密码
-forgotpwd_app.controller('ipone',['$scope','$http',function($scope,$http){
+forgotpwd_app.controller('ipone_ctr',['$scope','$http',function($scope,$http){
         $scope.mobile='';
         $scope.code='';
         $scope.iPhone_code='';
@@ -232,66 +312,109 @@ forgotpwd_app.controller('ipone',['$scope','$http',function($scope,$http){
         $scope.myVar1 = false;
         $scope.myVar2 = true;
         $scope.myVar3 = true;
+        //个人手机验证码
+        $scope.validateTel = function() {
+        	//if($("#"+s).css('display')=='block') {
+        		$http.post(
+        				'/user/validateTel/',
+        				{
+        					'mobilephone' : $scope.mobile
+        				},
+        				{
+        					headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+        					transformRequest: function(data){
+        						return $.param(data);
+        					}
+        				}
+        		)
+        		.success(function(data){
+        			$(".telephone_code_rep").val(data);
+        		})
+        		.error(function(data){
+        			
+        		});
+        	}
+      //  }
+        
         $scope.nextstep=function(){
             console.log($scope.mobile+"////"+$scope.num);
-            if($('input[type=hidden]').val()==0){
-                $http.post('',{mobile:$scope.mobile,code:$scope.code,iPhone_code:$scope.iPhone_code})
-                    .success(function(rep){
-                        //第一步验证成功时
-                        $scope.myVar1 = true;
-                        $scope.myVar2 = false;
-                    })
-                    .error(function(rep){
-                        //第一步验证失败时
-                        if(rep){
-                            //手机号错误
-                            $('.mobile_error img').show();
-                            $(".mobile_error span").html("此手机已注册");
-                            return false;
-                        }else if(rep){
-                            //图形验证码错误
-                            $('.code_error img').show();
-                            $(".code_error span").html("图形验证码错误");
-                            return false;
-                        }else{
-                            //手机验证码错误
-                            $('.iPhone_code_error img').show();
-                            $(".iPhone_code_error span").html("手机验证码错误");
-                            return false;
-                        }
-                    })
+            if($("#sub_tel").val()==0 && $("#sub_code").val()==0 && $("#sub_tel_code").val()==0){
+            	 $(".ipone_two").css("display","");
+            	 $(".ipone_one").css("display","none");
+            	 $(".ipone_three").css("display","none");
+            	// $scope.myVar2 = false;
+//                $http.post('',{mobile:$scope.mobile,code:$scope.code,iPhone_code:$scope.iPhone_code})
+//                    .success(function(rep){
+//                        //第一步验证成功时
+//                        $scope.myVar1 = true;
+//                        $scope.myVar2 = false;
+//                    })
+//                    .error(function(rep){
+//                        //第一步验证失败时
+//                        if(rep){
+//                            //手机号错误
+//                            $('.mobile_error img').show();
+//                            $(".mobile_error span").html("此手机已注册");
+//                            return false;
+//                        }else if(rep){
+//                            //图形验证码错误
+//                            $('.code_error img').show();
+//                            $(".code_error span").html("图形验证码错误");
+//                            return false;
+//                        }else{
+//                            //手机验证码错误
+//                            $('.iPhone_code_error img').show();
+//                            $(".iPhone_code_error span").html("手机验证码错误");
+//                            return false;
+//                        }
+//                    })
             }
 
         };
+        $scope.mobile='';
         $scope.pwd_new = '';
         $scope.pwd_new_agin = '';
         $scope.second=function(){
             if($('.second').val()==0){
-                $http.post('',{pwd_new:$scope.pwd_new,pwd_new_agin:$scope.pwd_new_agin})
-                    .success(function(rep){
+                $http.post('/user/updatePasswordByPhone/',{'pwd_new':$scope.pwd_new,'phone':$scope.mobile}
+                ,
+				{
+				   headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+				    transformRequest: function(data){
+				        return $.param(data);
+				    }
+				}
+                )
+                    .success(function(data){
                         //第二步验证成功时
-                        $scope.myVar2 = true;
-                        $scope.myVar3 = false;
+                    	if(data.message.success) {
+                    	 $(".ipone_two").css("display","none");
+                    	 $(".ipone_one").css("display","none");
+                    	 $(".ipone_three").css("display","");
+                    	 $("#qq").html(data.message.code);
+                    	}
+//                        $scope.myVar2 = true;
+//                        $scope.myVar3 = false;
                     })
                     .error(function(rep){
-                        //第二步验证失败时
-                        if(rep){
-                            //密码不能为空
-                            $('.pwd_new_error img').show();
-                            $(".pwd_new_error span").html("请输入密码");
-                            return false;
-                        }else{
-                            //再次输入密码不能为空
-                            $('.pwd_agin_error img').show();
-                            $(".pwd_agin_error span").html("请输入密码");
-                            return false;
-                        }
+//                        //第二步验证失败时
+//                        if(rep){
+//                            //密码不能为空
+//                            $('.pwd_new_error img').show();
+//                            $(".pwd_new_error span").html("请输入密码");
+//                            return false;
+//                        }else{
+//                            //再次输入密码不能为空
+//                            $('.pwd_agin_error img').show();
+//                            $(".pwd_agin_error span").html("请输入密码");
+//                            return false;
+//                        }
                     })
             }
         }
 }]);
 //邮箱找回密码
-forgotpwd_app.controller('email',['$scope','$http',function($scope,$http){
+forgotpwd_app.controller('email_ctr',['$scope','$http',function($scope,$http){
         $scope.boolen1=false;
         $scope.boolen2=true;
         $scope.boolen3=true;
@@ -300,12 +423,23 @@ forgotpwd_app.controller('email',['$scope','$http',function($scope,$http){
         $scope.email='';
         $scope.emailnext=function(){
             if($('.boolen1').val()==0){
-                $http.post('',{email:$scope.email})
+                $http.post(
+                		'/user/forGotPassword/',
+                		{'email':$scope.email},
+                		{
+		 				    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+		 				    transformRequest: function(data){
+		 				        return $.param(data);
+		 				    }
+		 				}
+                )
                     .success(function(rep){
                         //第一步验证成功时
                         $scope.boolen1=false;
                         $scope.boolen5=true;
                         $scope.boolen4=false;
+                        $("#emailcontent").html($scope.email);
+                        $scope.email = $scope.email;
                     })
                     .error(function(rep){
                         //第一步验证失败时
@@ -315,18 +449,29 @@ forgotpwd_app.controller('email',['$scope','$http',function($scope,$http){
                             $(".email_error span").html("邮箱不能为空");
                             return false;
                         }
-                    })
+                    });
             }
         };
         $scope.pwd_new1 = '';
         $scope.pwd_new_agin1 = '';
+        $scope.userId1='';
         $scope.second=function(){
             if($('.boolen2').val()==0){
-                $http.post('',{pwd_new1:$scope.pwd_new1})
-                    .success(function(rep){
+                $http.post('/user/updatePasswordByUserId/',{'pwdNew':$scope.pwd_new1,'userId':$("#userId").val()},
+                		{
+ 				    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+ 				    transformRequest: function(data){
+ 				        return $.param(data);
+ 				    }
+ 				}		
+                )
+                    .success(function(data){
                         //第二步验证成功时
-                        $scope.boolen2=true;
-                        $scope.boolen3=false;
+//                        $scope.boolen2=true;
+//                        $scope.boolen3=false;
+                    	$(".email_two").css("display","none");
+                    	$(".email_three").css("display","");
+                    	 $("#blindEmail").html(data.message.code);
                     })
                     .error(function(rep){
                         //第二步验证失败时

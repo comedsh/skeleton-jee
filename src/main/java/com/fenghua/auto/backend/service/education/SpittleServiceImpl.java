@@ -67,7 +67,7 @@ public class SpittleServiceImpl implements SpittleService {
 	public Spittle getSpittleById(long id) {
 		
 		for( Spittle s : mockSpittles ){
-			if( s.getId() == id ){
+			if( s.getId() .equals(id)  ){
 				return s;
 			}
 		}

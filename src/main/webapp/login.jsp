@@ -98,7 +98,7 @@
             <div class="error">手机账号错误</div>	
         </div>
         <div class="input_li">
-            <input ng-model="user.name" type="text" class="name" placeholder="用户名/手机/邮箱号"/>
+            <input ng-model="user.name" ng-blur="validateName()" type="text" class="name" placeholder="用户名/手机/邮箱号"/>
         </div>
         <div class="input_li pwd">
             <input ng-model="user.pwd" type="password" placeholder="请输入你的密码"/>
@@ -108,17 +108,12 @@
             <a ng-href="Forgot password.html">忘记密码</a>
         </div>
         <div class="code_d">
-            <input type="text">
-            <!--<img  src="<%=request.getContextPath() %>/resources/imgs/code.png" alt="" title="换一张" class="img_code"/>-->
-            <img title="换一张" class="img_code" src="https://authcode.jd.com/verify/image?a=0&amp;
-acid=feaaa1e7-e645-4dff-b702-679e5ebf70a2&amp;
-uid=feaaa1e7-e645-4dff-b702-679e5ebf70a2&amp;
-srcid=reg&amp;is=e69a14665f94d73d9ceb265005b78452&amp;
-yys=1444790929987"
+            <input type="text" ng-model="user.code">
+            <img title="换一张" class="img_code" src="<%=request.getContextPath() %>/user/validatePicCheck"
                  style="margin-left: 5px;margin-top: 1px;width: 80px;height: 30px;;display:block;"
                  alt="" clstag="regist|keycount|personalreg|06"
                  onclick="this.src= document.location.protocol +'//authcode.jd.com/verify/image?a=0&amp;acid=feaaa1e7-e645-4dff-b702-679e5ebf70a2&amp;uid=feaaa1e7-e645-4dff-b702-679e5ebf70a2&amp;srcid=reg&amp;is=e69a14665f94d73d9ceb265005b78452&amp;yys='+new Date().getTime()" ver_colorofnoisepoint="#888888" id="JD_Verification1">
-            <a href="javascript:void(0)">看不清楚换一张</a>
+            <a style="cursor: pointer;" class="validatePicCheck">看不清楚换一张</a>
         </div>
         <button class="login_btn" enter ng-click="logins()">登 录</button>
         <div class="san_d">

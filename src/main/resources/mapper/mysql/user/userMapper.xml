@@ -51,14 +51,30 @@
     from user
     where Email = #{email}
   </select>
-  
+  <!-- 根据用户id查询用户详细信息 -->
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+     <include refid="Base_Column_List" />
+    from user
+    where ID = #{userId}
+  </select>
   <select id="selectByTelephone" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from user
-    where Mobilephone = #{mobilephone}
+    where MobilePhone = #{telephone}
   </select>
-  
+     <update id="updatePasswordByPhone" parameterType="com.fenghua.auto.backend.domain.user.User" >
+    update user set
+      Password = #{password,jdbcType=VARCHAR}
+    where MobilePhone = #{mobilephone,jdbcType=VARCHAR}
+  </update>
+  <!--根据用户id修改密码  -->
+   <update id="updatePasswordByUserId" parameterType="com.fenghua.auto.backend.domain.user.User" >
+    update user set
+      Password = #{password,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
   <delete id="deleteById" parameterType="java.lang.Long" >
     delete from user
     where ID = #{id,jdbcType=BIGINT}
@@ -249,5 +265,10 @@
       Last_Modified_TS = #{lastModifiedTs,jdbcType=TIMESTAMP},
       Last_Modified_By = #{lastModifiedBy,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateFailtimesByName" parameterType="com.fenghua.auto.backend.domain.user.User" >
+    update user
+    set Failed_Login_Times = #{failedLoginTimes,jdbcType=SMALLINT}
+    where Name = #{name,jdbcType=VARCHAR}
   </update>
 </mapper>

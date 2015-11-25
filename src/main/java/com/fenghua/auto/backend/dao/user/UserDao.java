@@ -37,10 +37,32 @@ public interface UserDao extends BaseDao<User> {
 	 * @return
 	 */
 	public List<User> selectByEmail(String email); 
+	
 	/**
 	 * 通过用户telephone查询对应数据
 	 * @param telephone
 	 * @return
 	 */
 	public List<User> selectByTelephone(String telephone); 
+	
+	public User selectByUserId(Long userId);
+	/**
+	 * 
+	 * @param phone
+	 * @param password
+	 * @return
+	 */
+	public Long updatePasswordByPhone(User user); 
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public Long updatePasswordByUserId(User user); 
+	/**
+	 * 通过用户email查询对应数据
+	 * @param email
+	 * @return
+	 */
+	public void updateFailTimes(String name,short count); 
 }
