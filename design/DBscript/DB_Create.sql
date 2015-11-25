@@ -137,7 +137,7 @@ create table Sys_Config
 /*==============================================================*/
 create table User
 (
-   ID                   bigint not null,
+   ID                   bigint not null auto_increment,
    Name                 varchar(30) not null,
    Password             varchar(100),
    Email                varchar(100),
