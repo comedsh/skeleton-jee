@@ -6,133 +6,43 @@
 
 drop table if exists bill_order;
 
-drop index idx_sku_id on buy_car;
-
-drop index idx_buyer_id on buy_car;
-
 drop table if exists buy_car;
-
-drop index idx_biz_id_type on order_image;
 
 drop table if exists order_image;
 
-drop index idx_buyer_id on order_header;
-
-drop index idx_seller_id on order_header;
-
-drop index idx_order_no on order_header;
-
 drop table if exists order_header;
-
-drop index idx_order_id on order_invoice;
 
 drop table if exists order_invoice;
 
-drop index idx_seller_id on order_item;
-
-drop index idx_buyer_id on order_item;
-
-drop index idx_order_id on order_item;
-
 drop table if exists order_item;
-
-drop index idx_buyer_id on order_master;
-
-drop index idx_master_no on order_master;
 
 drop table if exists order_master;
 
-drop index idx_pay_no on order_payment;
-
-drop index idx_master_order_no on order_payment;
-
-drop index idx_order_id on order_payment;
-
 drop table if exists order_payment;
-
-drop index idx_order_no on order_task;
-
-drop index idx_order_id on order_task;
 
 drop table if exists order_task;
 
-drop index idx_order_id on order_track;
-
 drop table if exists order_track;
 
-drop index idx_waybill_no on order_transport;
-
-drop index idx_order_id on order_transport;
-
 drop table if exists order_transport;
-
-drop index idx_order_item_id on order_transport_detail;
-
-drop index idx_sku_id on order_transport_detail;
-
-drop index idx_waybill_id on order_transport_detail;
 
 drop table if exists order_transport_detail;
 
 drop table if exists order_pay_trade;
 
-drop index idx_order_no on quality_order;
-
-drop index idx_order_id on quality_order;
-
-drop index idx_seller_id on quality_order;
-
-drop index idx_buyer_id on quality_order;
-
-drop index idx_quality_order_no on quality_order;
-
 drop table if exists quality_order;
-
-drop index idx_sku_id on quality_order_detail;
-
-drop index idx_order_item_id on quality_order_detail;
-
-drop index idx_quality_order_id on quality_order_detail;
 
 drop table if exists quality_order_detail;
 
-drop index idx_retrade_no on refund_bill;
-
-drop index idx_order_no on refund_bill;
-
-drop index idx_order_id on refund_bill;
-
-drop index idx_refund_no on refund_bill;
-
 drop table if exists refund_bill;
-
-drop index idx_seller_id on refund_order;
-
-drop index idx_buyer_id on refund_order;
-
-drop index idx_order_id on refund_order;
-
-drop index idx_refund_no on refund_order;
 
 drop table if exists refund_order;
 
-drop index idx_sku_id on refund_order_detail;
-
-drop index idx_order_item_id on refund_order_detail;
-
-drop index idx_refund_id on refund_order_detail;
-
 drop table if exists refund_order_detail;
-
-drop index idx_refund_no on refund_track;
-
-drop index idx_refund_id on refund_track;
 
 drop table if exists refund_track;
 
 drop table if exists transaction_flow;
-
-drop index idx_waybill_id on waybill_track;
 
 drop table if exists waybill_track;
 
