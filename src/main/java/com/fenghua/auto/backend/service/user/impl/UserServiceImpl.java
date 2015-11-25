@@ -82,6 +82,10 @@ public class UserServiceImpl implements UserService {
 		String passWord = encoder.encode( personal.getPassword());
 		personal.setPassword(passWord);
 		personal.setRoleId(Long.parseLong("1"));
+		personal.setFailedLoginTimes(Short.parseShort("0"));
+		personal.setAvailable(true);
+		personal.setCreatedTs(new Date());
+		personal.setLastModifiedTs(new Date());
 		userDao.insert(personal);
 	}
 	@Override
@@ -112,6 +116,10 @@ public class UserServiceImpl implements UserService {
 		personal.setPassword(passWord);
 		personal.setCompanyId(companyId);
 		personal.setRoleId(Long.parseLong("2"));
+		personal.setFailedLoginTimes(Short.parseShort("0"));
+		personal.setAvailable(true);
+		personal.setCreatedTs(new Date());
+		personal.setLastModifiedTs(new Date());
 		Long userId = userDao.getPaymentId(personal);
 		//user与支付关系数据
 		UserPaymentType payment_type = new UserPaymentType();
