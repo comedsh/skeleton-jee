@@ -11,9 +11,9 @@
     <result column="MobilePhone" property="mobilephone" jdbcType="VARCHAR" />
     <result column="QQ_Number" property="qqNumber" jdbcType="VARCHAR" />
     <result column="WeChat" property="wechat" jdbcType="VARCHAR" />
-    <result column="Role" property="role" jdbcType="BIGINT" />
-    <result column="Level" property="level" jdbcType="BIGINT" />
-    <result column="Company" property="company" jdbcType="BIGINT" />
+    <result column="Role_ID" property="roleId" jdbcType="BIGINT" />
+    <result column="User_Level_ID" property="userLevelId" jdbcType="BIGINT" />
+    <result column="Company_ID" property="companyId" jdbcType="BIGINT" />
     <result column="Failed_Login_Times" property="failedLoginTimes" jdbcType="SMALLINT" />
     <result column="Available" property="available" jdbcType="BIT" />
     <result column="Created_TS" property="createdTs" jdbcType="TIMESTAMP" />
@@ -22,7 +22,7 @@
     <result column="Last_Modified_By" property="lastModifiedBy" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    ID, Name, Password, Email, MobilePhone, QQ_Number, WeChat, Role, Level, Company, 
+    ID, Name, Password, Email, MobilePhone, QQ_Number, WeChat, Role_ID, User_Level_ID, Company_ID, 
     Failed_Login_Times, Available, Created_TS, Created_By, Last_Modified_TS, Last_Modified_By
   </sql>
   <select id="select" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -66,14 +66,14 @@
   <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.fenghua.auto.backend.domain.user.User" >
     insert into user (ID, Name, Password, 
       Email, MobilePhone, QQ_Number, 
-      WeChat, Role, Level, 
-      Company, Failed_Login_Times, Available, 
+      WeChat, Role_ID, User_Level_ID, 
+      Company_ID, Failed_Login_Times, Available, 
       Created_TS, Created_By, Last_Modified_TS, 
       Last_Modified_By)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{mobilephone,jdbcType=VARCHAR}, #{qqNumber,jdbcType=VARCHAR}, 
-      #{wechat,jdbcType=VARCHAR}, #{role,jdbcType=BIGINT}, #{level,jdbcType=BIGINT}, 
-      #{company,jdbcType=BIGINT}, #{failedLoginTimes,jdbcType=SMALLINT}, #{available,jdbcType=BIT}, 
+      #{wechat,jdbcType=VARCHAR}, #{roleId,jdbcType=BIGINT}, #{userLevelId,jdbcType=BIGINT}, 
+      #{companyId,jdbcType=BIGINT}, #{failedLoginTimes,jdbcType=SMALLINT}, #{available,jdbcType=BIT}, 
       #{createdTs,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{lastModifiedTs,jdbcType=TIMESTAMP}, 
       #{lastModifiedBy,jdbcType=VARCHAR})
   </insert>
@@ -101,14 +101,14 @@
       <if test="wechat != null" >
         WeChat,
       </if>
-      <if test="role != null" >
-        Role,
+      <if test="roleId != null" >
+        Role_ID,
       </if>
-      <if test="level != null" >
-        Level,
+      <if test="userLevelId != null" >
+        User_Level_ID,
       </if>
-      <if test="company != null" >
-        Company,
+      <if test="companyId != null" >
+        Company_ID,
       </if>
       <if test="failedLoginTimes != null" >
         Failed_Login_Times,
@@ -151,14 +151,14 @@
       <if test="wechat != null" >
         #{wechat,jdbcType=VARCHAR},
       </if>
-      <if test="role != null" >
-        #{role,jdbcType=BIGINT},
+      <if test="roleId != null" >
+        #{roleId,jdbcType=BIGINT},
       </if>
-      <if test="level != null" >
-        #{level,jdbcType=BIGINT},
+      <if test="userLevelId != null" >
+        #{userLevelId,jdbcType=BIGINT},
       </if>
-      <if test="company != null" >
-        #{company,jdbcType=BIGINT},
+      <if test="companyId != null" >
+        #{companyId,jdbcType=BIGINT},
       </if>
       <if test="failedLoginTimes != null" >
         #{failedLoginTimes,jdbcType=SMALLINT},
@@ -201,14 +201,14 @@
       <if test="wechat != null" >
         WeChat = #{wechat,jdbcType=VARCHAR},
       </if>
-      <if test="role != null" >
-        Role = #{role,jdbcType=BIGINT},
+      <if test="roleId != null" >
+        Role_ID = #{roleId,jdbcType=BIGINT},
       </if>
-      <if test="level != null" >
-        Level = #{level,jdbcType=BIGINT},
+      <if test="userLevelId != null" >
+        User_Level_ID = #{userLevelId,jdbcType=BIGINT},
       </if>
-      <if test="company != null" >
-        Company = #{company,jdbcType=BIGINT},
+      <if test="companyId != null" >
+        Company_ID = #{companyId,jdbcType=BIGINT},
       </if>
       <if test="failedLoginTimes != null" >
         Failed_Login_Times = #{failedLoginTimes,jdbcType=SMALLINT},
@@ -239,9 +239,9 @@
       MobilePhone = #{mobilephone,jdbcType=VARCHAR},
       QQ_Number = #{qqNumber,jdbcType=VARCHAR},
       WeChat = #{wechat,jdbcType=VARCHAR},
-      Role = #{role,jdbcType=BIGINT},
-      Level = #{level,jdbcType=BIGINT},
-      Company = #{company,jdbcType=BIGINT},
+      Role_ID = #{roleId,jdbcType=BIGINT},
+      User_Level_ID = #{userLevelId,jdbcType=BIGINT},
+      Company_ID = #{companyId,jdbcType=BIGINT},
       Failed_Login_Times = #{failedLoginTimes,jdbcType=SMALLINT},
       Available = #{available,jdbcType=BIT},
       Created_TS = #{createdTs,jdbcType=TIMESTAMP},

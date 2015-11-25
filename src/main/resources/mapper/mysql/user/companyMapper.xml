@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.fenghua.auto.backend.domain.vo.user.CompanyVo" >
     <id column="ID" property="id" jdbcType="BIGINT" />
     <result column="Compnay_Name" property="compnayName" jdbcType="VARCHAR" />
-    <result column="Area_Code" property="areaCode" jdbcType="INTEGER" />
+    <result column="City_Area_ID" property="cityAreaId" jdbcType="BIGINT" />
     <result column="Detail_Address" property="detailAddress" jdbcType="VARCHAR" />
     <result column="Headcount" property="headcount" jdbcType="INTEGER" />
     <result column="Business_Licence" property="businessLicence" jdbcType="VARCHAR" />
@@ -21,7 +21,7 @@
     <result column="Last_Modified_By" property="lastModifiedBy" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    ID, Compnay_Name, Area_Code, Detail_Address, Headcount, Business_Licence, Taxpayer_Licence, 
+    ID, Compnay_Name, City_Area_ID, Detail_Address, Headcount, Business_Licence, Taxpayer_Licence, 
     Taxpayer_Number, Contacts_Name, Contacts_Phone, Contacts_Mobile, Contacts_Dept, Contacts_Email, 
     Created_TS, Created_by, Last_Modified_TS, Last_Modified_By
   </sql>
@@ -36,13 +36,13 @@
     where ID = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.fenghua.auto.backend.domain.user.Company" >
-    insert into company (ID, Compnay_Name, Area_Code, 
+    insert into company (ID, Compnay_Name, City_Area_ID, 
       Detail_Address, Headcount, Business_Licence, 
       Taxpayer_Licence, Taxpayer_Number, Contacts_Name, 
       Contacts_Phone, Contacts_Mobile, Contacts_Dept, 
       Contacts_Email, Created_TS, Created_by, 
       Last_Modified_TS, Last_Modified_By)
-    values (#{id,jdbcType=BIGINT}, #{compnayName,jdbcType=VARCHAR}, #{areaCode,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=BIGINT}, #{compnayName,jdbcType=VARCHAR}, #{cityAreaId,jdbcType=BIGINT}, 
       #{detailAddress,jdbcType=VARCHAR}, #{headcount,jdbcType=INTEGER}, #{businessLicence,jdbcType=VARCHAR}, 
       #{taxpayerLicence,jdbcType=VARCHAR}, #{taxpayerNumber,jdbcType=VARCHAR}, #{contactsName,jdbcType=VARCHAR}, 
       #{contactsPhone,jdbcType=VARCHAR}, #{contactsMobile,jdbcType=VARCHAR}, #{contactsDept,jdbcType=VARCHAR}, 
@@ -58,8 +58,8 @@
       <if test="compnayName != null" >
         Compnay_Name,
       </if>
-      <if test="areaCode != null" >
-        Area_Code,
+      <if test="cityAreaId != null" >
+        City_Area_ID,
       </if>
       <if test="detailAddress != null" >
         Detail_Address,
@@ -111,8 +111,8 @@
       <if test="compnayName != null" >
         #{compnayName,jdbcType=VARCHAR},
       </if>
-      <if test="areaCode != null" >
-        #{areaCode,jdbcType=INTEGER},
+      <if test="cityAreaId != null" >
+        #{cityAreaId,jdbcType=BIGINT},
       </if>
       <if test="detailAddress != null" >
         #{detailAddress,jdbcType=VARCHAR},
@@ -164,8 +164,8 @@
       <if test="compnayName != null" >
         Compnay_Name = #{compnayName,jdbcType=VARCHAR},
       </if>
-      <if test="areaCode != null" >
-        Area_Code = #{areaCode,jdbcType=INTEGER},
+      <if test="cityAreaId != null" >
+        City_Area_ID = #{cityAreaId,jdbcType=BIGINT},
       </if>
       <if test="detailAddress != null" >
         Detail_Address = #{detailAddress,jdbcType=VARCHAR},
@@ -215,7 +215,7 @@
   <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.backend.domain.user.Company" >
     update company
     set Compnay_Name = #{compnayName,jdbcType=VARCHAR},
-      Area_Code = #{areaCode,jdbcType=INTEGER},
+      City_Area_ID = #{cityAreaId,jdbcType=BIGINT},
       Detail_Address = #{detailAddress,jdbcType=VARCHAR},
       Headcount = #{headcount,jdbcType=INTEGER},
       Business_Licence = #{businessLicence,jdbcType=VARCHAR},
