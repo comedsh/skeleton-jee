@@ -100,7 +100,7 @@ app.controller('login_ctr',['$scope','$http',function($scope,$http){
       			}
       		  },
       		  error:function(data){
-      			  alert(data);
+      			  alert(data.msg.msg);
       		  }});
         }
     };

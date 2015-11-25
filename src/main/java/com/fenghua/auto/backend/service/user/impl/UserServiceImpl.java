@@ -150,11 +150,13 @@ public class UserServiceImpl implements UserService {
 	public void autoLogin(String userName, String passWord, Locale locale,HttpServletRequest request){
 		CustomUsernamePasswordAuthenticationToken token = new CustomUsernamePasswordAuthenticationToken(userName, passWord);
 		try {
+			token.setDetails(new WebAuthenticationDetails(request));
 			Authentication authenticatedUser = authenticationManager.authenticate(token);
 			SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
 			request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
 					SecurityContextHolder.getContext());
 		} catch (AuthenticationException e) {
+			e.printStackTrace();
 			System.out.println("Authentication failed: " + e.getMessage());
 		}
 	}

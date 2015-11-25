@@ -52,9 +52,9 @@ public class CustomUserDetailService implements UserDetailsService{
 		
 		Collection<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
 		//判断用户是用的用户名，电话或者邮箱登录的
-		String regex_tel ="^((13[0-9])|(15[^4,\\D])|(18[0,2-9]))\\d{8}$";
+		String regex_tel ="^((13[0-9])|(15[^4,\\D])|(18[0-9]))\\d{8}$";
 		String regex_email ="^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
-		String regex_name ="/^[a-zA-Z\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5]{3,19}$/";
+		String regex_name ="^[a-zA-Z\\u4e00-\\u9fa5][a-zA-Z0-9\\u4e00-\\u9fa5]{3,19}$";
 		List<User> users = null;
 		if(Pattern.compile(regex_tel).matcher(username).matches()) {
 			users = userService.getUserByTelephone(username);
@@ -72,10 +72,10 @@ public class CustomUserDetailService implements UserDetailsService{
 			String message = "用户" + username + "不存在";
 			logger.error(message);
 			throw new UsernameNotFoundException(message);
-		}
-		
+		} 
+		username = users.get(0).getName();
 		String password =users.get(0).getPassword();
-
+		
 		// 获得用户的角色
 		Long roleId = users.get(0).getRole();
 		Iterator<Role> roles = roleService.getRoleById(roleId).iterator();
