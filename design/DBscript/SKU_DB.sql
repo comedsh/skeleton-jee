@@ -1,429 +1,362 @@
-/*
-Navicat MySQL Data Transfer
+/*==============================================================*/
+/* DBMS name:      MySQL 5.0                                    */
+/* Created on:     2015/11/25 13:54:01                          */
+/*==============================================================*/
 
-Source Server         : localhost
-Source Server Version : 50626
-Source Host           : localhost:3306
-Source Database       : auto007db
 
-Target Server Type    : MYSQL
-Target Server Version : 50626
-File Encoding         : 65001
+drop table if exists catalog;
 
-Date: 2015-11-25 13:29:32
-*/
+drop table if exists catalog_attribute;
 
-SET FOREIGN_KEY_CHECKS=0;
+drop table if exists catalog_sku;
 
--- ----------------------------
--- Table structure for catalog
--- ----------------------------
-DROP TABLE IF EXISTS `catalog`;
-CREATE TABLE `catalog` (
-  `id` bigint(20) NOT NULL,
-  `code` varchar(20) DEFAULT NULL,
-  `name` varchar(100) DEFAULT NULL,
-  `parent_id` bigint(20) DEFAULT NULL,
-  `sort_no` int(11) DEFAULT NULL,
-  `remark` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `AK_code` (`code`),
-  KEY `FK_fk_pid` (`parent_id`),
-  CONSTRAINT `FK_fk_pid` FOREIGN KEY (`parent_id`) REFERENCES `catalog` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of catalog
--- ----------------------------
+drop table if exists price_strategy;
 
--- ----------------------------
--- Table structure for catalog_attribute
--- ----------------------------
-DROP TABLE IF EXISTS `catalog_attribute`;
-CREATE TABLE `catalog_attribute` (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(100) DEFAULT NULL,
-  `catalog_id` bigint(20) DEFAULT NULL,
-  `s_no` int(11) DEFAULT NULL,
-  `remark` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_catalog_attr` (`catalog_id`),
-  CONSTRAINT `FK_catalog_attr` FOREIGN KEY (`catalog_id`) REFERENCES `catalog` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+drop table if exists repertory;
 
--- ----------------------------
--- Records of catalog_attribute
--- ----------------------------
+drop table if exists sale_area;
 
--- ----------------------------
--- Table structure for catalog_sku
--- ----------------------------
-DROP TABLE IF EXISTS `catalog_sku`;
-CREATE TABLE `catalog_sku` (
-  `catalog_id` bigint(20) DEFAULT NULL,
-  `sku_id` bigint(20) DEFAULT NULL,
-  KEY `FK_Reference_21` (`sku_id`),
-  KEY `FK_Reference_23` (`catalog_id`),
-  CONSTRAINT `FK_Reference_21` FOREIGN KEY (`sku_id`) REFERENCES `sku` (`id`),
-  CONSTRAINT `FK_Reference_23` FOREIGN KEY (`catalog_id`) REFERENCES `catalog` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of catalog_sku
--- ----------------------------
+drop table if exists sku;
 
--- ----------------------------
--- Table structure for city
--- ----------------------------
-DROP TABLE IF EXISTS `city`;
-CREATE TABLE `city` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+drop table if exists sku_catalog_attr_value;
 
--- ----------------------------
--- Records of city
--- ----------------------------
+drop table if exists sku_comment;
 
--- ----------------------------
--- Table structure for price_strategy
--- ----------------------------
-DROP TABLE IF EXISTS `price_strategy`;
-CREATE TABLE `price_strategy` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `start_time` datetime DEFAULT NULL,
-  `end_time` datetime DEFAULT NULL,
-  `amount` int(11) DEFAULT NULL,
-  `discount` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+drop table if exists sku_extend_attrs;
 
--- ----------------------------
--- Records of price_strategy
--- ----------------------------
+drop table if exists sku_image_html;
 
--- ----------------------------
--- Table structure for repertory
--- ----------------------------
-DROP TABLE IF EXISTS `repertory`;
-CREATE TABLE `repertory` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `saller_id` bigint(20) DEFAULT NULL,
-  `name` int(11) DEFAULT NULL,
-  `address` int(11) DEFAULT NULL,
-  `area` int(11) DEFAULT NULL,
-  `city_region_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_Relationship_18` (`city_region_id`),
-  KEY `FK_Relationship_24` (`saller_id`),
-  CONSTRAINT `FK_Relationship_18` FOREIGN KEY (`city_region_id`) REFERENCES `city` (`id`),
-  CONSTRAINT `FK_Relationship_24` FOREIGN KEY (`saller_id`) REFERENCES `seller` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+drop table if exists sku_images;
 
--- ----------------------------
--- Records of repertory
--- ----------------------------
+drop table if exists sku_reply;
 
--- ----------------------------
--- Table structure for sale_area
--- ----------------------------
-DROP TABLE IF EXISTS `sale_area`;
-CREATE TABLE `sale_area` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `sale_id` bigint(20) NOT NULL,
-  `type` int(11) DEFAULT NULL COMMENT '1.åŒ…å«ï¼Œ 2 ä¸åŒ…å«',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+drop table if exists sku_stock;
 
--- ----------------------------
--- Records of sale_area
--- ----------------------------
+drop table if exists stock_lock;
 
--- ----------------------------
--- Table structure for seller
--- ----------------------------
-DROP TABLE IF EXISTS `seller`;
-CREATE TABLE `seller` (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(100) DEFAULT NULL,
-  `code` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+drop table if exists supplier;
 
--- ----------------------------
--- Records of seller
--- ----------------------------
-INSERT INTO `seller` VALUES ('1', 'æ–°ç–†ä¸°åŽç¥žå·ž', 'S1001');
+drop table if exists t_order;
 
--- ----------------------------
--- Table structure for sku
--- ----------------------------
-DROP TABLE IF EXISTS `sku`;
-CREATE TABLE `sku` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `code` varchar(20) NOT NULL,
-  `seller_id` bigint(20) NOT NULL,
-  `name` varchar(200) DEFAULT NULL,
-  `title` varchar(200) DEFAULT NULL,
-  `url` text COMMENT 'å•†å“ç¼©ç•¥å›¾',
-  `introduce` text,
-  `status` bit(1) DEFAULT NULL COMMENT '1,å¾…ä¸Šæž¶ï¼Œ2.å·²ä¸Šæž¶ 3ã€‚å·²ä¸‹æž¶ï¼Œé»˜è®¤ å¾…ä¸Šæž¶',
-  `type` bit(1) DEFAULT NULL COMMENT '1.å“ç‰Œä»¶ , 2 åŽŸåŽ‚ä»¶',
-  `shelf_time` datetime DEFAULT CURRENT_TIMESTAMP,
-  `under_time` datetime DEFAULT NULL,
-  `produce_time` date DEFAULT NULL,
-  `down_time` date DEFAULT NULL,
-  `min_quantity` int(11) DEFAULT NULL,
-  `gross_weight` double(7,2) DEFAULT NULL,
-  `weight` double(7,2) DEFAULT NULL,
-  `unit` varchar(10) DEFAULT NULL COMMENT 'ä»¶ï¼Œå°ï¼Œæ”¯,ä¸ª',
-  `brand` varchar(100) DEFAULT NULL,
-  `score` int(11) DEFAULT NULL,
-  `supplier_id` bigint(20) DEFAULT NULL,
-  `price` decimal(9,4) DEFAULT NULL,
-  `sale_price` decimal(9,4) DEFAULT NULL,
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
-  `update_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `AK_Key_2` (`code`,`seller_id`),
-  KEY `FK_Reference_24` (`seller_id`),
-  KEY `FK_Reference_25` (`supplier_id`),
-  CONSTRAINT `FK_Reference_24` FOREIGN KEY (`seller_id`) REFERENCES `seller` (`id`),
-  CONSTRAINT `FK_Reference_25` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+drop table if exists vehicle_oe_sku;
 
--- ----------------------------
--- Records of sku
--- ----------------------------
-INSERT INTO `sku` VALUES ('1', 'S001', '1', 'ç«èŠ±å¡ž é“‚é‡‘', 'ç«èŠ±å¡ž é“‚é‡‘ 10KG', null, null, '', '', '2015-11-24 16:50:50', null, null, null, '10', null, null, 'åª', 'æ—¥äº§', '0', null, '100.0500', '99.9000', '2015-11-24 16:50:50', null);
-INSERT INTO `sku` VALUES ('2', 'S002', '1', 'ç«èŠ±å¡ž æ™®é€š', 'ç«èŠ±å¡ž æ™®é€š 100KG', null, null, null, '', '2015-11-24 16:50:50', null, null, null, '10', null, null, 'åª', 'æ—¥äº§', '0', null, '100.0500', '99.9000', '2015-11-24 16:50:50', null);
+drop table if exists ÏµÍ³;
 
--- ----------------------------
--- Table structure for sku_catalog_attr_value
--- ----------------------------
-DROP TABLE IF EXISTS `sku_catalog_attr_value`;
-CREATE TABLE `sku_catalog_attr_value` (
-  `id` bigint(20) NOT NULL,
-  `catalog_attr_id` bigint(20) DEFAULT NULL,
-  `sttr_value` varchar(100) DEFAULT NULL,
-  `sku_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_Reference_22` (`catalog_attr_id`),
-  KEY `FK_Relationship_2` (`sku_id`),
-  CONSTRAINT `FK_Reference_22` FOREIGN KEY (`catalog_attr_id`) REFERENCES `catalog_attribute` (`id`),
-  CONSTRAINT `FK_Relationship_2` FOREIGN KEY (`sku_id`) REFERENCES `sku` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*==============================================================*/
+/* Table: catalog                                               */
+/*==============================================================*/
+create table catalog
+(
+   id                   bigint not null,
+   code                 varchar(20),
+   name                 varchar(100),
+   parent_id            bigint,
+   sort_no              int,
+   remark               varchar(100),
+   primary key (id),
+   unique key AK_code (code)
+);
 
--- ----------------------------
--- Records of sku_catalog_attr_value
--- ----------------------------
+/*==============================================================*/
+/* Table: catalog_attribute                                     */
+/*==============================================================*/
+create table catalog_attribute
+(
+   id                   bigint not null,
+   name                 varchar(100),
+   catalog_id           bigint,
+   s_no                 int,
+   remark               varchar(100),
+   primary key (id)
+);
 
--- ----------------------------
--- Table structure for sku_comment
--- ----------------------------
-DROP TABLE IF EXISTS `sku_comment`;
-CREATE TABLE `sku_comment` (
-  `id` bigint(20) NOT NULL,
-  `sku_id` bigint(20) DEFAULT NULL,
-  `order_id` bigint(20) DEFAULT NULL,
-  `order_detail_id` bigint(20) DEFAULT NULL,
-  `star` bit(1) DEFAULT NULL COMMENT '1åˆ°5ä¸ªæ˜Ÿï¼Œ>=4,å¥½è¯„  ï¼Œ3< å·®è¯„ï¼Œ3 ä¸­è¯„',
-  `comtent` text,
-  `user_id` varchar(20) DEFAULT NULL,
-  `create_time` datetime DEFAULT NULL,
-  `status` int(11) DEFAULT '1' COMMENT '1 æ˜¾ç¤ºï¼Œ2ä¸æ˜¾ç¤ºï¼Œé»˜è®¤æ˜¾ç¤º',
-  `comment_origin` bit(1) DEFAULT NULL COMMENT '0, pc ,1.android 2. iphone  ;',
-  PRIMARY KEY (`id`),
-  KEY `FK_Relationship_5` (`sku_id`),
-  CONSTRAINT `FK_Relationship_5` FOREIGN KEY (`sku_id`) REFERENCES `sku` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*==============================================================*/
+/* Table: catalog_sku                                           */
+/*==============================================================*/
+create table catalog_sku
+(
+   catalog_id           bigint,
+   sku_id               bigint
+);
 
--- ----------------------------
--- Records of sku_comment
--- ----------------------------
-INSERT INTO `sku_comment` VALUES ('1', '1', null, null, '', 'ç¬¬ä¸€ä¸ªå•†å“', '1', '2015-11-24 17:04:31', '1', '');
 
--- ----------------------------
--- Table structure for sku_extend_attrs
--- ----------------------------
-DROP TABLE IF EXISTS `sku_extend_attrs`;
-CREATE TABLE `sku_extend_attrs` (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(100) DEFAULT NULL,
-  `contents` varchar(100) DEFAULT NULL,
-  `sort_no` int(11) DEFAULT NULL,
-  `sku_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_Reference_18` (`sku_id`),
-  CONSTRAINT `FK_Reference_18` FOREIGN KEY (`sku_id`) REFERENCES `sku` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of sku_extend_attrs
--- ----------------------------
+/*==============================================================*/
+/* Table: price_strategy                                        */
+/*==============================================================*/
+create table price_strategy
+(
+   id                   bigint not null auto_increment,
+   start_time           datetime,
+   end_time             datetime,
+   amount               int,
+   discount             int,
+   primary key (id)
+);
 
--- ----------------------------
--- Table structure for sku_images
--- ----------------------------
-DROP TABLE IF EXISTS `sku_images`;
-CREATE TABLE `sku_images` (
-  `id` bigint(20) NOT NULL,
-  `url` text,
-  `title` char(100) DEFAULT NULL,
-  `sort_no` int(11) DEFAULT NULL,
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
-  `update_time` datetime DEFAULT NULL,
-  `sku_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_Reference_19` (`sku_id`),
-  CONSTRAINT `FK_Reference_19` FOREIGN KEY (`sku_id`) REFERENCES `sku` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*==============================================================*/
+/* Table: repertory                                             */
+/*==============================================================*/
+create table repertory
+(
+   id                   bigint not null auto_increment,
+   name                 int,
+   address              int,
+   area                 int,
+   seller_id            bigint,
+   city_region_id       bigint,
+   primary key (id)
+);
 
--- ----------------------------
--- Records of sku_images
--- ----------------------------
+/*==============================================================*/
+/* Table: sale_area                                             */
+/*==============================================================*/
+create table sale_area
+(
+   id                   bigint not null auto_increment,
+   sale_id              bigint not null,
+   type                 int comment '1.°üº¬£¬ 2 ²»°üº¬',
+   primary key (id)
+);
 
--- ----------------------------
--- Table structure for sku_image_html
--- ----------------------------
-DROP TABLE IF EXISTS `sku_image_html`;
-CREATE TABLE `sku_image_html` (
-  `id` bigint(20) NOT NULL,
-  `contents_html` text,
-  `sku_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_Reference_16` (`sku_id`),
-  CONSTRAINT `FK_Reference_16` FOREIGN KEY (`sku_id`) REFERENCES `sku` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of sku_image_html
--- ----------------------------
+/*==============================================================*/
+/* Table: sku                                                   */
+/*==============================================================*/
+create table sku
+(
+   id                   bigint not null auto_increment,
+   code                 varchar(20) not null,
+   name                 varchar(200),
+   title                varchar(200),
+   url                  text comment 'ÉÌÆ·ËõÂÔÍ¼',
+   introduce            text,
+   status               bit comment '1,´ýÉÏ¼Ü£¬2.ÒÑÉÏ¼Ü 3¡£ÒÑÏÂ¼Ü£¬Ä¬ÈÏ ´ýÉÏ¼Ü',
+   type                 bit comment '1.Æ·ÅÆ¼þ , 2 Ô­³§¼þ',
+   shelf_time           datetime default CURRENT_TIMESTAMP,
+   under_time           datetime,
+   produce_time         date,
+   down_time            date,
+   min_quantity         int,
+   gross_weight         double(7,2),
+   weight               double(7,2),
+   unit                 varchar(10) comment '¼þ£¬Ì¨£¬Ö§,¸ö',
+   brand                varchar(100),
+   score                int,
+   supplier_id          bigint,
+   price                decimal(9,4),
+   sale_price           decimal(9,4),
+   create_time          datetime default CURRENT_TIMESTAMP,
+   update_time          datetime,
+   seller_id            char(10),
+   primary key (id),
+   unique key AK_Key_2 (code)
+);
 
--- ----------------------------
--- Table structure for sku_reply
--- ----------------------------
-DROP TABLE IF EXISTS `sku_reply`;
-CREATE TABLE `sku_reply` (
-  `id` bigint(20) NOT NULL,
-  `reply_code` varchar(20) DEFAULT NULL,
-  `comtent` text,
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
-  `user_id` char(20) DEFAULT NULL,
-  `sku_comment_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_Relationship_28` (`sku_comment_id`),
-  CONSTRAINT `FK_Relationship_28` FOREIGN KEY (`sku_comment_id`) REFERENCES `sku_comment` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*==============================================================*/
+/* Table: sku_catalog_attr_value                                */
+/*==============================================================*/
+create table sku_catalog_attr_value
+(
+   id                   bigint not null,
+   catalog_attr_id      bigint,
+   sttr_value           varchar(100),
+   sku_id               bigint,
+   primary key (id)
+);
 
--- ----------------------------
--- Records of sku_reply
--- ----------------------------
+/*==============================================================*/
+/* Table: sku_comment                                           */
+/*==============================================================*/
+create table sku_comment
+(
+   id                   bigint not null,
+   sku_id               bigint,
+   order_id             bigint,
+   order_detail_id      bigint,
+   star                 bit comment '1µ½5¸öÐÇ£¬>=4,ºÃÆÀ  £¬3< ²îÆÀ£¬3 ÖÐÆÀ',
+   comtent              text,
+   user_id              varchar(20),
+   create_time          datetime,
+   status               int default 1 comment '1 ÏÔÊ¾£¬2²»ÏÔÊ¾£¬Ä¬ÈÏÏÔÊ¾',
+   comment_origin       bit comment '0, pc ,1.android 2. iphone  ;',
+   primary key (id)
+);
 
--- ----------------------------
--- Table structure for sku_stock
--- ----------------------------
-DROP TABLE IF EXISTS `sku_stock`;
-CREATE TABLE `sku_stock` (
-  `id` bigint(20) NOT NULL,
-  `stock_count` int(11) DEFAULT NULL,
-  `stock_availability` int(11) DEFAULT NULL,
-  `repertory_id` bigint(20) DEFAULT NULL,
-  `sku_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_Reference_17` (`repertory_id`),
-  KEY `FK_Reference_27` (`sku_id`),
-  CONSTRAINT `FK_Reference_17` FOREIGN KEY (`repertory_id`) REFERENCES `repertory` (`id`),
-  CONSTRAINT `FK_Reference_27` FOREIGN KEY (`sku_id`) REFERENCES `sku` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*==============================================================*/
+/* Table: sku_extend_attrs                                      */
+/*==============================================================*/
+create table sku_extend_attrs
+(
+   id                   bigint not null,
+   name                 varchar(100),
+   contents             varchar(100),
+   sort_no              int,
+   sku_id               bigint,
+   primary key (id)
+);
 
--- ----------------------------
--- Records of sku_stock
--- ----------------------------
-INSERT INTO `sku_stock` VALUES ('1', '1000', '900', null, '1');
+/*==============================================================*/
+/* Table: sku_image_html                                        */
+/*==============================================================*/
+create table sku_image_html
+(
+   id                   bigint not null,
+   contents_html        text,
+   sku_id               bigint,
+   primary key (id)
+);
 
--- ----------------------------
--- Table structure for stock_lock
--- ----------------------------
-DROP TABLE IF EXISTS `stock_lock`;
-CREATE TABLE `stock_lock` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `order_id` bigint(20) DEFAULT NULL,
-  `sku_id` bigint(20) DEFAULT NULL,
-  `stock_id` bigint(20) DEFAULT NULL,
-  `nums` int(11) DEFAULT NULL,
-  `create_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*==============================================================*/
+/* Table: sku_images                                            */
+/*==============================================================*/
+create table sku_images
+(
+   id                   bigint not null,
+   url                  text,
+   title                char(100),
+   sort_no              int,
+   create_time          datetime default CURRENT_TIMESTAMP,
+   update_time          datetime,
+   sku_id               bigint,
+   primary key (id)
+);
 
--- ----------------------------
--- Records of stock_lock
--- ----------------------------
+/*==============================================================*/
+/* Table: sku_reply                                             */
+/*==============================================================*/
+create table sku_reply
+(
+   id                   bigint not null,
+   reply_code           varchar(20),
+   comtent              text,
+   create_time          datetime default CURRENT_TIMESTAMP,
+   user_id              char(20),
+   sku_comment_id       bigint,
+   primary key (id)
+);
 
--- ----------------------------
--- Table structure for supplier
--- ----------------------------
-DROP TABLE IF EXISTS `supplier`;
-CREATE TABLE `supplier` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `code` varchar(20) DEFAULT NULL,
-  `name` varchar(20) DEFAULT NULL,
-  `address` varchar(200) DEFAULT NULL,
-  `fax` varchar(15) DEFAULT NULL,
-  `telephone` varchar(15) DEFAULT NULL,
-  `mobile_phone` varchar(15) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `supplier_code` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*==============================================================*/
+/* Table: sku_stock                                             */
+/*==============================================================*/
+create table sku_stock
+(
+   id                   bigint not null,
+   stock_count          int,
+   stock_availability   int,
+   repertory_id         bigint default NULL,
+   sku_id               bigint,
+   primary key (id)
+);
 
--- ----------------------------
--- Records of supplier
--- ----------------------------
+/*==============================================================*/
+/* Table: stock_lock                                            */
+/*==============================================================*/
+create table stock_lock
+(
+   id                   bigint not null auto_increment,
+   order_id             bigint,
+   sku_id               bigint,
+   stock_id             bigint,
+   nums                 int,
+   create_time          datetime,
+   primary key (id)
+);
 
--- ----------------------------
--- Table structure for t_order
--- ----------------------------
-DROP TABLE IF EXISTS `t_order`;
-CREATE TABLE `t_order` (
-  `id` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*==============================================================*/
+/* Table: supplier                                              */
+/*==============================================================*/
+create table supplier
+(
+   id                   bigint not null auto_increment,
+   code                 varchar(20),
+   name                 varchar(20),
+   address              varchar(200),
+   fax                  varchar(15),
+   telephone            varchar(15),
+   mobile_phone         varchar(15),
+   primary key (id),
+   unique key supplier_code (code)
+);
 
--- ----------------------------
--- Records of t_order
--- ----------------------------
+/*==============================================================*/
+/* Table: t_order                                               */
+/*==============================================================*/
+create table t_order
+(
+   id                   bigint not null,
+   primary key (id)
+);
 
--- ----------------------------
--- Table structure for vehicle_oe_sku
--- ----------------------------
-DROP TABLE IF EXISTS `vehicle_oe_sku`;
-CREATE TABLE `vehicle_oe_sku` (
-  `id` bigint(20) NOT NULL,
-  `oe_code` varchar(50) DEFAULT NULL,
-  `vehicle_id` bigint(20) DEFAULT NULL,
-  `vehicle_name` varchar(100) DEFAULT NULL,
-  `brand` varchar(20) DEFAULT NULL,
-  `engine` varchar(20) DEFAULT NULL,
-  `period` varchar(20) DEFAULT NULL,
-  `output_value` varchar(10) DEFAULT NULL,
-  `sku_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_Reference_20` (`sku_id`),
-  CONSTRAINT `FK_Reference_20` FOREIGN KEY (`sku_id`) REFERENCES `sku` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*==============================================================*/
+/* Table: vehicle_oe_sku                                        */
+/*==============================================================*/
+create table vehicle_oe_sku
+(
+   id                   bigint not null,
+   oe_code              varchar(50),
+   vehicle_id           bigint default NULL,
+   vehicle_name         varchar(100),
+   brand                varchar(20),
+   engine               varchar(20),
+   period               varchar(20),
+   output_value         varchar(10),
+   sku_id               bigint,
+   primary key (id)
+);
 
--- ----------------------------
--- Records of vehicle_oe_sku
--- ----------------------------
+/*==============================================================*/
+/* Table: ÏµÍ³                                                    */
+/*==============================================================*/
+create table ÏµÍ³
+(
+   id                   bigint
+);
 
--- ----------------------------
--- Table structure for ç³»ç»Ÿ
--- ----------------------------
-DROP TABLE IF EXISTS `ç³»ç»Ÿ`;
-CREATE TABLE `ç³»ç»Ÿ` (
-  `id` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+alter table catalog add constraint FK_fk_pid foreign key (parent_id)
+      references catalog (id) on delete restrict on update restrict;
 
--- ----------------------------
--- Records of ç³»ç»Ÿ
--- ----------------------------
+alter table catalog_attribute add constraint FK_catalog_attr foreign key (catalog_id)
+      references catalog (id) on delete restrict on update restrict;
+
+alter table catalog_sku add constraint FK_Reference_21 foreign key (sku_id)
+      references sku (id) on delete restrict on update restrict;
+
+alter table catalog_sku add constraint FK_Reference_23 foreign key (catalog_id)
+      references catalog (id) on delete restrict on update restrict;
+
+alter table sku add constraint FK_Reference_25 foreign key (supplier_id)
+      references supplier (id) on delete restrict on update restrict;
+
+alter table sku_catalog_attr_value add constraint FK_Reference_22 foreign key (catalog_attr_id)
+      references catalog_attribute (id) on delete restrict on update restrict;
+
+alter table sku_catalog_attr_value add constraint FK_Relationship_2 foreign key (sku_id)
+      references sku (id) on delete restrict on update restrict;
+
+alter table sku_comment add constraint FK_Relationship_5 foreign key (sku_id)
+      references sku (id) on delete restrict on update restrict;
+
+alter table sku_extend_attrs add constraint FK_Reference_18 foreign key (sku_id)
+      references sku (id) on delete restrict on update restrict;
+
+alter table sku_image_html add constraint FK_Reference_16 foreign key (sku_id)
+      references sku (id) on delete restrict on update restrict;
+
+alter table sku_images add constraint FK_Reference_19 foreign key (sku_id)
+      references sku (id) on delete restrict on update restrict;
+
+alter table sku_reply add constraint FK_Relationship_28 foreign key (sku_comment_id)
+      references sku_comment (id) on delete restrict on update restrict;
+
+alter table sku_stock add constraint FK_Reference_17 foreign key (repertory_id)
+      references repertory (id) on delete restrict on update restrict;
+
+alter table sku_stock add constraint FK_Reference_27 foreign key (sku_id)
+      references sku (id) on delete restrict on update restrict;
+
+alter table vehicle_oe_sku add constraint FK_Reference_20 foreign key (sku_id)
+      references sku (id) on delete restrict on update restrict;
+
