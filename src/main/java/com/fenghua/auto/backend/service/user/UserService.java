@@ -1,5 +1,9 @@
 package com.fenghua.auto.backend.service.user;
 
+import java.util.List;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
 
 import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.PaymentType;
@@ -56,17 +60,18 @@ public interface UserService {
 	 * 通过name查询用户
 	 * @return
 	 */
-	public List<User> getUserByName(String name);
+	public User getUserByName(String name);
 	/**
 	 * 通过email查询用户
 	 * @return
 	 */
-	public List<User> getUserByEmail(String email);
-	/**
-	 * 通过telephone查询用户
-	 * @return
-	 */
-	public List<User> getUserByTelephone(String telephone);
+	public User getUserByEmail(String email);
+//	/**
+//	 * 通过telephone查询用户
+//	 * @return
+//	 */
+//
+//	public List<User> getUserByTelephone(String telephone);
 	/**
 	 * 根据用户id查询用户相信信息
 	 * @param userId
@@ -87,6 +92,8 @@ public interface UserService {
 	 */
 	public Long updatePasswordByUserId(String pwdNew,Long UserId);
    
+	public User getUserByTelephone(String telephone);
+
 	/**
 	 * 自动登录，把用户名和密码写入security session中
 	 * @param userName

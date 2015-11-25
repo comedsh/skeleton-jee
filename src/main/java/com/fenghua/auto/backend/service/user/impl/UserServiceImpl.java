@@ -132,18 +132,48 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> getUserByName(String name) {
-		return userDao.selectByName(name);
+	public User getUserByName(String name) {
+		List<User> user = userDao.selectByName(name);
+		if (user.size() > 0) {
+			return user.get(0);
+		} else {
+			return null;
+		}
 	}
 	
 	@Override
-	public List<User> getUserByEmail(String email) {
-		return userDao.selectByEmail(email);
+	public User getUserByEmail(String email) {
+		List<User> user = userDao.selectByEmail(email);
+		if (user.size() > 0) {
+			return user.get(0);
+		} else {
+			return null;
+		}
 	}
 	
 	@Override
-	public List<User> getUserByTelephone(String telephone) {
-		return userDao.selectByTelephone(telephone);
+	public User getUserByTelephone(String telephone) {
+		List<User> user = userDao.selectByTelephone(telephone);
+		if (user.size() > 0) {
+			return user.get(0);
+		} else {
+			return null;
+		}
+	}
+	
+	@Override
+	public void autoLogin(String userName, String passWord, Locale locale,HttpServletRequest request){
+		CustomUsernamePasswordAuthenticationToken token = new CustomUsernamePasswordAuthenticationToken(userName, passWord);
+		try {
+			token.setDetails(new WebAuthenticationDetails(request));
+			Authentication authenticatedUser = authenticationManager.authenticate(token);
+			SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
+			request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+					SecurityContextHolder.getContext());
+		} catch (AuthenticationException e) {
+			e.printStackTrace();
+			System.out.println("Authentication failed: " + e.getMessage());
+		}
 	}
 	@Override
 	public Long updatePasswordByPhone(String pwdNew,String phone) {
@@ -167,18 +197,4 @@ public class UserServiceImpl implements UserService {
 		return userDao.selectByUserId(userId);
 	}
 	
-	@Override
-	public void autoLogin(String userName, String passWord, Locale locale,HttpServletRequest request){
-		CustomUsernamePasswordAuthenticationToken token = new CustomUsernamePasswordAuthenticationToken(userName, passWord);
-		try {
-			token.setDetails(new WebAuthenticationDetails(request));
-			Authentication authenticatedUser = authenticationManager.authenticate(token);
-			SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
-			request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
-					SecurityContextHolder.getContext());
-		} catch (AuthenticationException e) {
-			e.printStackTrace();
-			System.out.println("Authentication failed: " + e.getMessage());
-		}
-	}
 }

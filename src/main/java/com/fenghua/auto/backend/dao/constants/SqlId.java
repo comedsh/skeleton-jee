@@ -23,6 +23,7 @@ public interface SqlId {
 	public String SQL_UPDATE_BY_NAME = "updateFailtimesByName";
 	public String SQL_SELECT_BY_USERID="selectByUserId";
 	public String SQL_SELECT_BY_CONFIGNAME="selectByConfigName";
+
 	//company模块
 	public String SQL_SELECT_BY_FIXED = "selectByFixed";
 	public String SQL_SELECT_BY_CONTACTSTELEPHONE = "selectByContactsTelephone";
@@ -34,4 +35,7 @@ public interface SqlId {
 	public String SQL_SELECT_BY_CITY = "selectByCity";
 	//cityArea模块获取县级
 	public String SQL_SELECT_BY_AREA = "selectByArea";
+	//忘记密码模块
+	public String SQL_SELECT_BY_CODEANDUSER="selectByCodeAndUser";
+	public String SQL_DELETE_BY_USERID="deleteByUserId";
 }

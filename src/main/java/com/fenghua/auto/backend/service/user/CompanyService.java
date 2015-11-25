@@ -16,15 +16,15 @@ public interface CompanyService {
 	 * 通过fixed查询company
 	 * @return
 	 */
-	public List<Company> getUserByFixed(String fixed);
+	public Company getUserByFixed(String fixed);
 	/**
 	 * 通过telephone查询对应的实体
 	 * @return
 	 */
-	public List<Company> getContactsTelephone(String telephone);
+	public Company getContactsTelephone(String telephone);
 	/**
 	 * 通过email查询对应的实体
 	 * @return
 	 */
-	public List<Company> getCompanyByEmail(String email);
+	public Company getCompanyByEmail(String email);
 }

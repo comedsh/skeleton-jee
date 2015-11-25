@@ -111,7 +111,7 @@
 	            	<input type="hidden" class="verifyCode" value="">
                     <label>验证码</label>
                     <input type="text" class="code" ng-model="code" />
-                    <img src="<%=request.getContextPath() %>/user/validatePicCheck" class="pictureCheckCode"  alt="" title="换一张" class="img_code"/>
+                    <img src="<%=request.getContextPath() %>/user/validatePicCheck"  class="pictureCheckCode"  alt="" title="换一张" class="img_code"/>
                     <input type="hidden" class="verifyCode" value="">
                     <span>看不清楚？<a class="validatePicCheck">换一张</a></span>
      

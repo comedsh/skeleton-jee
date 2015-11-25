@@ -7,7 +7,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <!DOCTYPE html>
-<html ng-app="login_app">
+<html ng-app="userCenter">
 <head lang="en">
     <title>用户中心</title>
     <meta charset="UTF-8">
@@ -22,7 +22,7 @@
 	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/javaScript/angular/angular.min.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/javaScript/jQuery/json2.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/script/user/placeholder.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/script/user/login.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/script/user/usercenter.js"></script>
 	<script type="text/javascript">
 	
 	</script>
@@ -106,7 +106,7 @@
     </div>
 </div>
 <!--content-->
-<div class="content_login clearfix">
+<div class="content_login clearfix" ng-controller="centerContent">
     <div class="content_left">
         <p>个人中心</p>
         <ul>
@@ -122,7 +122,7 @@
         </ul>
         <ul>
             <li class="heder">设置</li>
-            <li>个人信息</li>
+            <li><a ng-click="forwordInformation(<sec:authentication property="name"></sec:authentication>)">个人信息</a></li>
             <li>收货地址</li>
             <li>增票资质</li>
         </ul>
@@ -294,6 +294,7 @@
             </div>
         </div>
     </div>
+    
 </div>
 <!--尾部-->
 <div class="fooder">

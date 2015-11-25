@@ -1,38 +1,34 @@
 package com.fenghua.auto.webapp.controller.user;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
-import java.util.regex.Pattern;
-import java.util.regex.Pattern;
-import java.util.UUID;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.web.servlet.ModelAndView;
 import com.fenghua.auto.backend.core.utills.uploadPicture;
 import com.fenghua.auto.backend.core.utills.graphValidate.PictureCheckCode;
 import com.fenghua.auto.backend.core.utills.message.SMSMessage;
-import com.fenghua.auto.backend.domain.education.Spittle;
 import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.PaymentType;
 import com.fenghua.auto.backend.domain.user.ResetPassRequest;
@@ -97,10 +93,35 @@ public class UserController {
 				msg.setMsg("您输入的图形验证码有误");
 			}
 		}
+		
 		model.put("message", msg);
 		return model;
 	}
-	
+	@RequestMapping(value = "/findPassByPhone", method = RequestMethod.POST)
+	public @ResponseBody Map<String,Result> findPassByPhone( @RequestParam String telcode, @RequestParam String code, HttpServletRequest request) {
+		Map<String,Result> model = new HashMap<String,Result>();
+		Result msg = new Result();
+		String validateTel = (String) request.getSession().getAttribute("validateTel");
+		String verifyCode = (String) request.getSession().getAttribute("rand");
+		if(new Date().getTime() - OLD_DATE.getTime()  > 1000*120) {
+			msg.setSuccess(false);
+			msg.setMsg("您输入的验证码已过期");
+		} else if(validateTel.equals(telcode) && verifyCode.equals(code)) {
+			msg.setSuccess(true);
+			msg.setMsg("成功");
+			//把用户名和密码存入安全的session中
+		} else {
+			if(!validateTel.equals(telcode)) {
+				msg.setSuccess(false);
+				msg.setMsg("您输入的手机验证码有误");
+			} else {
+				msg.setSuccess(false);
+				msg.setMsg("您输入的图形验证码有误");
+			}
+		}
+		model.put("message", msg);
+		return model;
+	}
 
 	/**
 	 * @author chengbin
@@ -390,7 +411,7 @@ public class UserController {
 	 * @param response
 	 * @param request
 	 */
-	@RequestMapping(value = "/upload",method=RequestMethod.GET)
+	@RequestMapping(value = "/upload",method=RequestMethod.POST)
 	public @ResponseBody void upload(@RequestParam(value = "houseMaps") MultipartFile picture, HttpServletResponse response, HttpServletRequest request){
 		String name = "licence";
 		response.setContentType("text/html");
@@ -413,7 +434,7 @@ public class UserController {
 	 * @param response
 	 * @param request
 	 */
-	@RequestMapping(value = "/uploads",method=RequestMethod.GET)
+	@RequestMapping(value = "/uploads",method=RequestMethod.POST)
 	public @ResponseBody void uploads(@RequestParam(value = "houseMapss") MultipartFile picture, HttpServletResponse response,HttpServletRequest request){
 		String name = "certificate";
 		response.setContentType("text/html");

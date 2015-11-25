@@ -2,11 +2,12 @@ package com.fenghua.auto.backend.domain.education;
 
 import java.util.Date;
 
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fenghua.auto.backend.domain.AbstractDomainObject;
 
 /**
  * Spittle 唾沫，同时也翻译为碎语
@@ -19,7 +20,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  *
  */
 
-public class Spittle {
+public class Spittle extends AbstractDomainObject{
 
 	/**
 	 * to enable spring MVC Form validation, First, needs javax.validation jar; Second, needs <mvc:annotation-driven /> enabled. 
@@ -33,7 +34,7 @@ public class Spittle {
 	@NotNull
 	String username;
 	
-	@Size(min=4, max=30)
+	@Size(min=8, max=30)
 	@NotNull
 	String text;
 	

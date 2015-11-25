@@ -42,7 +42,6 @@
 </head>
 <%
 String userName = request.getParameter("userName");
-String password = request.getParameter("password");
 %>
 <body>
 <!--头部-->
@@ -88,8 +87,6 @@ String password = request.getParameter("password");
 </div>
 <div class="Retrieve_password clearfix">
     <div sytle="height: 560px;border:1px solid #eceae8;">
-    	<input type="hidden" class="userName" value="${userName}">
-    	<input type="hidden" class="password" value="${password}">
         <div class="email_three" ng-hide="boolen3">
             <div class="form_div clearfix">
                 <div class="icon_div">

@@ -171,6 +171,7 @@ angular.module("spittle-ng-app", [])
 			</table>
 			
 			<!-- test for ajax invoke by angularjs-->
+<<<<<<< HEAD
 			
 			<div ng-app="spittle_app"> <!-- ng-app 表示，该 div 部分（含子标签）归 angular 接管 -->
 			
@@ -192,6 +193,8 @@ angular.module("spittle-ng-app", [])
 														}
 								  );
 				</script>
+=======
+>>>>>>> branch 'master' of http://218.244.137.212:8080/dev/fenghua.git
 				
 			<div ng-controller="SpittleGetController">
 				

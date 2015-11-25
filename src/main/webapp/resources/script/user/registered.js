@@ -302,7 +302,7 @@ $(function() {
             return false;
         }else{
         	$.ajax({
-                type: "POST",
+                type: "GET",
                 url: '/company/validateFixed',
                 data: {"fixed":$(this).val()},
                 dataType: "json",
@@ -880,13 +880,13 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
         contactsDept:'',
         Fixed_telephone:'',
         telephone:'',
-        telephone_code:'',
         email_e:'',
         company:'',
         address:'',
         num:'',
         areaCode:'',
-        type_name:''
+        type_name:'',
+        telcode:''
     };
   //企业手机验证码
     $scope.validateTelTwo = function(s) {
@@ -943,7 +943,8 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     					'areaCode' : $scope.Enterprise.areaCode,
     					'detailAddress' : $scope.Enterprise.address,
     					'taxpayerNumber' : $scope.Enterprise.num,
-    					'typename' : $scope.Enterprise.type_name
+    					'typename' : $scope.Enterprise.type_name,
+    					'telcode' : $scope.Enterprise.telcode
     				},
     				{
     				    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},

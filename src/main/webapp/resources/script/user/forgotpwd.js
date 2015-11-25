@@ -1,16 +1,4 @@
-$(document).ready(function(){
-   
-	    	var str =  $('.validatePicCheck');
-	    	$(this).parent().parent().find(".pictureCheckCode").attr('src','/user/validatePicCheck?'+Math.random());
-	    	$.ajax({
-	            type: "GET",
-	            url: '/user/validatePicCheckValue',
-	            dataType: "text",
-	            success: function (data) {
-	                $(str).parent().parent().find(".verifyCode").val(data);
-	            }
-	        });
-});/**
+/**
  * Created by think on 2015/11/2.
  */
 $(function() {
@@ -73,7 +61,7 @@ $(function() {
                 data: {"telephone":$(this).val()},
                 dataType: "json",
                 success: function (data) {
-                    if(data.length == 0) {
+                	 if(data == null) {
                     	$('.mobile_error img').show();
                         $(".mobile_error span").html("该手机号码未被注册");
                         $("#sub_tel").val(1);
@@ -108,14 +96,14 @@ $(function() {
             $(".code_error span").html("验证码格式不正确");
            $("#sub_code").val(1);
             return false;
-        }else if($(this).val() == $(this).parent().parent().find(".verifyCode").val()){
-           
-            $('.code_error img').hide();
-            $(".code_error span").html(" 输入正确");
-            $("#sub_code").val(0);
+//        }else if($(this).val() == $(this).parent().parent().find(".verifyCode").val()){
+//           
+//            $('.code_error img').hide();
+//            $(".code_error span").html(" 输入正确");
+//            $("#sub_code").val(0);
         }else{
-        	$(".code_error span").html("图形验证码输入有误");
-        	 $("#sub_code").val(1);
+        	$(".code_error span").html("");
+        	 $("#sub_code").val(0);
             return false;
         }
     });
@@ -123,14 +111,14 @@ $(function() {
     $('.validatePicCheck').on('click',function(){
     	var str = $(this);
     	$(this).parent().parent().find(".pictureCheckCode").attr('src','/user/validatePicCheck?'+Math.random());
-    	$.ajax({
-            type: "GET",
-            url: '/user/validatePicCheckValue',
-            dataType: "text",
-            success: function (data) {
-                $(str).parent().parent().find(".verifyCode").val(data);
-            }
-        });
+//    	$.ajax({
+//            type: "GET",
+//            url: '/user/validatePicCheck',
+//            dataType: "text",
+//            success: function (data) {
+//                $(str).parent().parent().find(".verifyCode").val(data);
+//            }
+//        });
     });
     //手机短信验证码
     $(".iPhone_code").blur(function(event) {
@@ -146,15 +134,15 @@ $(function() {
             $(".iPhone_code_error span").html("手机验证码格式不正确");
             $("#sub_tel_code").val(1);
             return false;
-        }else if($(this).val() == $(".telephone_code_rep").val()){
-           
-            $('.iPhone_code_error img').hide();
-            $(".iPhone_code_error span").html("输入正确");
-            $("#sub_tel_code").val(0);
+//        }else if($(this).val() == $(".telephone_code_rep").val()){
+//           
+//            $('.iPhone_code_error img').hide();
+//            $(".iPhone_code_error span").html("输入正确");
+//            $("#sub_tel_code").val(0);
         }else{
         	$('.iPhone_code_error img').show();
-            $(".iPhone_code_error span").html("输入的验证码不正确");
-            $("#sub_tel_code").val(1);
+            $(".iPhone_code_error span").html("");
+            $("#sub_tel_code").val(0);
             return false;
         }
     });
@@ -338,36 +326,38 @@ forgotpwd_app.controller('ipone_ctr',['$scope','$http',function($scope,$http){
         
         $scope.nextstep=function(){
             console.log($scope.mobile+"////"+$scope.num);
+            alert($("#sub_tel").val())
+            alert( $("#sub_code").val())
+            alert($("#sub_tel_code").val())
+            alert($scope.code)
+            alert($scope.iPhone_code)
             if($("#sub_tel").val()==0 && $("#sub_code").val()==0 && $("#sub_tel_code").val()==0){
-            	 $(".ipone_two").css("display","");
-            	 $(".ipone_one").css("display","none");
-            	 $(".ipone_three").css("display","none");
             	// $scope.myVar2 = false;
-//                $http.post('',{mobile:$scope.mobile,code:$scope.code,iPhone_code:$scope.iPhone_code})
-//                    .success(function(rep){
-//                        //第一步验证成功时
-//                        $scope.myVar1 = true;
-//                        $scope.myVar2 = false;
-//                    })
-//                    .error(function(rep){
-//                        //第一步验证失败时
-//                        if(rep){
-//                            //手机号错误
-//                            $('.mobile_error img').show();
-//                            $(".mobile_error span").html("此手机已注册");
-//                            return false;
-//                        }else if(rep){
-//                            //图形验证码错误
-//                            $('.code_error img').show();
-//                            $(".code_error span").html("图形验证码错误");
-//                            return false;
-//                        }else{
-//                            //手机验证码错误
-//                            $('.iPhone_code_error img').show();
-//                            $(".iPhone_code_error span").html("手机验证码错误");
-//                            return false;
-//                        }
-//                    })
+                $http.post(
+                		'/user/findPassByPhone/',
+                		{
+                			'code' : $scope.code,
+                			'telcode':$scope.iPhone_code}
+                		,
+                		{
+        				    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+        				    transformRequest: function(data){
+        				        return $.param(data);
+        				    }
+        				}
+                		)
+                    .success(function(data){
+                    	if(data.message.success) {
+                        //第一步验证成功时
+                    	 $(".ipone_two").css("display","");
+                    	 $(".ipone_one").css("display","none");
+                    	 $(".ipone_three").css("display","none");
+                    	}else{
+                    		alert(data.message.msg);
+                    	}
+                    })
+                    .error(function(rep){
+                    })
             }
 
         };

@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.fenghua.auto.backend.dao.BaseDao;
-import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.User;;
 /**
  * 用户dao
@@ -39,6 +38,12 @@ public interface UserDao extends BaseDao<User> {
 	public List<User> selectByEmail(String email); 
 	
 	/**
+	 * 通过用户email查询对应数据
+	 * @param email
+	 * @return
+	 */
+	public void updateFailTimes(String name,short count); 
+	/**
 	 * 通过用户telephone查询对应数据
 	 * @param telephone
 	 * @return
@@ -59,10 +64,5 @@ public interface UserDao extends BaseDao<User> {
 	 * @return
 	 */
 	public Long updatePasswordByUserId(User user); 
-	/**
-	 * 通过用户email查询对应数据
-	 * @param email
-	 * @return
-	 */
-	public void updateFailTimes(String name,short count); 
+	
 }
