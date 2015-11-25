@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="test.dao.sys_configMapper" >
-  <resultMap id="BaseResultMap" type="test.model.sys_config" >
+<mapper namespace="com.fenghua.auto.backend.domain.user.sysConfig" >
+  <resultMap id="BaseResultMap" type="com.fenghua.auto.backend.domain.vo.user.sysConfigVo" >
     <id column="Config_Name" property="configName" jdbcType="VARCHAR" />
     <result column="Config_Value" property="configValue" jdbcType="VARCHAR" />
     <result column="Created_TS" property="createdTs" jdbcType="TIMESTAMP" />
@@ -22,7 +22,7 @@
     delete from sys_config
     where Config_Name = #{configName,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="test.model.sys_config" >
+  <insert id="insert" parameterType="com.fenghua.auto.backend.domain.user.sysConfig" >
     insert into sys_config (Config_Name, Config_Value, Created_TS, 
       Created_By, Last_Modified_By, Last_Modified_TS
       )
@@ -30,7 +30,7 @@
       #{createdBy,jdbcType=VARCHAR}, #{lastModifiedBy,jdbcType=TIMESTAMP}, #{lastModifiedTs,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="test.model.sys_config" >
+  <insert id="insertSelective" parameterType="com.fenghua.auto.backend.domain.user.sysConfig" >
     insert into sys_config
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="configName != null" >
@@ -73,7 +73,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="test.model.sys_config" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.backend.domain.user.sysConfig" >
     update sys_config
     <set >
       <if test="configValue != null" >
@@ -94,7 +94,7 @@
     </set>
     where Config_Name = #{configName,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="test.model.sys_config" >
+  <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.backend.domain.user.sysConfig" >
     update sys_config
     set Config_Value = #{configValue,jdbcType=VARCHAR},
       Created_TS = #{createdTs,jdbcType=TIMESTAMP},

@@ -26,11 +26,11 @@ public class CityAreaServiceImpl implements CityAreaService {
 		return cityAreaDao.selectProvince();
 	}
 	@Override
-	public List<CityArea> selectCity(Integer parentId) {
+	public List<CityArea> selectCity(Long parentId) {
 		return cityAreaDao.selectCity(parentId);
 	}
 	@Override
-	public List<CityArea> selectArea(Integer parentId) {
+	public List<CityArea> selectArea(Long parentId) {
 		return cityAreaDao.selectArea(parentId);
 	}
 }
