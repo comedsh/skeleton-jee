@@ -42,8 +42,6 @@ drop table if exists t_order;
 
 drop table if exists vehicle_oe_sku;
 
-drop table if exists ÏµÍ³;
-
 /*==============================================================*/
 /* Table: catalog                                               */
 /*==============================================================*/
@@ -117,7 +115,7 @@ create table sale_area
 (
    id                   bigint not null auto_increment,
    sale_id              bigint not null,
-   type                 int comment '1.°üº¬£¬ 2 ²»°üº¬',
+   type                 int comment '1.åŒ…å«ï¼Œ 2 ä¸åŒ…å«',
    primary key (id)
 );
 
@@ -131,10 +129,10 @@ create table sku
    code                 varchar(20) not null,
    name                 varchar(200),
    title                varchar(200),
-   url                  text comment 'ÉÌÆ·ËõÂÔÍ¼',
+   url                  text comment 'å•†å“ç¼©ç•¥å›¾',
    introduce            text,
-   status               bit comment '1,´ýÉÏ¼Ü£¬2.ÒÑÉÏ¼Ü 3¡£ÒÑÏÂ¼Ü£¬Ä¬ÈÏ ´ýÉÏ¼Ü',
-   type                 bit comment '1.Æ·ÅÆ¼þ , 2 Ô­³§¼þ',
+   status               bit comment '1,å¾…ä¸Šæž¶ï¼Œ2.å·²ä¸Šæž¶ 3ã€‚å·²ä¸‹æž¶ï¼Œé»˜è®¤ å¾…ä¸Šæž¶',
+   type                 bit comment '1.å“ç‰Œä»¶ , 2 åŽŸåŽ‚ä»¶',
    shelf_time           datetime default CURRENT_TIMESTAMP,
    under_time           datetime,
    produce_time         date,
@@ -142,7 +140,7 @@ create table sku
    min_quantity         int,
    gross_weight         double(7,2),
    weight               double(7,2),
-   unit                 varchar(10) comment '¼þ£¬Ì¨£¬Ö§,¸ö',
+   unit                 varchar(10) comment 'ä»¶ï¼Œå°ï¼Œæ”¯,ä¸ª',
    brand                varchar(100),
    score                int,
    supplier_id          bigint,
@@ -176,11 +174,11 @@ create table sku_comment
    sku_id               bigint,
    order_id             bigint,
    order_detail_id      bigint,
-   star                 bit comment '1µ½5¸öÐÇ£¬>=4,ºÃÆÀ  £¬3< ²îÆÀ£¬3 ÖÐÆÀ',
+   star                 bit comment '1åˆ°5ä¸ªæ˜Ÿï¼Œ>=4,å¥½è¯„  ï¼Œ3< å·®è¯„ï¼Œ3 ä¸­è¯„',
    comtent              text,
    user_id              varchar(20),
    create_time          datetime,
-   status               int default 1 comment '1 ÏÔÊ¾£¬2²»ÏÔÊ¾£¬Ä¬ÈÏÏÔÊ¾',
+   status               int default 1 comment '1 æ˜¾ç¤ºï¼Œ2ä¸æ˜¾ç¤ºï¼Œé»˜è®¤æ˜¾ç¤º',
    comment_origin       bit comment '0, pc ,1.android 2. iphone  ;',
    primary key (id)
 );
@@ -282,15 +280,6 @@ create table supplier
 );
 
 /*==============================================================*/
-/* Table: t_order                                               */
-/*==============================================================*/
-create table t_order
-(
-   id                   bigint not null,
-   primary key (id)
-);
-
-/*==============================================================*/
 /* Table: vehicle_oe_sku                                        */
 /*==============================================================*/
 create table vehicle_oe_sku
@@ -307,56 +296,4 @@ create table vehicle_oe_sku
    primary key (id)
 );
 
-/*==============================================================*/
-/* Table: ÏµÍ³                                                    */
-/*==============================================================*/
-create table ÏµÍ³
-(
-   id                   bigint
-);
-
-alter table catalog add constraint FK_fk_pid foreign key (parent_id)
-      references catalog (id) on delete restrict on update restrict;
-
-alter table catalog_attribute add constraint FK_catalog_attr foreign key (catalog_id)
-      references catalog (id) on delete restrict on update restrict;
-
-alter table catalog_sku add constraint FK_Reference_21 foreign key (sku_id)
-      references sku (id) on delete restrict on update restrict;
-
-alter table catalog_sku add constraint FK_Reference_23 foreign key (catalog_id)
-      references catalog (id) on delete restrict on update restrict;
-
-alter table sku add constraint FK_Reference_25 foreign key (supplier_id)
-      references supplier (id) on delete restrict on update restrict;
-
-alter table sku_catalog_attr_value add constraint FK_Reference_22 foreign key (catalog_attr_id)
-      references catalog_attribute (id) on delete restrict on update restrict;
-
-alter table sku_catalog_attr_value add constraint FK_Relationship_2 foreign key (sku_id)
-      references sku (id) on delete restrict on update restrict;
-
-alter table sku_comment add constraint FK_Relationship_5 foreign key (sku_id)
-      references sku (id) on delete restrict on update restrict;
-
-alter table sku_extend_attrs add constraint FK_Reference_18 foreign key (sku_id)
-      references sku (id) on delete restrict on update restrict;
-
-alter table sku_image_html add constraint FK_Reference_16 foreign key (sku_id)
-      references sku (id) on delete restrict on update restrict;
-
-alter table sku_images add constraint FK_Reference_19 foreign key (sku_id)
-      references sku (id) on delete restrict on update restrict;
-
-alter table sku_reply add constraint FK_Relationship_28 foreign key (sku_comment_id)
-      references sku_comment (id) on delete restrict on update restrict;
-
-alter table sku_stock add constraint FK_Reference_17 foreign key (repertory_id)
-      references repertory (id) on delete restrict on update restrict;
-
-alter table sku_stock add constraint FK_Reference_27 foreign key (sku_id)
-      references sku (id) on delete restrict on update restrict;
-
-alter table vehicle_oe_sku add constraint FK_Reference_20 foreign key (sku_id)
-      references sku (id) on delete restrict on update restrict;
 
