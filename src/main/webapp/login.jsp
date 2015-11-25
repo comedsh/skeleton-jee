@@ -9,6 +9,7 @@
 <!DOCTYPE html>
 <html ng-app="login_app">
 <head lang="en">
+<meta property="qc:admins" content="24133277472661412366547477166230" />
     <title></title>
     <meta charset="UTF-8">
     <meta name="keywords" content="" />
@@ -38,6 +39,13 @@
         document.execCommand("BackgroundImageCache", false, true);
     </script>
     <![endif]-->
+    <!-- QQ登陆接入 -->
+    <script type="text/javascript"
+		src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" 
+		data-appid="101214271" 
+		data-redirecturi="http://www.auto007.com/auth/qq/" charset="utf-8"></script> 
+		
+		
     <style type="text/css">
         *{
             margin:0;
@@ -47,6 +55,7 @@
     </style>
 </head>
 <body>
+
 <!--头部-->
 <div class="header_login">
     <div class="header_ul clearfix">
@@ -98,7 +107,7 @@
             <div class="error">手机账号错误</div>	
         </div>
         <div class="input_li">
-            <input ng-model="user.name" type="text" class="name" placeholder="用户名/手机/邮箱号"/>
+            <input ng-model="user.name" ng-blur="validateName()" type="text" class="name" placeholder="用户名/手机/邮箱号"/>
         </div>
         <div class="input_li pwd">
             <input ng-model="user.pwd" type="password" placeholder="请输入你的密码"/>
@@ -107,23 +116,19 @@
             <div class="Remember_pwd" data="0">记住密码</div>
             <a ng-href="Forgot password.html">忘记密码</a>
         </div>
+        
         <div class="code_d">
-            <input type="text">
-            <!--<img  src="<%=request.getContextPath() %>/resources/imgs/code.png" alt="" title="换一张" class="img_code"/>-->
-            <img title="换一张" class="img_code" src="https://authcode.jd.com/verify/image?a=0&amp;
-acid=feaaa1e7-e645-4dff-b702-679e5ebf70a2&amp;
-uid=feaaa1e7-e645-4dff-b702-679e5ebf70a2&amp;
-srcid=reg&amp;is=e69a14665f94d73d9ceb265005b78452&amp;
-yys=1444790929987"
+            <input type="text" ng-model="user.code">
+            <img title="换一张" class="img_code" src="<%=request.getContextPath() %>/user/validatePicCheck"
                  style="margin-left: 5px;margin-top: 1px;width: 80px;height: 30px;;display:block;"
                  alt="" clstag="regist|keycount|personalreg|06"
                  onclick="this.src= document.location.protocol +'//authcode.jd.com/verify/image?a=0&amp;acid=feaaa1e7-e645-4dff-b702-679e5ebf70a2&amp;uid=feaaa1e7-e645-4dff-b702-679e5ebf70a2&amp;srcid=reg&amp;is=e69a14665f94d73d9ceb265005b78452&amp;yys='+new Date().getTime()" ver_colorofnoisepoint="#888888" id="JD_Verification1">
-            <a href="javascript:void(0)">看不清楚换一张</a>
+            <a style="cursor: pointer;" class="validatePicCheck">看不清楚换一张</a>
         </div>
         <button class="login_btn" enter ng-click="logins()">登 录</button>
         <div class="san_d">
             <label>使用合作网站账号登录</label>
-            <a href="###">QQ</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="/auth/qq.action">QQ</a>&nbsp;&nbsp;|&nbsp;&nbsp;
             <a href="###">微信</a>
         </div>
     </div>

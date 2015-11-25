@@ -10,7 +10,6 @@ import com.fenghua.auto.backend.dao.DaoException;
 import com.fenghua.auto.backend.dao.constants.SqlId;
 import com.fenghua.auto.backend.dao.impl.BaseDaoImpl;
 import com.fenghua.auto.backend.dao.user.UserDao;
-import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.User;
 /**
  * 用户的dao实现
@@ -30,6 +29,20 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 			throw new DaoException(String.format("根据Name查询对象出错！语句：%s", getSqlName(SqlId.SQL_SELECT_BY_NAME)), e);
 		}
 		return user;
+	}
+	
+	@Override
+	public void updateFailTimes(String name,short count) {
+		Assert.notNull(name);
+		Assert.notNull(count);
+		User user = new User();
+		user.setName(name);
+		user.setFailedLoginTimes(count);
+		try {
+			sqlSessionTemplate.update(getSqlName(SqlId.SQL_UPDATE_BY_NAME), user);
+		} catch (Exception e) {
+			throw new DaoException(String.format("根据Name查询对象出错！语句：%s", getSqlName(SqlId.SQL_UPDATE_BY_NAME)), e);
+		}
 	}
 	
 	@Override
@@ -75,6 +88,18 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 			user = sqlSessionTemplate.selectList(getSqlName(SqlId.SQL_SELECT_BY_TELEPHONE), telephone);
 		} catch (Exception e) {
 			throw new DaoException(String.format("根据Telephone查询对象出错！语句：%s", getSqlName(SqlId.SQL_SELECT_BY_TELEPHONE)), e);
+		}
+		return user;
+	}
+
+	@Override
+	public List<User> getUserByQQ(String qqOpenID) {
+		Assert.notNull(qqOpenID);
+		List<User> user = new ArrayList<User>();
+		try {
+			user = sqlSessionTemplate.selectList(getSqlName(SqlId.SQL_SELECT_BY_QQ_Number), qqOpenID);
+		} catch (Exception e) {
+			throw new DaoException(String.format("根据Telephone查询对象出错！语句：%s", getSqlName(SqlId.SQL_SELECT_BY_QQ_Number)), e);
 		}
 		return user;
 	}

@@ -1,15 +1,20 @@
 package com.fenghua.auto.webapp.controller.user;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.fenghua.auto.backend.core.utills.uploadPicture;
 import com.fenghua.auto.backend.core.utills.graphValidate.PictureCheckCode;
 import com.fenghua.auto.backend.core.utills.message.SMSMessage;
@@ -40,6 +46,9 @@ import net.sf.json.JSONObject;
 @RequestMapping("/user")
 public class UserController {
 	
+	@SuppressWarnings("unused")
+	private static Date OLD_DATE = null;
+	
 	@Autowired
 	private UserService userService;
 	/**
@@ -49,17 +58,30 @@ public class UserController {
 	 * @createTime 2015.11.4
 	 */
 	@RequestMapping(value = "/regisUser", method = RequestMethod.POST)
-	public @ResponseBody Map<String,Result> addUser(@Valid User user, HttpServletRequest request) {
+	public @ResponseBody Map<String,Result> addUser(@Valid User user, @RequestParam String telcode, @RequestParam String code, HttpServletRequest request,Locale locale) {
 		Map<String,Result> model = new HashMap<String,Result>();
 		Result msg = new Result();
-		if(request.getSession(false) == null) {
+		String validateTel = (String) request.getSession().getAttribute("validateTel");
+		String verifyCode = (String) request.getSession().getAttribute("rand");
+		if(new Date().getTime() - OLD_DATE.getTime()  > 1000*120) {
 			msg.setSuccess(false);
-			msg.setMsg("注册失败");
-		} else {
+			msg.setMsg("您输入的验证码已过期");
+		} else if(validateTel.equals(telcode) && verifyCode.equals(code)) {
+			String userPwd = user.getPassword();
 			userService.insert(user);
 			msg.setSuccess(true);
+			msg.setCode(user.getName());
 			msg.setMsg("注册成功");
-			msg.setCode(user.getName()+"&"+user.getPassword());
+			//把用户名和密码存入安全的session中
+			userService.autoLogin(user.getName(), userPwd, locale, request);
+		} else {
+			if(!validateTel.equals(telcode)) {
+				msg.setSuccess(false);
+				msg.setMsg("您输入的手机验证码有误");
+			} else {
+				msg.setSuccess(false);
+				msg.setMsg("您输入的图形验证码有误");
+			}
 		}
 		model.put("message", msg);
 		return model;
@@ -72,18 +94,29 @@ public class UserController {
 	 * @createTime 2015.11.4
 	 */
 	@RequestMapping(value = "/regisUserCompany", method = RequestMethod.POST)
-	public Map<String,Result> addUserAndCompany(@Valid User user, @Valid Company company, @Valid PaymentType paymenttype,HttpServletRequest request) {
+	public Map<String,Result> addUserAndCompany(@Valid User user, @Valid Company company, @RequestParam String telcode, @Valid PaymentType paymenttype,HttpServletRequest request, Locale locale) {
 		Map<String,Result> model = new HashMap<String,Result>();
-		Result msg = null;
+		Result msg = new Result();
+		String validateTel = (String) request.getSession().getAttribute("validateTel");
 		String licence = request.getSession().getAttribute("licence").toString();
 		String certificate = request.getSession().getAttribute("certificate").toString();
-		if(licence.equals("") && licence != null && certificate.equals("") && certificate != null) {
-			company.setBusinessLicence(licence);
-			company.setBusinessLicence(certificate);
-			userService.insert(user,company,paymenttype);
-			msg = new Result(true,"注册成功");
+		if(licence != null && !licence.equals("")  && certificate != null && !certificate.equals("") ) {
+			if(new Date().getTime() - OLD_DATE.getTime()  > 1000*120) {
+				msg.setSuccess(false);
+				msg.setMsg("您输入的验证码已过期");
+			}else if(validateTel.equals(telcode)) {
+				company.setBusinessLicence(licence);
+				company.setBusinessLicence(certificate);
+				userService.insert(user,company,paymenttype);
+				msg.setSuccess(true);
+				msg.setMsg("注册成功");
+			} else {
+				msg.setSuccess(false);
+				msg.setMsg("您输入的手机验证码有误");
+			}
 		} else {
-			msg = new Result(false,"注册失败");
+			msg.setSuccess(false);
+			msg.setMsg("您的图片没有上传成功");
 		}
 		model.put("message", msg);
 		return model;
@@ -96,8 +129,55 @@ public class UserController {
 	 * @param res
 	 */
 	@RequestMapping(value = "/validateName", method = RequestMethod.GET)
-	public @ResponseBody List<User> validateName(@RequestParam String name,  HttpServletRequest req, HttpServletResponse res) {
+	public @ResponseBody User validateName(@RequestParam String name,  HttpServletRequest req, HttpServletResponse res) {
 		return userService.getUserByName(name);
+	}
+	/**
+	 * 通过name判断是否应该显示图形验证码
+	 * @param name
+	 * @param req
+	 * @param res
+	 */
+	@RequestMapping(value = "/validatePic", method = RequestMethod.GET)
+	public @ResponseBody Map<String,Result> getValidatePic(@RequestParam String name,  HttpServletRequest req, HttpServletResponse res) {
+		Map<String,Result> model = new HashMap<String,Result>();
+		Result result = new Result();
+		if(name ==null || name.equals("")) {
+			//获取是否失败三次的session
+			Object limitCounts = req.getSession().getAttribute("-t");
+			if(limitCounts != null){
+				if((int)limitCounts >= 3) {
+					//显示图形验证码
+					result.setSuccess(false);
+				}
+			}
+		} else {
+			String regex_tel ="^((13[0-9])|(15[^4,\\D])|(18[0-9]))\\d{8}$";
+			String regex_email ="^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
+			String regex_name ="^[a-zA-Z\\u4e00-\\u9fa5][a-zA-Z0-9\\u4e00-\\u9fa5]{3,19}$";
+			User user = null;
+			if(Pattern.compile(regex_tel).matcher(name).matches()) {
+				user = userService.getUserByTelephone(name);
+			}
+			if(Pattern.compile(regex_email).matcher(name).matches()) {
+				
+				user = userService.getUserByEmail(name);
+			}
+			if(Pattern.compile(regex_name).matcher(name).matches()) {
+				
+				user = userService.getUserByName(name);
+			}
+			if(user!= null) {
+				if(user.getFailedLoginTimes() != null){
+					if(user.getFailedLoginTimes() >= 3) {
+						//显示图形验证码
+						result.setSuccess(false);
+					}
+				}
+			}
+		}
+		model.put("msg", result);
+		return model;
 	}
 	/**
 	 * 通过telephone查询
@@ -106,7 +186,7 @@ public class UserController {
 	 * @param res
 	 */
 	@RequestMapping(value = "/validateTelephone", method = RequestMethod.GET)
-	public @ResponseBody List<User> validateTelephone(@RequestParam String telephone,  HttpServletRequest req, HttpServletResponse res) {
+	public @ResponseBody User validateTelephone(@RequestParam String telephone,  HttpServletRequest req, HttpServletResponse res) {
 		return userService.getUserByTelephone(telephone);
 	}
 	/**
@@ -116,7 +196,7 @@ public class UserController {
 	 * @param res
 	 */
 	@RequestMapping(value = "/validateEmail", method = RequestMethod.GET)
-	public @ResponseBody List<User> validateEmail(@RequestParam String email,  HttpServletRequest req, HttpServletResponse res) {
+	public @ResponseBody User validateEmail(@RequestParam String email,  HttpServletRequest req, HttpServletResponse res) {
 		return userService.getUserByEmail(email);
 	}
 	/**
@@ -136,25 +216,6 @@ public class UserController {
 		}
 	}
 	/**
-	 * 获取验证码code值
-	 * @param email
-	 * @param req
-	 * @param res
-	 */
-	@RequestMapping(value = "/validatePicCheckValue",method = RequestMethod.GET)
-	@ResponseBody
-	public String validatePicCheckValue(HttpServletRequest req, HttpServletResponse res) {
-		String str = null;
-		try {
-			str = PictureCheckCode.validatePicCheckValue(req,res);
-		} catch (ServletException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return str;
-	}
-	/**
 	 * 获取手机验证码
 	 * @param email
 	 * @param req
@@ -168,8 +229,8 @@ public class UserController {
 				str = SMSMessage.send(mobilephone,req,res);
 				if(str!=null){
 					 HttpSession session = req.getSession();
-					 session.setMaxInactiveInterval(60);
 					 session.setAttribute("validateTel", str);
+					 OLD_DATE = new Date();
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
