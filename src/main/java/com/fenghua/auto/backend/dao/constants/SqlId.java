@@ -20,6 +20,7 @@ public interface SqlId {
 	public String SQL_SELECT_BY_NAME = "selectByName";
 	public String SQL_SELECT_BY_EMAIL = "selectByEmail";
 	public String SQL_SELECT_BY_TELEPHONE = "selectByTelephone";
+	public String SQL_UPDATE_BY_NAME = "updateFailtimesByName";
 	
 	
 	//company模块

@@ -98,7 +98,7 @@
             <div class="error">手机账号错误</div>	
         </div>
         <div class="input_li">
-            <input ng-model="user.name" type="text" class="name" placeholder="用户名/手机/邮箱号"/>
+            <input ng-model="user.name" ng-blur="validateName()" type="text" class="name" placeholder="用户名/手机/邮箱号"/>
         </div>
         <div class="input_li pwd">
             <input ng-model="user.pwd" type="password" placeholder="请输入你的密码"/>

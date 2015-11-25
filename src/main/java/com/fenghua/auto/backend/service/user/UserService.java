@@ -28,6 +28,11 @@ public interface UserService {
 	 */
 	public void update(User personal);
 	/**
+	 * 更新登录失败次数
+	 * @param name
+	 */
+	public void updateFailTimes(String name,short count);
+	/**
 	 * 增加个人用户
 	 * @param personal
 	 */

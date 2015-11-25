@@ -66,6 +66,11 @@ public class UserServiceImpl implements UserService {
 	public void update(User personal) {
 		userDao.updateById(personal);
 	}
+	
+	@Override
+	public void updateFailTimes(String name,short count) {
+		userDao.updateFailTimes(name,count);
+	}
 
 	@Override
 	public void insert(User personal) {
