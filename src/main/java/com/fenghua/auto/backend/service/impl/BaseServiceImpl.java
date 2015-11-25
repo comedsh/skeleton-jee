@@ -36,6 +36,9 @@ public abstract class BaseServiceImpl<T extends DomainObject> implements BaseSer
 			return getBaseDao().selectList(query);
 		}
 
+		public <V extends T> V selectById(Serializable id){
+			return getBaseDao().selectById(id);
+		}
 
 		
 		public <V extends T> List<V> selectAll(){
