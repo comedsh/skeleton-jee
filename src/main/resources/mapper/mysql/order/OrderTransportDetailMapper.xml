@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fenghua.auto.backend.domain.order.OrderTransportDetail" >
-  <resultMap id="BaseResultMap" type="com.fenghua.auto.backend.domain.order.OrderTransportDetail" >
+<mapper namespace="com.fenghua.auto.order.domain.OrderTransportDetail" >
+  <resultMap id="BaseResultMap" type="com.fenghua.auto.order.domain.OrderTransportDetail" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="transport_id" property="transportId" jdbcType="BIGINT" />
     <result column="order_item_id" property="orderItemId" jdbcType="BIGINT" />
@@ -25,7 +25,7 @@
     delete from order_transport_detail
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.fenghua.auto.backend.domain.order.OrderTransportDetail" >
+  <insert id="insert" parameterType="com.fenghua.auto.order.domain.OrderTransportDetail" >
     insert into order_transport_detail (id, transport_id, order_item_id, 
       sku_id, sku_code, sku_name, 
       qty, entry_id, entry_time
@@ -35,7 +35,7 @@
       #{qty,jdbcType=INTEGER}, #{entryId,jdbcType=BIGINT}, #{entryTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.fenghua.auto.backend.domain.order.OrderTransportDetail" >
+  <insert id="insertSelective" parameterType="com.fenghua.auto.order.domain.OrderTransportDetail" >
     insert into order_transport_detail
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -96,7 +96,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.backend.domain.order.OrderTransportDetail" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.order.domain.OrderTransportDetail" >
     update order_transport_detail
     <set >
       <if test="transportId != null" >
@@ -126,7 +126,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.backend.domain.order.OrderTransportDetail" >
+  <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.order.domain.OrderTransportDetail" >
     update order_transport_detail
     set transport_id = #{transportId,jdbcType=BIGINT},
       order_item_id = #{orderItemId,jdbcType=BIGINT},

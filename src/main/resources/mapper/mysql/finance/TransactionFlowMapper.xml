@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fenghua.auto.backend.domain.finance.TransactionFlow" >
-  <resultMap id="BaseResultMap" type="com.fenghua.auto.backend.domain.finance.TransactionFlow" >
+<mapper namespace="com.fenghua.auto.finance.domain.TransactionFlow" >
+  <resultMap id="BaseResultMap" type="com.fenghua.auto.finance.domain.TransactionFlow" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="tran_type" property="tranType" jdbcType="INTEGER" />
     <result column="biz_order_id" property="bizOrderId" jdbcType="BIGINT" />
@@ -36,7 +36,7 @@
     delete from transaction_flow
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.fenghua.auto.backend.domain.finance.TransactionFlow" >
+  <insert id="insert" parameterType="com.fenghua.auto.finance.domain.TransactionFlow" >
     insert into transaction_flow (id, tran_type, biz_order_id, 
       master_order_id, master_order_no, order_id, 
       order_no, buyer_id, seller_id, 
@@ -52,7 +52,7 @@
       #{billId,jdbcType=BIGINT}, #{sumOperatorId,jdbcType=BIGINT}, #{sumTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.fenghua.auto.backend.domain.finance.TransactionFlow" >
+  <insert id="insertSelective" parameterType="com.fenghua.auto.finance.domain.TransactionFlow" >
     insert into transaction_flow
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -167,7 +167,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.backend.domain.finance.TransactionFlow" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.finance.domain.TransactionFlow" >
     update transaction_flow
     <set >
       <if test="tranType != null" >
@@ -224,7 +224,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.backend.domain.finance.TransactionFlow" >
+  <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.finance.domain.TransactionFlow" >
     update transaction_flow
     set tran_type = #{tranType,jdbcType=INTEGER},
       biz_order_id = #{bizOrderId,jdbcType=BIGINT},
