@@ -283,7 +283,7 @@ public class UserController {
 	 * @param response
 	 * @param request
 	 */
-	@RequestMapping(value = "/upload",method=RequestMethod.GET)
+	@RequestMapping(value = "/upload",method=RequestMethod.POST)
 	public @ResponseBody void upload(@RequestParam(value = "houseMaps") MultipartFile picture, HttpServletResponse response, HttpServletRequest request){
 		String name = "licence";
 		response.setContentType("text/html");
@@ -306,7 +306,7 @@ public class UserController {
 	 * @param response
 	 * @param request
 	 */
-	@RequestMapping(value = "/uploads",method=RequestMethod.GET)
+	@RequestMapping(value = "/uploads",method=RequestMethod.POST)
 	public @ResponseBody void uploads(@RequestParam(value = "houseMapss") MultipartFile picture, HttpServletResponse response,HttpServletRequest request){
 		String name = "certificate";
 		response.setContentType("text/html");

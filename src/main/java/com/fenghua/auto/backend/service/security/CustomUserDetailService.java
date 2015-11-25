@@ -67,7 +67,7 @@ public class CustomUserDetailService implements UserDetailsService{
 			users = userService.getUserByName(username);
 		}
 
-		if (users != null) {
+		if (users == null) {
 			String message = "用户" + username + "不存在";
 			logger.error(message);
 			throw new UsernameNotFoundException(message);
