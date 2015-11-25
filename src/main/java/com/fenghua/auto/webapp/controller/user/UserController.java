@@ -126,6 +126,39 @@ public class UserController {
 		return userService.getUserByName(name);
 	}
 	/**
+	 * 通过name判断是否应该显示图形验证码
+	 * @param name
+	 * @param req
+	 * @param res
+	 */
+	@RequestMapping(value = "/validatePic", method = RequestMethod.GET)
+	public @ResponseBody Map<String,Result> getValidatePic(@RequestParam String name,  HttpServletRequest req, HttpServletResponse res) {
+		Map<String,Result> model = new HashMap<String,Result>();
+		Result result = new Result();
+		if(name ==null || name.equals("")) {
+			//获取是否失败三次的session
+			Object limitCounts = req.getSession().getAttribute("-t");
+			if(limitCounts != null){
+				if((int)limitCounts >= 3) {
+					//显示图形验证码
+					result.setSuccess(false);
+				}
+			}
+		} else {
+			List<User> user = userService.getUserByName(name);
+			if(user.size() > 0) {
+				if(user.get(0).getFailedLoginTimes() != null){
+					if(user.get(0).getFailedLoginTimes() >= 3) {
+						//显示图形验证码
+						result.setSuccess(false);
+					}
+				}
+			}
+		}
+		model.put("msg", result);
+		return model;
+	}
+	/**
 	 * 通过telephone查询
 	 * @param email
 	 * @param req

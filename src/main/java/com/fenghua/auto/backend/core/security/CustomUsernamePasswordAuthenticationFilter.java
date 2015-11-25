@@ -1,14 +1,21 @@
 package com.fenghua.auto.backend.core.security;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.util.StringUtils;
+
+import com.fenghua.auto.backend.domain.user.User;
+import com.fenghua.auto.backend.service.user.UserService;
 
 
 /** 
@@ -25,6 +32,9 @@ import org.springframework.util.StringUtils;
   * @version 
   */
 public class CustomUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter{
+	
+	@Autowired
+	UserService service;
 
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			 throws AuthenticationException{
@@ -60,10 +70,10 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 		try{
 			
 			Authentication authentication = this.getAuthenticationManager().authenticate(authRequest);	
-			removeInputVCode(request);
+			removeInputVCode(request,username);
 			return authentication;
 		}catch(AuthenticationException e){
-			checkLimitLogin(request);
+			checkLimitLogin(request,e,username);
 			throw e;
 		}
     }
@@ -88,27 +98,45 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 	/**
 	 * 检查用户登录次数
 	 */
-	private void checkLimitLogin(HttpServletRequest request) throws AuthenticationException{
-		HttpSession s = request.getSession(false);
-		if(s == null)
-			return;
-		
-		Object limitCounts = s.getAttribute("_t");
-		if(limitCounts == null){
-			limitCounts = 0;
+	private void checkLimitLogin(HttpServletRequest request,AuthenticationException e,String name) throws AuthenticationException{
+		//用户名存在，更新入库
+		List<User> user = service.getUserByName(name);
+		int count = 0;
+		if(user.size() > 0) {
+			if(user.get(0).getFailedLoginTimes() != null) {
+				count = user.get(0).getFailedLoginTimes();
+			}
+			service.updateFailTimes(name,(short)(count+1));
+			if(count > 1) {
+				request.setAttribute("showVCode", true);
+			}
+		} else {
+			//用户名不存在，应该用session来存失败次数
+			HttpSession s = request.getSession(true);
+			if(s == null)
+				return;
+			//以用户名作为键
+			Object limitCounts = s.getAttribute("-t");
+			if(limitCounts == null){
+				limitCounts = 0;
+			}
+			count = (int)limitCounts+1;
+			s.setAttribute("-t", count);
+			if(count > 2){
+				//throw new AuthenticationLimitException("locked account");
+				request.setAttribute("showVCode", true);
+			}
 		}
-		int count = (int) limitCounts+1;
-		s.setAttribute("_t", count);
-	
-		if(count > 3){
-			//throw new AuthenticationLimitException("locked account");
-			request.setAttribute("showVCode", true);
-		}	
 	}
 	
-	private void removeInputVCode(HttpServletRequest request){
+	private void removeInputVCode(HttpServletRequest request,String name){
 		request.removeAttribute("showVCode");
+		List<User> user = service.getUserByName(name);
+		if(user.size() > 0) {
+			if(user.get(0).getFailedLoginTimes() != null) {
+				service.updateFailTimes(name,(short)(0));
+			}
+		} 
+		request.getSession().removeAttribute("-t");
 	}
-	
-	
 }

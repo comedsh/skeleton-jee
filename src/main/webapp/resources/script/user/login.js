@@ -52,7 +52,19 @@ $(function() {
 });
 var app=angular.module('login_app',[]);
 app.controller('login_ctr',['$scope','$http',function($scope,$http){
+	
     $scope.user={name:'',pwd:''};
+    
+    //根据用户名，查看是否应该显示图形验证码
+    $scope.validateName = function(){
+    	var name = $scope.user.name;
+    	$http.get('/user/validatePic', {params: {name:name}}).success(function(data){
+    		if(data.msg.success == false) {
+    			$(".code_d").css("display","block"); 
+    		}  
+        });
+    }
+    
     //登录js
     $scope.logins=function(){
         var name=$scope.user.name;
@@ -92,4 +104,7 @@ app.controller('login_ctr',['$scope','$http',function($scope,$http){
       		  }});
         }
     };
+    
+    //页面加载就初始化
+    $scope.validateName();
 }]);

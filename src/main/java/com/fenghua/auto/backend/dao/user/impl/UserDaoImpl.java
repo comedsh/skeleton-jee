@@ -33,6 +33,20 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 	}
 	
 	@Override
+	public void updateFailTimes(String name,short count) {
+		Assert.notNull(name);
+		Assert.notNull(count);
+		User user = new User();
+		user.setName(name);
+		user.setFailedLoginTimes(count);
+		try {
+			sqlSessionTemplate.update(getSqlName(SqlId.SQL_UPDATE_BY_NAME), user);
+		} catch (Exception e) {
+			throw new DaoException(String.format("根据Name查询对象出错！语句：%s", getSqlName(SqlId.SQL_UPDATE_BY_NAME)), e);
+		}
+	}
+	
+	@Override
 	public void insert(User user) {
 		Assert.notNull(user);
 		try {

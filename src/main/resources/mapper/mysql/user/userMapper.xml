@@ -250,4 +250,9 @@
       Last_Modified_By = #{lastModifiedBy,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=BIGINT}
   </update>
+  <update id="updateFailtimesByName" parameterType="com.fenghua.auto.backend.domain.user.User" >
+    update user
+    set Failed_Login_Times = #{failedLoginTimes,jdbcType=SMALLINT}
+    where Name = #{name,jdbcType=VARCHAR}
+  </update>
 </mapper>
