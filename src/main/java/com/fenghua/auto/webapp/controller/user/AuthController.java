@@ -5,19 +5,13 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.fenghua.auto.backend.core.security.CustomAccessDecisionManager;
 import com.fenghua.auto.backend.domain.user.User;
-import com.fenghua.auto.backend.service.security.CustomUserDetailService;
 import com.fenghua.auto.backend.service.user.AuthService;
 import com.fenghua.auto.backend.service.user.UserService;
 import com.qq.connect.QQConnectException;
-import com.qq.connect.api.OpenID;
-import com.qq.connect.javabeans.AccessToken;
 import com.qq.connect.oauth.Oauth;
 
 /**
