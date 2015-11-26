@@ -20,6 +20,18 @@ import com.fenghua.auto.backend.domain.user.Company;
 public class CompanyDaoImpl extends BaseDaoImpl<Company> implements CompanyDao {
 
 	@Override
+	public List<Company> getById(Long id) {
+		Assert.notNull(id);
+		List<Company> company = new ArrayList<Company>();
+		try {
+			company = sqlSessionTemplate.selectList(getSqlName(SqlId.SQL_SELECT_PRIMARY_KEY), id);
+		} catch (Exception e) {
+			throw new DaoException(String.format("根据Fixed查询对象出错！语句：%s", getSqlName(SqlId.SQL_SELECT_PRIMARY_KEY)), e);
+		}
+		return company;
+	}
+	
+	@Override
 	public List<Company> selectByFixed(String fixed) {
 		Assert.notNull(fixed);
 		List<Company> company = new ArrayList<Company>();

@@ -122,7 +122,7 @@
         </ul>
         <ul>
             <li class="heder">设置</li>
-            <li><a ng-click="forwordInformation(<sec:authentication property="name"></sec:authentication>)">个人信息</a></li>
+            <li><a href="/user/sellerInformation">个人信息</a></li>
             <li>收货地址</li>
             <li>增票资质</li>
         </ul>

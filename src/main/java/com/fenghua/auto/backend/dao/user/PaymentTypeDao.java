@@ -1,5 +1,7 @@
 package com.fenghua.auto.backend.dao.user;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.fenghua.auto.backend.dao.BaseDao;
@@ -18,6 +20,12 @@ public interface PaymentTypeDao extends BaseDao<PaymentType> {
 	 * @return
 	 */
 	public Long getPaymentId(PaymentType payment); 
+	/**
+	 * 通过
+	 * @param payment
+	 * @return
+	 */
+	public List<PaymentType> getById(Long id); 
 	
 	
 }

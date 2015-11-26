@@ -42,8 +42,5 @@ $(function(){
 */
 var app=angular.module('userCenter',[]);
 app.controller('centerContent',['$scope','$http',function($scope,$http){
-	//获取个人信息
-	$scope.forwordInformation =function(name) {
-		window.location.href="/secure/sellerInformation";
-	}
+	
 }]);
