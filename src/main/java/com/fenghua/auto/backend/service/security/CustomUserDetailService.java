@@ -44,7 +44,6 @@ public class CustomUserDetailService implements UserDetailsService{
 	@Autowired
 	private RoleService roleService;
 	
-	@SuppressWarnings("null")
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 

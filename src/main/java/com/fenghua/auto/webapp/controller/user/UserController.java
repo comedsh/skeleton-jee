@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fenghua.auto.backend.core.utills.UserSecurityUtils;
 import com.fenghua.auto.backend.core.utills.uploadPicture;
 import com.fenghua.auto.backend.core.utills.graphValidate.PictureCheckCode;
 import com.fenghua.auto.backend.core.utills.message.SMSMessage;
@@ -189,9 +190,10 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/sellerInformation", method = RequestMethod.GET)
-	public void getInformation(Model model,HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView getInformation(Model model,HttpServletRequest request, HttpServletResponse response) {
+		response.setCharacterEncoding("UTF-8");
 		JSONObject json =new JSONObject(); 
-		String name="chengbin";
+		String name = UserSecurityUtils.getCurrentUserName();
 		User user = userService.getUserByName(name);
 		if(user.getRoleId() == 1) {
 			//个体买家
@@ -216,6 +218,7 @@ public class UserController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return new ModelAndView("/user/userCenter/sellerInformation");
 	}
 	/**
 	 * 通过name判断是否应该显示图形验证码
