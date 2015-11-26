@@ -67,7 +67,7 @@ public class CustomUserDetailService implements UserDetailsService{
 			users = userService.getUserByName(username);
 		}
 
-		if (users != null) {
+		if (users == null) {
 			String message = "用户" + username + "不存在";
 			logger.error(message);
 			throw new UsernameNotFoundException(message);
@@ -76,7 +76,7 @@ public class CustomUserDetailService implements UserDetailsService{
 		String password =users.getPassword();
 		
 		// 获得用户的角色
-		Long roleId = users.getRole();
+		Long roleId = users.getRoleId();
 		Iterator<Role> roles = roleService.getRoleById(roleId).iterator();
 		while (roles.hasNext()) {
 			Role role = roles.next();		

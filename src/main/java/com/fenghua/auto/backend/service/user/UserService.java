@@ -3,6 +3,9 @@ package com.fenghua.auto.backend.service.user;
 import java.util.List;
 import java.util.Locale;
 
+import java.util.List;
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.fenghua.auto.backend.domain.user.Company;

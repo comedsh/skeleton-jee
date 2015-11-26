@@ -3,6 +3,9 @@ package com.fenghua.auto.backend.service.user.impl;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -179,7 +182,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserByQQ(String openID) {
 		List<User> user = userDao.getUserByQQ(openID);
-		if (user != null && user.equals("")) {
+		if (user != null) {
 			return user.get(0);
 		} else {
 			return null;
