@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fenghua.auto.backend.domain.finance.OrderPayment" >
-  <resultMap id="BaseResultMap" type="com.fenghua.auto.backend.domain.finance.OrderPayment" >
+<mapper namespace="com.fenghua.auto.finance.domain.OrderPayment" >
+  <resultMap id="BaseResultMap" type="com.fenghua.auto.finance.domain.OrderPayment" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="pay_no" property="payNo" jdbcType="VARCHAR" />
     <result column="master_order_id" property="masterOrderId" jdbcType="BIGINT" />
@@ -38,7 +38,7 @@
     delete from order_payment
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.fenghua.auto.backend.domain.finance.OrderPayment" >
+  <insert id="insert" parameterType="com.fenghua.auto.finance.domain.OrderPayment" >
     insert into order_payment (id, pay_no, master_order_id, 
       master_order_no, trade_no, need_pay_amount, 
       payed_amount, refund_amount, pay_status, 
@@ -54,7 +54,7 @@
       #{payedTime,jdbcType=TIMESTAMP}, #{payeeId,jdbcType=BIGINT}, #{payeeName,jdbcType=VARCHAR}, 
       #{payeeTime,jdbcType=TIMESTAMP}, #{buyerId,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.fenghua.auto.backend.domain.finance.OrderPayment" >
+  <insert id="insertSelective" parameterType="com.fenghua.auto.finance.domain.OrderPayment" >
     insert into order_payment
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -181,7 +181,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.backend.domain.finance.OrderPayment" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.finance.domain.OrderPayment" >
     update order_payment
     <set >
       <if test="payNo != null" >
@@ -244,7 +244,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.backend.domain.finance.OrderPayment" >
+  <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.finance.domain.OrderPayment" >
     update order_payment
     set pay_no = #{payNo,jdbcType=VARCHAR},
       master_order_id = #{masterOrderId,jdbcType=BIGINT},

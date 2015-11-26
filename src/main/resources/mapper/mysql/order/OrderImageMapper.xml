@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fenghua.auto.backend.domain.order.OrderImage" >
-  <resultMap id="BaseResultMap" type="com.fenghua.auto.backend.domain.order.OrderImage" >
+<mapper namespace="com.fenghua.auto.order.domain.OrderImage" >
+  <resultMap id="BaseResultMap" type="com.fenghua.auto.order.domain.OrderImage" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="biz_type" property="bizType" jdbcType="INTEGER" />
     <result column="biz_id" property="bizId" jdbcType="BIGINT" />
@@ -22,7 +22,7 @@
     delete from order_image
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.fenghua.auto.backend.domain.order.OrderImage" >
+  <insert id="insert" parameterType="com.fenghua.auto.order.domain.OrderImage" >
     insert into order_image (id, biz_type, biz_id, 
       path, entry_id, entry_time
       )
@@ -30,7 +30,7 @@
       #{path,jdbcType=VARCHAR}, #{entryId,jdbcType=BIGINT}, #{entryTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.fenghua.auto.backend.domain.order.OrderImage" >
+  <insert id="insertSelective" parameterType="com.fenghua.auto.order.domain.OrderImage" >
     insert into order_image
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -73,7 +73,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.backend.domain.order.OrderImage" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.order.domain.OrderImage" >
     update order_image
     <set >
       <if test="bizType != null" >
@@ -94,7 +94,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.backend.domain.order.OrderImage" >
+  <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.order.domain.OrderImage" >
     update order_image
     set biz_type = #{bizType,jdbcType=INTEGER},
       biz_id = #{bizId,jdbcType=BIGINT},

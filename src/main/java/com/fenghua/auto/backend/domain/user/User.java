@@ -26,11 +26,11 @@ public class User implements DomainObject {
 
 	private String wechat;
 
-	private Long role;
+	private Long roleId;
 
-	private Long level;
+	private Long userLevelId;
 
-	private Long company;
+	private Long companyId;
 
 	private Short failedLoginTimes;
 
@@ -100,28 +100,28 @@ public class User implements DomainObject {
 		this.wechat = wechat == null ? null : wechat.trim();
 	}
 
-	public Long getRole() {
-		return role;
+	public Long getRoleId() {
+		return roleId;
 	}
 
-	public void setRole(Long role) {
-		this.role = role;
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
 	}
 
-	public Long getLevel() {
-		return level;
+	public Long getUserLevelId() {
+		return userLevelId;
 	}
 
-	public void setLevel(Long level) {
-		this.level = level;
+	public void setUserLevelId(Long userLevelId) {
+		this.userLevelId = userLevelId;
 	}
 
-	public Long getCompany() {
-		return company;
+	public Long getCompanyId() {
+		return companyId;
 	}
 
-	public void setCompany(Long company) {
-		this.company = company;
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
 	}
 
 	public Short getFailedLoginTimes() {

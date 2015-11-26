@@ -257,7 +257,7 @@
             	<input type="hidden" class="sub_tel_code" value="1">
                 <label><span style="color:red">*</span>短信验证码</label>
                 <div class="input_d" style="width: 150px">
-                    <input type="text" class="telephone_code" ng-model="Enterprise.telephone_code"  placeholder="请输入短信验证码"/>
+                    <input type="text" class="telephone_code" ng-model="Enterprise.telcode"  placeholder="请输入短信验证码"/>
                 </div>
                 <div class="remove_d" style="left: 235px;">
                     <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>

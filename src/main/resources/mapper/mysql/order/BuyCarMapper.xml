@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fenghua.auto.backend.domain.order.BuyCar" >
-  <resultMap id="BaseResultMap" type="com.fenghua.auto.backend.domain.order.BuyCar" >
+<mapper namespace="com.fenghua.auto.order.domain.BuyCar" >
+  <resultMap id="BaseResultMap" type="com.fenghua.auto.order.domain.BuyCar" >
     <id column="ID" property="id" jdbcType="BIGINT" />
     <result column="buyer_id" property="buyerId" jdbcType="BIGINT" />
     <result column="sku_id" property="skuId" jdbcType="BIGINT" />
@@ -27,7 +27,7 @@
     delete from buy_car
     where ID = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.fenghua.auto.backend.domain.order.BuyCar" >
+  <insert id="insert" parameterType="com.fenghua.auto.order.domain.BuyCar" >
     insert into buy_car (ID, buyer_id, sku_id, 
       original_price, sale_price, current_price, 
       discount_strategy_desc, qty, last_price_time, 
@@ -37,7 +37,7 @@
       #{discountStrategyDesc,jdbcType=VARCHAR}, #{qty,jdbcType=INTEGER}, #{lastPriceTime,jdbcType=TIMESTAMP}, 
       #{addTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.fenghua.auto.backend.domain.order.BuyCar" >
+  <insert id="insertSelective" parameterType="com.fenghua.auto.order.domain.BuyCar" >
     insert into buy_car
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -104,7 +104,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.backend.domain.order.BuyCar" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.order.domain.BuyCar" >
     update buy_car
     <set >
       <if test="buyerId != null" >
@@ -137,7 +137,7 @@
     </set>
     where ID = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.backend.domain.order.BuyCar" >
+  <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.order.domain.BuyCar" >
     update buy_car
     set buyer_id = #{buyerId,jdbcType=BIGINT},
       sku_id = #{skuId,jdbcType=BIGINT},

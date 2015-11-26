@@ -57,17 +57,17 @@ public interface UserService {
 	 * 通过name查询用户
 	 * @return
 	 */
-	public List<User> getUserByName(String name);
+	public User getUserByName(String name);
 	/**
 	 * 通过email查询用户
 	 * @return
 	 */
-	public List<User> getUserByEmail(String email);
+	public User getUserByEmail(String email);
 	/**
 	 * 通过telephone查询用户
 	 * @return
 	 */
-	public List<User> getUserByTelephone(String telephone);
+	public User getUserByTelephone(String telephone);
 	/**
 	 * 自动登录，把用户名和密码写入security session中
 	 * @param userName

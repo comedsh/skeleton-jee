@@ -1,16 +1,19 @@
 package com.fenghua.auto.webapp.controller.user;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.fenghua.auto.backend.core.utills.uploadPicture;
 import com.fenghua.auto.backend.core.utills.graphValidate.PictureCheckCode;
 import com.fenghua.auto.backend.core.utills.message.SMSMessage;
@@ -27,7 +31,6 @@ import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.PaymentType;
 import com.fenghua.auto.backend.domain.user.User;
 import com.fenghua.auto.backend.service.user.UserService;
-import com.fenghua.auto.webapp.controller.securtity.SecureController;
 import com.fenghua.auto.webapp.view.Result;
 
 import net.sf.json.JSONObject;
@@ -41,6 +44,8 @@ import net.sf.json.JSONObject;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+	
+	private static Date OLD_DATE = null;
 	
 	@Autowired
 	private UserService userService;
@@ -56,7 +61,7 @@ public class UserController {
 		Result msg = new Result();
 		String validateTel = (String) request.getSession().getAttribute("validateTel");
 		String verifyCode = (String) request.getSession().getAttribute("rand");
-		if(validateTel == null || validateTel.equals("")) {
+		if(new Date().getTime() - OLD_DATE.getTime()  > 1000*120) {
 			msg.setSuccess(false);
 			msg.setMsg("您输入的验证码已过期");
 		} else if(validateTel.equals(telcode) && verifyCode.equals(code)) {
@@ -94,7 +99,7 @@ public class UserController {
 		String licence = request.getSession().getAttribute("licence").toString();
 		String certificate = request.getSession().getAttribute("certificate").toString();
 		if(licence != null && !licence.equals("")  && certificate != null && !certificate.equals("") ) {
-			if(validateTel == null || validateTel.equals("")) {
+			if(new Date().getTime() - OLD_DATE.getTime()  > 1000*120) {
 				msg.setSuccess(false);
 				msg.setMsg("您输入的验证码已过期");
 			}else if(validateTel.equals(telcode)) {
@@ -122,7 +127,7 @@ public class UserController {
 	 * @param res
 	 */
 	@RequestMapping(value = "/validateName", method = RequestMethod.GET)
-	public @ResponseBody List<User> validateName(@RequestParam String name,  HttpServletRequest req, HttpServletResponse res) {
+	public @ResponseBody User validateName(@RequestParam String name,  HttpServletRequest req, HttpServletResponse res) {
 		return userService.getUserByName(name);
 	}
 	/**
@@ -145,10 +150,24 @@ public class UserController {
 				}
 			}
 		} else {
-			List<User> user = userService.getUserByName(name);
-			if(user.size() > 0) {
-				if(user.get(0).getFailedLoginTimes() != null){
-					if(user.get(0).getFailedLoginTimes() >= 3) {
+			String regex_tel ="^((13[0-9])|(15[^4,\\D])|(18[0-9]))\\d{8}$";
+			String regex_email ="^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
+			String regex_name ="^[a-zA-Z\\u4e00-\\u9fa5][a-zA-Z0-9\\u4e00-\\u9fa5]{3,19}$";
+			User user = null;
+			if(Pattern.compile(regex_tel).matcher(name).matches()) {
+				user = userService.getUserByTelephone(name);
+			}
+			if(Pattern.compile(regex_email).matcher(name).matches()) {
+				
+				user = userService.getUserByEmail(name);
+			}
+			if(Pattern.compile(regex_name).matcher(name).matches()) {
+				
+				user = userService.getUserByName(name);
+			}
+			if(user!= null) {
+				if(user.getFailedLoginTimes() != null){
+					if(user.getFailedLoginTimes() >= 3) {
 						//显示图形验证码
 						result.setSuccess(false);
 					}
@@ -165,7 +184,7 @@ public class UserController {
 	 * @param res
 	 */
 	@RequestMapping(value = "/validateTelephone", method = RequestMethod.GET)
-	public @ResponseBody List<User> validateTelephone(@RequestParam String telephone,  HttpServletRequest req, HttpServletResponse res) {
+	public @ResponseBody User validateTelephone(@RequestParam String telephone,  HttpServletRequest req, HttpServletResponse res) {
 		return userService.getUserByTelephone(telephone);
 	}
 	/**
@@ -175,7 +194,7 @@ public class UserController {
 	 * @param res
 	 */
 	@RequestMapping(value = "/validateEmail", method = RequestMethod.GET)
-	public @ResponseBody List<User> validateEmail(@RequestParam String email,  HttpServletRequest req, HttpServletResponse res) {
+	public @ResponseBody User validateEmail(@RequestParam String email,  HttpServletRequest req, HttpServletResponse res) {
 		return userService.getUserByEmail(email);
 	}
 	/**
@@ -208,8 +227,8 @@ public class UserController {
 				str = SMSMessage.send(mobilephone,req,res);
 				if(str!=null){
 					 HttpSession session = req.getSession();
-					 session.setMaxInactiveInterval(60);
 					 session.setAttribute("validateTel", str);
+					 OLD_DATE = new Date();
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -262,7 +281,7 @@ public class UserController {
 	 * @param response
 	 * @param request
 	 */
-	@RequestMapping(value = "/upload",method=RequestMethod.GET)
+	@RequestMapping(value = "/upload",method=RequestMethod.POST)
 	public @ResponseBody void upload(@RequestParam(value = "houseMaps") MultipartFile picture, HttpServletResponse response, HttpServletRequest request){
 		String name = "licence";
 		response.setContentType("text/html");
@@ -285,7 +304,7 @@ public class UserController {
 	 * @param response
 	 * @param request
 	 */
-	@RequestMapping(value = "/uploads",method=RequestMethod.GET)
+	@RequestMapping(value = "/uploads",method=RequestMethod.POST)
 	public @ResponseBody void uploads(@RequestParam(value = "houseMapss") MultipartFile picture, HttpServletResponse response,HttpServletRequest request){
 		String name = "certificate";
 		response.setContentType("text/html");

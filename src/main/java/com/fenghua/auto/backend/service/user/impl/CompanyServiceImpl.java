@@ -22,15 +22,30 @@ public class CompanyServiceImpl implements CompanyService {
 	private CompanyDao companyDao;
 	
 	@Override
-	public List<Company> getUserByFixed(String fixed) {
-		return companyDao.selectByFixed(fixed);
+	public Company getUserByFixed(String fixed) {
+		List<Company> company = companyDao.selectByFixed(fixed);
+		if (company.size() > 0) {
+			return company.get(0);
+		} else {
+			return null;
+		}
 	}
 	@Override
-	public List<Company> getContactsTelephone(String telephone) {
-		return companyDao.selectByTelephone(telephone);
+	public Company getContactsTelephone(String telephone) {
+		List<Company> company = companyDao.selectByTelephone(telephone);
+		if (company.size() > 0) {
+			return company.get(0);
+		} else {
+			return null;
+		}
 	}
 	@Override
-	public List<Company> getCompanyByEmail(String email) {
-		return companyDao.selectByEmail(email);
+	public Company getCompanyByEmail(String email) {
+		List<Company> company = companyDao.selectByEmail(email);
+		if (company.size() > 0) {
+			return company.get(0);
+		} else {
+			return null;
+		}
 	}
 }

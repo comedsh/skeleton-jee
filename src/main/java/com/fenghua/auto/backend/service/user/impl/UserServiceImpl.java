@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -82,11 +81,16 @@ public class UserServiceImpl implements UserService {
 		
 		String passWord = encoder.encode( personal.getPassword());
 		personal.setPassword(passWord);
-		personal.setRole(Long.parseLong("1"));
+		personal.setRoleId(Long.parseLong("1"));
+		personal.setFailedLoginTimes(Short.parseShort("0"));
+		personal.setAvailable(true);
+		personal.setCreatedTs(new Date());
+		personal.setLastModifiedTs(new Date());
 		userDao.insert(personal);
 	}
 	@Override
 	public void insert(User personal, Company company, PaymentType payment) {
+		
 //		//录入角色
 //		Role role = new Role();
 //		role.setName("企业买家");
@@ -110,8 +114,12 @@ public class UserServiceImpl implements UserService {
 		//个人数据
 		String passWord = encoder.encode( personal.getPassword());
 		personal.setPassword(passWord);
-		personal.setCompany(companyId);
-		personal.setRole(Long.parseLong("2"));
+		personal.setCompanyId(companyId);
+		personal.setRoleId(Long.parseLong("2"));
+		personal.setFailedLoginTimes(Short.parseShort("0"));
+		personal.setAvailable(true);
+		personal.setCreatedTs(new Date());
+		personal.setLastModifiedTs(new Date());
 		Long userId = userDao.getPaymentId(personal);
 		//user与支付关系数据
 		UserPaymentType payment_type = new UserPaymentType();
@@ -132,29 +140,46 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> getUserByName(String name) {
-		return userDao.selectByName(name);
+	public User getUserByName(String name) {
+		List<User> user = userDao.selectByName(name);
+		if (user.size() > 0) {
+			return user.get(0);
+		} else {
+			return null;
+		}
 	}
 	
 	@Override
-	public List<User> getUserByEmail(String email) {
-		return userDao.selectByEmail(email);
+	public User getUserByEmail(String email) {
+		List<User> user = userDao.selectByEmail(email);
+		if (user.size() > 0) {
+			return user.get(0);
+		} else {
+			return null;
+		}
 	}
 	
 	@Override
-	public List<User> getUserByTelephone(String telephone) {
-		return userDao.selectByTelephone(telephone);
+	public User getUserByTelephone(String telephone) {
+		List<User> user = userDao.selectByTelephone(telephone);
+		if (user.size() > 0) {
+			return user.get(0);
+		} else {
+			return null;
+		}
 	}
 	
 	@Override
 	public void autoLogin(String userName, String passWord, Locale locale,HttpServletRequest request){
 		CustomUsernamePasswordAuthenticationToken token = new CustomUsernamePasswordAuthenticationToken(userName, passWord);
 		try {
+			token.setDetails(new WebAuthenticationDetails(request));
 			Authentication authenticatedUser = authenticationManager.authenticate(token);
 			SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
 			request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
 					SecurityContextHolder.getContext());
 		} catch (AuthenticationException e) {
+			e.printStackTrace();
 			System.out.println("Authentication failed: " + e.getMessage());
 		}
 	}

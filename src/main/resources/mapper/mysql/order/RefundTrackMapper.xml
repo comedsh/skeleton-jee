@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fenghua.auto.backend.domain.order.RefundTrack" >
-  <resultMap id="BaseResultMap" type="com.fenghua.auto.backend.domain.order.RefundTrack" >
+<mapper namespace="com.fenghua.auto.order.domain.RefundTrack" >
+  <resultMap id="BaseResultMap" type="com.fenghua.auto.order.domain.RefundTrack" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="refund_id" property="refundId" jdbcType="BIGINT" />
     <result column="refund_no" property="refundNo" jdbcType="VARCHAR" />
@@ -23,7 +23,7 @@
     delete from refund_track
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.fenghua.auto.backend.domain.order.RefundTrack" >
+  <insert id="insert" parameterType="com.fenghua.auto.order.domain.RefundTrack" >
     insert into refund_track (id, refund_id, refund_no, 
       refund_status, content, track_time, 
       operator_id)
@@ -31,7 +31,7 @@
       #{refundStatus,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{trackTime,jdbcType=TIMESTAMP}, 
       #{operatorId,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.fenghua.auto.backend.domain.order.RefundTrack" >
+  <insert id="insertSelective" parameterType="com.fenghua.auto.order.domain.RefundTrack" >
     insert into refund_track
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -80,7 +80,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.backend.domain.order.RefundTrack" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.order.domain.RefundTrack" >
     update refund_track
     <set >
       <if test="refundId != null" >
@@ -104,7 +104,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.backend.domain.order.RefundTrack" >
+  <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.order.domain.RefundTrack" >
     update refund_track
     set refund_id = #{refundId,jdbcType=BIGINT},
       refund_no = #{refundNo,jdbcType=VARCHAR},

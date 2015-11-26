@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fenghua.auto.backend.domain.order.OrderMaster" >
-  <resultMap id="BaseResultMap" type="com.fenghua.auto.backend.domain.order.OrderMaster" >
+<mapper namespace="com.fenghua.auto.order.domain.OrderMaster" >
+  <resultMap id="BaseResultMap" type="com.fenghua.auto.order.domain.OrderMaster" >
     <id column="ID" property="id" jdbcType="BIGINT" />
     <result column="master_order_no" property="masterOrderNo" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
@@ -35,7 +35,7 @@
     delete from order_master
     where ID = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.fenghua.auto.backend.domain.order.OrderMaster" >
+  <insert id="insert" parameterType="com.fenghua.auto.order.domain.OrderMaster" >
     insert into order_master (ID, master_order_no, status, 
       buyer_id, seller_id, total_amount, 
       discount_amount, transport_amount, need_pay_amount, 
@@ -49,7 +49,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP}, #{cityId,jdbcType=BIGINT}, 
       #{comeFrom,jdbcType=INTEGER}, #{orderQty,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.fenghua.auto.backend.domain.order.OrderMaster" >
+  <insert id="insertSelective" parameterType="com.fenghua.auto.order.domain.OrderMaster" >
     insert into order_master
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -158,7 +158,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.backend.domain.order.OrderMaster" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.order.domain.OrderMaster" >
     update order_master
     <set >
       <if test="masterOrderNo != null" >
@@ -212,7 +212,7 @@
     </set>
     where ID = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.backend.domain.order.OrderMaster" >
+  <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.order.domain.OrderMaster" >
     update order_master
     set master_order_no = #{masterOrderNo,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},

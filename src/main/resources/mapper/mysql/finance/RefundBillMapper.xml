@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fenghua.auto.backend.domain.finance.RefundBill" >
-  <resultMap id="BaseResultMap" type="com.fenghua.auto.backend.domain.finance.RefundBill" >
+<mapper namespace="com.fenghua.auto.finance.domain.RefundBill" >
+  <resultMap id="BaseResultMap" type="com.fenghua.auto.finance.domain.RefundBill" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="rebill_no" property="rebillNo" jdbcType="VARCHAR" />
     <result column="retrade_no" property="retradeNo" jdbcType="VARCHAR" />
@@ -46,7 +46,7 @@
     delete from refund_bill
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.fenghua.auto.backend.domain.finance.RefundBill" >
+  <insert id="insert" parameterType="com.fenghua.auto.finance.domain.RefundBill" >
     insert into refund_bill (id, rebill_no, retrade_no, 
       refund_id, refund_no, order_id, 
       order_no, buyer_id, seller_id, 
@@ -68,7 +68,7 @@
       #{remark,jdbcType=VARCHAR}, #{tradeNo,jdbcType=VARCHAR}, #{refundTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.fenghua.auto.backend.domain.finance.RefundBill" >
+  <insert id="insertSelective" parameterType="com.fenghua.auto.finance.domain.RefundBill" >
     insert into refund_bill
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -237,7 +237,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.backend.domain.finance.RefundBill" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.finance.domain.RefundBill" >
     update refund_bill
     <set >
       <if test="rebillNo != null" >
@@ -321,7 +321,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.backend.domain.finance.RefundBill" >
+  <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.finance.domain.RefundBill" >
     update refund_bill
     set rebill_no = #{rebillNo,jdbcType=VARCHAR},
       retrade_no = #{retradeNo,jdbcType=VARCHAR},

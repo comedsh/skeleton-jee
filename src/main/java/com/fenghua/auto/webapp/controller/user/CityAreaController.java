@@ -40,7 +40,7 @@ public class CityAreaController {
 	 * @param res
 	 */
 	@RequestMapping(value = "/selectCity", method = RequestMethod.GET)
-	public @ResponseBody List<CityArea> selectCity(@RequestParam Integer parentId, HttpServletRequest req, HttpServletResponse res) {
+	public @ResponseBody List<CityArea> selectCity(@RequestParam Long parentId, HttpServletRequest req, HttpServletResponse res) {
 		return cityAreaService.selectCity(parentId);
 	}
 	/**
@@ -49,7 +49,7 @@ public class CityAreaController {
 	 * @param res
 	 */
 	@RequestMapping(value = "/selectArea", method = RequestMethod.GET)
-	public @ResponseBody List<CityArea> selectArea(@RequestParam Integer parentId, HttpServletRequest req, HttpServletResponse res) {
+	public @ResponseBody List<CityArea> selectArea(@RequestParam Long parentId, HttpServletRequest req, HttpServletResponse res) {
 		return cityAreaService.selectArea(parentId);
 	}
 }

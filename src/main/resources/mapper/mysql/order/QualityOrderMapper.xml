@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fenghua.auto.backend.domain.order.QualityOrder" >
-  <resultMap id="BaseResultMap" type="com.fenghua.auto.backend.domain.order.QualityOrder" >
+<mapper namespace="com.fenghua.auto.order.domain.QualityOrder" >
+  <resultMap id="BaseResultMap" type="com.fenghua.auto.order.domain.QualityOrder" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="quality_no" property="qualityNo" jdbcType="VARCHAR" />
     <result column="buyer_id" property="buyerId" jdbcType="BIGINT" />
@@ -30,7 +30,7 @@
     delete from quality_order
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.fenghua.auto.backend.domain.order.QualityOrder" >
+  <insert id="insert" parameterType="com.fenghua.auto.order.domain.QualityOrder" >
     insert into quality_order (id, quality_no, buyer_id, 
       seller_id, order_id, order_no, 
       process_desc, auditor_id, audit_time, 
@@ -42,7 +42,7 @@
       #{processorId,jdbcType=BIGINT}, #{processTime,jdbcType=TIMESTAMP}, #{applicantId,jdbcType=BIGINT}, 
       #{applyTime,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.fenghua.auto.backend.domain.order.QualityOrder" >
+  <insert id="insertSelective" parameterType="com.fenghua.auto.order.domain.QualityOrder" >
     insert into quality_order
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -127,7 +127,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.backend.domain.order.QualityOrder" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.order.domain.QualityOrder" >
     update quality_order
     <set >
       <if test="qualityNo != null" >
@@ -169,7 +169,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.backend.domain.order.QualityOrder" >
+  <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.order.domain.QualityOrder" >
     update quality_order
     set quality_no = #{qualityNo,jdbcType=VARCHAR},
       buyer_id = #{buyerId,jdbcType=BIGINT},

@@ -15,7 +15,7 @@ public class UserAddress implements DomainObject {
 
     private Long userId;
 
-    private Integer areaCode;
+    private Long cityAreaId;
 
     private String alias;
 
@@ -25,7 +25,7 @@ public class UserAddress implements DomainObject {
 
     private String receiverMobile;
 
-    private Boolean default_addr;
+    private Boolean defaultAddr;
 
     private Date createdTs;
 
@@ -51,12 +51,12 @@ public class UserAddress implements DomainObject {
         this.userId = userId;
     }
 
-    public Integer getAreaCode() {
-        return areaCode;
+    public Long getCityAreaId() {
+        return cityAreaId;
     }
 
-    public void setAreaCode(Integer areaCode) {
-        this.areaCode = areaCode;
+    public void setCityAreaId(Long cityAreaId) {
+        this.cityAreaId = cityAreaId;
     }
 
     public String getAlias() {
@@ -91,13 +91,13 @@ public class UserAddress implements DomainObject {
         this.receiverMobile = receiverMobile == null ? null : receiverMobile.trim();
     }
 
-    public Boolean getDefault_addr() {
-		return default_addr;
-	}
+    public Boolean getDefaultAddr() {
+        return defaultAddr;
+    }
 
-	public void setDefault_addr(Boolean default_addr) {
-		this.default_addr = default_addr;
-	}
+    public void setDefaultAddr(Boolean defaultAddr) {
+        this.defaultAddr = defaultAddr;
+    }
 
 	public Date getCreatedTs() {
         return createdTs;

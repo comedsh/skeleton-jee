@@ -24,11 +24,11 @@ public interface CityAreaDao extends BaseDao<CityArea> {
 	 * @param Fixed
 	 * @return
 	 */
-	public List<CityArea> selectCity(Integer parentId); 
+	public List<CityArea> selectCity(Long parentId); 
 	/**
 	 * 通过父节点id获取县级
 	 * @param Fixed
 	 * @return
 	 */
-	public List<CityArea> selectArea(Integer parentId); 
+	public List<CityArea> selectArea(Long parentId); 
 }
