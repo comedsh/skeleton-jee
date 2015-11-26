@@ -38,9 +38,9 @@ drop table if exists stock_lock;
 
 drop table if exists supplier;
 
+drop table if exists t_order;
 
 drop table if exists vehicle_oe_sku;
-
 
 /*==============================================================*/
 /* Table: catalog                                               */
@@ -115,7 +115,7 @@ create table sale_area
 (
    id                   bigint not null auto_increment,
    sale_id              bigint not null,
-   type                 int comment '1.�� 2 ����',
+   type                 int comment '1.包含， 2 不包含',
    primary key (id)
 );
 
@@ -129,10 +129,10 @@ create table sku
    code                 varchar(20) not null,
    name                 varchar(200),
    title                varchar(200),
-   url                  text comment '��Ʒ����ͼ',
+   url                  text comment '商品缩略图',
    introduce            text,
-   status               bit comment '1,���ϼܣ�2.���ϼ� 3�����¼ܣ�Ĭ�� ���ϼ�',
-   type                 bit comment '1.Ʒ�Ƽ� , 2 ԭ����',
+   status               bit comment '1,待上架，2.已上架 3。已下架，默认 待上架',
+   type                 bit comment '1.品牌件 , 2 原厂件',
    shelf_time           datetime default CURRENT_TIMESTAMP,
    under_time           datetime,
    produce_time         date,
@@ -140,7 +140,7 @@ create table sku
    min_quantity         int,
    gross_weight         double(7,2),
    weight               double(7,2),
-   unit                 varchar(10) comment '����̨��֧,��',
+   unit                 varchar(10) comment '件，台，支,个',
    brand                varchar(100),
    score                int,
    supplier_id          bigint,
@@ -174,11 +174,11 @@ create table sku_comment
    sku_id               bigint,
    order_id             bigint,
    order_detail_id      bigint,
-   star                 bit comment '1��5���ǣ�>=4,����  ��3< ������3 ����',
+   star                 bit comment '1到5个星，>=4,好评  ，3< 差评，3 中评',
    comtent              text,
    user_id              varchar(20),
    create_time          datetime,
-   status               int default 1 comment '1 ��ʾ��2����ʾ��Ĭ����ʾ',
+   status               int default 1 comment '1 显示，2不显示，默认显示',
    comment_origin       bit comment '0, pc ,1.android 2. iphone  ;',
    primary key (id)
 );
@@ -279,7 +279,6 @@ create table supplier
    unique key supplier_code (code)
 );
 
-
 /*==============================================================*/
 /* Table: vehicle_oe_sku                                        */
 /*==============================================================*/
@@ -297,49 +296,4 @@ create table vehicle_oe_sku
    primary key (id)
 );
 
-
-alter table catalog add constraint FK_fk_pid foreign key (parent_id)
-      references catalog (id) on delete restrict on update restrict;
-
-alter table catalog_attribute add constraint FK_catalog_attr foreign key (catalog_id)
-      references catalog (id) on delete restrict on update restrict;
-
-alter table catalog_sku add constraint FK_Reference_21 foreign key (sku_id)
-      references sku (id) on delete restrict on update restrict;
-
-alter table catalog_sku add constraint FK_Reference_23 foreign key (catalog_id)
-      references catalog (id) on delete restrict on update restrict;
-
-alter table sku add constraint FK_Reference_25 foreign key (supplier_id)
-      references supplier (id) on delete restrict on update restrict;
-
-alter table sku_catalog_attr_value add constraint FK_Reference_22 foreign key (catalog_attr_id)
-      references catalog_attribute (id) on delete restrict on update restrict;
-
-alter table sku_catalog_attr_value add constraint FK_Relationship_2 foreign key (sku_id)
-      references sku (id) on delete restrict on update restrict;
-
-alter table sku_comment add constraint FK_Relationship_5 foreign key (sku_id)
-      references sku (id) on delete restrict on update restrict;
-
-alter table sku_extend_attrs add constraint FK_Reference_18 foreign key (sku_id)
-      references sku (id) on delete restrict on update restrict;
-
-alter table sku_image_html add constraint FK_Reference_16 foreign key (sku_id)
-      references sku (id) on delete restrict on update restrict;
-
-alter table sku_images add constraint FK_Reference_19 foreign key (sku_id)
-      references sku (id) on delete restrict on update restrict;
-
-alter table sku_reply add constraint FK_Relationship_28 foreign key (sku_comment_id)
-      references sku_comment (id) on delete restrict on update restrict;
-
-alter table sku_stock add constraint FK_Reference_17 foreign key (repertory_id)
-      references repertory (id) on delete restrict on update restrict;
-
-alter table sku_stock add constraint FK_Reference_27 foreign key (sku_id)
-      references sku (id) on delete restrict on update restrict;
-
-alter table vehicle_oe_sku add constraint FK_Reference_20 foreign key (sku_id)
-      references sku (id) on delete restrict on update restrict;
 
