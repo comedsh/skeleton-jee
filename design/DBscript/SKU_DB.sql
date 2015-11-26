@@ -47,7 +47,7 @@ drop table if exists vehicle_oe_sku;
 /*==============================================================*/
 create table catalog
 (
-   id                   bigint not null,
+   id                   bigint not null auto_increment,
    code                 varchar(20),
    name                 varchar(100),
    parent_id            bigint,
@@ -62,7 +62,7 @@ create table catalog
 /*==============================================================*/
 create table catalog_attribute
 (
-   id                   bigint not null,
+   id                   bigint not null auto_increment,
    name                 varchar(100),
    catalog_id           bigint,
    s_no                 int,
@@ -158,7 +158,7 @@ create table sku
 /*==============================================================*/
 create table sku_catalog_attr_value
 (
-   id                   bigint not null,
+   id                   bigint not null auto_increment,
    catalog_attr_id      bigint,
    sttr_value           varchar(100),
    sku_id               bigint,
@@ -170,7 +170,7 @@ create table sku_catalog_attr_value
 /*==============================================================*/
 create table sku_comment
 (
-   id                   bigint not null,
+   id                   bigint not null auto_increment,
    sku_id               bigint,
    order_id             bigint,
    order_detail_id      bigint,
@@ -188,7 +188,7 @@ create table sku_comment
 /*==============================================================*/
 create table sku_extend_attrs
 (
-   id                   bigint not null,
+   id                   bigint not null auto_increment,
    name                 varchar(100),
    contents             varchar(100),
    sort_no              int,
@@ -201,7 +201,7 @@ create table sku_extend_attrs
 /*==============================================================*/
 create table sku_image_html
 (
-   id                   bigint not null,
+   id                   bigint not null auto_increment,
    contents_html        text,
    sku_id               bigint,
    primary key (id)
@@ -212,7 +212,7 @@ create table sku_image_html
 /*==============================================================*/
 create table sku_images
 (
-   id                   bigint not null,
+   id                   bigint not null auto_increment,
    url                  text,
    title                char(100),
    sort_no              int,
@@ -227,7 +227,7 @@ create table sku_images
 /*==============================================================*/
 create table sku_reply
 (
-   id                   bigint not null,
+   id                   bigint not null auto_increment,
    reply_code           varchar(20),
    comtent              text,
    create_time          datetime default CURRENT_TIMESTAMP,
@@ -241,7 +241,7 @@ create table sku_reply
 /*==============================================================*/
 create table sku_stock
 (
-   id                   bigint not null,
+   id                   bigint not null auto_increment,
    stock_count          int,
    stock_availability   int,
    repertory_id         bigint default NULL,
@@ -284,7 +284,7 @@ create table supplier
 /*==============================================================*/
 create table vehicle_oe_sku
 (
-   id                   bigint not null,
+   id                   bigint not null auto_increment,
    oe_code              varchar(50),
    vehicle_id           bigint default NULL,
    vehicle_name         varchar(100),
