@@ -8,10 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.PaymentType;
 import com.fenghua.auto.backend.domain.user.User;
-import java.util.List;
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
 /**
  * 个人注册service
  * 
@@ -66,6 +62,7 @@ public interface UserService {
 	 * @return
 	 */
 	public User getUserByEmail(String email);
+
 //	/**
 //	 * 通过telephone查询用户
 //	 * @return
@@ -102,4 +99,11 @@ public interface UserService {
 	 * @param request
 	 */
 	public void autoLogin(String userName, String passWord, Locale locale,HttpServletRequest request);
+
+	/**
+	 * 根据qq openID查询用户
+	 * @param openID
+	 * @return
+	 */
+	public User getUserByQQ(String openID);
 }
