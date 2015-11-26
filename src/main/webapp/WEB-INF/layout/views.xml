@@ -10,7 +10,9 @@
   <definition name="education.spittle_home" extends="education.default_template">
       <put-attribute name="body" value="/WEB-INF/views/education/home_body.jsp" />
   </definition>
-
+<definition name="forgot.findPassbyemail" >
+      <put-attribute name="body" value="/WEB-INF/views/user/forgetpass/findPassbyemail.jsp" />
+  </definition>
   <definition name="education.spittle_view" extends="education.default_template">
       <put-attribute name="body" value="/WEB-INF/views/education/view_body.jsp" />
   </definition>

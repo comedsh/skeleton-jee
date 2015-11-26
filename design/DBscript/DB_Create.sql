@@ -1,25 +1,23 @@
 /*==============================================================*/
 /* Database name:  auto007db                                    */
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2015-11-17 22:53:47                          */
+/* Created on:     2015/11/25 14:20:06                          */
 /*==============================================================*/
-
-
-drop database if exists auto007db;
-
-/*==============================================================*/
-/* Database: auto007db                                          */
-/*==============================================================*/
-create database auto007db;
-
-use auto007db;
-
+drop table if exists City_Area;
+drop table if exists Company;
+drop table if exists Payment_Type;
+drop table if exists Role;
+drop table if exists User;
+drop table if exists User_Address;
+drop table if exists User_Level;
+drop table if exists User_Payment_Type;
+drop table if exists sys_config;
 /*==============================================================*/
 /* Table: City_Area                                             */
 /*==============================================================*/
 create table City_Area
 (
-   ID                   bigint not null,
+   ID                   bigint not null auto_increment,
    Parent_ID            bigint,
    Name                 varchar(100) not null,
    Level                smallint not null,
@@ -27,8 +25,7 @@ create table City_Area
    Full_Name            varchar(200) not null,
    Available            boolean not null,
    primary key (ID)
-)
-Engine = InnoDB DEFAULT CHARSET=utf8;
+);
 
 /*==============================================================*/
 /* Index: City_Code_idx                                         */
@@ -62,7 +59,7 @@ create table Company
    Last_Modified_By     varchar(30),
    primary key (ID)
 )
-Engine = InnoDB DEFAULT CHARSET=utf8;
+;
 
 /*==============================================================*/
 /* Index: Company_Name_idx                                      */
@@ -95,7 +92,7 @@ create table Payment_Type
    Last_Modified_By     varchar(30),
    primary key (ID)
 )
-Engine = InnoDB DEFAULT CHARSET=utf8;
+;
 
 /*==============================================================*/
 /* Table: Role                                                  */
@@ -103,7 +100,7 @@ Engine = InnoDB DEFAULT CHARSET=utf8;
 create table Role
 (
    ID                   bigint not null auto_increment,
-   Name                 varchar(10) not null,
+   Name                 varchar(30) not null,
    Description          varchar(100),
    Created_TS           timestamp,
    Created_By           varchar(30),
@@ -111,7 +108,7 @@ create table Role
    Last_Modified_By     varchar(30),
    primary key (ID)
 )
-Engine = InnoDB DEFAULT CHARSET=utf8;
+;
 
 /*==============================================================*/
 /* Index: Name_idx                                              */
@@ -130,18 +127,18 @@ create table Sys_Config
    Config_Value         varchar(200) not null,
    Created_TS           timestamp,
    Created_By           varchar(30),
-   Last_Modified_By     timestamp,
-   Last_Modified_TS     varchar(30),
+   Last_Modified_By     varchar(30),
+   Last_Modified_TS     timestamp,
    primary key (Config_Name)
 )
-Engine = InnoDB DEFAULT CHARSET=utf8;
+;
 
 /*==============================================================*/
 /* Table: User                                                  */
 /*==============================================================*/
 create table User
 (
-   ID                   bigint not null,
+   ID                   bigint not null auto_increment,
    Name                 varchar(30) not null,
    Password             varchar(100),
    Email                varchar(100),
@@ -159,7 +156,7 @@ create table User
    Last_Modified_By     varchar(30),
    primary key (ID)
 )
-Engine = InnoDB DEFAULT CHARSET=utf8;
+;
 
 /*==============================================================*/
 /* Index: QQ_Number_idx                                         */
@@ -220,7 +217,7 @@ create table User_Address
    last_Modified_by     varchar(30),
    primary key (ID)
 )
-Engine = InnoDB DEFAULT CHARSET=utf8;
+;
 
 /*==============================================================*/
 /* Index: UserID_idx                                            */
@@ -245,7 +242,7 @@ create table User_Level
    Last_Modified_By     varchar(30),
    primary key (ID)
 )
-Engine = InnoDB DEFAULT CHARSET=utf8;
+;
 
 /*==============================================================*/
 /* Table: User_Payment_Type                                     */
@@ -263,7 +260,7 @@ create table User_Payment_Type
    Last_Modified_By     varchar(30),
    primary key (PaymentType_ID, User_ID)
 )
-Engine = InnoDB DEFAULT CHARSET=utf8;
+;
 
 /*==============================================================*/
 /* Index: UserID_idx                                            */
@@ -272,34 +269,4 @@ create index UserID_idx on User_Payment_Type
 (
    User_ID
 );
-
-alter table City_Area add constraint FK_City_Parent_FK foreign key (Parent_ID)
-      references City_Area (ID) on delete restrict on update restrict;
-
-alter table Company add constraint FK_Company_City_FK foreign key (City_Area_ID)
-      references City_Area (ID) on delete restrict on update restrict;
-
-alter table User add constraint FK_Reference_22 foreign key (Company_ID)
-      references Company (ID) on delete restrict on update restrict;
-
-alter table User add constraint FK_User_Role_FK foreign key (Role_ID)
-      references Role (ID) on delete restrict on update restrict;
-
-alter table User add constraint FK_User_UserLev_FK foreign key (User_Level_ID)
-      references User_Level (ID) on delete restrict on update restrict;
-
-alter table User_Address add constraint FK_User_Addr_City_FK foreign key (City_Area_ID)
-      references City_Area (ID) on delete restrict on update restrict;
-
-alter table User_Address add constraint FK_User_Addr_User_FK foreign key (User_ID)
-      references User (ID) on delete restrict on update restrict;
-
-alter table User_Level add constraint FK_User_Lev_Prev_FK foreign key (Previous_ID)
-      references User_Level (ID) on delete restrict on update restrict;
-
-alter table User_Payment_Type add constraint FK_User_PayType_PayType_FK foreign key (PaymentType_ID)
-      references Payment_Type (ID) on delete restrict on update restrict;
-
-alter table User_Payment_Type add constraint FK_User_PayType_User_FK foreign key (User_ID)
-      references User (ID) on delete restrict on update restrict;
 

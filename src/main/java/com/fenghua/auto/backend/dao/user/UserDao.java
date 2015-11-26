@@ -64,7 +64,7 @@ public interface UserDao extends BaseDao<User> {
 	 * @return
 	 */
 	public Long updatePasswordByUserId(User user); 
-	
+
 	/**
 	 * 
 	 * @param accessToken

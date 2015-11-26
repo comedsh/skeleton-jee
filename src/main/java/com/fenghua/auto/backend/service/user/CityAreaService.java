@@ -21,10 +21,10 @@ public interface CityAreaService {
 	 * 通过父节点id获取市级城市
 	 * @return
 	 */
-	public List<CityArea> selectCity(Integer parentId);
+	public List<CityArea> selectCity(Long parentId);
 	/**
 	 * 通过父节点id获取县级城市
 	 * @return
 	 */
-	public List<CityArea> selectArea(Integer parentId);
+	public List<CityArea> selectArea(Long parentId);
 }

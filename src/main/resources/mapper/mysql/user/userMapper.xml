@@ -271,10 +271,12 @@
     set Failed_Login_Times = #{failedLoginTimes,jdbcType=SMALLINT}
     where Name = #{name,jdbcType=VARCHAR}
   </update>
+
     <select id="selectByQQ_Number" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from user
     where QQ_Number = #{QQ_Number}
   </select>
+
 </mapper>

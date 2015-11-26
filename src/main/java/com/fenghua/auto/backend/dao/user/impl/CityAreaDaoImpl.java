@@ -31,7 +31,7 @@ public class CityAreaDaoImpl extends BaseDaoImpl<CityArea> implements CityAreaDa
 	}
 	
 	@Override
-	public List<CityArea> selectCity(Integer parentId) {
+	public List<CityArea> selectCity(Long parentId) {
 		Assert.notNull(parentId);
 		List<CityArea> cityArea = new ArrayList<CityArea>();
 		CityArea city_area = new CityArea();
@@ -46,7 +46,7 @@ public class CityAreaDaoImpl extends BaseDaoImpl<CityArea> implements CityAreaDa
 	}
 	
 	@Override
-	public List<CityArea> selectArea(Integer parentId) {
+	public List<CityArea> selectArea(Long parentId) {
 		Assert.notNull(parentId);
 		List<CityArea> cityArea = new ArrayList<CityArea>();
 		CityArea city_area = new CityArea();

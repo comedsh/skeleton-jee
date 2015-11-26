@@ -1,6 +1,7 @@
 package com.fenghua.auto.backend.core.security;
 
 import org.springframework.security.authentication.AccountStatusException;
+import org.springframework.security.core.AuthenticationException;
 
 /** 
   *<des>
@@ -11,7 +12,7 @@ import org.springframework.security.authentication.AccountStatusException;
   * @date 2015年11月3日
   * @version 
   */
-public class AuthenticationLimitException extends AccountStatusException {
+public class AuthenticationLimitException extends AuthenticationException {
 
 	public AuthenticationLimitException(String msg) {
 		super(msg);

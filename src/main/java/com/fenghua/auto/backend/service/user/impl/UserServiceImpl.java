@@ -3,9 +3,6 @@ package com.fenghua.auto.backend.service.user.impl;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -84,7 +81,11 @@ public class UserServiceImpl implements UserService {
 		
 		String passWord = encoder.encode( personal.getPassword());
 		personal.setPassword(passWord);
-		personal.setRole(Long.parseLong("1"));
+		personal.setRoleId(Long.parseLong("1"));
+		personal.setFailedLoginTimes(Short.parseShort("0"));
+		personal.setAvailable(true);
+		personal.setCreatedTs(new Date());
+		personal.setLastModifiedTs(new Date());
 		userDao.insert(personal);
 	}
 	@Override
@@ -113,8 +114,12 @@ public class UserServiceImpl implements UserService {
 		//个人数据
 		String passWord = encoder.encode( personal.getPassword());
 		personal.setPassword(passWord);
-		personal.setCompany(companyId);
-		personal.setRole(Long.parseLong("2"));
+		personal.setCompanyId(companyId);
+		personal.setRoleId(Long.parseLong("2"));
+		personal.setFailedLoginTimes(Short.parseShort("0"));
+		personal.setAvailable(true);
+		personal.setCreatedTs(new Date());
+		personal.setLastModifiedTs(new Date());
 		Long userId = userDao.getPaymentId(personal);
 		//user与支付关系数据
 		UserPaymentType payment_type = new UserPaymentType();
@@ -137,6 +142,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserByName(String name) {
 		List<User> user = userDao.selectByName(name);
+
 		if (user != null && user.equals("")) {
 			return user.get(0);
 		} else {
@@ -147,6 +153,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserByEmail(String email) {
 		List<User> user = userDao.selectByEmail(email);
+
 		if (user != null && user.equals("")) {
 			return user.get(0);
 		} else {
@@ -158,6 +165,17 @@ public class UserServiceImpl implements UserService {
 	public User getUserByTelephone(String telephone) {
 		List<User> user = userDao.selectByTelephone(telephone);
 		if (user != null && user.equals("")) {
+			return user.get(0);
+		} else {
+			return null;
+		}
+	}
+	
+
+	@Override
+	public User getUserByQQ(String openID) {
+		List<User> user = userDao.getUserByQQ(openID);
+		if (user != null) {
 			return user.get(0);
 		} else {
 			return null;
@@ -178,14 +196,26 @@ public class UserServiceImpl implements UserService {
 			System.out.println("Authentication failed: " + e.getMessage());
 		}
 	}
+	@Override
+	public Long updatePasswordByPhone(String pwdNew,String phone) {
+		User user=new User();
+		String passWord = encoder.encode(pwdNew);
+		user.setPassword(passWord);
+		user.setMobilephone(phone);
+		return userDao.updatePasswordByPhone(user);
+	}
 
 	@Override
-	public User getUserByQQ(String openID) {
-		List<User> user = userDao.getUserByQQ(openID);
-		if (user != null) {
-			return user.get(0);
-		} else {
-			return null;
-		}
+	public Long updatePasswordByUserId(String pwdNew, Long UserId) {
+		User user=new User();
+		String passWord = encoder.encode(pwdNew);
+		user.setPassword(passWord);
+		user.setId(UserId);
+		return userDao.updatePasswordByUserId(user);	}
+
+	@Override
+	public User getUserByuserId(Long userId) {
+		return userDao.selectByUserId(userId);
 	}
+	
 }

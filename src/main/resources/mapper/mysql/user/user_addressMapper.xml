@@ -4,19 +4,19 @@
   <resultMap id="BaseResultMap" type="com.fenghua.auto.backend.domain.vo.user.UserAddressVo" >
     <id column="ID" property="id" jdbcType="BIGINT" />
     <result column="User_ID" property="userId" jdbcType="BIGINT" />
-    <result column="Area_Code" property="areaCode" jdbcType="INTEGER" />
+    <result column="City_Area_ID" property="cityAreaId" jdbcType="BIGINT" />
     <result column="Alias" property="alias" jdbcType="VARCHAR" />
     <result column="Detail_Addr" property="detailAddr" jdbcType="VARCHAR" />
     <result column="Receiver_Name" property="receiverName" jdbcType="VARCHAR" />
     <result column="Receiver_Mobile" property="receiverMobile" jdbcType="VARCHAR" />
-    <result column="Default_addr" property="DefaultAddr" jdbcType="BIT" />
+    <result column="Default_Addr" property="defaultAddr" jdbcType="BIT" />
     <result column="created_ts" property="createdTs" jdbcType="TIMESTAMP" />
     <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
     <result column="last_Modified_ts" property="lastModifiedTs" jdbcType="TIMESTAMP" />
     <result column="last_Modified_by" property="lastModifiedBy" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    ID, User_ID, Area_Code, Alias, Detail_Addr, Receiver_Name, Receiver_Mobile, Default_addr, 
+    ID, User_ID, City_Area_ID, Alias, Detail_Addr, Receiver_Name, Receiver_Mobile, Default_Addr, 
     created_ts, created_by, last_Modified_ts, last_Modified_by
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -30,14 +30,14 @@
     where ID = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.fenghua.auto.backend.domain.user.UserAddress" >
-    insert into user_address (ID, User_ID, Area_Code, 
+    insert into user_address (ID, User_ID, City_Area_ID, 
       Alias, Detail_Addr, Receiver_Name, 
-      Receiver_Mobile, Default_addr, created_ts, 
+      Receiver_Mobile, Default_Addr, created_ts, 
       created_by, last_Modified_ts, last_Modified_by
       )
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{areaCode,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{cityAreaId,jdbcType=BIGINT}, 
       #{alias,jdbcType=VARCHAR}, #{detailAddr,jdbcType=VARCHAR}, #{receiverName,jdbcType=VARCHAR}, 
-      #{receiverMobile,jdbcType=VARCHAR}, #{DefaultAddr,jdbcType=BIT}, #{createdTs,jdbcType=TIMESTAMP}, 
+      #{receiverMobile,jdbcType=VARCHAR}, #{defaultAddr,jdbcType=BIT}, #{createdTs,jdbcType=TIMESTAMP}, 
       #{createdBy,jdbcType=VARCHAR}, #{lastModifiedTs,jdbcType=TIMESTAMP}, #{lastModifiedBy,jdbcType=VARCHAR}
       )
   </insert>
@@ -50,8 +50,8 @@
       <if test="userId != null" >
         User_ID,
       </if>
-      <if test="areaCode != null" >
-        Area_Code,
+      <if test="cityAreaId != null" >
+        City_Area_ID,
       </if>
       <if test="alias != null" >
         Alias,
@@ -65,8 +65,8 @@
       <if test="receiverMobile != null" >
         Receiver_Mobile,
       </if>
-      <if test="DefaultAddr != null" >
-        Default_addr,
+      <if test="defaultAddr != null" >
+        Default_Addr,
       </if>
       <if test="createdTs != null" >
         created_ts,
@@ -88,8 +88,8 @@
       <if test="userId != null" >
         #{userId,jdbcType=BIGINT},
       </if>
-      <if test="areaCode != null" >
-        #{areaCode,jdbcType=INTEGER},
+      <if test="cityAreaId != null" >
+        #{cityAreaId,jdbcType=BIGINT},
       </if>
       <if test="alias != null" >
         #{alias,jdbcType=VARCHAR},
@@ -103,8 +103,8 @@
       <if test="receiverMobile != null" >
         #{receiverMobile,jdbcType=VARCHAR},
       </if>
-      <if test="DefaultAddr != null" >
-        #{DefaultAddr,jdbcType=BIT},
+      <if test="defaultAddr != null" >
+        #{defaultAddr,jdbcType=BIT},
       </if>
       <if test="createdTs != null" >
         #{createdTs,jdbcType=TIMESTAMP},
@@ -126,8 +126,8 @@
       <if test="userId != null" >
         User_ID = #{userId,jdbcType=BIGINT},
       </if>
-      <if test="areaCode != null" >
-        Area_Code = #{areaCode,jdbcType=INTEGER},
+      <if test="cityAreaId != null" >
+        City_Area_ID = #{cityAreaId,jdbcType=BIGINT},
       </if>
       <if test="alias != null" >
         Alias = #{alias,jdbcType=VARCHAR},
@@ -141,8 +141,8 @@
       <if test="receiverMobile != null" >
         Receiver_Mobile = #{receiverMobile,jdbcType=VARCHAR},
       </if>
-      <if test="DefaultAddr != null" >
-        Default_addr = #{DefaultAddr,jdbcType=BIT},
+      <if test="defaultAddr != null" >
+        Default_Addr = #{defaultAddr,jdbcType=BIT},
       </if>
       <if test="createdTs != null" >
         created_ts = #{createdTs,jdbcType=TIMESTAMP},
@@ -162,12 +162,12 @@
   <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.backend.domain.user.UserAddress" >
     update user_address
     set User_ID = #{userId,jdbcType=BIGINT},
-      Area_Code = #{areaCode,jdbcType=INTEGER},
+      City_Area_ID = #{cityAreaId,jdbcType=BIGINT},
       Alias = #{alias,jdbcType=VARCHAR},
       Detail_Addr = #{detailAddr,jdbcType=VARCHAR},
       Receiver_Name = #{receiverName,jdbcType=VARCHAR},
       Receiver_Mobile = #{receiverMobile,jdbcType=VARCHAR},
-      Default_addr = #{DefaultAddr,jdbcType=BIT},
+      Default_Addr = #{defaultAddr,jdbcType=BIT},
       created_ts = #{createdTs,jdbcType=TIMESTAMP},
       created_by = #{createdBy,jdbcType=VARCHAR},
       last_Modified_ts = #{lastModifiedTs,jdbcType=TIMESTAMP},

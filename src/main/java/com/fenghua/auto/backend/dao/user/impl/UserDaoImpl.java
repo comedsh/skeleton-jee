@@ -126,6 +126,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 		}
 		return user;
 	}
+
 	@Override
 	public List<User> getUserByQQ(String qqOpenID) {
 		Assert.notNull(qqOpenID);
@@ -139,6 +140,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 		}
 		return user;
 	}
+
 	
 	
 }

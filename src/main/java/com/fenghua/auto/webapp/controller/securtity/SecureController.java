@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.WebAttributes;
@@ -20,7 +23,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.fenghua.auto.backend.core.security.AuthenticationCodeException;
-import com.fenghua.auto.backend.core.security.AuthenticationLimitException;
 import com.fenghua.auto.webapp.view.Result;
 
 /** 
@@ -37,6 +39,10 @@ import com.fenghua.auto.webapp.view.Result;
 @RequestMapping("/secure")
 public class SecureController {
 	private static final Logger logger = LoggerFactory.getLogger(SecureController.class);
+	
+	 @Autowired
+     @Qualifier("org.springframework.security.authenticationManager")//编辑软件会提示错误
+     private static AuthenticationManager authenticationManager;
 	
 	/** Session失效
 	 * @return
@@ -65,8 +71,8 @@ public class SecureController {
 	@RequestMapping(value = "/userCenter")
 	public @ResponseBody Map<String,Result> userCenter(HttpServletRequest request) {
 		Map<String,Result> model = new HashMap<String,Result>();
-		Result msg = new Result(true,"登录成功");
-		model.put("message", msg);
+		Result msg = new Result(true,"");
+		model.put("msg", msg);
 		return model;
 	}
 	
@@ -80,6 +86,16 @@ public class SecureController {
 	public String main(Model model,HttpServletRequest request) {
 		return "/user/userCenter/userCenter";
 	}
+	/**
+	 * 跳转到个人中心页面
+	 * @param model
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/sellerInformation")
+	public String forwardInformation(Model model,HttpServletRequest request) {
+		return "/user/userCenter/sellerInformation";
+	}
 	
 	/**
 	 * 跳转到登录页面
@@ -92,7 +108,6 @@ public class SecureController {
 	public ModelAndView showLoginPage(HttpServletRequest req, HttpServletResponse res, Model model) {
 		Map<String,String> map = new HashMap<String, String>();
 		map.put("userName", req.getParameter("userName"));
-		map.put("password", req.getParameter("password"));
 		return new ModelAndView("/user/register/successRegister",map);
 	}
 	
@@ -102,14 +117,16 @@ public class SecureController {
 	 */
 	@RequestMapping(value="/failure",method=RequestMethod.POST)
 	@ResponseBody
-	public  Map<String,Result> failure(HttpServletRequest request) {
-		
-		Exception e = (Exception)request.getSession().getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
-			
-		
-		//需移入service处理类
-		
-		 Result result = new Result();
+	public  Map<String,Result> failure(HttpServletRequest request, HttpServletResponse response) {
+		//forward 从requet取
+		Exception e =  (Exception)request.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+		if(e == null){
+			 //非forward 从 seesion取
+			 e = (Exception)request.getSession().getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+		}
+	
+		//需移入service处理类		
+		Result result = new Result();
 		//用户不存在
 	    if(e instanceof UsernameNotFoundException){
 	    	result.setMsg("用户名不存在");
@@ -118,15 +135,16 @@ public class SecureController {
         if(e instanceof BadCredentialsException){
         	result.setMsg("用户名或密码错误");
 		}
-        //登录次数大于等于3次
-		if(e instanceof AuthenticationLimitException){
-			//限制登录异常信息
-			result.setCode("1001");
-		}
 	    //输入验证码错误
         if(e instanceof AuthenticationCodeException){
         	result.setMsg("验证码错误");
-		}
+		}  
+        
+        Object showVCode =  request.getAttribute("showVCode");
+        boolean isShow = showVCode == null? false:(Boolean)showVCode;
+        if(isShow){
+         	result.setCode("1001");
+        }  
        
         Map<String,Result> model = new HashMap<String,Result>();
         model.put("msg", result);

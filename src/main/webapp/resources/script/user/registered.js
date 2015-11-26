@@ -96,7 +96,7 @@ $(function() {
                 data: {"name":$(this).val()},
                 dataType: "json",
                 success: function (data) {
-                    if(data.length != 0) {
+                    if(data != null) {
                     	$(str).css({
                             border:'1px solid red'
                         });
@@ -245,9 +245,11 @@ $(function() {
         url: '/cityArea/selectProvince',
         dataType: "json",
         success: function (data) {
-        	for (var i = 0; i < data.length; i++) {
-				$(".select_province ul").append("<li onclick='selectCity("+data[i].id+")' value='"+data[i].id+"'>"+data[i].name+"</li>");
-			}
+        	if(data != null) {
+        		for (var i = 0; i < data.length; i++) {
+        			$(".select_province ul").append("<li onclick='selectCity("+data[i].id+")' value='"+data[i].id+"'>"+data[i].name+"</li>");
+        		}
+        	}
         }
     });
     
@@ -300,12 +302,12 @@ $(function() {
             return false;
         }else{
         	$.ajax({
-                type: "POST",
+                type: "GET",
                 url: '/company/validateFixed',
                 data: {"fixed":$(this).val()},
                 dataType: "json",
                 success: function (data) {
-                    if(data.length != 0) {
+                    if(data != null) {
                     	$(str).css({
                             border:'1px solid red'
                         });
@@ -357,7 +359,7 @@ $(function() {
                 data: {"telephone":$(this).val()},
                 dataType: "json",
                 success: function (data) {
-                    if(data.length != 0) {
+                    if(data != null) {
                     	$(str).css({
                             border:'1px solid red'
                         });
@@ -411,7 +413,7 @@ $(function() {
     			data: {"telephone":$(this).val()},
     			dataType: "json",
     			success: function (data) {
-    				if(data.length != 0) {
+    				if(data != null) {
     					$(str).css({
     						border:'1px solid red'
     					});
@@ -480,20 +482,13 @@ $(function() {
             $(this).parent().parent().children('.user_error2').show().html("短信验证码格式不正确");
             $(this).parent().parent().children('.sub_tel_code').val('1');
             return false;
-        }else if($(this).val() == $(".telephone_code_rep").val()){
+        }else {
             $(this).parent().css({
                 border:'1px solid #2FA840'
             });
             $(this).parent().parent().children('.user_error2').hide();
             $(this).parent().parent().children('.user_error3').show();
             $(this).parent().parent().children('.sub_tel_code').val('0');
-        } else {
-        	$(this).parent().css({
-                border:'1px solid red'
-            });
-            $(this).parent().parent().children('.user_error2').show().html("输入的验证码不正确");
-            $(this).parent().parent().children('.sub_tel_code').val('1');
-            return false;
         }
     });
     //个人邮箱验证
@@ -524,7 +519,7 @@ $(function() {
                 data: {"email":$(this).val()},
                 dataType: "json",
                 success: function (data) {
-                    if(data.length != 0) {
+                    if(data != null) {
                     	$(str).css({
                             border:'1px solid red'
                         });
@@ -577,7 +572,7 @@ $(function() {
     			data: {"email":$(this).val()},
     			dataType: "json",
     			success: function (data) {
-    				if(data.length != 0) {
+    				if(data != null) {
     					$(str).css({
     						border:'1px solid red'
     					});
@@ -669,21 +664,21 @@ $(function() {
             $(this).parent().parent().children('.user_error2').show().html("图形验证码格式不正确");
             $(this).parent().parent().children('.sub_code').val('1');
             return false;
-        }else if($(this).val() == $(this).parent().parent().find(".verifyCode").val()){
+        }else/* if($(this).val() == $(this).parent().parent().find(".verifyCode").val())*/{
             $(this).parent().css({
                 border:'1px solid #2FA840'
             });
             $(this).parent().parent().children('.user_error2').hide();
             $(this).parent().parent().children('.user_error3').show();
             $(this).parent().parent().children('.sub_code').val('0');
-        } else {
+        } /*else {
         	$(this).parent().css({
                 border:'1px solid red'
             });
             $(this).parent().parent().children('.user_error2').show().html("图形验证码输入有误");
             $(this).parent().parent().children('.sub_code').val('1');
             return false;
-        }
+        }*/
     });
     //同意协议
     var i=0;
@@ -727,14 +722,14 @@ $(function() {
     $('.validatePicCheck').on('click',function(){
     	var str = $(this);
     	$(this).parent().parent().find(".pictureCheckCode").attr('src','/user/validatePicCheck?'+Math.random());
-    	$.ajax({
-            type: "GET",
-            url: '/user/validatePicCheckValue',
-            dataType: "text",
-            success: function (data) {
-                $(str).parent().parent().find(".verifyCode").val(data);
-            }
-        });
+//    	$.ajax({
+//            type: "GET",
+//            url: '/user/validatePicCheckValue',
+//            dataType: "text",
+//            success: function (data) {
+//                $(str).parent().parent().find(".verifyCode").val(data);
+//            }
+//        });
     });
   //所有input失去焦点的状态
     $('.chren_div .input_d input').blur(function(event){
@@ -764,9 +759,11 @@ function selectCity(obj) {
         data: {"parentId":obj},
         dataType: "json",
         success: function (data) {
-        	for (var i = 0; i < data.length; i++) {
-				$(".select_city ul").append("<li onclick='selectArea("+data[i].id+")' value='"+data[i].id+"'>"+data[i].name+"</li>");
-			}
+        	if (data != null) {
+        		for (var i = 0; i < data.length; i++) {
+        			$(".select_city ul").append("<li onclick='selectArea("+data[i].id+")' value='"+data[i].id+"'>"+data[i].name+"</li>");
+        		}
+        	}
         }
     });
 }
@@ -777,8 +774,10 @@ function selectArea(obj) {
 		data: {"parentId":obj},
 		dataType: "json",
 		success: function (data) {
-			for (var i = 0; i < data.length; i++) {
-				$(".select_area ul").append("<li value='"+data[i].id+"'>"+data[i].name+"</li>");
+			if (data != null) {
+				for (var i = 0; i < data.length; i++) {
+					$(".select_area ul").append("<li value='"+data[i].id+"'>"+data[i].name+"</li>");
+				}
 			}
 		}
 	});
@@ -847,6 +846,8 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
 					'password' : $scope.Individual.pwd,
 					'email' : $scope.Individual.email,
 					'mobilephone' : $scope.Individual.telephone,
+					'telcode' : $scope.Individual.telcode,
+					'code' : $scope.Individual.code,
 				},
 				{
 				    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
@@ -857,12 +858,10 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
 			)
             .success(function(data){
             	if(data.message.success) {
-            		var str = data.message.code;
-                	var name = str.split("&")[0];
-                	var password = str.split("&")[1];
-            		window.location.href = "/secure/fowardLogin?userName='"+name+"'&password='"+password+"'";
+            		var name = data.message.code;
+            		window.location.href = "/secure/fowardLogin?userName='"+name+"'";
             	} else {
-            		alert("您输入的手机验证码已过期，请重新获取手机验证码");
+            		alert(data.message.success);
             	}
             })
             .error(function(data){
@@ -881,13 +880,13 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
         contactsDept:'',
         Fixed_telephone:'',
         telephone:'',
-        telephone_code:'',
         email_e:'',
         company:'',
         address:'',
         num:'',
         areaCode:'',
-        type_name:''
+        type_name:'',
+        telcode:''
     };
   //企业手机验证码
     $scope.validateTelTwo = function(s) {
@@ -943,8 +942,9 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     					'compnayName' : $scope.Enterprise.company,
     					'areaCode' : $scope.Enterprise.areaCode,
     					'detailAddress' : $scope.Enterprise.address,
-    					'taxpayerNumber' : $scope.Enterprise.num,
-    					'typename' : $scope.Enterprise.type_name
+    					'headcount' : $scope.Enterprise.num,
+    					'typename' : $scope.Enterprise.type_name,
+    					'telcode' : $scope.Enterprise.telcode
     				},
     				{
     				    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
@@ -954,11 +954,12 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     				}
     			)
                 .success(function(data){
-                	 if(data.message.success) {
-                 		window.location.href = "/secure/fowardLogin";
-                 	} else {
-                 		alert("您输入的手机验证码已过期，请重新获取手机验证码");
-                 	}
+                	if(data.message.success) {
+                		var name = data.message.code;
+                		window.location.href = "/secure/fowardLogin?userName='"+name+"'";
+                	} else {
+                		alert(data.message.success);
+                	}
                 })
                 .error(function(data){
 
