@@ -15,7 +15,7 @@ public class Company implements DomainObject {
 
     private String compnayName;
 
-    private Integer areaCode;
+    private Long cityAreaId;
 
     private String detailAddress;
 
@@ -61,12 +61,12 @@ public class Company implements DomainObject {
         this.compnayName = compnayName == null ? null : compnayName.trim();
     }
 
-    public Integer getAreaCode() {
-        return areaCode;
+    public Long getCityAreaId() {
+        return cityAreaId;
     }
 
-    public void setAreaCode(Integer areaCode) {
-        this.areaCode = areaCode;
+    public void setCityAreaId(Long cityAreaId) {
+        this.cityAreaId = cityAreaId;
     }
 
     public String getDetailAddress() {

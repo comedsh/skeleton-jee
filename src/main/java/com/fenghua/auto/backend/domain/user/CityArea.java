@@ -10,9 +10,9 @@ public class CityArea implements DomainObject {
 	
 	private static final long serialVersionUID = 1L;
 
-	private Integer id;
+	private Long id;
 
-    private Integer parentId;
+    private Long parentId;
 
     private String name;
 
@@ -24,19 +24,19 @@ public class CityArea implements DomainObject {
 
     private Boolean available;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getParentId() {
+    public Long getParentId() {
         return parentId;
     }
 
-    public void setParentId(Integer parentId) {
+    public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
 
