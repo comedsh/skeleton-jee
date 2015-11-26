@@ -53,7 +53,7 @@ public class AuthController {
 		try {
 			User user=authService.isUser(request);
 			if(user!=null){
-				userService.autoLogin(user.getName(), user.getPassword(), new Locale(""), request);
+				userService.autoLogin(user.getName(), user.getPassword(), request);
 //				return new ModelAndView("/");
 				return "redirect:/.action";
 			}else {
