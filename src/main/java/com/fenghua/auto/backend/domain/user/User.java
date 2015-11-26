@@ -2,18 +2,26 @@ package com.fenghua.auto.backend.domain.user;
 
 import java.util.Date;
 
+import javax.validation.constraints.Pattern;
+
+import com.fenghua.auto.backend.domain.AbstractDomainObject;
 import com.fenghua.auto.backend.domain.DomainObject;
+import com.fenghua.auto.backend.domain.MessageTransfer;
+import com.fenghua.auto.backend.domain.validation.NoDuplicated;
+
 /**
  * 用户实体类
  * @author chengbin
  * @createTime 2015.11.5
  */
-public class User implements DomainObject {
+public class User extends AbstractDomainObject implements DomainObject, MessageTransfer {
 	
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-
+	
+	@Pattern(regexp="^[a-zA-Z\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5]{3,19}$")
+	@NoDuplicated( sql = "select count(*) from user where name = ?" )
 	private String name;
 
 	private String password;

@@ -155,7 +155,7 @@ public class RestfullClientTest {
 		
 		Assert.assertNotNull( s.getErrors() );
 		
-		Assert.assertTrue( s.getErrors().get(0).getField().equals("username"));
+		Assert.assertTrue( s.getErrors()[0].getField().equals("username"));
 		
 	
 	}

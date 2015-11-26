@@ -1,9 +1,8 @@
 package com.fenghua.auto.backend.domain;
 
-import java.util.List;
+import javax.mail.MethodNotSupportedException;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.springframework.validation.FieldError;
+import org.apache.commons.lang.ArrayUtils;
 
 /**
  * 
@@ -19,20 +18,51 @@ import org.springframework.validation.FieldError;
 
 public class AbstractDomainObject {
 	
-	
-	List<LabelError> errors;
+	LabelError[] errors;
 
-	public List<LabelError> getErrors() {
+	public LabelError[] getErrors() {
 		return errors;
 	}
 
-	public void addErrors(List<FieldError> errors) {
-		this.errors = LabelError.convert2LableErrors(errors);
+	public void addErrors(LabelError... errors) {
+		this.errors = errors;
 	}
 	
 	public boolean hasError(){
 		
-		return CollectionUtils.isEmpty( this.errors ) ? false : true;
+		return ArrayUtils.isEmpty( this.errors ) ? false : true;
+	
+	}
+	
+	/**
+	 * @TODO Not supported yet
+	 * 
+	 * @author shang yang
+	 *
+	 * @version 
+	 * 
+	 * @createTime: 2015年11月26日 下午6:52:27
+	 *
+	 */
+	public boolean hasMessage() throws MethodNotSupportedException{
+		
+		throw new MethodNotSupportedException();
+	
+	}
+	
+	/**
+	 * @TODO Not supported yet 
+	 * 
+	 * @author shang yang
+	 *
+	 * @version 
+	 * 
+	 * @createTime: 2015年11月26日 下午6:55:12
+	 *
+	 */
+	public String[] getMessages() throws MethodNotSupportedException{
+		
+		throw new MethodNotSupportedException();
 	
 	}
 	
