@@ -1,5 +1,8 @@
 package com.fenghua.auto.backend.dao.user.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
@@ -27,5 +30,17 @@ public class PaymentTypeDaoImpl extends BaseDaoImpl<PaymentType> implements Paym
 			throw new DaoException(String.format("添加对象出错！语句：%s", getSqlName(SqlId.SQL_INSERT)), e);
 		}
 		return str;
+	}
+	
+	@Override
+	public List<PaymentType> getById(Long id) {
+		Assert.notNull(id);
+		List<PaymentType> paymentType = new ArrayList<PaymentType>();
+		try {
+			paymentType = sqlSessionTemplate.selectList(getSqlName(SqlId.SQL_SELECT_PRIMARY_KEY), id);
+		} catch (Exception e) {
+			throw new DaoException(String.format("添加对象出错！语句：%s", getSqlName(SqlId.SQL_INSERT)), e);
+		}
+		return paymentType;
 	}
 }

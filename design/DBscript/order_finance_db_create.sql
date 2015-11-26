@@ -51,7 +51,7 @@ drop table if exists waybill_track;
 /*==============================================================*/
 create table bill_order
 (
-   id                   bigint not null auto_increment,
+   id                   bigint not null,
    bill_no              varchar(32) not null,
    buyer_id             bigint not null,
    seller_id            bigint not null,
@@ -79,7 +79,7 @@ create table bill_order
 /*==============================================================*/
 create table buy_car
 (
-   ID                   bigint not null auto_increment,
+   ID                   bigint not null,
    buyer_id             bigint not null,
    sku_id               bigint not null,
    original_price       decimal(18,4) not null,
@@ -113,7 +113,7 @@ create index idx_sku_id on buy_car
 /*==============================================================*/
 create table order_image
 (
-   id                   bigint not null auto_increment,
+   id                   bigint not null,
    biz_type             int not null,
    biz_id               bigint not null,
    path                 varchar(100) not null,
@@ -137,7 +137,7 @@ create index idx_biz_id_type on order_image
 /*==============================================================*/
 create table order_header
 (
-   id                   bigint not null auto_increment,
+   id                   bigint not null,
    order_no             varchar(32) not null,
    status               int not null,
    fork_status          int,
@@ -204,7 +204,7 @@ create index idx_buyer_id on order_header
 /*==============================================================*/
 create table order_invoice
 (
-   id                   bigint not null auto_increment,
+   id                   bigint not null,
    order_id             bigint not null,
    value_add_id         bigint,
    invoice_type         int not null,
@@ -236,7 +236,7 @@ create index idx_order_id on order_invoice
 /*==============================================================*/
 create table order_item
 (
-   id                   bigint not null auto_increment,
+   id                   bigint not null,
    order_id             bigint not null,
    seller_id            bigint not null,
    buyer_id             bigint not null,
@@ -288,7 +288,7 @@ create index idx_seller_id on order_item
 /*==============================================================*/
 create table order_master
 (
-   ID                   bigint not null auto_increment,
+   ID                   bigint not null,
    master_order_no      varchar(32) not null,
    status               int not null,
    buyer_id             bigint not null,
@@ -329,7 +329,7 @@ create index idx_buyer_id on order_master
 /*==============================================================*/
 create table order_payment
 (
-   id                   bigint not null auto_increment,
+   id                   bigint not null,
    pay_no               varchar(32) not null,
    master_order_id      bigint not null,
    master_order_no      varchar(32) not null,
@@ -381,7 +381,7 @@ create unique index idx_pay_no on order_payment
 /*==============================================================*/
 create table order_task
 (
-   task_id              bigint not null auto_increment,
+   task_id              bigint not null,
    order_id             bigint not null,
    order_no             varchar(32) not null,
    type                 int not null comment '10：新订单未支付取消任务；20：自动审核任务；30：收货自动确任务',
@@ -419,7 +419,7 @@ create index idx_order_no on order_task
 /*==============================================================*/
 create table order_track
 (
-   id                   bigint not null auto_increment,
+   id                   bigint not null,
    order_id             bigint not null,
    order_no             varchar(32) not null,
    order_status         int not null,
@@ -443,7 +443,7 @@ create index idx_order_id on order_track
 /*==============================================================*/
 create table order_transport
 (
-   id                   bigint not null auto_increment,
+   id                   bigint not null,
    order_id             bigint not null,
    order_no             varchar(32) not null,
    waybill_no           varchar(60) not null,
@@ -480,7 +480,7 @@ create unique index idx_waybill_no on order_transport
 /*==============================================================*/
 create table order_transport_detail
 (
-   id                   bigint not null auto_increment,
+   id                   bigint not null,
    transport_id         bigint not null,
    order_item_id        bigint not null,
    sku_id               bigint not null,
@@ -521,7 +521,7 @@ create index idx_order_item_id on order_transport_detail
 /*==============================================================*/
 create table order_pay_trade
 (
-   id                   bigint not null auto_increment,
+   id                   bigint not null,
    order_payment_id     bigint not null,
    order_payment_sub_no varchar(32) not null comment '子号码作为支付平台使用的商户订单号，多次提交产生多个子号',
    pay_method           int not null,
@@ -538,7 +538,7 @@ create table order_pay_trade
 /*==============================================================*/
 create table quality_order
 (
-   id                   bigint not null auto_increment,
+   id                   bigint not null,
    quality_no           varchar(32) not null,
    buyer_id             bigint not null,
    seller_id            bigint not null,
@@ -599,7 +599,7 @@ create index idx_order_no on quality_order
 /*==============================================================*/
 create table quality_order_detail
 (
-   id                   bigint not null auto_increment,
+   id                   bigint not null,
    quality_id           bigint not null,
    quality_no           varchar(32) not null,
    order_item_id        bigint not null,
@@ -643,7 +643,7 @@ create index idx_sku_id on quality_order_detail
 /*==============================================================*/
 create table refund_bill
 (
-   id                   bigint not null auto_increment,
+   id                   bigint not null,
    rebill_no            varchar(32) not null,
    retrade_no           varchar(32),
    refund_id            bigint not null,
@@ -710,7 +710,7 @@ create index idx_retrade_no on refund_bill
 /*==============================================================*/
 create table refund_order
 (
-   id                   bigint not null auto_increment,
+   id                   bigint not null,
    refund_no            varchar(32) not null,
    buyer_id             bigint not null,
    seller_id            bigint not null,
@@ -783,7 +783,7 @@ create index idx_seller_id on refund_order
 /*==============================================================*/
 create table refund_order_detail
 (
-   id                   bigint not null auto_increment,
+   id                   bigint not null,
    refund_id            bigint not null,
    order_item_id        bigint not null,
    sku_id               bigint not null,
@@ -835,7 +835,7 @@ create index idx_sku_id on refund_order_detail
 /*==============================================================*/
 create table refund_track
 (
-   id                   bigint not null auto_increment,
+   id                   bigint not null,
    refund_id            bigint not null,
    refund_no            varchar(32) not null,
    refund_status        int not null,
@@ -866,7 +866,7 @@ create index idx_refund_no on refund_track
 /*==============================================================*/
 create table transaction_flow
 (
-   id                   bigint not null auto_increment,
+   id                   bigint not null,
    tran_type            int not null comment '1：收款，2：退款',
    biz_order_id         bigint not null comment '支付单ID、退款单ID',
    master_order_id      bigint not null,
@@ -892,7 +892,7 @@ create table transaction_flow
 /*==============================================================*/
 create table waybill_track
 (
-   id                   bigint not null auto_increment,
+   id                   bigint not null,
    transport_id         bigint not null,
    waybill_no           varchar(32) not null,
    waybill_status       varchar(200),

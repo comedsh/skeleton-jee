@@ -51,4 +51,18 @@
       
   </definition>
   
+  
+   <definition name="web.product" extends="web.default_template">
+  
+      <put-attribute name="body" value="/WEB-INF/views/product/product.jsp" />  
+      
+  </definition>
+  
+    <definition name="web.product_list" extends="web.default_template">
+ 
+
+      <put-attribute name="body" value="/WEB-INF/views/product/product_list.jsp" />  
+      
+  </definition>
+  
 </tiles-definitions>

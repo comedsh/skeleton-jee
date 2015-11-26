@@ -86,16 +86,6 @@ public class SecureController {
 	public String main(Model model,HttpServletRequest request) {
 		return "/user/userCenter/userCenter";
 	}
-	/**
-	 * 跳转到个人中心页面
-	 * @param model
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(value = "/sellerInformation")
-	public String forwardInformation(Model model,HttpServletRequest request) {
-		return "/user/userCenter/sellerInformation";
-	}
 	
 	/**
 	 * 跳转到登录页面

@@ -7,11 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fenghua.auto.sku.service.SkuCommentService;
+import com.fenghua.auto.sku.domain.SkuStock;
+import com.fenghua.auto.sku.service.SkuService;
+import com.fenghua.auto.sku.service.SkuStockService;
 
 /** 
   *<des>
@@ -21,20 +24,21 @@ import com.fenghua.auto.sku.service.SkuCommentService;
   * @version 
   */
 @Controller
-@RequestMapping("/comment")
-public class SkuCommentController {
+@RequestMapping("/stock")
+public class SkuStockController {
 
 	@Autowired
-	private SkuCommentService skuCommentService;
+	private SkuStockService skuStockService;
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	@ResponseBody
-	public Map<String,String> countBySkuId(@PathVariable("id") Long id,Model model){
-		long counts = skuCommentService.countBySkuId(id);
-		Map<String,String> maps = new HashMap<String,String>();
-		maps.put("comtotal", counts+"");
-		return maps;
-		
+	public SkuStock queryStockBySkuId(@PathVariable("id") Long id,Model model){
+		SkuStock stock = skuStockService.queryStockBySkuId(id);
+		if(stock != null){
+			long saledCount = (stock.getStockCount()-stock.getStockAvailability());
+			stock.setSaledCount(saledCount);
+		}		
+		return stock;
 		
 	}
 }

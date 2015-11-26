@@ -98,7 +98,7 @@ public interface UserService {
 	 * @param locale
 	 * @param request
 	 */
-	public void autoLogin(String userName, String passWord, Locale locale,HttpServletRequest request);
+	public void autoLogin(String userName, String passWord, HttpServletRequest request);
 
 	/**
 	 * 根据qq openID查询用户

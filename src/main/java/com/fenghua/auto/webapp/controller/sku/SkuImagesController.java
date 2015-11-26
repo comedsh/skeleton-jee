@@ -1,6 +1,7 @@
 package com.fenghua.auto.webapp.controller.sku;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fenghua.auto.sku.service.SkuCommentService;
+import com.fenghua.auto.sku.domain.SkuImages;
+import com.fenghua.auto.sku.service.SkuImageService;
 
 /** 
   *<des>
@@ -21,20 +23,19 @@ import com.fenghua.auto.sku.service.SkuCommentService;
   * @version 
   */
 @Controller
-@RequestMapping("/comment")
-public class SkuCommentController {
-
+@RequestMapping("/productPic")
+public class SkuImagesController {
+    
 	@Autowired
-	private SkuCommentService skuCommentService;
+	private SkuImageService skuImageService;
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	@ResponseBody
-	public Map<String,String> countBySkuId(@PathVariable("id") Long id,Model model){
-		long counts = skuCommentService.countBySkuId(id);
-		Map<String,String> maps = new HashMap<String,String>();
-		maps.put("comtotal", counts+"");
+	public Map<String,List<SkuImages>> queryPictureBySkuId(@PathVariable("id") Long id){
+		List<SkuImages> picItems= skuImageService.queryBySkuId(id);
+	
+		Map<String,List<SkuImages>> maps = new HashMap<String,List<SkuImages>>();
+		maps.put("items", picItems);
 		return maps;
-		
-		
 	}
 }

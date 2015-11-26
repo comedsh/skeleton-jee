@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `auto007db` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `auto007db`;
 -- MySQL dump 10.13  Distrib 5.6.24, for Win64 (x86_64)
 --
 -- Host: localhost    Database: auto007db
@@ -23,7 +25,7 @@ DROP TABLE IF EXISTS `bill_order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `bill_order` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `bill_no` varchar(32) NOT NULL,
   `buyer_id` bigint(20) NOT NULL,
   `seller_id` bigint(20) NOT NULL,
@@ -64,7 +66,7 @@ DROP TABLE IF EXISTS `buy_car`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `buy_car` (
-  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ID` bigint(20) NOT NULL,
   `buyer_id` bigint(20) NOT NULL,
   `sku_id` bigint(20) NOT NULL,
   `original_price` decimal(18,4) NOT NULL,
@@ -97,7 +99,7 @@ DROP TABLE IF EXISTS `catalog`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `catalog` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `code` varchar(20) DEFAULT NULL,
   `name` varchar(100) DEFAULT NULL,
   `parent_id` bigint(20) DEFAULT NULL,
@@ -125,7 +127,7 @@ DROP TABLE IF EXISTS `catalog_attribute`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `catalog_attribute` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
   `catalog_id` bigint(20) DEFAULT NULL,
   `s_no` int(11) DEFAULT NULL,
@@ -173,7 +175,7 @@ DROP TABLE IF EXISTS `city_area`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `city_area` (
-  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ID` bigint(20) NOT NULL,
   `Parent_ID` bigint(20) DEFAULT NULL,
   `Name` varchar(100) NOT NULL,
   `Level` smallint(6) NOT NULL,
@@ -182,7 +184,7 @@ CREATE TABLE `city_area` (
   `Available` tinyint(1) NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `City_Code_idx` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=820302 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -243,7 +245,7 @@ DROP TABLE IF EXISTS `order_header`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `order_header` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `order_no` varchar(32) NOT NULL,
   `status` int(11) NOT NULL,
   `fork_status` int(11) DEFAULT NULL,
@@ -302,7 +304,7 @@ DROP TABLE IF EXISTS `order_image`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `order_image` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `biz_type` int(11) NOT NULL,
   `biz_id` bigint(20) NOT NULL,
   `path` varchar(100) NOT NULL,
@@ -330,7 +332,7 @@ DROP TABLE IF EXISTS `order_invoice`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `order_invoice` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `order_id` bigint(20) NOT NULL,
   `value_add_id` bigint(20) DEFAULT NULL,
   `invoice_type` int(11) NOT NULL,
@@ -368,7 +370,7 @@ DROP TABLE IF EXISTS `order_item`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `order_item` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `order_id` bigint(20) NOT NULL,
   `seller_id` bigint(20) NOT NULL,
   `buyer_id` bigint(20) NOT NULL,
@@ -412,7 +414,7 @@ DROP TABLE IF EXISTS `order_master`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `order_master` (
-  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ID` bigint(20) NOT NULL,
   `master_order_no` varchar(32) NOT NULL,
   `status` int(11) NOT NULL,
   `buyer_id` bigint(20) NOT NULL,
@@ -452,7 +454,7 @@ DROP TABLE IF EXISTS `order_pay_trade`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `order_pay_trade` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `order_payment_id` bigint(20) NOT NULL,
   `order_payment_sub_no` varchar(32) NOT NULL COMMENT '子号码作为支付平台使用的商户订单号，多次提交产生多个子号',
   `pay_method` int(11) NOT NULL,
@@ -482,7 +484,7 @@ DROP TABLE IF EXISTS `order_payment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `order_payment` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `pay_no` varchar(32) NOT NULL,
   `master_order_id` bigint(20) NOT NULL,
   `master_order_no` varchar(32) NOT NULL,
@@ -526,7 +528,7 @@ DROP TABLE IF EXISTS `order_task`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `order_task` (
-  `task_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `task_id` bigint(20) NOT NULL,
   `order_id` bigint(20) NOT NULL,
   `order_no` varchar(32) NOT NULL,
   `type` int(11) NOT NULL COMMENT '10：新订单未支付取消任务；20：自动审核任务；30：收货自动确任务',
@@ -563,7 +565,7 @@ DROP TABLE IF EXISTS `order_track`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `order_track` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `order_id` bigint(20) NOT NULL,
   `order_no` varchar(32) NOT NULL,
   `order_status` int(11) NOT NULL,
@@ -593,7 +595,7 @@ DROP TABLE IF EXISTS `order_transport`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `order_transport` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `order_id` bigint(20) NOT NULL,
   `order_no` varchar(32) NOT NULL,
   `waybill_no` varchar(60) NOT NULL,
@@ -628,7 +630,7 @@ DROP TABLE IF EXISTS `order_transport_detail`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `order_transport_detail` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `transport_id` bigint(20) NOT NULL,
   `order_item_id` bigint(20) NOT NULL,
   `sku_id` bigint(20) NOT NULL,
@@ -716,7 +718,7 @@ DROP TABLE IF EXISTS `quality_order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `quality_order` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `quality_no` varchar(32) NOT NULL,
   `buyer_id` bigint(20) NOT NULL,
   `seller_id` bigint(20) NOT NULL,
@@ -755,7 +757,7 @@ DROP TABLE IF EXISTS `quality_order_detail`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `quality_order_detail` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `quality_id` bigint(20) NOT NULL,
   `quality_no` varchar(32) NOT NULL,
   `order_item_id` bigint(20) NOT NULL,
@@ -791,7 +793,7 @@ DROP TABLE IF EXISTS `refund_bill`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `refund_bill` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `rebill_no` varchar(32) NOT NULL,
   `retrade_no` varchar(32) DEFAULT NULL,
   `refund_id` bigint(20) NOT NULL,
@@ -843,7 +845,7 @@ DROP TABLE IF EXISTS `refund_order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `refund_order` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `refund_no` varchar(32) NOT NULL,
   `buyer_id` bigint(20) NOT NULL,
   `seller_id` bigint(20) NOT NULL,
@@ -898,7 +900,7 @@ DROP TABLE IF EXISTS `refund_order_detail`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `refund_order_detail` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `refund_id` bigint(20) NOT NULL,
   `order_item_id` bigint(20) NOT NULL,
   `sku_id` bigint(20) NOT NULL,
@@ -940,7 +942,7 @@ DROP TABLE IF EXISTS `refund_track`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `refund_track` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `refund_id` bigint(20) NOT NULL,
   `refund_no` varchar(32) NOT NULL,
   `refund_status` int(11) NOT NULL,
@@ -998,7 +1000,7 @@ DROP TABLE IF EXISTS `role`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `role` (
   `ID` bigint(20) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(30) NOT NULL,
+  `Name` varchar(10) NOT NULL,
   `Description` varchar(100) DEFAULT NULL,
   `Created_TS` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `Created_By` varchar(30) DEFAULT NULL,
@@ -1006,7 +1008,7 @@ CREATE TABLE `role` (
   `Last_Modified_By` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `Name_idx` (`Name`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1015,7 +1017,6 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (1,'个体买家','私人买家或者是个体经营户','2015-11-26 02:41:02','system','2015-11-26 02:41:02','system'),(2,'企业买家','企业和公司买家','2015-11-26 02:41:02','system','2015-11-26 02:41:02','system'),(3,'卖家','卖家','2015-11-26 02:41:02','system','2015-11-26 02:41:02','system'),(4,'管理员','平台的管理员','2015-11-26 02:41:02','system','2015-11-26 02:41:02','system');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1097,7 +1098,7 @@ DROP TABLE IF EXISTS `sku_catalog_attr_value`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sku_catalog_attr_value` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `catalog_attr_id` bigint(20) DEFAULT NULL,
   `sttr_value` varchar(100) DEFAULT NULL,
   `sku_id` bigint(20) DEFAULT NULL,
@@ -1122,7 +1123,7 @@ DROP TABLE IF EXISTS `sku_comment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sku_comment` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `sku_id` bigint(20) DEFAULT NULL,
   `order_id` bigint(20) DEFAULT NULL,
   `order_detail_id` bigint(20) DEFAULT NULL,
@@ -1153,7 +1154,7 @@ DROP TABLE IF EXISTS `sku_extend_attrs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sku_extend_attrs` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
   `contents` varchar(100) DEFAULT NULL,
   `sort_no` int(11) DEFAULT NULL,
@@ -1179,7 +1180,7 @@ DROP TABLE IF EXISTS `sku_image_html`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sku_image_html` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `contents_html` text,
   `sku_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1203,7 +1204,7 @@ DROP TABLE IF EXISTS `sku_images`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sku_images` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `url` text,
   `title` char(100) DEFAULT NULL,
   `sort_no` int(11) DEFAULT NULL,
@@ -1231,7 +1232,7 @@ DROP TABLE IF EXISTS `sku_reply`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sku_reply` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `reply_code` varchar(20) DEFAULT NULL,
   `comtent` text,
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
@@ -1258,7 +1259,7 @@ DROP TABLE IF EXISTS `sku_stock`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sku_stock` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `stock_count` int(11) DEFAULT NULL,
   `stock_availability` int(11) DEFAULT NULL,
   `repertory_id` bigint(20) DEFAULT NULL,
@@ -1367,7 +1368,7 @@ DROP TABLE IF EXISTS `transaction_flow`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `transaction_flow` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `tran_type` int(11) NOT NULL COMMENT '1：收款，2：退款',
   `biz_order_id` bigint(20) NOT NULL COMMENT '支付单ID、退款单ID',
   `master_order_id` bigint(20) NOT NULL,
@@ -1406,7 +1407,7 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
-  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ID` bigint(20) NOT NULL,
   `Name` varchar(30) NOT NULL,
   `Password` varchar(100) DEFAULT NULL,
   `Email` varchar(100) DEFAULT NULL,
@@ -1542,7 +1543,7 @@ DROP TABLE IF EXISTS `vehicle_oe_sku`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vehicle_oe_sku` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `oe_code` varchar(50) DEFAULT NULL,
   `vehicle_id` bigint(20) DEFAULT NULL,
   `vehicle_name` varchar(100) DEFAULT NULL,
@@ -1572,7 +1573,7 @@ DROP TABLE IF EXISTS `waybill_track`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `waybill_track` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `transport_id` bigint(20) NOT NULL,
   `waybill_no` varchar(32) NOT NULL,
   `waybill_status` varchar(200) DEFAULT NULL,
@@ -1607,4 +1608,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-11-26 10:43:13
+-- Dump completed on 2015-11-25 14:32:19
