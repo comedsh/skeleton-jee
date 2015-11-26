@@ -2,6 +2,8 @@ package com.fenghua.auto.backend.core.utills;
 
 import java.util.Collection;
 
+import javax.security.sasl.AuthenticationException;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -24,16 +26,16 @@ public final class UserSecurityUtils {
 	/**
 	 * 取得当前用户
 	 */
-	public static UserInfo getCurrentUser() {
+	public static UserInfo getCurrentUser() throws AuthenticationException{
 		Authentication authentication = getAuthentication();
 
 		if (authentication == null) {
-			return null;
+			 throw new AuthenticationException("user not athentication!");
 		}
 
 		Object principal = authentication.getPrincipal();
 		if (!(principal instanceof UserInfo)) {
-			return null;
+			 throw new AuthenticationException("user not athentication!");
 		}
 
 		return (UserInfo) principal;
@@ -54,8 +56,9 @@ public final class UserSecurityUtils {
 
 	/**
 	 * 取得当前用户的真实姓名, 如果当前用户未登录则返回空字符串.
+	 * @throws AuthenticationException 
 	 */
-	public static Long getCurrentUserId() {
+	public static Long getCurrentUserId() throws AuthenticationException {
 		return getCurrentUser().getUserId();
 	}
 
