@@ -55,18 +55,21 @@ public class AuthController {
 	 * @return
 	 */
 	@RequestMapping("/afterlogin")
-	public ModelAndView afterlogin(HttpServletRequest request) {
+	public String afterlogin(HttpServletRequest request) {
 		try {
 			User user=authService.isUser(request);
 			if(user!=null){
-				userService.autoLogin(user.getName(), user.getPassword(), new Locale(null), request);
-				return new ModelAndView("/");
+				userService.autoLogin(user.getName(), user.getPassword(), new Locale(""), request);
+//				return new ModelAndView("/");
+				return "redirect:/.action";
 			}else {
-				return new ModelAndView("/registered.jsp");
+				//return new ModelAndView("/registered.jsp");
+				return "redirect:/registered.jsp?xx=";
 			}
 		} catch (QQConnectException e) {
 			e.printStackTrace();
-			return new ModelAndView("/login.jsp");
+			//return new ModelAndView("/login.jsp");
 		}
+		return null;
 	}
 }
