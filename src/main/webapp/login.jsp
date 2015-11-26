@@ -105,7 +105,7 @@
         </div>
         <div class="Keep_div clearfix">
             <div class="Remember_pwd" data="0">记住密码</div>
-            <a ng-href="Forgot password.html">忘记密码</a>
+            <a ng-href="/findPassbyphone.jsp">忘记密码</a>
         </div>
         <div class="code_d">
             <input type="text" ng-model="user.code">

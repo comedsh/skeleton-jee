@@ -171,6 +171,30 @@ angular.module("spittle-ng-app", [])
 			</table>
 			
 			<!-- test for ajax invoke by angularjs-->
+<<<<<<< HEAD
+			
+			<div ng-app="spittle_app"> <!-- ng-app 表示，该 div 部分（含子标签）归 angular 接管 -->
+			
+    <script src="http://ngnice.com/lib/angular/1.2.16/angular.js"></script>
+
+				<script>
+				angular.module("spittle_app", [])
+					   .controller("SpittleController", function spittleController($scope, $http) {
+						   									
+						   									$scope.getSpittle = function(){
+						   										alert("888888")
+							   									var url="/spittle/home1";
+							   									$http.get(url).success( function(spittle) {
+							   										if(!spittle) alert("spittle 1001 get deleted ~, no information responsed")
+							         								$scope.spittles = spittle;
+							   									});
+							   									
+						   									}
+														}
+								  );
+				</script>
+=======
+>>>>>>> branch 'master' of http://218.244.137.212:8080/dev/fenghua.git
 				
 			<div ng-controller="SpittleGetController">
 				

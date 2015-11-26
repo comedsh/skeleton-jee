@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fenghua.auto.backend.domain.user.Config">
+
+<resultMap id="BaseResultMap" type="com.fenghua.auto.backend.domain.vo.user.ConfigVo" >
+    <id column="Config_Name" property="configName" jdbcType="VARCHAR" />
+    <result column="Config_Value" property="ConfigValue" jdbcType="VARCHAR" />
+    <result column="Created_TS" property="createdTs" jdbcType="TIMESTAMP" />
+    <result column="Created_By" property="createdBy" jdbcType="VARCHAR" />
+    <result column="Last_Modified_TS" property="lastModifiedTs" jdbcType="TIMESTAMP" />
+    <result column="Last_Modified_By" property="lastModifiedBy" jdbcType="VARCHAR" />
+    
+</resultMap>
+
+
+ <sql id="Base_Column_List" >
+    Config_Name, Config_Value, Created_TS,Created_By,Last_Modified_TS,Last_Modified_By
+  </sql>
+
+  <!-- 根据名字查询config信息-->
+  <select id="selectByConfigName" parameterType="java.lang.String" resultMap="BaseResultMap">
+	select 
+		 <include refid="Base_Column_List" />				
+			from Sys_Config where Config_Name=#{configName} 
+	</select>
+</mapper>
