@@ -19,6 +19,60 @@
     id, order_id, order_no, waybill_no, logistics_com_id, logistics_com_code, logistics_com_name, 
     status, entry_id, entry_time, update_id, update_time
   </sql>
+  <sql id="Base_Where_Case" >
+    <where >
+      <if test="id != null" >
+         AND id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="orderId != null" >
+         AND order_id = #{orderId,jdbcType=BIGINT}
+      </if>
+      <if test="orderNo != null" >
+         AND order_no = #{orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="waybillNo != null" >
+         AND waybill_no = #{waybillNo,jdbcType=VARCHAR}
+      </if>
+      <if test="logisticsComId != null" >
+         AND logistics_com_id = #{logisticsComId,jdbcType=BIGINT}
+      </if>
+      <if test="logisticsComCode != null" >
+         AND logistics_com_code = #{logisticsComCode,jdbcType=VARCHAR}
+      </if>
+      <if test="logisticsComName != null" >
+         AND logistics_com_name = #{logisticsComName,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null" >
+         AND status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="entryId != null" >
+         AND entry_id = #{entryId,jdbcType=BIGINT}
+      </if>
+      <if test="entryTime != null" >
+         AND entry_time = #{entryTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updateId != null" >
+         AND update_id = #{updateId,jdbcType=BIGINT}
+      </if>
+      <if test="updateTime != null" >
+         AND update_time = #{updateTime,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </sql>
+  <select id="selectCount" resultType="java.lang.Long" parameterType="com.fenghua.auto.order.domain.OrderTransport" >
+    select count( id)
+     from order_transport
+    <include refid="Base_Where_Case" />
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fenghua.auto.order.domain.OrderTransport" >
+    select 
+    <include refid="Base_Column_List" />
+     from order_transport
+    <include refid="Base_Where_Case" />
+    <if test="limit > 0" >
+       limit #{offset},#{limit} 
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

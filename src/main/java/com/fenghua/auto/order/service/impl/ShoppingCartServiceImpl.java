@@ -7,26 +7,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fenghua.auto.backend.dao.BaseDao;
-import com.fenghua.auto.order.dao.BuyCarDao;
-import com.fenghua.auto.order.domain.BuyCar;
+import com.fenghua.auto.order.dao.ShoppingCartDao;
+import com.fenghua.auto.order.domain.ShoppingCart;
 import com.fenghua.auto.backend.service.impl.BaseServiceImpl;
-import com.fenghua.auto.order.service.BuyCarService;
+import com.fenghua.auto.order.service.ShoppingCartService;
 
 /**
  * Service实现类
  *
  * @author 王直元
- * @createTime 2015-11-25 11:11:35
+ * @createTime 2015-11-26 14:10:18
  *
  */
 @Service
-public class BuyCarServiceImpl extends BaseServiceImpl<BuyCar> implements BuyCarService {
+public class ShoppingCartServiceImpl extends BaseServiceImpl<ShoppingCart> implements ShoppingCartService {
 
 	@Autowired
-	private BuyCarDao dao;
+	private ShoppingCartDao dao;
 	
 	@Override
-	protected BaseDao<BuyCar> getBaseDao() {
+	protected BaseDao<ShoppingCart> getBaseDao() {
 		return dao;
 	}
 
