@@ -86,9 +86,6 @@ public class CustomUserDetailService implements UserDetailsService{
 			auths.add(grantedAuthorityImpl);
 		}
 
-		/*org.springframework.security.core.userdetails.User user = new org.springframework.security.core.userdetails.User(
-				username, password, true, true, true, true, auths);*/
-	   
 		UserInfo userInfo = new UserInfo(username, password, auths);
 		userInfo.setUserId(users.getId());
 		userInfo.setCompanyId(users.getCompanyId());
