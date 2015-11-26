@@ -127,8 +127,8 @@ create table Sys_Config
    Config_Value         varchar(200) not null,
    Created_TS           timestamp,
    Created_By           varchar(30),
-   Last_Modified_By     timestamp,
-   Last_Modified_TS     varchar(30),
+   Last_Modified_By     varchar(30),
+   Last_Modified_TS     timestamp,
    primary key (Config_Name)
 )
 ;
