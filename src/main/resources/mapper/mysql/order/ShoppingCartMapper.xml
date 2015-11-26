@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fenghua.auto.order.domain.BuyCar" >
-  <resultMap id="BaseResultMap" type="com.fenghua.auto.order.domain.BuyCar" >
+<mapper namespace="com.fenghua.auto.order.domain.ShoppingCart" >
+  <resultMap id="BaseResultMap" type="com.fenghua.auto.order.domain.ShoppingCart" >
     <id column="ID" property="id" jdbcType="BIGINT" />
     <result column="buyer_id" property="buyerId" jdbcType="BIGINT" />
     <result column="sku_id" property="skuId" jdbcType="BIGINT" />
@@ -17,18 +17,66 @@
     ID, buyer_id, sku_id, original_price, sale_price, current_price, discount_strategy_desc, 
     qty, last_price_time, add_time
   </sql>
+  <sql id="Base_Where_Case" >
+    <where >
+      <if test="id != null" >
+         AND ID = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="buyerId != null" >
+         AND buyer_id = #{buyerId,jdbcType=BIGINT}
+      </if>
+      <if test="skuId != null" >
+         AND sku_id = #{skuId,jdbcType=BIGINT}
+      </if>
+      <if test="originalPrice != null" >
+         AND original_price = #{originalPrice,jdbcType=DECIMAL}
+      </if>
+      <if test="salePrice != null" >
+         AND sale_price = #{salePrice,jdbcType=DECIMAL}
+      </if>
+      <if test="currentPrice != null" >
+         AND current_price = #{currentPrice,jdbcType=DECIMAL}
+      </if>
+      <if test="discountStrategyDesc != null" >
+         AND discount_strategy_desc = #{discountStrategyDesc,jdbcType=VARCHAR}
+      </if>
+      <if test="qty != null" >
+         AND qty = #{qty,jdbcType=INTEGER}
+      </if>
+      <if test="lastPriceTime != null" >
+         AND last_price_time = #{lastPriceTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="addTime != null" >
+         AND add_time = #{addTime,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </sql>
+  <select id="selectCount" resultType="java.lang.Long" parameterType="com.fenghua.auto.order.domain.ShoppingCart" >
+    select count( ID)
+     from shopping_cart
+    <include refid="Base_Where_Case" />
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fenghua.auto.order.domain.ShoppingCart" >
+    select 
+    <include refid="Base_Column_List" />
+     from shopping_cart
+    <include refid="Base_Where_Case" />
+    <if test="limit > 0" >
+       limit #{offset},#{limit} 
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from buy_car
+    from shopping_cart
     where ID = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from buy_car
+    delete from shopping_cart
     where ID = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.fenghua.auto.order.domain.BuyCar" >
-    insert into buy_car (ID, buyer_id, sku_id, 
+  <insert id="insert" parameterType="com.fenghua.auto.order.domain.ShoppingCart" >
+    insert into shopping_cart (ID, buyer_id, sku_id, 
       original_price, sale_price, current_price, 
       discount_strategy_desc, qty, last_price_time, 
       add_time)
@@ -37,8 +85,8 @@
       #{discountStrategyDesc,jdbcType=VARCHAR}, #{qty,jdbcType=INTEGER}, #{lastPriceTime,jdbcType=TIMESTAMP}, 
       #{addTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.fenghua.auto.order.domain.BuyCar" >
-    insert into buy_car
+  <insert id="insertSelective" parameterType="com.fenghua.auto.order.domain.ShoppingCart" >
+    insert into shopping_cart
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         ID,
@@ -104,8 +152,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.order.domain.BuyCar" >
-    update buy_car
+  <update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.order.domain.ShoppingCart" >
+    update shopping_cart
     <set >
       <if test="buyerId != null" >
         buyer_id = #{buyerId,jdbcType=BIGINT},
@@ -137,8 +185,8 @@
     </set>
     where ID = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.order.domain.BuyCar" >
-    update buy_car
+  <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.order.domain.ShoppingCart" >
+    update shopping_cart
     set buyer_id = #{buyerId,jdbcType=BIGINT},
       sku_id = #{skuId,jdbcType=BIGINT},
       original_price = #{originalPrice,jdbcType=DECIMAL},
