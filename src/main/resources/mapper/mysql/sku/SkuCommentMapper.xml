@@ -27,7 +27,7 @@
         and sku_id=#{skuId,jdbcType=BIGINT}
     </if>
      <if test="id != null" >
-       where id = #{id,jdbcType=BIGINT}
+       and id = #{id,jdbcType=BIGINT}
      </if>
      order by create_time desc
   </select>

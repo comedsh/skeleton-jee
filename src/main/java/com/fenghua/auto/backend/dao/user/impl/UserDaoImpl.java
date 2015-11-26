@@ -69,6 +69,17 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 	}
 	
 	@Override
+	public Long updatePasswordByPhone(User user) {
+		Long str = null;
+		try {
+			str=(long) sqlSessionTemplate.insert(getSqlName(SqlId.SQL_UPDATEPASSWORD_BY_PHONE), user);
+			//str = user.getId();
+		} catch (Exception e) {
+			throw new DaoException(String.format("添加对象出错！语句：%s", getSqlName(SqlId.SQL_INSERT)), e);
+		}
+		return str;
+	}
+	@Override
 	public List<User> selectByEmail(String email) {
 		Assert.notNull(email);
 		List<User> user = new ArrayList<User>();
@@ -91,5 +102,45 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 		}
 		return user;
 	}
+
+	@Override
+	public Long updatePasswordByUserId(User user) {
+		Long str = null;
+		try {
+			str=(long) sqlSessionTemplate.insert(getSqlName(SqlId.SQL_UPDATEPASSWORD_BY_USERID), user);
+			//str = user.getId();
+		} catch (Exception e) {
+			throw new DaoException(String.format("跟新密码出错！语句：%s", getSqlName(SqlId.SQL_UPDATEPASSWORD_BY_USERID)), e);
+		}
+		return str;
+	}
+
+	@Override
+	public User selectByUserId(Long userId) {
+		Assert.notNull(userId);
+		User user = null;
+		try {
+			user = sqlSessionTemplate.selectOne(getSqlName(SqlId.SQL_SELECT_BY_USERID), userId);
+		} catch (Exception e) {
+			throw new DaoException(String.format("根据用户id查询对象出错！语句：%s", getSqlName(SqlId.SQL_SELECT_BY_USERID)), e);
+		}
+		return user;
+	}
+
+	@Override
+	public List<User> getUserByQQ(String qqOpenID) {
+		Assert.notNull(qqOpenID);
+		List<User> user = new ArrayList<User>();
+		try {
+			user = sqlSessionTemplate.selectList(
+					getSqlName(SqlId.SQL_SELECT_BY_QQ_Number), qqOpenID);
+		} catch (Exception e) {
+			throw new DaoException(String.format("根据Telephone查询对象出错！语句：%s",
+					getSqlName(SqlId.SQL_SELECT_BY_QQ_Number)), e);
+		}
+		return user;
+	}
+
+	
 	
 }
