@@ -18,6 +18,5 @@ public class LoginAuthenticationProvider extends DaoAuthenticationProvider {
 	  
 		    return super.authenticate(authentication);
 		  
-	    }
-	 
+	   }
 }

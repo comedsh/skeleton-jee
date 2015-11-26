@@ -142,8 +142,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserByName(String name) {
 		List<User> user = userDao.selectByName(name);
-
-		if (user != null && user.equals("")) {
+		if (user.size() > 0) {
 			return user.get(0);
 		} else {
 			return null;
@@ -153,8 +152,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserByEmail(String email) {
 		List<User> user = userDao.selectByEmail(email);
-
-		if (user != null && user.equals("")) {
+		if (user.size() > 0) {
 			return user.get(0);
 		} else {
 			return null;
@@ -164,7 +162,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserByTelephone(String telephone) {
 		List<User> user = userDao.selectByTelephone(telephone);
-		if (user != null && user.equals("")) {
+		if (user.size() > 0) {
 			return user.get(0);
 		} else {
 			return null;
@@ -175,7 +173,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserByQQ(String openID) {
 		List<User> user = userDao.getUserByQQ(openID);
-		if (user != null) {
+		if (user != null&&user.size()==1) {
 			return user.get(0);
 		} else {
 			return null;
@@ -183,7 +181,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public void autoLogin(String userName, String passWord, Locale locale,HttpServletRequest request){
+	public void autoLogin(String userName, String passWord,HttpServletRequest request){
 		CustomUsernamePasswordAuthenticationToken token = new CustomUsernamePasswordAuthenticationToken(userName, passWord);
 		try {
 			token.setDetails(new WebAuthenticationDetails(request));
@@ -217,5 +215,4 @@ public class UserServiceImpl implements UserService {
 	public User getUserByuserId(Long userId) {
 		return userDao.selectByUserId(userId);
 	}
-	
 }

@@ -46,6 +46,129 @@
     receiver_idcard, receiver_address, invoice_flag, come_from, evaluated_flag, remark, 
     evaluated_time
   </sql>
+  <sql id="Base_Where_Case" >
+    <where >
+      <if test="id != null" >
+         AND id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="orderNo != null" >
+         AND order_no = #{orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null" >
+         AND status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="forkStatus != null" >
+         AND fork_status = #{forkStatus,jdbcType=INTEGER}
+      </if>
+      <if test="buyerId != null" >
+         AND buyer_id = #{buyerId,jdbcType=BIGINT}
+      </if>
+      <if test="sellerId != null" >
+         AND seller_id = #{sellerId,jdbcType=BIGINT}
+      </if>
+      <if test="warehouseId != null" >
+         AND warehouse_id = #{warehouseId,jdbcType=BIGINT}
+      </if>
+      <if test="masterOrderId != null" >
+         AND master_order_id = #{masterOrderId,jdbcType=BIGINT}
+      </if>
+      <if test="totalAmount != null" >
+         AND total_amount = #{totalAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="discountAmount != null" >
+         AND discount_amount = #{discountAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="needPayAmount != null" >
+         AND need_pay_amount = #{needPayAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="transportAmount != null" >
+         AND transport_amount = #{transportAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="payedAmount != null" >
+         AND payed_amount = #{payedAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="payMethod != null" >
+         AND pay_method = #{payMethod,jdbcType=INTEGER}
+      </if>
+      <if test="payStatus != null" >
+         AND pay_status = #{payStatus,jdbcType=INTEGER}
+      </if>
+      <if test="deliveryMethod != null" >
+         AND delivery_method = #{deliveryMethod,jdbcType=INTEGER}
+      </if>
+      <if test="createTime != null" >
+         AND create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="payTime != null" >
+         AND pay_time = #{payTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="confirmTime != null" >
+         AND confirm_time = #{confirmTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="sendTime != null" >
+         AND send_time = #{sendTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="receiveDelayTimes != null" >
+         AND receive_delay_times = #{receiveDelayTimes,jdbcType=INTEGER}
+      </if>
+      <if test="receiveExpireTime != null" >
+         AND receive_expire_time = #{receiveExpireTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="receivedTime != null" >
+         AND received_time = #{receivedTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="cityId != null" >
+         AND city_id = #{cityId,jdbcType=BIGINT}
+      </if>
+      <if test="sender != null" >
+         AND sender = #{sender,jdbcType=VARCHAR}
+      </if>
+      <if test="senderAddress != null" >
+         AND sender_address = #{senderAddress,jdbcType=VARCHAR}
+      </if>
+      <if test="receiver != null" >
+         AND receiver = #{receiver,jdbcType=VARCHAR}
+      </if>
+      <if test="receiverPhone != null" >
+         AND receiver_phone = #{receiverPhone,jdbcType=VARCHAR}
+      </if>
+      <if test="receiverIdcard != null" >
+         AND receiver_idcard = #{receiverIdcard,jdbcType=VARCHAR}
+      </if>
+      <if test="receiverAddress != null" >
+         AND receiver_address = #{receiverAddress,jdbcType=VARCHAR}
+      </if>
+      <if test="invoiceFlag != null" >
+         AND invoice_flag = #{invoiceFlag,jdbcType=INTEGER}
+      </if>
+      <if test="comeFrom != null" >
+         AND come_from = #{comeFrom,jdbcType=INTEGER}
+      </if>
+      <if test="evaluatedFlag != null" >
+         AND evaluated_flag = #{evaluatedFlag,jdbcType=INTEGER}
+      </if>
+      <if test="remark != null" >
+         AND remark = #{remark,jdbcType=VARCHAR}
+      </if>
+      <if test="evaluatedTime != null" >
+         AND evaluated_time = #{evaluatedTime,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </sql>
+  <select id="selectCount" resultType="java.lang.Long" parameterType="com.fenghua.auto.order.domain.OrderHeader" >
+    select count( id)
+     from order_header
+    <include refid="Base_Where_Case" />
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fenghua.auto.order.domain.OrderHeader" >
+    select 
+    <include refid="Base_Column_List" />
+     from order_header
+    <include refid="Base_Where_Case" />
+    <if test="limit > 0" >
+       limit #{offset},#{limit} 
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

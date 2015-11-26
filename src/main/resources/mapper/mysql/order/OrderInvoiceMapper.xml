@@ -24,6 +24,72 @@
     rec_contact_phone, rec_address, rec_zipcode, status, entry_time, printer_id, printer_name, 
     print_time
   </sql>
+  <sql id="Base_Where_Case" >
+    <where >
+      <if test="id != null" >
+         AND id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="orderId != null" >
+         AND order_id = #{orderId,jdbcType=BIGINT}
+      </if>
+      <if test="valueAddId != null" >
+         AND value_add_id = #{valueAddId,jdbcType=BIGINT}
+      </if>
+      <if test="invoiceType != null" >
+         AND invoice_type = #{invoiceType,jdbcType=INTEGER}
+      </if>
+      <if test="title != null" >
+         AND title = #{title,jdbcType=VARCHAR}
+      </if>
+      <if test="contentType != null" >
+         AND content_type = #{contentType,jdbcType=INTEGER}
+      </if>
+      <if test="content != null" >
+         AND content = #{content,jdbcType=VARCHAR}
+      </if>
+      <if test="recContact != null" >
+         AND rec_contact = #{recContact,jdbcType=VARCHAR}
+      </if>
+      <if test="recContactPhone != null" >
+         AND rec_contact_phone = #{recContactPhone,jdbcType=VARCHAR}
+      </if>
+      <if test="recAddress != null" >
+         AND rec_address = #{recAddress,jdbcType=VARCHAR}
+      </if>
+      <if test="recZipcode != null" >
+         AND rec_zipcode = #{recZipcode,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null" >
+         AND status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="entryTime != null" >
+         AND entry_time = #{entryTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="printerId != null" >
+         AND printer_id = #{printerId,jdbcType=BIGINT}
+      </if>
+      <if test="printerName != null" >
+         AND printer_name = #{printerName,jdbcType=VARCHAR}
+      </if>
+      <if test="printTime != null" >
+         AND print_time = #{printTime,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </sql>
+  <select id="selectCount" resultType="java.lang.Long" parameterType="com.fenghua.auto.order.domain.OrderInvoice" >
+    select count( id)
+     from order_invoice
+    <include refid="Base_Where_Case" />
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fenghua.auto.order.domain.OrderInvoice" >
+    select 
+    <include refid="Base_Column_List" />
+     from order_invoice
+    <include refid="Base_Where_Case" />
+    <if test="limit > 0" >
+       limit #{offset},#{limit} 
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
