@@ -11,12 +11,13 @@ drop table if exists User;
 drop table if exists User_Address;
 drop table if exists User_Level;
 drop table if exists User_Payment_Type;
+drop table if exists sys_config;
 /*==============================================================*/
 /* Table: City_Area                                             */
 /*==============================================================*/
 create table City_Area
 (
-   ID                   bigint not null,
+   ID                   bigint not null auto_increment,
    Parent_ID            bigint,
    Name                 varchar(100) not null,
    Level                smallint not null,
@@ -99,7 +100,7 @@ create table Payment_Type
 create table Role
 (
    ID                   bigint not null auto_increment,
-   Name                 varchar(10) not null,
+   Name                 varchar(30) not null,
    Description          varchar(100),
    Created_TS           timestamp,
    Created_By           varchar(30),
@@ -126,8 +127,8 @@ create table Sys_Config
    Config_Value         varchar(200) not null,
    Created_TS           timestamp,
    Created_By           varchar(30),
-   Last_Modified_By     timestamp,
-   Last_Modified_TS     varchar(30),
+   Last_Modified_By     varchar(30),
+   Last_Modified_TS     timestamp,
    primary key (Config_Name)
 )
 ;

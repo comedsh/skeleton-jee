@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.PaymentType;
 import com.fenghua.auto.backend.domain.user.User;
-
 /**
  * 个人注册service
  * 
@@ -63,11 +62,35 @@ public interface UserService {
 	 * @return
 	 */
 	public User getUserByEmail(String email);
+
+//	/**
+//	 * 通过telephone查询用户
+//	 * @return
+//	 */
+//
+//	public List<User> getUserByTelephone(String telephone);
 	/**
-	 * 通过telephone查询用户
+	 * 根据用户id查询用户相信信息
+	 * @param userId
 	 * @return
 	 */
+	public User getUserByuserId(Long userId);
+	/**
+	 * 根据电话号码更新密码
+	 * @param user
+	 * @return
+	 */
+	public Long updatePasswordByPhone(String pwdNew,String phone);
+	/**
+	 * 根据用户id跟新密码
+	 * @param pwdNew
+	 * @param phone
+	 * @return
+	 */
+	public Long updatePasswordByUserId(String pwdNew,Long UserId);
+   
 	public User getUserByTelephone(String telephone);
+
 	/**
 	 * 自动登录，把用户名和密码写入security session中
 	 * @param userName
@@ -76,4 +99,11 @@ public interface UserService {
 	 * @param request
 	 */
 	public void autoLogin(String userName, String passWord, Locale locale,HttpServletRequest request);
+
+	/**
+	 * 根据qq openID查询用户
+	 * @param openID
+	 * @return
+	 */
+	public User getUserByQQ(String openID);
 }

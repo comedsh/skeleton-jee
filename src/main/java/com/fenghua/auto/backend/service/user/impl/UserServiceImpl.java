@@ -142,7 +142,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserByName(String name) {
 		List<User> user = userDao.selectByName(name);
-		if (user.size() > 0) {
+
+		if (user != null && user.equals("")) {
 			return user.get(0);
 		} else {
 			return null;
@@ -152,7 +153,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserByEmail(String email) {
 		List<User> user = userDao.selectByEmail(email);
-		if (user.size() > 0) {
+
+		if (user != null && user.equals("")) {
 			return user.get(0);
 		} else {
 			return null;
@@ -162,7 +164,18 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserByTelephone(String telephone) {
 		List<User> user = userDao.selectByTelephone(telephone);
-		if (user.size() > 0) {
+		if (user != null && user.equals("")) {
+			return user.get(0);
+		} else {
+			return null;
+		}
+	}
+	
+
+	@Override
+	public User getUserByQQ(String openID) {
+		List<User> user = userDao.getUserByQQ(openID);
+		if (user != null) {
 			return user.get(0);
 		} else {
 			return null;
@@ -183,4 +196,26 @@ public class UserServiceImpl implements UserService {
 			System.out.println("Authentication failed: " + e.getMessage());
 		}
 	}
+	@Override
+	public Long updatePasswordByPhone(String pwdNew,String phone) {
+		User user=new User();
+		String passWord = encoder.encode(pwdNew);
+		user.setPassword(passWord);
+		user.setMobilephone(phone);
+		return userDao.updatePasswordByPhone(user);
+	}
+
+	@Override
+	public Long updatePasswordByUserId(String pwdNew, Long UserId) {
+		User user=new User();
+		String passWord = encoder.encode(pwdNew);
+		user.setPassword(passWord);
+		user.setId(UserId);
+		return userDao.updatePasswordByUserId(user);	}
+
+	@Override
+	public User getUserByuserId(Long userId) {
+		return userDao.selectByUserId(userId);
+	}
+	
 }

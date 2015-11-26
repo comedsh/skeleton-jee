@@ -9,6 +9,7 @@
 <!DOCTYPE html>
 <html ng-app="login_app">
 <head lang="en">
+<meta property="qc:admins" content="24133277472661412366547477166230" />
     <title></title>
     <meta charset="UTF-8">
     <meta name="keywords" content="" />
@@ -38,6 +39,13 @@
         document.execCommand("BackgroundImageCache", false, true);
     </script>
     <![endif]-->
+    <!-- QQ登陆接入 -->
+    <script type="text/javascript"
+		src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" 
+		data-appid="101214271" 
+		data-redirecturi="http://www.auto007.com/auth/qq/" charset="utf-8"></script> 
+		
+		
     <style type="text/css">
         *{
             margin:0;
@@ -47,6 +55,7 @@
     </style>
 </head>
 <body>
+
 <!--头部-->
 <div class="header_login">
     <div class="header_ul clearfix">
@@ -105,8 +114,9 @@
         </div>
         <div class="Keep_div clearfix">
             <div class="Remember_pwd" data="0">记住密码</div>
-            <a ng-href="Forgot password.html">忘记密码</a>
+            <a ng-href="/findPassbyphone.jsp">忘记密码</a>
         </div>
+        
         <div class="code_d">
             <input type="text" ng-model="user.code">
             <img title="换一张" class="img_code" src="<%=request.getContextPath() %>/user/validatePicCheck"
@@ -118,7 +128,7 @@
         <button class="login_btn" enter ng-click="logins()">登 录</button>
         <div class="san_d">
             <label>使用合作网站账号登录</label>
-            <a href="###">QQ</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="/auth/qq.action">QQ</a>&nbsp;&nbsp;|&nbsp;&nbsp;
             <a href="###">微信</a>
         </div>
     </div>

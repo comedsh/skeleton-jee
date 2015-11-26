@@ -942,7 +942,7 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     					'compnayName' : $scope.Enterprise.company,
     					'areaCode' : $scope.Enterprise.areaCode,
     					'detailAddress' : $scope.Enterprise.address,
-    					'headcount' : $scope.Enterprise.num,
+    					'taxpayerNumber' : $scope.Enterprise.num,
     					'typename' : $scope.Enterprise.type_name,
     					'telcode' : $scope.Enterprise.telcode
     				},
