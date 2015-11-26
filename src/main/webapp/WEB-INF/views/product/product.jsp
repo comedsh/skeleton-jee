@@ -125,7 +125,7 @@ div.zoomMask {
 	</div>
 
 	<ul class="tb-thumb" id="thumblist" > 	  
-	      <li ng-repeat="item in picItems">	        
+	      <li ng-repeat="item in picItems" ng-class="">	        
 			<div class="tb-pic tb-s40"><a href="#" ng-click="imgClick()">
 			  <img  src="{{item.url}}" mid="{{item.url}}" big="{{item.url}}"></a>
 		    </div>
@@ -142,9 +142,9 @@ div.zoomMask {
 				<div>品牌:${product.brand}</div>
 				<div>配送方式:由丰华神州发货  并提供售后服务</div>
 				<div>数量:<input id="min" name="" type="button" value="-" ng-click="reduce()">
-<input id="num" name="num" type="text" value="1" readonly="true" ng-model="nums">
-<input id="add" name="" type="button" value="+" ng-click="add()">
-</div>
+						<input id="num" readonly="true" ng-model="nums">
+						<input id="add" name="" type="button" value="+" ng-click="add()">
+				</div>
 				<div>库存：{{stock.stockAvailability}}</div>
 				<div>
 					<input type="button" value="立即购买" />&nbsp;&nbsp;&nbsp;&nbsp;<input
@@ -162,6 +162,12 @@ div.zoomMask {
 	   angular.module('productApp', [])
        .controller('productController', function($scope,$http) {      	
     	 
+    	   $scope.init = function() {
+               $scope.nums = "1";
+           };
+           $scope.init();
+
+    	   
     	   var id = ${product.id};
 
     	   $scope.getPro =  function(url,callback){
@@ -171,9 +177,7 @@ div.zoomMask {
     	   };
     	   $scope.getPro("/productPic/"+id,function(data){
     		   $scope.picItems=data.items;
-    	   });	 
-    	   
-    	  
+    	   });	   	  
     	   
     	   $scope.getPro("/stock/"+id,function(data){
     		   $scope.stock=data;
@@ -183,38 +187,17 @@ div.zoomMask {
     	   });
     	  
     	   $scope.imgClick = function(){
-    			alert("s");
-    		/* 	alert(angular.element(this).parents("li"));
-    			angular.element(this).parents("li").addClass("tb-selected").siblings().removeClass("tb-selected");
-    			angular.element(".jqzoom").attr('src',$j(this).find("img").attr("mid"));
-    			angular.element(".jqzoom").attr('rel',$j(this).find("img").attr("big")); */
     	   };
     	   
     	   $scope.reduce =function(){
-    		   $scope.nums =  $scope.reduce -1;
+    		   $scope.nums =  parseInt($scope.nums) -1;
     	   }
     	   
            $scope.add =function(){
-        	   $scope.nums =  $scope.nums +1;
-    	   }
-    	   
+        	   
+        	  $scope.nums =   parseInt($scope.nums) +1;
+    	   } 	   
        });
-	   
-	 
-	var $j = jQuery.noConflict();
-		$j(document).ready(function(){
-
-			/* $j(".jqzoom").imagezoom();  */
-		/* 	alert("ss");
-			$j("#thumblist li a").click(function(){
-				alert("s");
-				$j(this).parents("li").addClass("tb-selected").siblings().removeClass("tb-selected");
-				$j(".jqzoom").attr('src',$j(this).find("img").attr("mid"));
-				$j(".jqzoom").attr('rel',$j(this).find("img").attr("big"));
-			}); */
-			
-			
-		}); 
 	</script>
 </body>
 </html>
