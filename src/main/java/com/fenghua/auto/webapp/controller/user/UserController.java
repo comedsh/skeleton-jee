@@ -10,7 +10,6 @@ import java.util.regex.Pattern;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fenghua.auto.backend.core.utills.uploadPicture;
@@ -39,9 +37,14 @@ import com.fenghua.auto.backend.domain.user.ResetPassRequest;
 import com.fenghua.auto.backend.domain.user.User;
 import com.fenghua.auto.backend.service.ConfigService;
 import com.fenghua.auto.backend.service.user.UserForgetPassService;
+import com.fenghua.auto.backend.domain.user.UserPaymentType;
+import com.fenghua.auto.backend.service.user.CompanyService;
+import com.fenghua.auto.backend.service.user.PaymentTypeService;
+import com.fenghua.auto.backend.service.user.UserPaymentTypeService;
 import com.fenghua.auto.backend.service.user.UserService;
 import com.fenghua.auto.webapp.view.Result;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /**
@@ -54,8 +57,6 @@ import net.sf.json.JSONObject;
 @RequestMapping("/user")
 public class UserController {
 	
-	private static Date OLD_DATE = null;
-	
 	@Autowired
 	private UserService userService;
 	@Autowired
@@ -64,6 +65,15 @@ public class UserController {
 	private UserForgetPassService userForgetPassService;
 	@Autowired
 	private ConfigService configService;
+	
+	@Autowired
+	private CompanyService companyService;
+	
+	@Autowired
+	private UserPaymentTypeService userPaymentTypeService;
+	
+	@Autowired
+	private PaymentTypeService paymentTypeService;
 	/**
 	 * @author chengbin
 	 * 增加一个个人用户注册
@@ -76,7 +86,7 @@ public class UserController {
 		Result msg = new Result();
 		String validateTel = (String) request.getSession().getAttribute("validateTel");
 		String verifyCode = (String) request.getSession().getAttribute("rand");
-		if(new Date().getTime() - OLD_DATE.getTime()  > 1000*120) {
+		if(new Date().getTime() - ((Date)request.getSession().getAttribute("date")).getTime()  > 1000*120) {
 			msg.setSuccess(false);
 			msg.setMsg("您输入的验证码已过期");
 		} else if(validateTel.equals(telcode) && verifyCode.equals(code)) {
@@ -86,7 +96,7 @@ public class UserController {
 			msg.setCode(user.getName());
 			msg.setMsg("注册成功");
 			//把用户名和密码存入安全的session中
-			userService.autoLogin(user.getName(), userPwd, locale, request);
+			userService.autoLogin(user.getName(), userPwd, request);
 		} else {
 			if(!validateTel.equals(telcode)) {
 				msg.setSuccess(false);
@@ -105,7 +115,7 @@ public class UserController {
 		Result msg = new Result();
 		String validateTel = (String) request.getSession().getAttribute("validateTel");
 		String verifyCode = (String) request.getSession().getAttribute("rand");
-		if(new Date().getTime() - OLD_DATE.getTime()  > 1000*120) {
+		if(new Date().getTime() - ((Date)request.getSession().getAttribute("date")).getTime()  > 1000*120) {
 			msg.setSuccess(false);
 			msg.setMsg("您输入的验证码已过期");
 		} else if(validateTel.equals(telcode) && verifyCode.equals(code)) {
@@ -124,7 +134,6 @@ public class UserController {
 		model.put("message", msg);
 		return model;
 	}
-
 	/**
 	 * @author chengbin
 	 * 增加一个企业用户注册
@@ -139,7 +148,7 @@ public class UserController {
 		String licence = request.getSession().getAttribute("licence").toString();
 		String certificate = request.getSession().getAttribute("certificate").toString();
 		if(licence != null && !licence.equals("")  && certificate != null && !certificate.equals("") ) {
-			if(new Date().getTime() - OLD_DATE.getTime()  > 1000*120) {
+			if(new Date().getTime() - ((Date)request.getSession().getAttribute("date")).getTime()  > 1000*120) {
 				msg.setSuccess(false);
 				msg.setMsg("您输入的验证码已过期");
 			}else if(validateTel.equals(telcode)) {
@@ -150,7 +159,7 @@ public class UserController {
 				msg.setCode(user.getName());
 				msg.setMsg("注册成功");
 				//把用户名和密码存入安全的session中
-				userService.autoLogin(user.getName(), user.getPassword(), locale, request);
+				userService.autoLogin(user.getName(), user.getPassword(), request);
 			} else {
 				if(!validateTel.equals(telcode)) {
 					msg.setSuccess(false);
@@ -177,6 +186,41 @@ public class UserController {
 	@RequestMapping(value = "/validateName", method = RequestMethod.GET)
 	public @ResponseBody User validateName(@RequestParam String name,  HttpServletRequest req, HttpServletResponse res) {
 		return userService.getUserByName(name);
+	}
+	/**
+	 * 通过用户名获取对应的信息
+	 * @param model
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/sellerInformation", method = RequestMethod.GET)
+	public void getInformation(Model model,HttpServletRequest request, HttpServletResponse response) {
+		JSONObject json =new JSONObject(); 
+		String name="chengbin";
+		User user = userService.getUserByName(name);
+		if(user.getRoleId() == 1) {
+			//个体买家
+			json.put("userInformation", user);
+		} else if(user.getRoleId() == 2) {
+			//企业买家
+			json.put("userInformation", user);
+			Company company = companyService.getById(user.getCompanyId());
+			json.put("companyInformation", company);
+			//目前前段用的radio 只支持一种支付方式
+			List<UserPaymentType> userPaymentTypes= userPaymentTypeService.getByUserId(user.getId());
+			JSONArray array = new JSONArray();
+			for (UserPaymentType userPaymentType : userPaymentTypes) {
+				PaymentType paymentType = paymentTypeService.getById(userPaymentType.getPaymenttypeId());
+				array.add(paymentType);
+				
+			}
+			json.put("paymentType", array);
+		}
+		try {
+			response.getWriter().write(json.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	/**
 	 * 通过name判断是否应该显示图形验证码
@@ -276,7 +320,8 @@ public class UserController {
 				if(str!=null){
 					 HttpSession session = req.getSession();
 					 session.setAttribute("validateTel", str);
-					 OLD_DATE = new Date();
+					 Date date = new Date();
+					 session.setAttribute("date", date);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
