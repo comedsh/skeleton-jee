@@ -104,13 +104,21 @@ public class UserController {
 				msg.setMsg("您输入的验证码已过期");
 			}else if(validateTel.equals(telcode)) {
 				company.setBusinessLicence(licence);
-				company.setBusinessLicence(certificate);
+				company.setTaxpayerLicence(certificate);
 				userService.insert(user,company,paymenttype);
 				msg.setSuccess(true);
+				msg.setCode(user.getName());
 				msg.setMsg("注册成功");
+				//把用户名和密码存入安全的session中
+				userService.autoLogin(user.getName(), user.getPassword(), locale, request);
 			} else {
-				msg.setSuccess(false);
-				msg.setMsg("您输入的手机验证码有误");
+				if(!validateTel.equals(telcode)) {
+					msg.setSuccess(false);
+					msg.setMsg("您输入的手机验证码有误");
+				} else {
+					msg.setSuccess(false);
+					msg.setMsg("您输入的图形验证码有误");
+				}
 			}
 		} else {
 			msg.setSuccess(false);
