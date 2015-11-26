@@ -18,6 +18,12 @@ public interface CompanyDao extends BaseDao<Company> {
 	 * @param fixed
 	 * @return
 	 */
+	public List<Company> getById(Long id);
+	/**
+	 * 通过固定电话查询是否有对应的company
+	 * @param fixed
+	 * @return
+	 */
 	public List<Company> selectByFixed(String fixed);
 	/**
 	 * 通过手机查询是否有对应的company

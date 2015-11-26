@@ -6,7 +6,7 @@
 
 drop table if exists bill_order;
 
-drop table if exists buy_car;
+drop table if exists shopping_cart;
 
 drop table if exists order_image;
 
@@ -75,27 +75,28 @@ create table bill_order
 );
 
 /*==============================================================*/
-/* Table: buy_car                                               */
+/* Table: shopping_cart                                               */
 /*==============================================================*/
-create table buy_car
-(
-   ID                   bigint not null auto_increment,
-   buyer_id             bigint not null,
-   sku_id               bigint not null,
-   original_price       decimal(18,4) not null,
-   sale_price           decimal(18,4) not null,
-   current_price        decimal(18,4) not null,
-   discount_strategy_desc varchar(200),
-   qty                  int not null,
-   last_price_time      datetime,
-   add_time             datetime not null,
-   primary key (ID)
-);
+CREATE TABLE `shopping_cart` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `buyer_id` bigint(20) NOT NULL,
+  `sku_id` bigint(20) NOT NULL,
+  `original_price` decimal(18,4) NOT NULL,
+  `sale_price` decimal(18,4) NOT NULL,
+  `current_price` decimal(18,4) NOT NULL,
+  `discount_strategy_desc` varchar(200) DEFAULT NULL,
+  `qty` int(11) NOT NULL,
+  `last_price_time` datetime DEFAULT NULL,
+  `add_time` datetime NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `idx_buyer_id` (`buyer_id`),
+  KEY `idx_sku_id` (`sku_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*==============================================================*/
 /* Index: idx_buyer_id                                          */
 /*==============================================================*/
-create index idx_buyer_id on buy_car
+create index idx_cart_id on shopping_cart
 (
    buyer_id
 );
@@ -103,7 +104,7 @@ create index idx_buyer_id on buy_car
 /*==============================================================*/
 /* Index: idx_sku_id                                            */
 /*==============================================================*/
-create index idx_sku_id on buy_car
+create index idx_sku_id on shopping_cart
 (
    sku_id
 );

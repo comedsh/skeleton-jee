@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import com.fenghua.auto.backend.core.security.UserInfo;
 import com.fenghua.auto.backend.domain.user.Role;
 import com.fenghua.auto.backend.domain.user.User;
 import com.fenghua.auto.backend.service.user.RoleService;
@@ -85,11 +86,15 @@ public class CustomUserDetailService implements UserDetailsService{
 			auths.add(grantedAuthorityImpl);
 		}
 
-		org.springframework.security.core.userdetails.User user = new org.springframework.security.core.userdetails.User(
-				username, password, true, true, true, true, auths);
-	
+		/*org.springframework.security.core.userdetails.User user = new org.springframework.security.core.userdetails.User(
+				username, password, true, true, true, true, auths);*/
+	   
+		UserInfo userInfo = new UserInfo(username, password, auths);
+		userInfo.setUserId(users.getId());
+		userInfo.setCompanyId(users.getCompanyId());
+		
 		logger.debug("loadUserByUsername(String) - end");
-		return user;
+		return userInfo;
 	}
 
 	public void setAccountService(AccountService accountService) {
