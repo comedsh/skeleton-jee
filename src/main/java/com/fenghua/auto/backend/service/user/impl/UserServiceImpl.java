@@ -173,7 +173,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserByQQ(String openID) {
 		List<User> user = userDao.getUserByQQ(openID);
-		if (user != null) {
+		if (user != null&&user.size()==1) {
 			return user.get(0);
 		} else {
 			return null;
