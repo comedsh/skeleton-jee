@@ -98,7 +98,7 @@
     width: 145px;
     position: relative;
     padding-right: 30px;
-    background: url("../imgs/arrow.jpg") no-repeat 160px 11px;
+    background: url("../../imgs/arrow.jpg") no-repeat 160px 11px;
 }
 .name_pwd .chren_div .input_select ul {
     width: 185px;
@@ -135,7 +135,7 @@
 }
 .name_pwd .chren_div .select_province, .name_pwd .chren_div .select_city, .name_pwd .chren_div .select_area {
     width: 85px;
-    background: url("../imgs/arrow.jpg") no-repeat 104px 11px;
+    background: url("../../imgs/arrow.jpg") no-repeat 104px 11px;
 }
 .name_pwd .chren_div .select_province ul, .name_pwd .chren_div .select_city ul, .name_pwd .chren_div .select_area ul, .name_pwd .chren_div .select_province ul li, .name_pwd .chren_div .select_city ul li, .name_pwd .chren_div .select_area ul li {
     width: 125px;
@@ -203,10 +203,10 @@
     color: #333;
     cursor: pointer;
     margin-top: 10px;
-    background: url('../imgs/as.png') no-repeat center;
+    background: url('../../imgs/as.png') no-repeat center;
 }
 .Remember_pwd1 {
-    background: url('../imgs/as1.jpg') no-repeat center;
+    background: url('../../imgs/as1.jpg') no-repeat center;
 }
 .name_pwd .chren_div .check_box label{
     float: left;
@@ -232,12 +232,12 @@
 .name_pwd .chren_div .radio_r1 {
     width: 90px;
     padding-left: 25px;
-    background: url("../imgs/radio.jpg") no-repeat 0 center;
+    background: url("../../imgs/radio.jpg") no-repeat 0 center;
 }
 .name_pwd .chren_div .radio_r2 {
     width: 90px;
     padding-left: 25px;
-    background: url("../imgs/radio1.jpg") no-repeat 0 center;
+    background: url("../../imgs/radio1.jpg") no-repeat 0 center;
 }
 .radio_div{
     display: none;

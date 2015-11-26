@@ -2,6 +2,7 @@ package com.fenghua.auto.sku.service;
 
 import java.util.List;
 
+import com.fenghua.auto.backend.service.BaseService;
 import com.fenghua.auto.sku.domain.SkuStock;
 
 /** 
@@ -11,13 +12,14 @@ import com.fenghua.auto.sku.domain.SkuStock;
   * @date 2015年11月24日
   * @version 
   */
-public interface SkuStockService {
+public interface SkuStockService extends BaseService<SkuStock>{
 
 	
 	public SkuStock queryStockBySkuId(Long skuId);
 
-	public List<SkuStock> queryStockByReposityId(Long reposityId);
+	public SkuStock queryStockByReposityId(Long reposityId);
 	
-	public long countBySkuId(Long id);
+	
+	
 
 }

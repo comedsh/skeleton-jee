@@ -21,7 +21,7 @@
     from sku_images
     where 1=1
     <if test="skuId != null" >
-        and skuId=#{skuId,jdbcType=BIGINT}
+        and sku_id=#{skuId,jdbcType=BIGINT}
     </if>
     <if test="id != null" >
        and id = #{id,jdbcType=BIGINT}

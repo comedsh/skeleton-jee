@@ -26,6 +26,78 @@
     reason_desc, status, order_amount, deduct_amount, refund_amount, audit_content, auditor_id, 
     audit_time, applicant_id, apply_time
   </sql>
+  <sql id="Base_Where_Case" >
+    <where >
+      <if test="id != null" >
+         AND id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="refundId != null" >
+         AND refund_id = #{refundId,jdbcType=BIGINT}
+      </if>
+      <if test="orderItemId != null" >
+         AND order_item_id = #{orderItemId,jdbcType=BIGINT}
+      </if>
+      <if test="skuId != null" >
+         AND sku_id = #{skuId,jdbcType=BIGINT}
+      </if>
+      <if test="skuCode != null" >
+         AND sku_code = #{skuCode,jdbcType=VARCHAR}
+      </if>
+      <if test="skuName != null" >
+         AND sku_name = #{skuName,jdbcType=VARCHAR}
+      </if>
+      <if test="skuQty != null" >
+         AND sku_qty = #{skuQty,jdbcType=INTEGER}
+      </if>
+      <if test="reasonCodes != null" >
+         AND reason_codes = #{reasonCodes,jdbcType=VARCHAR}
+      </if>
+      <if test="reasonDesc != null" >
+         AND reason_desc = #{reasonDesc,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null" >
+         AND status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="orderAmount != null" >
+         AND order_amount = #{orderAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="deductAmount != null" >
+         AND deduct_amount = #{deductAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="refundAmount != null" >
+         AND refund_amount = #{refundAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="auditContent != null" >
+         AND audit_content = #{auditContent,jdbcType=VARCHAR}
+      </if>
+      <if test="auditorId != null" >
+         AND auditor_id = #{auditorId,jdbcType=BIGINT}
+      </if>
+      <if test="auditTime != null" >
+         AND audit_time = #{auditTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="applicantId != null" >
+         AND applicant_id = #{applicantId,jdbcType=BIGINT}
+      </if>
+      <if test="applyTime != null" >
+         AND apply_time = #{applyTime,jdbcType=BIGINT}
+      </if>
+    </where>
+  </sql>
+  <select id="selectCount" resultType="java.lang.Long" parameterType="com.fenghua.auto.order.domain.RefundOrderDetail" >
+    select count( id)
+     from refund_order_detail
+    <include refid="Base_Where_Case" />
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fenghua.auto.order.domain.RefundOrderDetail" >
+    select 
+    <include refid="Base_Column_List" />
+     from refund_order_detail
+    <include refid="Base_Where_Case" />
+    <if test="limit > 0" >
+       limit #{offset},#{limit} 
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

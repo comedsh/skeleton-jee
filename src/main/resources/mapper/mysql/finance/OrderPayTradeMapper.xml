@@ -16,6 +16,51 @@
     id, order_payment_id, order_payment_sub_no, pay_method, pay_status, trade_no, submit_time, 
     pay_time, cancel_time
   </sql>
+  <sql id="Base_Where_Case" >
+    <where >
+      <if test="id != null" >
+         AND id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="orderPaymentId != null" >
+         AND order_payment_id = #{orderPaymentId,jdbcType=BIGINT}
+      </if>
+      <if test="orderPaymentSubNo != null" >
+         AND order_payment_sub_no = #{orderPaymentSubNo,jdbcType=VARCHAR}
+      </if>
+      <if test="payMethod != null" >
+         AND pay_method = #{payMethod,jdbcType=INTEGER}
+      </if>
+      <if test="payStatus != null" >
+         AND pay_status = #{payStatus,jdbcType=INTEGER}
+      </if>
+      <if test="tradeNo != null" >
+         AND trade_no = #{tradeNo,jdbcType=VARCHAR}
+      </if>
+      <if test="submitTime != null" >
+         AND submit_time = #{submitTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="payTime != null" >
+         AND pay_time = #{payTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="cancelTime != null" >
+         AND cancel_time = #{cancelTime,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </sql>
+  <select id="selectCount" resultType="java.lang.Long" parameterType="com.fenghua.auto.finance.domain.OrderPayTrade" >
+    select count( id)
+     from order_pay_trade
+    <include refid="Base_Where_Case" />
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fenghua.auto.finance.domain.OrderPayTrade" >
+    select 
+    <include refid="Base_Column_List" />
+     from order_pay_trade
+    <include refid="Base_Where_Case" />
+    <if test="limit > 0" >
+       limit #{offset},#{limit} 
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

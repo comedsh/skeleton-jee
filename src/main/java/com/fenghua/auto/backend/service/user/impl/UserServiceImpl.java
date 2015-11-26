@@ -82,6 +82,10 @@ public class UserServiceImpl implements UserService {
 		String passWord = encoder.encode( personal.getPassword());
 		personal.setPassword(passWord);
 		personal.setRoleId(Long.parseLong("1"));
+		personal.setFailedLoginTimes(Short.parseShort("0"));
+		personal.setAvailable(true);
+		personal.setCreatedTs(new Date());
+		personal.setLastModifiedTs(new Date());
 		userDao.insert(personal);
 	}
 	@Override
@@ -112,6 +116,10 @@ public class UserServiceImpl implements UserService {
 		personal.setPassword(passWord);
 		personal.setCompanyId(companyId);
 		personal.setRoleId(Long.parseLong("2"));
+		personal.setFailedLoginTimes(Short.parseShort("0"));
+		personal.setAvailable(true);
+		personal.setCreatedTs(new Date());
+		personal.setLastModifiedTs(new Date());
 		Long userId = userDao.getPaymentId(personal);
 		//user与支付关系数据
 		UserPaymentType payment_type = new UserPaymentType();
@@ -161,8 +169,19 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 	
+
 	@Override
-	public void autoLogin(String userName, String passWord, Locale locale,HttpServletRequest request){
+	public User getUserByQQ(String openID) {
+		List<User> user = userDao.getUserByQQ(openID);
+		if (user != null&&user.size()==1) {
+			return user.get(0);
+		} else {
+			return null;
+		}
+	}
+	
+	@Override
+	public void autoLogin(String userName, String passWord,HttpServletRequest request){
 		CustomUsernamePasswordAuthenticationToken token = new CustomUsernamePasswordAuthenticationToken(userName, passWord);
 		try {
 			token.setDetails(new WebAuthenticationDetails(request));
@@ -174,5 +193,26 @@ public class UserServiceImpl implements UserService {
 			e.printStackTrace();
 			System.out.println("Authentication failed: " + e.getMessage());
 		}
+	}
+	@Override
+	public Long updatePasswordByPhone(String pwdNew,String phone) {
+		User user=new User();
+		String passWord = encoder.encode(pwdNew);
+		user.setPassword(passWord);
+		user.setMobilephone(phone);
+		return userDao.updatePasswordByPhone(user);
+	}
+
+	@Override
+	public Long updatePasswordByUserId(String pwdNew, Long UserId) {
+		User user=new User();
+		String passWord = encoder.encode(pwdNew);
+		user.setPassword(passWord);
+		user.setId(UserId);
+		return userDao.updatePasswordByUserId(user);	}
+
+	@Override
+	public User getUserByuserId(Long userId) {
+		return userDao.selectByUserId(userId);
 	}
 }
