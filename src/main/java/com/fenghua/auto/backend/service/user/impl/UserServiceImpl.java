@@ -183,4 +183,26 @@ public class UserServiceImpl implements UserService {
 			System.out.println("Authentication failed: " + e.getMessage());
 		}
 	}
+	@Override
+	public Long updatePasswordByPhone(String pwdNew,String phone) {
+		User user=new User();
+		String passWord = encoder.encode(pwdNew);
+		user.setPassword(passWord);
+		user.setMobilephone(phone);
+		return userDao.updatePasswordByPhone(user);
+	}
+
+	@Override
+	public Long updatePasswordByUserId(String pwdNew, Long UserId) {
+		User user=new User();
+		String passWord = encoder.encode(pwdNew);
+		user.setPassword(passWord);
+		user.setId(UserId);
+		return userDao.updatePasswordByUserId(user);	}
+
+	@Override
+	public User getUserByuserId(Long userId) {
+		return userDao.selectByUserId(userId);
+	}
+	
 }

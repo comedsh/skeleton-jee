@@ -7,14 +7,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
-
+import java.sql.Timestamp;
+import java.util.Calendar;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,13 +24,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.web.servlet.ModelAndView;
 import com.fenghua.auto.backend.core.utills.uploadPicture;
 import com.fenghua.auto.backend.core.utills.graphValidate.PictureCheckCode;
 import com.fenghua.auto.backend.core.utills.message.SMSMessage;
 import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.PaymentType;
+import com.fenghua.auto.backend.domain.user.ResetPassRequest;
 import com.fenghua.auto.backend.domain.user.User;
+import com.fenghua.auto.backend.service.ConfigService;
+import com.fenghua.auto.backend.service.user.UserForgetPassService;
 import com.fenghua.auto.backend.service.user.UserService;
 import com.fenghua.auto.webapp.view.Result;
 
@@ -49,6 +53,12 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private BCryptPasswordEncoder encoder;
+	@Autowired
+	private UserForgetPassService userForgetPassService;
+	@Autowired
+	private ConfigService configService;
 	/**
 	 * @author chengbin
 	 * 增加一个个人用户注册
@@ -84,7 +94,32 @@ public class UserController {
 		model.put("message", msg);
 		return model;
 	}
-	
+	@RequestMapping(value = "/findPassByPhone", method = RequestMethod.POST)
+	public @ResponseBody Map<String,Result> findPassByPhone( @RequestParam String telcode, @RequestParam String code, HttpServletRequest request) {
+		Map<String,Result> model = new HashMap<String,Result>();
+		Result msg = new Result();
+		String validateTel = (String) request.getSession().getAttribute("validateTel");
+		String verifyCode = (String) request.getSession().getAttribute("rand");
+		if(new Date().getTime() - OLD_DATE.getTime()  > 1000*120) {
+			msg.setSuccess(false);
+			msg.setMsg("您输入的验证码已过期");
+		} else if(validateTel.equals(telcode) && verifyCode.equals(code)) {
+			msg.setSuccess(true);
+			msg.setMsg("成功");
+			//把用户名和密码存入安全的session中
+		} else {
+			if(!validateTel.equals(telcode)) {
+				msg.setSuccess(false);
+				msg.setMsg("您输入的手机验证码有误");
+			} else {
+				msg.setSuccess(false);
+				msg.setMsg("您输入的图形验证码有误");
+			}
+		}
+		model.put("message", msg);
+		return model;
+	}
+
 	/**
 	 * @author chengbin
 	 * 增加一个企业用户注册
@@ -104,13 +139,21 @@ public class UserController {
 				msg.setMsg("您输入的验证码已过期");
 			}else if(validateTel.equals(telcode)) {
 				company.setBusinessLicence(licence);
-				company.setBusinessLicence(certificate);
+				company.setTaxpayerLicence(certificate);
 				userService.insert(user,company,paymenttype);
 				msg.setSuccess(true);
+				msg.setCode(user.getName());
 				msg.setMsg("注册成功");
+				//把用户名和密码存入安全的session中
+				userService.autoLogin(user.getName(), user.getPassword(), locale, request);
 			} else {
-				msg.setSuccess(false);
-				msg.setMsg("您输入的手机验证码有误");
+				if(!validateTel.equals(telcode)) {
+					msg.setSuccess(false);
+					msg.setMsg("您输入的手机验证码有误");
+				} else {
+					msg.setSuccess(false);
+					msg.setMsg("您输入的图形验证码有误");
+				}
 			}
 		} else {
 			msg.setSuccess(false);
@@ -263,6 +306,98 @@ public class UserController {
 	public String updateUser(@Valid User user, Model model) {
 		userService.update(user);
 		return "";
+	}
+	/**
+	 * 根据电话号码跟新密码
+	 * @param user
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/updatePasswordByPhone",method=RequestMethod.POST)
+	public @ResponseBody Map<String,Result> updatePasswordByPhone(@RequestParam String pwd_new,@RequestParam String phone, Model model) {
+		Map<String,Result> model1 = new HashMap<String,Result>();
+		Long id=null;
+		id=userService.updatePasswordByPhone(pwd_new,phone);
+		Result msg = new Result();
+		if(id != null && id!=0) {
+			msg.setSuccess(true);
+			msg.setMsg("修改成功");
+			msg.setCode(phone);
+		} else {
+			msg.setSuccess(false);
+			msg.setMsg("修改失败");
+			
+		}
+		model1.put("message", msg);
+		return model1;
+	}
+	/**
+	 * 根据用户id跟新密码
+	 * @param user
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/updatePasswordByUserId",method=RequestMethod.POST)
+	public @ResponseBody Map<String,Result> updatePasswordByUserId(@RequestParam String pwdNew,@RequestParam Long userId, Model model) {
+		Map<String,Result> model1 = new HashMap<String,Result>();
+		Long id=null;
+		id=userService.updatePasswordByUserId(pwdNew, userId);
+		Result msg = new Result();
+		if(id != null && id!=0) {
+			User user=userService.getUserByuserId(userId);
+			msg.setSuccess(true);
+			msg.setMsg("修改成功");
+			msg.setCode(user.getEmail());
+		} else {
+			msg.setSuccess(false);
+			msg.setMsg("修改失败");
+			
+		}
+		model1.put("message", msg);
+		return model1;
+	}
+
+	/**
+	 * 忘记密码  发送邮件链接
+	 * @param email
+	 * @param phone
+	 * @param model
+	 */
+	@RequestMapping(value = "/forGotPassword",method=RequestMethod.POST)
+	public @ResponseBody void forGotPassword(@RequestParam String email, Model model) {
+		userForgetPassService.insert(email);
+	}
+	/**
+	 * 验证找回密码邮箱链接
+	 * @param spittle
+	 * @param result
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value ="/checkResetLink") 
+	public  ModelAndView checkResetLink(@RequestParam String token, @RequestParam Long userId, Model model){
+		List<ResetPassRequest> list=null;
+	    list =userForgetPassService.selectByCodeAndUser(token, userId);
+	    Calendar c = Calendar.getInstance();
+		//现在的时间(单位：毫秒)
+		long curtime = c.getTimeInMillis();
+		Map<String,String> map = new HashMap<String, String>();
+		if(list!=null && list.size()>0){
+			ResetPassRequest resetPassRequest=list.get(0);
+			Timestamp token_exptime=resetPassRequest.getValidTo();
+			if( System.currentTimeMillis()>token_exptime.getTime() ){
+				//激活码过期，先删除该用户记录，然后重新发送邮件
+				userForgetPassService.deleteByUserId(userId);
+				return new ModelAndView("/user/forgetPass/findPassFail",map);
+			}else{
+				userForgetPassService.deleteByUserId(userId);
+				map.put("userId", userId.toString());
+				return new ModelAndView("/user/forgetPass/findPassbyemail",map);
+			}
+		}else{
+			return new ModelAndView("/user/forgetPass/findPassFail",map);
+		}
+		
 	}
 	/**
 	 * 删除用户

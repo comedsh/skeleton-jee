@@ -55,6 +55,7 @@ public class Sku implements DomainObject{
 
     private String introduce;
 
+    private String distribution ;
 
     public Long getId() {
         return id;
@@ -247,4 +248,14 @@ public class Sku implements DomainObject{
     public void setIntroduce(String introduce) {
         this.introduce = introduce == null ? null : introduce.trim();
     }
+
+	public String getDistribution() {
+		return distribution;
+	}
+
+	public void setDistribution(String distribution) {
+		this.distribution = distribution;
+	}
+    
+    
 }
