@@ -69,7 +69,7 @@ $(function() {
                     	
                     	$("#sub_tel").val(0);
                         $('.mobile_error img').hide();
-                        $(".mobile_error span").html("输入正确");
+                        $(".mobile_error span").html("");
                         $('#validateTel').bind('click','validateTel()');
                       //失去焦点时，隐藏X图标
 //                        var as= $(str).parent().children('.user_error3').css('display');
@@ -102,7 +102,8 @@ $(function() {
 //            $(".code_error span").html(" 输入正确");
 //            $("#sub_code").val(0);
         }else{
-        	$(".code_error span").html("");
+        	 $('.code_error img').hide();
+        	 $(".code_error span").html("");
         	 $("#sub_code").val(0);
             return false;
         }
@@ -140,7 +141,7 @@ $(function() {
 //            $(".iPhone_code_error span").html("输入正确");
 //            $("#sub_tel_code").val(0);
         }else{
-        	$('.iPhone_code_error img').show();
+        	 $('.iPhone_code_error img').hide();
             $(".iPhone_code_error span").html("");
             $("#sub_tel_code").val(0);
             return false;
@@ -326,11 +327,6 @@ forgotpwd_app.controller('ipone_ctr',['$scope','$http',function($scope,$http){
         
         $scope.nextstep=function(){
             console.log($scope.mobile+"////"+$scope.num);
-            alert($("#sub_tel").val())
-            alert( $("#sub_code").val())
-            alert($("#sub_tel_code").val())
-            alert($scope.code)
-            alert($scope.iPhone_code)
             if($("#sub_tel").val()==0 && $("#sub_code").val()==0 && $("#sub_tel_code").val()==0){
             	// $scope.myVar2 = false;
                 $http.post(
@@ -357,6 +353,7 @@ forgotpwd_app.controller('ipone_ctr',['$scope','$http',function($scope,$http){
                     	}
                     })
                     .error(function(rep){
+                    	alert(data.message.msg);
                     })
             }
 

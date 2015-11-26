@@ -390,6 +390,7 @@ public class UserController {
 				userForgetPassService.deleteByUserId(userId);
 				return new ModelAndView("/user/forgetPass/findPassFail",map);
 			}else{
+				userForgetPassService.deleteByUserId(userId);
 				map.put("userId", userId.toString());
 				return new ModelAndView("/user/forgetPass/findPassbyemail",map);
 			}
