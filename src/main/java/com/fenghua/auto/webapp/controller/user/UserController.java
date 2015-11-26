@@ -1,6 +1,8 @@
 package com.fenghua.auto.webapp.controller.user;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -8,8 +10,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import java.sql.Timestamp;
-import java.util.Calendar;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +17,6 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,11 +34,10 @@ import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.PaymentType;
 import com.fenghua.auto.backend.domain.user.ResetPassRequest;
 import com.fenghua.auto.backend.domain.user.User;
-import com.fenghua.auto.backend.service.ConfigService;
-import com.fenghua.auto.backend.service.user.UserForgetPassService;
 import com.fenghua.auto.backend.domain.user.UserPaymentType;
 import com.fenghua.auto.backend.service.user.CompanyService;
 import com.fenghua.auto.backend.service.user.PaymentTypeService;
+import com.fenghua.auto.backend.service.user.UserForgetPassService;
 import com.fenghua.auto.backend.service.user.UserPaymentTypeService;
 import com.fenghua.auto.backend.service.user.UserService;
 import com.fenghua.auto.webapp.view.Result;
@@ -59,12 +57,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private BCryptPasswordEncoder encoder;
+	
 	@Autowired
 	private UserForgetPassService userForgetPassService;
-	@Autowired
-	private ConfigService configService;
 	
 	@Autowired
 	private CompanyService companyService;
@@ -424,6 +419,7 @@ public class UserController {
 	 * @param model
 	 * @return
 	 */
+	@SuppressWarnings("unused")
 	@RequestMapping(value ="/checkResetLink") 
 	public  ModelAndView checkResetLink(@RequestParam String token, @RequestParam Long userId, Model model){
 		List<ResetPassRequest> list=null;

@@ -1,7 +1,5 @@
 package com.fenghua.auto.webapp.controller.user;
 
-import java.util.Locale;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
