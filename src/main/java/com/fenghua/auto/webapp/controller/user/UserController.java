@@ -1,15 +1,14 @@
 package com.fenghua.auto.webapp.controller.user;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
-
+import java.sql.Timestamp;
+import java.util.Calendar;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -50,7 +49,6 @@ import net.sf.json.JSONObject;
 @RequestMapping("/user")
 public class UserController {
 	
-	@SuppressWarnings("unused")
 	private static Date OLD_DATE = null;
 	
 	@Autowired
@@ -93,7 +91,6 @@ public class UserController {
 				msg.setMsg("您输入的图形验证码有误");
 			}
 		}
-		
 		model.put("message", msg);
 		return model;
 	}
@@ -142,13 +139,21 @@ public class UserController {
 				msg.setMsg("您输入的验证码已过期");
 			}else if(validateTel.equals(telcode)) {
 				company.setBusinessLicence(licence);
-				company.setBusinessLicence(certificate);
+				company.setTaxpayerLicence(certificate);
 				userService.insert(user,company,paymenttype);
 				msg.setSuccess(true);
+				msg.setCode(user.getName());
 				msg.setMsg("注册成功");
+				//把用户名和密码存入安全的session中
+				userService.autoLogin(user.getName(), user.getPassword(), locale, request);
 			} else {
-				msg.setSuccess(false);
-				msg.setMsg("您输入的手机验证码有误");
+				if(!validateTel.equals(telcode)) {
+					msg.setSuccess(false);
+					msg.setMsg("您输入的手机验证码有误");
+				} else {
+					msg.setSuccess(false);
+					msg.setMsg("您输入的图形验证码有误");
+				}
 			}
 		} else {
 			msg.setSuccess(false);
@@ -157,7 +162,6 @@ public class UserController {
 		model.put("message", msg);
 		return model;
 	}
-	
 	
 	/**
 	 * 通过name查询

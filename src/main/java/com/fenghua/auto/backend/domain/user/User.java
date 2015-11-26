@@ -2,9 +2,6 @@ package com.fenghua.auto.backend.domain.user;
 
 import java.util.Date;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import com.fenghua.auto.backend.domain.DomainObject;
 /**
  * 用户实体类
@@ -16,8 +13,7 @@ public class User implements DomainObject {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-	@Size(min=6, max=20)
-	@NotNull
+
 	private String name;
 
 	private String password;
@@ -30,11 +26,11 @@ public class User implements DomainObject {
 
 	private String wechat;
 
-	private Long role;
+	private Long roleId;
 
-	private Long level;
+	private Long userLevelId;
 
-	private Long company;
+	private Long companyId;
 
 	private Short failedLoginTimes;
 
@@ -104,28 +100,28 @@ public class User implements DomainObject {
 		this.wechat = wechat == null ? null : wechat.trim();
 	}
 
-	public Long getRole() {
-		return role;
+	public Long getRoleId() {
+		return roleId;
 	}
 
-	public void setRole(Long role) {
-		this.role = role;
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
 	}
 
-	public Long getLevel() {
-		return level;
+	public Long getUserLevelId() {
+		return userLevelId;
 	}
 
-	public void setLevel(Long level) {
-		this.level = level;
+	public void setUserLevelId(Long userLevelId) {
+		this.userLevelId = userLevelId;
 	}
 
-	public Long getCompany() {
-		return company;
+	public Long getCompanyId() {
+		return companyId;
 	}
 
-	public void setCompany(Long company) {
-		this.company = company;
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
 	}
 
 	public Short getFailedLoginTimes() {

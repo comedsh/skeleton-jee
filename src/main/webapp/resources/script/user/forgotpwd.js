@@ -223,7 +223,7 @@ $(function() {
                 data: {"email":$(this).val()},
                 dataType: "json",
                 success: function (data) {
-                    if(data.length == 0) {
+                    if(data==null || data.length == 0) {
                     	 $(".email_error span").show().html("该邮箱未被注册");
                     	 $('.boolen1').val('1');
                     } else {
