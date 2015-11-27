@@ -363,15 +363,82 @@ public class UserController {
 		return userService.getUserById(id);
 	}
 	/**
-	 * 更新用户
-	 * @param User
-	 * @param model
-	 * @return
+	 * @author chengbin
+	 * 修改一个个人用户注册
+	 * @return 
+	 * @createTime 2015.11.4
 	 */
-	@RequestMapping(value = "/{id}",method=RequestMethod.PUT)
-	public String updateUser(@Valid User user, Model model) {
-		userService.update(user);
-		return "";
+	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+	public @ResponseBody Map<String,Result> update(@Valid User user, @RequestParam String telcode, @RequestParam String code, HttpServletRequest request,Locale locale) {
+		Map<String,Result> model = new HashMap<String,Result>();
+		Result msg = new Result();
+		String validateTel = (String) request.getSession().getAttribute("validateTel");
+		String verifyCode = (String) request.getSession().getAttribute("rand");
+		if(new Date().getTime() - ((Date)request.getSession().getAttribute("date")).getTime()  > 1000*120) {
+			msg.setSuccess(false);
+			msg.setMsg("您输入的验证码已过期");
+		} else if(validateTel.equals(telcode) && verifyCode.equals(code)) {
+			String userPwd = user.getPassword();
+			userService.insert(user);
+			msg.setSuccess(true);
+			msg.setCode(user.getName());
+			msg.setMsg("注册成功");
+			//把用户名和密码存入安全的session中
+			userService.autoLogin(user.getName(), userPwd, request);
+		} else {
+			if(!validateTel.equals(telcode)) {
+				msg.setSuccess(false);
+				msg.setMsg("您输入的手机验证码有误");
+			} else {
+				msg.setSuccess(false);
+				msg.setMsg("您输入的图形验证码有误");
+			}
+		}
+		model.put("message", msg);
+		return model; 
+	}
+	/**
+	 * @author chengbin
+	 * 修改一个企业用户注册
+	 * @return 
+	 * @createTime 2015.11.4
+	 */
+	@RequestMapping(value = "/upadateUserCompany", method = RequestMethod.POST)
+	public Map<String,Result> upadateUserAndCompany(@Valid User user, @Valid Company company, @RequestParam String telcode, @Valid PaymentType paymenttype,HttpServletRequest request, Locale locale) {
+		Map<String,Result> model = new HashMap<String,Result>();
+		Result msg = new Result();
+		String validateTel = (String) request.getSession().getAttribute("validateTel");
+		String licence = request.getSession().getAttribute("licence").toString();
+		String certificate = request.getSession().getAttribute("certificate").toString();
+		if(licence != null && !licence.equals("")  && certificate != null && !certificate.equals("") ) {
+			if(new Date().getTime() - ((Date)request.getSession().getAttribute("date")).getTime()  > 1000*120) {
+				msg.setSuccess(false);
+				msg.setMsg("您输入的验证码已过期");
+			}else if(validateTel.equals(telcode)) {
+				String userPwd = user.getPassword();
+				company.setBusinessLicence(licence);
+				company.setTaxpayerLicence(certificate);
+				userService.insert(user,company,paymenttype);
+				msg.setSuccess(true);
+				msg.setCode(user.getName());
+				msg.setMsg("注册成功");
+				//把用户名和密码存入安全的session中
+				userService.autoLogin(user.getName(), userPwd, request);
+			} else {
+				if(!validateTel.equals(telcode)) {
+					msg.setSuccess(false);
+					msg.setMsg("您输入的手机验证码有误");
+				} else {
+					msg.setSuccess(false);
+					msg.setMsg("您输入的图形验证码有误");
+				}
+			}
+		} else {
+			msg.setSuccess(false);
+			msg.setMsg("您的图片没有上传成功");
+		}
+		model.put("message", msg);
+		return model;
 	}
 	/**
 	 * 根据电话号码跟新密码
