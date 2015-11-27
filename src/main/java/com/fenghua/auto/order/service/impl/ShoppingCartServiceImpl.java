@@ -3,14 +3,26 @@
  */
 package com.fenghua.auto.order.service.impl;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.fenghua.auto.backend.core.utills.UserSecurityUtils;
 import com.fenghua.auto.backend.dao.BaseDao;
 import com.fenghua.auto.order.dao.ShoppingCartDao;
 import com.fenghua.auto.order.domain.ShoppingCart;
 import com.fenghua.auto.backend.service.impl.BaseServiceImpl;
 import com.fenghua.auto.order.service.ShoppingCartService;
+import com.fenghua.auto.order.vo.ShoppingCartGroupVO;
+import com.fenghua.auto.order.vo.ShoppingCartVO;
+import com.fenghua.auto.sku.domain.Sku;
+import com.fenghua.auto.sku.service.SkuService;
 
 /**
  * Service实现类
@@ -25,9 +37,112 @@ public class ShoppingCartServiceImpl extends BaseServiceImpl<ShoppingCart> imple
 	@Autowired
 	private ShoppingCartDao dao;
 	
+	@Autowired
+	private SkuService skuService;
+	
 	@Override
 	protected BaseDao<ShoppingCart> getBaseDao() {
 		return dao;
 	}
 
+	@Override
+	@Transactional
+	public boolean addToCart(Long pid, int qty) {
+		boolean added = false;
+		try {
+			Sku sku = skuService.selectById(pid);
+			if(sku != null) {
+				ShoppingCart query = new ShoppingCart();
+				query.setBuyerId(UserSecurityUtils.getCurrentUserId());
+				query.setSkuId(sku.getId());
+				ShoppingCart scart = dao.selectOne(query);
+				if(scart == null) {
+					scart = new ShoppingCart();
+					scart.setBuyerId(UserSecurityUtils.getCurrentUserId());
+					scart.setSkuId(sku.getId());
+				}
+				scart.addQty(qty);
+				scart.setAddTime(new Date());
+				scart.setOriginalPrice(sku.getPrice());
+				scart.setSalePrice(sku.getSalePrice());
+				scart.setCurrentPrice(sku.getSalePrice());
+				scart.setDiscountStrategyDesc("满 2000 减 200");
+				if(scart.getId() != null && scart.getId() > 0) {
+					dao.updateById(scart);
+				} else {
+					dao.insert(scart);
+				}
+				
+				added = true;
+			}
+		} catch (Exception e) {
+		}
+		
+		return added;
+	}
+	
+	@Transactional
+	public boolean putToCart(Long pid, int qty) {
+		if(pid == null || pid <= 0 || qty <= 0) {
+			return false;
+		}
+		boolean added = false;
+		try {
+			Sku sku = skuService.selectById(pid);
+			if(sku != null) {
+				ShoppingCart query = new ShoppingCart();
+				query.setBuyerId(UserSecurityUtils.getCurrentUserId());
+				query.setSkuId(sku.getId());
+				ShoppingCart scart = dao.selectOne(query);
+				if(scart != null) {
+					scart.setQty(qty);
+					scart.setAddTime(new Date());
+					scart.setOriginalPrice(sku.getPrice());
+					scart.setSalePrice(sku.getSalePrice());
+					scart.setCurrentPrice(sku.getSalePrice());
+					scart.setDiscountStrategyDesc("满 2000 减 200");
+					dao.updateById(scart);
+					added = true;
+				}
+			}
+		} catch (Exception e) {
+		}
+		
+		return added;
+	}
+	
+	@Override
+	@Transactional
+	public boolean removeCart(Long sid) {
+		dao.deleteById(sid);
+		return true;
+	}
+
+	@Override
+	public List<ShoppingCartGroupVO> loadByBuyerId(Long buyerId) {
+		ShoppingCart query = new ShoppingCart();
+		if(buyerId == null) {
+			return new ArrayList<ShoppingCartGroupVO>(0);
+		}
+		query.setBuyerId(buyerId);
+		List<ShoppingCart> cartDOs = selectList(query);
+		
+		Map<String, ShoppingCartGroupVO> map = new HashMap<String, ShoppingCartGroupVO>();
+		if(cartDOs != null) {
+			String key= null;
+			for (ShoppingCart cart : cartDOs) {
+				ShoppingCartVO vo = new ShoppingCartVO("丰华神州汽车零配件有限公司", cart, skuService.selectById(cart.getSkuId()), "满 ￥20000.00 减 ￥1000.00");
+				key = vo.getSellerName()+"_"+vo.getDiscountStrategyDesc();
+				if(!map.containsKey(key)) {
+					map.put(key, new ShoppingCartGroupVO(vo.getSellerName(), vo.getDiscountStrategyDesc()));
+				}
+				map.get(key).addCart(vo);
+			}
+		}
+		if(!map.isEmpty()) {
+			return new ArrayList<ShoppingCartGroupVO>(map.values());
+		}
+		return new ArrayList<ShoppingCartGroupVO>(0);
+	}
+	
 }
