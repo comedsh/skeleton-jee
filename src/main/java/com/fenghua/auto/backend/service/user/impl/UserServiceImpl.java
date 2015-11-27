@@ -169,8 +169,19 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 	
+
 	@Override
-	public void autoLogin(String userName, String passWord, Locale locale,HttpServletRequest request){
+	public User getUserByQQ(String openID) {
+		List<User> user = userDao.getUserByQQ(openID);
+		if (user != null&&user.size()==1) {
+			return user.get(0);
+		} else {
+			return null;
+		}
+	}
+	
+	@Override
+	public void autoLogin(String userName, String passWord,HttpServletRequest request){
 		CustomUsernamePasswordAuthenticationToken token = new CustomUsernamePasswordAuthenticationToken(userName, passWord);
 		try {
 			token.setDetails(new WebAuthenticationDetails(request));
@@ -204,5 +215,4 @@ public class UserServiceImpl implements UserService {
 	public User getUserByuserId(Long userId) {
 		return userDao.selectByUserId(userId);
 	}
-	
 }

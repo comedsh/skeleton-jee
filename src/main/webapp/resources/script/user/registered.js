@@ -861,7 +861,7 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
             		var name = data.message.code;
             		window.location.href = "/secure/fowardLogin?userName='"+name+"'";
             	} else {
-            		alert(data.message.success);
+            		alert(data.message.msg);
             	}
             })
             .error(function(data){
@@ -958,7 +958,7 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
                 		var name = data.message.code;
                 		window.location.href = "/secure/fowardLogin?userName='"+name+"'";
                 	} else {
-                		alert(data.message.success);
+                		alert(data.message.msg);
                 	}
                 })
                 .error(function(data){

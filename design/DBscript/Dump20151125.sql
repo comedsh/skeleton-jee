@@ -57,13 +57,13 @@ LOCK TABLES `bill_order` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `buy_car`
+-- Table structure for table `shopping_cart`
 --
 
-DROP TABLE IF EXISTS `buy_car`;
+DROP TABLE IF EXISTS `shopping_cart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `buy_car` (
+CREATE TABLE `shopping_cart` (
   `ID` bigint(20) NOT NULL AUTO_INCREMENT,
   `buyer_id` bigint(20) NOT NULL,
   `sku_id` bigint(20) NOT NULL,
@@ -75,18 +75,18 @@ CREATE TABLE `buy_car` (
   `last_price_time` datetime DEFAULT NULL,
   `add_time` datetime NOT NULL,
   PRIMARY KEY (`ID`),
-  KEY `idx_buyer_id` (`buyer_id`),
+  KEY `idx_cart_id` (`buyer_id`),
   KEY `idx_sku_id` (`sku_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `buy_car`
+-- Dumping data for table `shopping_cart`
 --
 
-LOCK TABLES `buy_car` WRITE;
-/*!40000 ALTER TABLE `buy_car` DISABLE KEYS */;
-/*!40000 ALTER TABLE `buy_car` ENABLE KEYS */;
+LOCK TABLES `shopping_cart` WRITE;
+/*!40000 ALTER TABLE `shopping_cart` DISABLE KEYS */;
+/*!40000 ALTER TABLE `shopping_cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

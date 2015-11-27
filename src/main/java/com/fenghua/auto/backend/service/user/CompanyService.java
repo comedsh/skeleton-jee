@@ -1,7 +1,5 @@
 package com.fenghua.auto.backend.service.user;
 
-import java.util.List;
-
 import com.fenghua.auto.backend.domain.user.Company;
 
 /**
@@ -12,6 +10,11 @@ import com.fenghua.auto.backend.domain.user.Company;
  *
  */
 public interface CompanyService {
+	/**
+	 * 通过id查询company
+	 * @return
+	 */
+	public Company getById(Long id);
 	/**
 	 * 通过fixed查询company
 	 * @return

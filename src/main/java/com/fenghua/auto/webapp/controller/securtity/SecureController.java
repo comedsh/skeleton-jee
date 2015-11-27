@@ -69,9 +69,12 @@ public class SecureController {
 	 * @return
 	 */
 	@RequestMapping(value = "/userCenter")
-	public @ResponseBody Map<String,Result> userCenter(HttpServletRequest request) {
+	@ResponseBody
+	public Map<String,Result> userCenter(HttpServletRequest request) {
 		Map<String,Result> model = new HashMap<String,Result>();
-		Result msg = new Result(true,"");
+		Result msg = new Result();
+		msg.setCode("1");
+		msg.setMsg("登录成功");
 		model.put("msg", msg);
 		return model;
 	}
@@ -85,16 +88,6 @@ public class SecureController {
 	@RequestMapping(value = "/main")
 	public String main(Model model,HttpServletRequest request) {
 		return "/user/userCenter/userCenter";
-	}
-	/**
-	 * 跳转到个人中心页面
-	 * @param model
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(value = "/sellerInformation")
-	public String forwardInformation(Model model,HttpServletRequest request) {
-		return "/user/userCenter/sellerInformation";
 	}
 	
 	/**
@@ -129,21 +122,25 @@ public class SecureController {
 		Result result = new Result();
 		//用户不存在
 	    if(e instanceof UsernameNotFoundException){
+	    	result.setCode("-1");
 	    	result.setMsg("用户名不存在");
 		}
 	    //用户名或密码错误
         if(e instanceof BadCredentialsException){
-        	result.setMsg("用户名或密码错误");
+        	result.setCode("-2");
+        	result.setMsg("用户名或密码输入错误");
 		}
 	    //输入验证码错误
         if(e instanceof AuthenticationCodeException){
+        	result.setCode("-3");
         	result.setMsg("验证码错误");
 		}  
         
         Object showVCode =  request.getAttribute("showVCode");
         boolean isShow = showVCode == null? false:(Boolean)showVCode;
         if(isShow){
-         	result.setCode("1001");
+         	result.setCode("-4");
+         	result.setMsg("已经错误三次，显示验证码");
         }  
        
         Map<String,Result> model = new HashMap<String,Result>();

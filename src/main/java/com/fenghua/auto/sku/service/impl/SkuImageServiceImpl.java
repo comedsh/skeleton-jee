@@ -3,6 +3,7 @@ package com.fenghua.auto.sku.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.fenghua.auto.backend.dao.BaseDao;
 import com.fenghua.auto.backend.service.impl.BaseServiceImpl;
@@ -17,6 +18,11 @@ import com.fenghua.auto.sku.service.SkuImageService;
   * @date 2015年11月24日
   * @version 
   */
+@Service
+/**
+ * @author lenovo
+ *
+ */
 public class SkuImageServiceImpl extends BaseServiceImpl<SkuImages> implements SkuImageService{
 
 	@Autowired

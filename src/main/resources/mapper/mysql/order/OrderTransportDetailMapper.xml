@@ -15,6 +15,51 @@
   <sql id="Base_Column_List" >
     id, transport_id, order_item_id, sku_id, sku_code, sku_name, qty, entry_id, entry_time
   </sql>
+  <sql id="Base_Where_Case" >
+    <where >
+      <if test="id != null" >
+         AND id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="transportId != null" >
+         AND transport_id = #{transportId,jdbcType=BIGINT}
+      </if>
+      <if test="orderItemId != null" >
+         AND order_item_id = #{orderItemId,jdbcType=BIGINT}
+      </if>
+      <if test="skuId != null" >
+         AND sku_id = #{skuId,jdbcType=BIGINT}
+      </if>
+      <if test="skuCode != null" >
+         AND sku_code = #{skuCode,jdbcType=VARCHAR}
+      </if>
+      <if test="skuName != null" >
+         AND sku_name = #{skuName,jdbcType=VARCHAR}
+      </if>
+      <if test="qty != null" >
+         AND qty = #{qty,jdbcType=INTEGER}
+      </if>
+      <if test="entryId != null" >
+         AND entry_id = #{entryId,jdbcType=BIGINT}
+      </if>
+      <if test="entryTime != null" >
+         AND entry_time = #{entryTime,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </sql>
+  <select id="selectCount" resultType="java.lang.Long" parameterType="com.fenghua.auto.order.domain.OrderTransportDetail" >
+    select count( id)
+     from order_transport_detail
+    <include refid="Base_Where_Case" />
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fenghua.auto.order.domain.OrderTransportDetail" >
+    select 
+    <include refid="Base_Column_List" />
+     from order_transport_detail
+    <include refid="Base_Where_Case" />
+    <if test="limit > 0" >
+       limit #{offset},#{limit} 
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
