@@ -14,6 +14,48 @@
   <sql id="Base_Column_List" >
     id, order_id, order_no, order_status, content, track_time, operator_id, operator_name
   </sql>
+  <sql id="Base_Where_Case" >
+    <where >
+      <if test="id != null" >
+         AND id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="orderId != null" >
+         AND order_id = #{orderId,jdbcType=BIGINT}
+      </if>
+      <if test="orderNo != null" >
+         AND order_no = #{orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="orderStatus != null" >
+         AND order_status = #{orderStatus,jdbcType=INTEGER}
+      </if>
+      <if test="content != null" >
+         AND content = #{content,jdbcType=VARCHAR}
+      </if>
+      <if test="trackTime != null" >
+         AND track_time = #{trackTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="operatorId != null" >
+         AND operator_id = #{operatorId,jdbcType=BIGINT}
+      </if>
+      <if test="operatorName != null" >
+         AND operator_name = #{operatorName,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+  <select id="selectCount" resultType="java.lang.Long" parameterType="com.fenghua.auto.order.domain.OrderTrack" >
+    select count( id)
+     from order_track
+    <include refid="Base_Where_Case" />
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fenghua.auto.order.domain.OrderTrack" >
+    select 
+    <include refid="Base_Column_List" />
+     from order_track
+    <include refid="Base_Where_Case" />
+    <if test="limit > 0" >
+       limit #{offset},#{limit} 
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

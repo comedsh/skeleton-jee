@@ -1,6 +1,8 @@
 package com.fenghua.auto.webapp.controller.user;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -8,8 +10,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import java.sql.Timestamp;
-import java.util.Calendar;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +17,6 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fenghua.auto.backend.core.utills.UserSecurityUtils;
 import com.fenghua.auto.backend.core.utills.uploadPicture;
 import com.fenghua.auto.backend.core.utills.graphValidate.PictureCheckCode;
 import com.fenghua.auto.backend.core.utills.message.SMSMessage;
@@ -35,11 +35,10 @@ import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.PaymentType;
 import com.fenghua.auto.backend.domain.user.ResetPassRequest;
 import com.fenghua.auto.backend.domain.user.User;
-import com.fenghua.auto.backend.service.ConfigService;
-import com.fenghua.auto.backend.service.user.UserForgetPassService;
 import com.fenghua.auto.backend.domain.user.UserPaymentType;
 import com.fenghua.auto.backend.service.user.CompanyService;
 import com.fenghua.auto.backend.service.user.PaymentTypeService;
+import com.fenghua.auto.backend.service.user.UserForgetPassService;
 import com.fenghua.auto.backend.service.user.UserPaymentTypeService;
 import com.fenghua.auto.backend.service.user.UserService;
 import com.fenghua.auto.webapp.view.Result;
@@ -59,12 +58,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private BCryptPasswordEncoder encoder;
+	
 	@Autowired
 	private UserForgetPassService userForgetPassService;
-	@Autowired
-	private ConfigService configService;
 	
 	@Autowired
 	private CompanyService companyService;
@@ -152,6 +148,7 @@ public class UserController {
 				msg.setSuccess(false);
 				msg.setMsg("您输入的验证码已过期");
 			}else if(validateTel.equals(telcode)) {
+				String userPwd = user.getPassword();
 				company.setBusinessLicence(licence);
 				company.setTaxpayerLicence(certificate);
 				userService.insert(user,company,paymenttype);
@@ -159,7 +156,7 @@ public class UserController {
 				msg.setCode(user.getName());
 				msg.setMsg("注册成功");
 				//把用户名和密码存入安全的session中
-				userService.autoLogin(user.getName(), user.getPassword(), request);
+				userService.autoLogin(user.getName(), userPwd, request);
 			} else {
 				if(!validateTel.equals(telcode)) {
 					msg.setSuccess(false);
@@ -194,9 +191,10 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/sellerInformation", method = RequestMethod.GET)
-	public void getInformation(Model model,HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView getInformation(Model model,HttpServletRequest request, HttpServletResponse response) {
+		response.setCharacterEncoding("UTF-8");
 		JSONObject json =new JSONObject(); 
-		String name="chengbin";
+		String name = UserSecurityUtils.getCurrentUserName();
 		User user = userService.getUserByName(name);
 		if(user.getRoleId() == 1) {
 			//个体买家
@@ -221,6 +219,7 @@ public class UserController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return new ModelAndView("/user/userCenter/sellerInformation");
 	}
 	/**
 	 * 通过name判断是否应该显示图形验证码
@@ -424,6 +423,7 @@ public class UserController {
 	 * @param model
 	 * @return
 	 */
+	@SuppressWarnings("unused")
 	@RequestMapping(value ="/checkResetLink") 
 	public  ModelAndView checkResetLink(@RequestParam String token, @RequestParam Long userId, Model model){
 		List<ResetPassRequest> list=null;

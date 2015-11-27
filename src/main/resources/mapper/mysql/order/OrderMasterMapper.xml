@@ -25,6 +25,75 @@
     transport_amount, need_pay_amount, payed_amount, pay_method, pay_status, create_time, 
     pay_time, city_id, come_from, order_qty
   </sql>
+  <sql id="Base_Where_Case" >
+    <where >
+      <if test="id != null" >
+         AND ID = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="masterOrderNo != null" >
+         AND master_order_no = #{masterOrderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null" >
+         AND status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="buyerId != null" >
+         AND buyer_id = #{buyerId,jdbcType=BIGINT}
+      </if>
+      <if test="sellerId != null" >
+         AND seller_id = #{sellerId,jdbcType=BIGINT}
+      </if>
+      <if test="totalAmount != null" >
+         AND total_amount = #{totalAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="discountAmount != null" >
+         AND discount_amount = #{discountAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="transportAmount != null" >
+         AND transport_amount = #{transportAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="needPayAmount != null" >
+         AND need_pay_amount = #{needPayAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="payedAmount != null" >
+         AND payed_amount = #{payedAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="payMethod != null" >
+         AND pay_method = #{payMethod,jdbcType=INTEGER}
+      </if>
+      <if test="payStatus != null" >
+         AND pay_status = #{payStatus,jdbcType=INTEGER}
+      </if>
+      <if test="createTime != null" >
+         AND create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="payTime != null" >
+         AND pay_time = #{payTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="cityId != null" >
+         AND city_id = #{cityId,jdbcType=BIGINT}
+      </if>
+      <if test="comeFrom != null" >
+         AND come_from = #{comeFrom,jdbcType=INTEGER}
+      </if>
+      <if test="orderQty != null" >
+         AND order_qty = #{orderQty,jdbcType=INTEGER}
+      </if>
+    </where>
+  </sql>
+  <select id="selectCount" resultType="java.lang.Long" parameterType="com.fenghua.auto.order.domain.OrderMaster" >
+    select count( ID)
+     from order_master
+    <include refid="Base_Where_Case" />
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fenghua.auto.order.domain.OrderMaster" >
+    select 
+    <include refid="Base_Column_List" />
+     from order_master
+    <include refid="Base_Where_Case" />
+    <if test="limit > 0" >
+       limit #{offset},#{limit} 
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

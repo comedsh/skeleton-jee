@@ -26,6 +26,78 @@
     buyer_id, seller_id, tran_method, trade_no, tran_amount, status, operator_id, tran_time, 
     bill_id, sum_operator_id, sum_time
   </sql>
+  <sql id="Base_Where_Case" >
+    <where >
+      <if test="id != null" >
+         AND id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="tranType != null" >
+         AND tran_type = #{tranType,jdbcType=INTEGER}
+      </if>
+      <if test="bizOrderId != null" >
+         AND biz_order_id = #{bizOrderId,jdbcType=BIGINT}
+      </if>
+      <if test="masterOrderId != null" >
+         AND master_order_id = #{masterOrderId,jdbcType=BIGINT}
+      </if>
+      <if test="masterOrderNo != null" >
+         AND master_order_no = #{masterOrderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="orderId != null" >
+         AND order_id = #{orderId,jdbcType=BIGINT}
+      </if>
+      <if test="orderNo != null" >
+         AND order_no = #{orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="buyerId != null" >
+         AND buyer_id = #{buyerId,jdbcType=BIGINT}
+      </if>
+      <if test="sellerId != null" >
+         AND seller_id = #{sellerId,jdbcType=BIGINT}
+      </if>
+      <if test="tranMethod != null" >
+         AND tran_method = #{tranMethod,jdbcType=INTEGER}
+      </if>
+      <if test="tradeNo != null" >
+         AND trade_no = #{tradeNo,jdbcType=VARCHAR}
+      </if>
+      <if test="tranAmount != null" >
+         AND tran_amount = #{tranAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="status != null" >
+         AND status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="operatorId != null" >
+         AND operator_id = #{operatorId,jdbcType=BIGINT}
+      </if>
+      <if test="tranTime != null" >
+         AND tran_time = #{tranTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="billId != null" >
+         AND bill_id = #{billId,jdbcType=BIGINT}
+      </if>
+      <if test="sumOperatorId != null" >
+         AND sum_operator_id = #{sumOperatorId,jdbcType=BIGINT}
+      </if>
+      <if test="sumTime != null" >
+         AND sum_time = #{sumTime,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </sql>
+  <select id="selectCount" resultType="java.lang.Long" parameterType="com.fenghua.auto.finance.domain.TransactionFlow" >
+    select count( id)
+     from transaction_flow
+    <include refid="Base_Where_Case" />
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fenghua.auto.finance.domain.TransactionFlow" >
+    select 
+    <include refid="Base_Column_List" />
+     from transaction_flow
+    <include refid="Base_Where_Case" />
+    <if test="limit > 0" >
+       limit #{offset},#{limit} 
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

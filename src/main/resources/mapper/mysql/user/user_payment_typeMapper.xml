@@ -23,6 +23,12 @@
     where PaymentType_ID = #{paymenttypeId,jdbcType=BIGINT}
       and User_ID = #{userId,jdbcType=BIGINT}
   </select>
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="com.fenghua.auto.backend.domain.user.UserPaymentType" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_payment_type
+    where User_ID = #{userId,jdbcType=BIGINT}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="com.fenghua.auto.backend.domain.user.UserPaymentType" >
     delete from user_payment_type
     where PaymentType_ID = #{paymenttypeId,jdbcType=BIGINT}

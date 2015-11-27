@@ -12,6 +12,42 @@
   <sql id="Base_Column_List" >
     id, biz_type, biz_id, path, entry_id, entry_time
   </sql>
+  <sql id="Base_Where_Case" >
+    <where >
+      <if test="id != null" >
+         AND id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="bizType != null" >
+         AND biz_type = #{bizType,jdbcType=INTEGER}
+      </if>
+      <if test="bizId != null" >
+         AND biz_id = #{bizId,jdbcType=BIGINT}
+      </if>
+      <if test="path != null" >
+         AND path = #{path,jdbcType=VARCHAR}
+      </if>
+      <if test="entryId != null" >
+         AND entry_id = #{entryId,jdbcType=BIGINT}
+      </if>
+      <if test="entryTime != null" >
+         AND entry_time = #{entryTime,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </sql>
+  <select id="selectCount" resultType="java.lang.Long" parameterType="com.fenghua.auto.order.domain.OrderImage" >
+    select count( id)
+     from order_image
+    <include refid="Base_Where_Case" />
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fenghua.auto.order.domain.OrderImage" >
+    select 
+    <include refid="Base_Column_List" />
+     from order_image
+    <include refid="Base_Where_Case" />
+    <if test="limit > 0" >
+       limit #{offset},#{limit} 
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

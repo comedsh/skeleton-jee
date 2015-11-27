@@ -28,6 +28,84 @@
     trade_price, qty, status, fork_status, note, evaluated_flag, evaluated_time, entry_id, 
     entry_date, edit_id, edit_date
   </sql>
+  <sql id="Base_Where_Case" >
+    <where >
+      <if test="id != null" >
+         AND id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="orderId != null" >
+         AND order_id = #{orderId,jdbcType=BIGINT}
+      </if>
+      <if test="sellerId != null" >
+         AND seller_id = #{sellerId,jdbcType=BIGINT}
+      </if>
+      <if test="buyerId != null" >
+         AND buyer_id = #{buyerId,jdbcType=BIGINT}
+      </if>
+      <if test="skuId != null" >
+         AND sku_id = #{skuId,jdbcType=BIGINT}
+      </if>
+      <if test="skuCode != null" >
+         AND sku_code = #{skuCode,jdbcType=VARCHAR}
+      </if>
+      <if test="skuName != null" >
+         AND sku_name = #{skuName,jdbcType=VARCHAR}
+      </if>
+      <if test="originalPrice != null" >
+         AND original_price = #{originalPrice,jdbcType=DECIMAL}
+      </if>
+      <if test="salePrice != null" >
+         AND sale_price = #{salePrice,jdbcType=DECIMAL}
+      </if>
+      <if test="tradePrice != null" >
+         AND trade_price = #{tradePrice,jdbcType=DECIMAL}
+      </if>
+      <if test="qty != null" >
+         AND qty = #{qty,jdbcType=INTEGER}
+      </if>
+      <if test="status != null" >
+         AND status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="forkStatus != null" >
+         AND fork_status = #{forkStatus,jdbcType=INTEGER}
+      </if>
+      <if test="note != null" >
+         AND note = #{note,jdbcType=VARCHAR}
+      </if>
+      <if test="evaluatedFlag != null" >
+         AND evaluated_flag = #{evaluatedFlag,jdbcType=INTEGER}
+      </if>
+      <if test="evaluatedTime != null" >
+         AND evaluated_time = #{evaluatedTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="entryId != null" >
+         AND entry_id = #{entryId,jdbcType=BIGINT}
+      </if>
+      <if test="entryDate != null" >
+         AND entry_date = #{entryDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="editId != null" >
+         AND edit_id = #{editId,jdbcType=BIGINT}
+      </if>
+      <if test="editDate != null" >
+         AND edit_date = #{editDate,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </sql>
+  <select id="selectCount" resultType="java.lang.Long" parameterType="com.fenghua.auto.order.domain.OrderItem" >
+    select count( id)
+     from order_item
+    <include refid="Base_Where_Case" />
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fenghua.auto.order.domain.OrderItem" >
+    select 
+    <include refid="Base_Column_List" />
+     from order_item
+    <include refid="Base_Where_Case" />
+    <if test="limit > 0" >
+       limit #{offset},#{limit} 
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

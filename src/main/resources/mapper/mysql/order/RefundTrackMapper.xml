@@ -13,6 +13,45 @@
   <sql id="Base_Column_List" >
     id, refund_id, refund_no, refund_status, content, track_time, operator_id
   </sql>
+  <sql id="Base_Where_Case" >
+    <where >
+      <if test="id != null" >
+         AND id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="refundId != null" >
+         AND refund_id = #{refundId,jdbcType=BIGINT}
+      </if>
+      <if test="refundNo != null" >
+         AND refund_no = #{refundNo,jdbcType=VARCHAR}
+      </if>
+      <if test="refundStatus != null" >
+         AND refund_status = #{refundStatus,jdbcType=INTEGER}
+      </if>
+      <if test="content != null" >
+         AND content = #{content,jdbcType=VARCHAR}
+      </if>
+      <if test="trackTime != null" >
+         AND track_time = #{trackTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="operatorId != null" >
+         AND operator_id = #{operatorId,jdbcType=BIGINT}
+      </if>
+    </where>
+  </sql>
+  <select id="selectCount" resultType="java.lang.Long" parameterType="com.fenghua.auto.order.domain.RefundTrack" >
+    select count( id)
+     from refund_track
+    <include refid="Base_Where_Case" />
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fenghua.auto.order.domain.RefundTrack" >
+    select 
+    <include refid="Base_Column_List" />
+     from refund_track
+    <include refid="Base_Where_Case" />
+    <if test="limit > 0" >
+       limit #{offset},#{limit} 
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

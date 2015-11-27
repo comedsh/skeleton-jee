@@ -20,6 +20,63 @@
     id, quality_no, buyer_id, seller_id, order_id, order_no, process_desc, auditor_id, 
     audit_time, processor_id, process_time, applicant_id, apply_time
   </sql>
+  <sql id="Base_Where_Case" >
+    <where >
+      <if test="id != null" >
+         AND id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="qualityNo != null" >
+         AND quality_no = #{qualityNo,jdbcType=VARCHAR}
+      </if>
+      <if test="buyerId != null" >
+         AND buyer_id = #{buyerId,jdbcType=BIGINT}
+      </if>
+      <if test="sellerId != null" >
+         AND seller_id = #{sellerId,jdbcType=BIGINT}
+      </if>
+      <if test="orderId != null" >
+         AND order_id = #{orderId,jdbcType=BIGINT}
+      </if>
+      <if test="orderNo != null" >
+         AND order_no = #{orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="processDesc != null" >
+         AND process_desc = #{processDesc,jdbcType=VARCHAR}
+      </if>
+      <if test="auditorId != null" >
+         AND auditor_id = #{auditorId,jdbcType=BIGINT}
+      </if>
+      <if test="auditTime != null" >
+         AND audit_time = #{auditTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="processorId != null" >
+         AND processor_id = #{processorId,jdbcType=BIGINT}
+      </if>
+      <if test="processTime != null" >
+         AND process_time = #{processTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="applicantId != null" >
+         AND applicant_id = #{applicantId,jdbcType=BIGINT}
+      </if>
+      <if test="applyTime != null" >
+         AND apply_time = #{applyTime,jdbcType=BIGINT}
+      </if>
+    </where>
+  </sql>
+  <select id="selectCount" resultType="java.lang.Long" parameterType="com.fenghua.auto.order.domain.QualityOrder" >
+    select count( id)
+     from quality_order
+    <include refid="Base_Where_Case" />
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fenghua.auto.order.domain.QualityOrder" >
+    select 
+    <include refid="Base_Column_List" />
+     from quality_order
+    <include refid="Base_Where_Case" />
+    <if test="limit > 0" >
+       limit #{offset},#{limit} 
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

@@ -28,6 +28,84 @@
     status, in_qty, out_qty, sum_operator_id, sum_time, review_id, review_time, review_note, 
     payer_id, payed_time, payed_note
   </sql>
+  <sql id="Base_Where_Case" >
+    <where >
+      <if test="id != null" >
+         AND id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="billNo != null" >
+         AND bill_no = #{billNo,jdbcType=VARCHAR}
+      </if>
+      <if test="buyerId != null" >
+         AND buyer_id = #{buyerId,jdbcType=BIGINT}
+      </if>
+      <if test="sellerId != null" >
+         AND seller_id = #{sellerId,jdbcType=BIGINT}
+      </if>
+      <if test="startDate != null" >
+         AND start_date = #{startDate,jdbcType=DATE}
+      </if>
+      <if test="endDate != null" >
+         AND end_date = #{endDate,jdbcType=DATE}
+      </if>
+      <if test="inAmount != null" >
+         AND in_amount = #{inAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="outAmount != null" >
+         AND out_amount = #{outAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="billAmount != null" >
+         AND bill_amount = #{billAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="status != null" >
+         AND status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="inQty != null" >
+         AND in_qty = #{inQty,jdbcType=INTEGER}
+      </if>
+      <if test="outQty != null" >
+         AND out_qty = #{outQty,jdbcType=INTEGER}
+      </if>
+      <if test="sumOperatorId != null" >
+         AND sum_operator_id = #{sumOperatorId,jdbcType=BIGINT}
+      </if>
+      <if test="sumTime != null" >
+         AND sum_time = #{sumTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="reviewId != null" >
+         AND review_id = #{reviewId,jdbcType=BIGINT}
+      </if>
+      <if test="reviewTime != null" >
+         AND review_time = #{reviewTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="reviewNote != null" >
+         AND review_note = #{reviewNote,jdbcType=VARCHAR}
+      </if>
+      <if test="payerId != null" >
+         AND payer_id = #{payerId,jdbcType=BIGINT}
+      </if>
+      <if test="payedTime != null" >
+         AND payed_time = #{payedTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="payedNote != null" >
+         AND payed_note = #{payedNote,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+  <select id="selectCount" resultType="java.lang.Long" parameterType="com.fenghua.auto.finance.domain.BillOrder" >
+    select count( id)
+     from bill_order
+    <include refid="Base_Where_Case" />
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fenghua.auto.finance.domain.BillOrder" >
+    select 
+    <include refid="Base_Column_List" />
+     from bill_order
+    <include refid="Base_Where_Case" />
+    <if test="limit > 0" >
+       limit #{offset},#{limit} 
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

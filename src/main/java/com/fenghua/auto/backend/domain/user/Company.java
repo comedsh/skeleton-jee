@@ -19,7 +19,7 @@ public class Company implements DomainObject {
 
     private String detailAddress;
 
-    private Integer headcount;
+    private String headcount;
 
     private String businessLicence;
 
@@ -77,13 +77,9 @@ public class Company implements DomainObject {
         this.detailAddress = detailAddress == null ? null : detailAddress.trim();
     }
 
-    public Integer getHeadcount() {
-        return headcount;
-    }
-
-    public void setHeadcount(Integer headcount) {
-        this.headcount = headcount;
-    }
+    public void setHeadcount(String headcount) {
+		this.headcount = headcount;
+	}
 
     public String getBusinessLicence() {
         return businessLicence;

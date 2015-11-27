@@ -58,7 +58,6 @@ public class AuthServiceImpl implements AuthService {
 		HttpSession session = UserSecurityUtils.getSession();
 		String qqtoken = (String) session.getAttribute("qqtoken");
 		if (qqtoken != null) {
-			UserInfo currentUser = UserSecurityUtils.getCurrentUser();
 			binding(qqtoken,userInfo);
 		}
 	}

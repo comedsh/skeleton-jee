@@ -1,110 +1,116 @@
 /**
  * Created by think on 2015/10/27.
+ * Modify by yangzhi on 2015/11/25
  */
-$(function() {
-    //城市切换
-    $('.city_div').hover(function () {
-        $(this).addClass('active_l');
-        $('#show_div').show();
-    }, function () {
-        $(this).removeClass('active_l');
-        $('#show_div').hide();
-    });
-    $('#show_div').hover(function () {
-        $(this).show();
-    }, function () {
-        $('.city_div').hover(function () {
-            $(this).addClass('active_l');
-            $('#show_div').show();
-        }, function () {
-            $(this).removeClass('active_l');
-            $('#show_div').hide();
-        });
-    });
-    $('#show_div ul li a').on('click', function () {
-        var text = $(this).html();
-        $(this).addClass('active');
-        $(this).parent().siblings().children('a').removeClass('active');
-        $('.city_div span').html(text);
-    });
-    //记住密码
-    $(".Remember_pwd").toggle(
-        function () {
-            $(this).addClass("Remember_pwd1").attr({data: '1'});
-        },
-        function () {
-            $(this).removeClass("Remember_pwd1").attr({data: '0'});
-        }
-    );
-    //图片验证码请求
-    $('.validatePicCheck').on('click',function(){
-    	var str = $(this);
-    	$(this).parent().parent().find(".img_code").attr('src','/user/validatePicCheck?'+Math.random());
-//    	$.ajax({
-//            type: "GET",
-//            url: '/user/validatePicCheckValue',
-//            dataType: "text",
-//            success: function (data) {
-//                //$(str).parent().parent().find(".verifyCode").val(data);
-//            }
-//        });
-    });
-});
-var app=angular.module('login_app',[]);
-app.controller('login_ctr',['$scope','$http',function($scope,$http){
-	
-    $scope.user={name:'',pwd:''};
+var app=angular.module('loginApp',[]);
+//登录Controller
+app.controller('loginController',['$scope','$http',function($scope,$http){
+    $scope.user={name:'',pwd:'',isRememberPwd:false,code:""};
     
-    //根据用户名，查看是否应该显示图形验证码
+  //根据用户名，查看是否应该显示图形验证码
     $scope.validateName = function(){
     	var name = $scope.user.name;
     	$http.get('/user/validatePic', {params: {name:name}}).success(function(data){
     		if(data.msg.success == false) {
-    			$(".code_d").css("display","block"); 
+    			$(".imgcode-box").css("display","block"); 
     		}  
         });
     }
     
+    //登录错误信息
+    $scope.errorMessage={isError:false,errorDesc:"用户名或密码必填"};
+    //是否正在登录进行中
+    $scope.isLogining=false;
+    //登录按钮文字
+    $scope.loginBtnText="登 录";
+    //图片验证码链接
+    $scope.imgeCodeSrc="/user/validatePicCheck";
+
+
+
+    //切换是否记住密码
+    $scope.toggleRemenmmberPwd=function(){
+        $scope.user.isRememberPwd=!($scope.user.isRememberPwd);
+    }
+    //切换是否正在登录（flag为true表示正在登录）
+    $scope.changeLoginStatus=function(flag){
+        if(flag){
+            $scope.isLogining=true;
+            $scope.loginBtnText="正在登录...";
+        }else{
+            $scope.isLogining=false;
+            $scope.loginBtnText="登 录";
+        }
+    }
+    //更换图片验证码
+    $scope.changeImgeCode=function(){
+        $scope.imgeCodeSrc="/user/validatePicCheck?"+Math.random();
+    }
+    //设置错误信息(msg不传则代表当前无错误，否则代表有错误)
+    $scope.setError=function(msg){
+        if (!msg) {
+            $scope.errorMessage.isError=false;            
+        }else{
+            $scope.errorMessage.isError=true;
+            $scope.errorMessage.errorDesc=msg;
+        }
+    }
     //登录js
     $scope.logins=function(){
+        if ($scope.isLogining) {
+            return false;
+        }
         var name=$scope.user.name;
         var pwd=$scope.user.pwd;
         var code=$scope.user.code;
-        var num=$('.Remember_pwd').attr("data");
-        if(name==''|| pwd=='' || name==null || pwd==null){
-            $('.error').show().html('用户名或密码必填');
+        var isRememberPwd=$scope.user.isRememberPwd?1:0;
+        if(name==''|| pwd==''){
+            $scope.setError("用户名和密码必填");
         }else if(pwd.length>100){
-            $('.error').show().html("密码不超过一百位");
-            $('.pwd input').val('').focus();
-            return false;
+            $scope.setError("密码过长");
         } else{
-            $('.error').hide();
-            $.ajax({  
-      		  url: "/login",
-      		  type:'POST',
-      		  dataType:'json',
-      		  data:{'username':name,'password':pwd,'autoLogin':num,'vCode':code},
-      		  success: function(data,textStatus){
-      			if(data.msg.success){
-      				if(data.msg.code == '1001'){
-      					//显示验证码输入框
-      					$(".code_d").css("display","block");      				
-      				}     					
-      				 if(data.msg.msg != ''){     				    
-      				    alert(data.msg.msg);
-      				}else{
-      					window.location.href='/secure/main';
-      				}
-      			}else{
-      				window.location.href='错误页面';
-      			}
-      		  },
-      		  error:function(data){
-      			  alert(data.msg.msg);
-      		  }});
+            $scope.setError();
+            $scope.changeLoginStatus(true);
+            $.ajax({
+				url : "/login",
+				type : 'POST',
+				dataType : 'json',
+				data : {
+					'username' : name,
+					'password' : pwd,
+					'autoLogin' : isRememberPwd,
+					'vCode' : code
+				},
+				success : function(rep, textStatus) {
+					if (rep.msg.code == 1) {
+						//成功跳转到登录页面
+						$scope.loginCount = 0;
+						window.location.href='/secure/main';
+					} else {
+						$scope.changeLoginStatus(false);
+						if (rep.msg.code == -1) {
+							$scope.setError("用户名不存在");
+						} else if (rep.msg.code == -2) {
+							$scope.setError("密码输入错误");
+						} else if (rep.msg.code == -3) {
+							$scope.setError("验证码输入错误");
+						} else if (rep.msg.code == -4) {
+							$(".imgcode-box").css("display", "block");
+						} else {
+							$scope.setError("系统繁忙，请稍后再试");
+						}
+					}
+				},
+				error : function() {
+					$scope.changeLoginStatus(false);
+					$scope.setError("系统繁忙，请稍后再试");
+				}
+			});
         }
+        return false;
     };
     
     //页面加载就初始化
     $scope.validateName();
 }]);
+

@@ -47,7 +47,6 @@ public class CustomUserDetailService implements UserDetailsService{
 	@Autowired
 	private RoleService roleService;
 	
-	@SuppressWarnings("null")
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         logger.debug("loadUserByUsername(String) - start"); //$NON-NLS-1$  
@@ -87,11 +86,6 @@ public class CustomUserDetailService implements UserDetailsService{
 			logger.debug("用户：[" + users.getName() + "]拥有角色：["+ role.getName() + "],即spring security中的access");
 			auths.add(grantedAuthorityImpl);
 		}
-		
-		
-		/*org.springframework.security.core.userdetails.User user = new org.springframework.security.core.userdetails.User(
-				username, password, true, true, true, true, auths);*/
-	   
 		UserInfo userInfo = new UserInfo(username, password, auths);
 		userInfo.setUserId(users.getId());
 		userInfo.setCompanyId(users.getCompanyId());
