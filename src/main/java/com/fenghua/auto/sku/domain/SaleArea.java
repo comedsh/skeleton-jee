@@ -1,6 +1,9 @@
 package com.fenghua.auto.sku.domain;
 
-public class SaleArea {
+import com.fenghua.auto.backend.domain.DomainObject;
+
+public class SaleArea implements DomainObject {
+	private static final long serialVersionUID = 1L;
     private Long id;
 
     private Long saleId;
