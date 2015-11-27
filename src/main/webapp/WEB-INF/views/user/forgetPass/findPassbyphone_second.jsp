@@ -41,50 +41,10 @@
 </head>
 <body>
 <!--头部-->
-<div class="header_login">
-    <div class="header_ul clearfix">
-        <ul class="header_ul_left clearfix">
-            <li class="city_div clearfix"><label>所在地 :<span>成都</span></label><img src="<%=request.getContextPath() %>/resources/imgs/arrow.png"/>
-                <div id="show_div">
-                    <ul class="clearfix">
-                        <li><a href="javascript:void(0)">四川</a></li>
-                        <li><a href="javascript:void(0)" class="active">四川</a></li>
-                        <li><a href="javascript:void(0)">四川川</a></li>
-                        <li><a href="javascript:void(0)">四川川</a></li>
-                        <li><a href="javascript:void(0)">四川</a></li>
-                        <li><a href="javascript:void(0)">四川</a></li>
-                        <li><a href="javascript:void(0)">四川川</a></li>
-                        <li><a href="javascript:void(0)">四川</a></li>
-                        <li><a href="javascript:void(0)">四川</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="ipone_li">
-                400-616-6666
-            </li>
-        </ul>
-        <ul class="header_ul_right clearfix">
-            <li><a href="">首页</a></li>
-            <li class="li">|</li>
-            <li><a href="">原厂目录</a></li>
-            <li class="li">|</li>
-            <li><a href="">品牌件</a></li>
-            <li class="li">|</li>
-            <li><a href="">帮助中心</a></li>
-        </ul>
-    </div>
-    <div class="logo_div">
-        <div class="logo_img clearfix">
-            <a href="" class="clearfix">
-                <img src="<%=request.getContextPath() %>/resources/imgs/icon.png" alt=""/>
-            </a>
-        </div>
-    </div>
-</div>
 <div class="Retrieve_password clearfix">
     <p class="clearfix">
         <label>已有账号？<a href="/login.jsp">马上登录</a></label>
-  ${message.msg }
+<form:errors path="*"/>
     <!--手机找回密码-->
     <div class="border_div">
     <form id="secondformByPhone" method="post" action="/user/updatePasswordByPhone/">
@@ -211,28 +171,7 @@
     </div>
 </div>
 <!--尾部-->
-<div class="fooder">
-    <div class="tail_description">
-        <ul class="clearfix">
-            <li><a href="">关于我们</a></li>
-            <li>|</li>
-            <li><a href="">联系我们</a></li>
-            <li>|</li>
-            <li><a href="">人才招聘</a></li>
-        </ul>
-        <p>备案号： 新ICP备12057998号-1 新疆丰华神州汽车配件有限公司版权所有</p>
-    </div>
-</div>
-
-<script type="text/javascript" src="../js/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="../js/angular.min.js"></script>
-<script type="text/javascript" src="../js/json2.js"></script>
-<script type="text/javascript" src="../js/placeholder.js"></script>
-<script type="text/javascript" src="../js/forgotpwd.js"></script>
-<script type="text/javascript">
 
 
-
-</script>
 </body>
 </html>

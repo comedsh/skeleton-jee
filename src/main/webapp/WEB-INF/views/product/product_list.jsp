@@ -15,7 +15,7 @@
   <table>
    <c:forEach items="${items}" var="item">
     <tr>
-    <td>${item.name}</td>
+    <td><img src=${item.url}>${item.name}</td>
     <td><a href="/product/${item.id}">查看商品详情</a></td>
     </tr>
    

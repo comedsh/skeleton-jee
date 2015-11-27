@@ -24,7 +24,7 @@
 	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/script/user/placeholder.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/script/user/forgotpwd.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/javaScript/uploadify/ajaxfileupload.js"></script>
-       <style type="text/css">
+    <style type="text/css">
         *{
             margin:0;
             padding:0;
@@ -39,17 +39,18 @@
         }
     </style>
 </head>
+
 <body>
 <!--头部-->
 <div class="Retrieve_password clearfix">
     <p class="clearfix">
         <label>已有账号？<a href="/login.jsp">马上登录</a></label>
     </p>
-  
     <!--手机找回密码-->
-    <div class="border_div">
-        
-        <div class="ipone_three" >
+    
+    <!--邮箱找回密码-->
+    <div  ng-controller="email_ctr">
+        <div class="email_three">
             <span class="progress_bar progress_bar1 progress_bar2"></span>
             <ul class="progress_ul clearfix">
                 <li class="active_color">填写资料</li>
@@ -58,13 +59,13 @@
             </ul>
             <div class="form_div clearfix">
                 <div class="icon_div">
-                    <img src="<%=request.getContextPath() %>/resources/imgs/success.png" alt=""/>
+                    <img src="../imgs/success.png" alt=""/>
                 </div>
                 <div class="left">
-                    <label style="color:#2ca63d;font-size: 28px">找回成功</label>
-                    <span style="font-size: 16px;color:#666" id="qq">
+                    <label style="color:#2ca63d;font-size: 28px">激活成功</label>
+                    <span style="font-size: 16px;color:#666" id="blindEmail">
                         欢迎您，
-                        <a href="###" style="color:#ff8d02">${message.code}</a>
+                        <a href="###" style="color:#ff8d02">${message.msg}</a>
                     </span>
                     <span style="font-size: 12px;color: #989898">立即开始您的汽车零件选购吧！</span>
                 </div>
@@ -72,9 +73,8 @@
             </div>
         </div>
     </div>
-   
-   
 </div>
 <!--尾部-->
+
 </body>
 </html>

@@ -26,6 +26,14 @@ public class ShoppingCart implements DomainObject {
 
     private Date addTime;
 
+    public void addQty(int qty) {
+    	if(this.qty == null) {
+    		this.qty = qty;
+    	} else {
+    		this.qty += qty;
+    	}
+    }
+    
     public Long getId() {
         return id;
     }
