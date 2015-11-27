@@ -148,6 +148,7 @@ public class UserController {
 				msg.setSuccess(false);
 				msg.setMsg("您输入的验证码已过期");
 			}else if(validateTel.equals(telcode)) {
+				String userPwd = user.getPassword();
 				company.setBusinessLicence(licence);
 				company.setTaxpayerLicence(certificate);
 				userService.insert(user,company,paymenttype);
@@ -155,7 +156,7 @@ public class UserController {
 				msg.setCode(user.getName());
 				msg.setMsg("注册成功");
 				//把用户名和密码存入安全的session中
-				userService.autoLogin(user.getName(), user.getPassword(), request);
+				userService.autoLogin(user.getName(), userPwd, request);
 			} else {
 				if(!validateTel.equals(telcode)) {
 					msg.setSuccess(false);
