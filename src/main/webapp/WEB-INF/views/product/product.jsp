@@ -147,8 +147,7 @@ div.zoomMask {
 						<input id="add" name="" type="button" value="+" ng-click="add()">
 				</div>
 				<div>库存：{{stock.stockAvailability}}</div>
-				<div>
-				
+				<div>				
 					<input type="button" value="立即购买" />&nbsp;&nbsp;&nbsp;&nbsp;
 						<a href="/shoppingCart/add?pid=${product.id}&num={{nums}}">加入购物车</a>
 				</div>
