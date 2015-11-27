@@ -87,6 +87,7 @@
         <a class="a_tab" style="margin-left: 10px" href="javascript:void(0)">邮箱找回密码</a>
         <label>已有账号？<a href="/login.jsp">马上登录</a></label>
     </p>
+     ${message.msg }
     <!--手机找回密码-->
     <div class="border_div" ng-controller="ipone_ctr" >
         <div class="ipone_one" >
@@ -96,21 +97,26 @@
                 <li class="left_li">修改密码</li>
                 <li class="progress_li last_il">找回成功</li>
             </ul>
+       
+                ${message.msg }
+             
+
+            <form action="/user/findPassByPhone/" method="post" id="firstformByPhone">
             <div class="form_div clearfix">
                 <div class="clearfix chren_div">
                 <input type="hidden" class="sub_tel" value="1" id="sub_tel">
                     <label>手机号</label>
-                    <input type="text" id="mobile" ng-model="mobile"  placeholder="请输入手机号"/>
+                    <input type="text" id="mobile" name="mobile" ng-model="mobile"  placeholder="请输入手机号"/>
                 </div>
                 <label class="error_lab clearfix mobile_error">
                     <img src="<%=request.getContextPath() %>/resources/imgs/error.png">
                     <span></span>
                 </label>
                 <div class="clearfix chren_div">
-	                <input type="hidden" class="sub_code" id="sub_code" value="1">
+	                <input type="hidden" class="sub_code" id="sub_code"  value="1">
 	            	<input type="hidden" class="verifyCode" value="">
                     <label>验证码</label>
-                    <input type="text" class="code" ng-model="code" />
+                    <input type="text" class="code" ng-model="code" name="code"/>
                     <img src="<%=request.getContextPath() %>/user/validatePicCheck"  class="pictureCheckCode"  alt="" title="换一张" class="img_code"/>
                     <input type="hidden" class="verifyCode" value="">
                     <span>看不清楚？<a class="validatePicCheck">换一张</a></span>
@@ -122,13 +128,14 @@
                     <label>短信验证码</label>
                   
 	                    <input type="hidden" class="telephone_code_rep" value=""/>
-	                    <input type="text" placeholder="请输入验证码" class="iPhone_code" id="iPhone_code" ng-model="iPhone_code"/>
+	                    <input type="text" placeholder="请输入验证码" class="iPhone_code" id="iPhone_code" name="iPhone_code" ng-model="iPhone_code"/>
                     <a class="button_a" ng-click='validateTel()' >获取手机验证码</a>
                 </div>
                 <label class="error_lab clearfix iPhone_code_error"><img src="<%=request.getContextPath() %>/resources/imgs/error.png"><span></span></label>
                 <input type="hidden" value='1'/>
-                <button class="btn_login" ng-click="nextstep()">下一步</button>
+                <button class="btn_login" onClick="nextstepByPhone()">下一步</button>
             </div>
+            </form>
         </div>
         <div class="ipone_two"  style="display: none;">
             <span class="progress_bar progress_bar1"></span>
@@ -178,6 +185,7 @@
     </div>
     <!--邮箱找回密码-->
     <div class="border_div1" ng-controller="email_ctr">
+    <form id="firstformByEmail" method="post" action="/user/forGotPassword/">
         <div class="email_one" ng-hide="boolen1">
             <span class="progress_bar"></span>
             <ul class="progress_ul clearfix">
@@ -188,11 +196,11 @@
             <div class="form_div clearfix" ng-hide="boolen5">
                 <div class="clearfix chren_div">
                     <label>输入邮箱</label>
-                    <input type="text" class="email" ng-model="email" placeholder="请输入邮箱"/>
+                    <input type="text" class="email" name="email" ng-model="email" placeholder="请输入邮箱"/>
                 </div>
                 <label class="error_lab clearfix email_error"><img src="<%=request.getContextPath() %>/resources/imgs/error.png"><span></span></label>
                 <input type="hidden" class="boolen1" value="1"/>
-                <button class="btn_login" ng-click="emailnext()">下一步</button>
+                <button class="btn_login" onClick="nextstepByEmail()">下一步</button>
             </div>
             <div class="email_success" ng-hide="boolen4">
                 <p>用户激活电子邮件已发送至：<strong id="emailcontent"></strong></p>
@@ -203,51 +211,7 @@
                 <a href="" ng-click="emailnext()">重新发送激活邮件</a>
             </div>
         </div>
-        <div class="email_two" ng-hide="boolen2">
-            <span class="progress_bar progress_bar1"></span>
-            <ul class="progress_ul clearfix">
-                <li class="active_color">填写资料</li>
-                <li class="left_li active_color">修改密码</li>
-                <li class="progress_li last_il">找回成功</li>
-            </ul>
-            <div class="form_div clearfix" style="width: 460px">
-                <div class="clearfix left_div">
-                 
-                    <label>设置密码 :</label>
-                    <input class="email_pwd" ng-model="pwd_new1" type="password" placeholder="请输入密码"/>
-                </div>
-                <label class="error_lab clearfix email_pwd_error "><img src="<%=request.getContextPath() %>/resources/imgs/error.png"><span></span></label>
-                <div class="clearfix left_div">
-                    <label>确定密码 :</label>
-                    <input class="email_new_agin" ng-model="pwd_new_agin1" type="password" placeholder="请在次输入密码"/>
-                </div>
-                <label class="error_lab clearfix email_agin_error"><img src="<%=request.getContextPath() %>/resources/imgs/error.png"><span></span></label>
-                <input type="hidden" class="boolen2" value="1"/>
-                <button class="btn_login btn_login1" style="margin-left: 130px">下一步</button>
-            </div>
-        </div>
-        <div class="email_three" ng-hide="boolen3">
-            <span class="progress_bar progress_bar1 progress_bar2"></span>
-            <ul class="progress_ul clearfix">
-                <li class="active_color">填写资料</li>
-                <li class="left_li active_color">修改密码</li>
-                <li class="progress_li last_il active_color">找回成功</li>
-            </ul>
-            <div class="form_div clearfix">
-                <div class="icon_div">
-                    <img src="../imgs/success.png" alt=""/>
-                </div>
-                <div class="left">
-                    <label style="color:#2ca63d;font-size: 28px">激活成功</label>
-                    <span style="font-size: 16px;color:#666" >
-                        欢迎您，
-                        <a href="###" style="color:#ff8d02">15631566541</a>
-                    </span>
-                    <span style="font-size: 12px;color: #989898">立即开始您的汽车零件选购吧！</span>
-                </div>
-                <a href="Login.html" class="btn_login btn_login2">立即去登录</a>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 <!--尾部-->

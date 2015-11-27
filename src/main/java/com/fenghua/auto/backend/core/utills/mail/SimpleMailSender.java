@@ -129,7 +129,7 @@ public class SimpleMailSender {
 
 			// 发送邮件
 			Transport.send(mailMessage);
-			Transport.send(mailMessage, mailInfo.getUserName(),mailInfo.getPassword());
+			//Transport.send(mailMessage, mailInfo.getUserName(),mailInfo.getPassword());
 			return true;
 		} catch (MessagingException ex) {
 			throw ex;
