@@ -67,5 +67,9 @@
       <put-attribute name="body" value="/WEB-INF/views/product/product_list.jsp" />  
       
   </definition>
+  <!-- 登录页面 -->
+  <definition name="web.login" extends="web.default_template">
+      <put-attribute name="body" value="/login.jsp" />  
+  </definition>
   
 </tiles-definitions>
