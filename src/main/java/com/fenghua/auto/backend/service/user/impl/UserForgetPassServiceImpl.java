@@ -14,8 +14,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import com.fenghua.auto.backend.aop.PerformanceListener;
 import com.fenghua.auto.backend.core.utills.mail.MailSenderInfo;
 import com.fenghua.auto.backend.core.utills.mail.SimpleMailSender;
 import com.fenghua.auto.backend.dao.ConfigDao;
@@ -60,7 +58,6 @@ public class UserForgetPassServiceImpl implements UserForgetPassService {
 		if(list!=null){
 		 userId=list.get(0).getId();
 		}
-		
 		ResetPassRequest resetPassRequest=new ResetPassRequest();
 		resetPassRequest.setUserId(userId);
 		resetPassRequest.setCertificateCode(encodeString);
@@ -86,7 +83,6 @@ public class UserForgetPassServiceImpl implements UserForgetPassService {
 		mailInfo.setFromAddress("noreply@auto007.com"); // 设置发送人邮箱地址
 		mailInfo.setToAddress(email);
 		mailInfo.setSubject("找回您的账户密码");
-	
          String resetPassHref = "http://localhost:8080/user/checkResetLink?token="
                  + encodeString +"&userId="+userId;
 		 String emailContent = "请勿回复本邮件.点击下面的链接,重设密码<br/><a href="

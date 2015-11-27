@@ -95,7 +95,7 @@
         <a class="login_btn" enter ng-click="logins()" ng-bind="loginBtnText">登 录</a>
         <div class="thirdparty-box">
             <label>使用合作网站账号登录</label>
-            <a href="###">QQ</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="/auth/qq.action">QQ</a>&nbsp;&nbsp;|&nbsp;&nbsp;
             <a href="###">微信</a>
         </div>
     </div>

@@ -14,6 +14,10 @@
 			classpath:spring-security.xml
 		</param-value>
 	</context-param>
+	  <!-- 全局Request封装监听器 -->
+	  <listener>
+	  	<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	  </listener>
 	
 	<!-- spring sercurity 过滤器链 -->
      <filter>

@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
+import com.fenghua.auto.backend.core.security.UserInfo;
 import com.fenghua.auto.backend.domain.user.User;
 import com.qq.connect.QQConnectException;
 
@@ -21,5 +22,8 @@ public interface AuthService {
 	 * @return 返回登陆用户
 	 */
 	User isUser(HttpServletRequest request) throws QQConnectException;
-
+	/**
+	 * 绑定qq
+	 */
+	void binding(UserInfo userInfo);
 }

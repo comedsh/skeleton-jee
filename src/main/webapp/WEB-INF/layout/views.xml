@@ -6,7 +6,10 @@
 <tiles-definitions>
 
 <!-- defined for education -->
-
+    <definition name="forgot.findPassbyphoneOrEmail" extends="web.default_template">
+      <put-attribute name="body" value="/WEB-INF/user/forgetPass/findPassbyphone.jsp" />  
+      
+  </definition>
   <definition name="education.spittle_home" extends="education.default_template">
       <put-attribute name="body" value="/WEB-INF/views/education/home_body.jsp" />
   </definition>
@@ -63,6 +66,10 @@
 
       <put-attribute name="body" value="/WEB-INF/views/product/product_list.jsp" />  
       
+  </definition>
+  <!-- 登录页面 -->
+  <definition name="web.login" extends="web.default_template">
+      <put-attribute name="body" value="/login.jsp" />  
   </definition>
   
 </tiles-definitions>

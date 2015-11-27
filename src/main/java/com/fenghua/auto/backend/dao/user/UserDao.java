@@ -70,6 +70,5 @@ public interface UserDao extends BaseDao<User> {
 	 * @param accessToken
 	 * @return
 	 */
-	public List<User> getUserByQQ(String accessToken); 
-	
+	public List<User> getUserByQQ(String accessToken);
 }
