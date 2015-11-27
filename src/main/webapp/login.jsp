@@ -37,7 +37,7 @@
 </head>
 <body>
 <!--头部-->
-<div class="header" ng-controller="headerController">
+<div style="display: none" class="header" ng-controller="headerController">
     <div class="header_box clearfix">
         <ul class="header_left clearfix">
             <li class=" city_wrap clearfix" ng-class={'active':isCityActive} ng-mouseenter="mouseOver()" ng-mouseleave="mouseLeave()"><label>所在地 :<span>{{currentCity.cityName}}</span></label><img src="<%=request.getContextPath() %>/resources/imgs/arrow.png"/>
@@ -86,7 +86,7 @@
         </div>
         <div class="remember_box clearfix">
             <div class="remember_pwd" ng-class="{'checked':user.isRememberPwd}" ng-model="user.isRememberPwd" ng-click="toggleRemenmmberPwd()">记住密码</div>
-            <a ng-href="Forgot password.html">忘记密码</a>
+            <a ng-href="/user/findPassbyphoneOrEmail/">忘记密码</a>
         </div>
         <div class="imgcode-box">
             <input type="text" ng-model="user.code">
@@ -103,7 +103,7 @@
     </div>
 </div>
 <!--尾部-->
-<div class="footer">
+<div style="display: none" class="footer">
    <div class="tail_description">
        <ul class="clearfix">
            <li><a href="">关于我们</a></li>

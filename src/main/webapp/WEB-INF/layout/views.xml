@@ -6,9 +6,24 @@
 <tiles-definitions>
 
 <!-- defined for education -->
-    <definition name="forgot.findPassbyphoneOrEmail" extends="web.default_template">
-      <put-attribute name="body" value="/WEB-INF/user/forgetPass/findPassbyphone.jsp" />  
+   <definition name="forgot.findPassbyphoneOrEmail" extends="web.default_template">
+      <put-attribute name="body" value="/WEB-INF/views/user/forgetPass/findPassbyphone.jsp" />  
       
+  </definition>
+   <definition name="forgot.findPassbyphoneSecond" extends="web.default_template">
+      <put-attribute name="body" value="/WEB-INF/views/user/forgetPass/findPassbyphone_second.jsp" />  
+  </definition>
+     <definition name="forgot.findPassbyphoneLast" extends="web.default_template">
+      <put-attribute name="body" value="/WEB-INF/views/user/forgetPass/findPassbyphone_last.jsp" />  
+  </definition>
+   <definition name="forgot.findPassbyEmailSecond" extends="web.default_template">
+      <put-attribute name="body" value="/WEB-INF/views/user/forgetPass/findPssByEamil_Second.jsp" />  
+  </definition>
+   <definition name="forgot.findPassbyEmailThired" extends="web.default_template">
+      <put-attribute name="body" value="/WEB-INF/views/user/forgetPass/findPassbyemail.jsp" />  
+  </definition>
+   <definition name="forgot.findPassbyEmailLast" extends="web.default_template">
+      <put-attribute name="body" value="/WEB-INF/views/user/forgetPass/findPssByEamil_last.jsp" />  
   </definition>
   <definition name="education.spittle_home" extends="education.default_template">
       <put-attribute name="body" value="/WEB-INF/views/education/home_body.jsp" />
@@ -71,5 +86,18 @@
   <definition name="web.login" extends="web.default_template">
       <put-attribute name="body" value="/login.jsp" />  
   </definition>
-  
+  <!-- 用户中心 -->
+  <definition name="user.center" extends="web.default_template">
+      <put-attribute name="body" value="/WEB-INF/views/user/userCenter/userCenter.jsp" />  
+  </definition>
+  <!-- 注册成功页面 -->
+  <definition name="register.success" extends="web.default_template">
+      <put-attribute name="body" value="/WEB-INF/views/user/register/successRegister.jsp" />  
+  </definition>
+  <!-- 个人修改信息页面 -->
+  <definition name="personal.information" extends="web.default_template">
+      <put-attribute name="body" value="/WEB-INF/views/user/userCenter/sellerInformation.jsp" />  
+  </definition>
+
 </tiles-definitions>
+

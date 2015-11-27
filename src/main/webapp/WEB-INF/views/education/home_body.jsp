@@ -204,7 +204,7 @@ angular.module("spittle-ng-app", [])
 			
 			<sf:form method="POST"  action="/spittle" modelAttribute="spittle"> 
 			
-			<table width = 700 >	
+			<table width = 800 >	
 				<tr>
 					<td align="right" width="40%">Username: </td> 
 					<td width="30%"><sf:input path="username" size="15" maxlength="15" /></td>
@@ -230,7 +230,7 @@ angular.module("spittle-ng-app", [])
 				
 				<form ng-submit="addSpittle()">
 				
-				<table width = 700 >	
+				<table width = 800 >	
 					<tr>
 						<td align="right" width="40%">Username: </td> 
 						<td width="30%"><input type="text" size="15" maxlength="15" ng-model="formdata.username" name="username"/> </td>

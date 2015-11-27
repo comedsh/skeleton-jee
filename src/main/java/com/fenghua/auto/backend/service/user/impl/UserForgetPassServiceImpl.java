@@ -84,7 +84,7 @@ public class UserForgetPassServiceImpl implements UserForgetPassService {
 		mailInfo.setToAddress(email);
 		mailInfo.setSubject("找回您的账户密码");
          String resetPassHref = "http://localhost:8080/user/checkResetLink?token="
-                 + encodeString +"&userId="+userId;
+                 + encodeString;
 		 String emailContent = "请勿回复本邮件.点击下面的链接,重设密码<br/><a href="
                  + resetPassHref + " target='_BLANK'>" + resetPassHref
                  + "</a>";
@@ -98,10 +98,9 @@ public class UserForgetPassServiceImpl implements UserForgetPassService {
 		}
 	}
 	@Override
-	public List<ResetPassRequest> selectByCodeAndUser(String certificateCode,Long UserId) {
+	public List<ResetPassRequest> selectByCodeAndUser(String certificateCode) {
 		Map<String,Object> map = new HashMap<String,Object>();	
 		map.put("certificateCode", certificateCode);
-		map.put("UserId", UserId);
 		return userForgetPassDao.selectByCodeAndUser(map);
 	}
 	@Override

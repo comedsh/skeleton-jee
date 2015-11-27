@@ -27,7 +27,7 @@ public class SkuController {
 	private SkuService skuService;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public String queryAll( Model model){;
+	public String queryAll( Model model){
 		List<Sku> list = skuService.selectAll();
 		model.addAttribute("items",list);
 		return "web.product_list";
