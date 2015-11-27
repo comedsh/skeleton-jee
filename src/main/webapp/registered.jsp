@@ -96,7 +96,9 @@
         <a class="a_tab active_tab" href="javascript:void(0)">个人注册</a>
         <a class="a_tab" style="margin-left: 10px" href="javascript:void(0)">企业注册</a>
         <a class="a_tab" style="margin-left: 10px" href="javascript:void(0)">商家注册</a>
-        <label>已有账号？<a href="Login.html">马上登录</a></label>
+        
+        
+        <label>已有账号？<a href="Login.html"><a href="/login.jsp">绑定已有账号</a>马上登录</a></label>
     </p>
     <!--企业注册-->
     <div class="border_div">

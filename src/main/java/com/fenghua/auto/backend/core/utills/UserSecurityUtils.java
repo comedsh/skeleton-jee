@@ -2,11 +2,16 @@ package com.fenghua.auto.backend.core.utills;
 
 import java.util.Collection;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.fenghua.auto.backend.core.security.UserInfo;
 
@@ -20,6 +25,17 @@ import com.fenghua.auto.backend.core.security.UserInfo;
  * @version
  */
 public final class UserSecurityUtils {
+	
+	/**
+	 * 获取全局request
+	 * @return
+	 */
+	public static HttpSession getSession() {
+		ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder
+				.getRequestAttributes();
+		 HttpSession session = requestAttributes.getRequest().getSession();
+		return session;
+	}
 
 	/**
 	 * 取得当前用户
