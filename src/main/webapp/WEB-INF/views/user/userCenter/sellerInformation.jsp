@@ -336,10 +336,10 @@
                         季结
                     </div>
                 </div>
-                <a class="btn_a" href="javascript:void(0)">确定修改</a>
+                <a class="btn_a" href="/user/updateUser">确定修改</a>
             </div>
         </div>
-
+		
     </div>
 </div>
 <!--尾部-->
