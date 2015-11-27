@@ -3,7 +3,14 @@ package com.fenghua.auto.sku.domain;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.BindingResultUtils;
+import org.springframework.validation.Validator;
+
 import com.fenghua.auto.backend.domain.DomainObject;
+import com.google.common.eventbus.AllowConcurrentEvents;
 
 public class Sku implements DomainObject{
 	
@@ -17,9 +24,9 @@ public class Sku implements DomainObject{
 
     private String title;
 
-    private Boolean status;
+    private Byte status;
 
-    private Boolean type;
+    private Byte type;
 
     private Date shelfTime;
 
@@ -55,7 +62,6 @@ public class Sku implements DomainObject{
 
     private String introduce;
 
-    private String distribution ;
 
     public Long getId() {
         return id;
@@ -97,19 +103,19 @@ public class Sku implements DomainObject{
         this.title = title == null ? null : title.trim();
     }
 
-    public Boolean getStatus() {
+    public Byte getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(Byte status) {
         this.status = status;
     }
 
-    public Boolean getType() {
+    public Byte getType() {
         return type;
     }
 
-    public void setType(Boolean type) {
+    public void setType(Byte type) {
         this.type = type;
     }
 
@@ -248,14 +254,4 @@ public class Sku implements DomainObject{
     public void setIntroduce(String introduce) {
         this.introduce = introduce == null ? null : introduce.trim();
     }
-
-	public String getDistribution() {
-		return distribution;
-	}
-
-	public void setDistribution(String distribution) {
-		this.distribution = distribution;
-	}
-    
-    
 }

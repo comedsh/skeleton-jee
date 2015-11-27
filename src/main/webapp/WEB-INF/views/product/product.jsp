@@ -138,7 +138,8 @@ div.zoomMask {
 		</td>
 			<td rowspan="10">
 				<div>${product.name}&nbsp;&nbsp;&nbsp;&nbsp;累计销量{{stock.saledCount}}:&nbsp;&nbsp;&nbsp;累计评价：{{comment.comtotal}}</div>
-				<div>价格：￥${product.salePrice}</div>
+				<div>原价：￥${product.price}</div>
+				<div>现价：￥${product.salePrice}</div>
 				<div>品牌:${product.brand}</div>
 				<div>配送方式:由丰华神州发货  并提供售后服务</div>
 				<div>数量:<input id="min" name="" type="button" value="-" ng-click="reduce()">
@@ -147,8 +148,9 @@ div.zoomMask {
 				</div>
 				<div>库存：{{stock.stockAvailability}}</div>
 				<div>
-					<input type="button" value="立即购买" />&nbsp;&nbsp;&nbsp;&nbsp;<input
-						type="button" value="加入购物车" />
+				
+					<input type="button" value="立即购买" />&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="/shoppingCart/add?pid=${product.id}&num={{nums}}">加入购物车</a>
 				</div>
 			</td>
 			<tr>
@@ -158,7 +160,6 @@ div.zoomMask {
 	
 
 	<script type="text/javascript">
-
 	   angular.module('productApp', [])
        .controller('productController', function($scope,$http) {      	
     	 
