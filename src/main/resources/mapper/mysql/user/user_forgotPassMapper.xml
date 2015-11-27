@@ -22,7 +22,6 @@
 	select 
 		 <include refid="Base_Column_List" />				
 			from Reset_Password_Request where certificate_code=#{certificateCode} 
-			and User_ID=#{UserId}
 	</select>
 	<!-- 根据用户id删除一条忘记密码数据 -->
 	<delete id="deleteByUserId" parameterType="java.lang.Long" >

@@ -33,10 +33,11 @@
         document.execCommand("BackgroundImageCache", false, true);
     </script>
     <![endif]-->
+    <meta property="qc:admins" content="24133276336154700063757477166230" />
 </head>
 <body>
 <!--头部-->
-<div class="header" ng-controller="headerController">
+<div style="display: none" class="header" ng-controller="headerController">
     <div class="header_box clearfix">
         <ul class="header_left clearfix">
             <li class=" city_wrap clearfix" ng-class={'active':isCityActive} ng-mouseenter="mouseOver()" ng-mouseleave="mouseLeave()"><label>所在地 :<span>{{currentCity.cityName}}</span></label><img src="<%=request.getContextPath() %>/resources/imgs/arrow.png"/>
@@ -85,7 +86,7 @@
         </div>
         <div class="remember_box clearfix">
             <div class="remember_pwd" ng-class="{'checked':user.isRememberPwd}" ng-model="user.isRememberPwd" ng-click="toggleRemenmmberPwd()">记住密码</div>
-            <a ng-href="Forgot password.html">忘记密码</a>
+            <a ng-href="/user/findPassbyphoneOrEmail/">忘记密码</a>
         </div>
         <div class="imgcode-box">
             <input type="text" ng-model="user.code">
@@ -95,13 +96,14 @@
         <a class="login_btn" enter ng-click="logins()" ng-bind="loginBtnText">登 录</a>
         <div class="thirdparty-box">
             <label>使用合作网站账号登录</label>
-            <a href="/auth/qq.action">QQ</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-            <a href="###">微信</a>
+            <a href="/auth/qq">QQ</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="https://open.weixin.qq.com/connect/qrconnect?appid=wx6b9f7b5ad12d533e&redirect_uri=http%3A%2F%2Fwww.auto007.com%2Fauth%2Fwechat%2F&response_type=code&scope=snsapi_login&state=c5bb88d64571ca433c1409787726cb35#wechat_redirect">
+            	微信</a>
         </div>
     </div>
 </div>
 <!--尾部-->
-<div class="footer">
+<div style="display: none" class="footer">
    <div class="tail_description">
        <ul class="clearfix">
            <li><a href="">关于我们</a></li>

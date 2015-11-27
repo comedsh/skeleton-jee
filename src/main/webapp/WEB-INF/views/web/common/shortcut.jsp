@@ -15,7 +15,7 @@
 				<a class="auth__login login_icon inline" href="<%=request.getContextPath() %>/global/i18n?langType=en"> English</a> 
 				<a class="auth__login login_icon inline" href="<%=request.getContextPath() %>/global/i18n?langType=ru"> русский</a> 
 				 | 
-				<a class="auth__login login_icon inline" href="/login.jsp"> 
+				<a class="auth__login login_icon inline" href="secure/session/invalid"> 
 					<spring:message code="login.page.sign"/>
 				</a> 
 				<a class="auth__reg inline" href="/registration.html">

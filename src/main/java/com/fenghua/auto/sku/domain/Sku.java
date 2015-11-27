@@ -3,14 +3,8 @@ package com.fenghua.auto.sku.domain;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import org.springframework.format.annotation.NumberFormat;
-import org.springframework.format.annotation.NumberFormat.Style;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.BindingResultUtils;
-import org.springframework.validation.Validator;
 
 import com.fenghua.auto.backend.domain.DomainObject;
-import com.google.common.eventbus.AllowConcurrentEvents;
 
 public class Sku implements DomainObject{
 	

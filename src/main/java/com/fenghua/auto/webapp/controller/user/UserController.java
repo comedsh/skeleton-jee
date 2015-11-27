@@ -20,9 +20,6 @@ import javax.validation.Valid;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,10 +32,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContext;
 
+import com.fenghua.auto.backend.core.utills.SpringValidationHelper;
 import com.fenghua.auto.backend.core.utills.UserSecurityUtils;
 import com.fenghua.auto.backend.core.utills.uploadPicture;
 import com.fenghua.auto.backend.core.utills.graphValidate.PictureCheckCode;
 import com.fenghua.auto.backend.core.utills.message.SMSMessage;
+import com.fenghua.auto.backend.domain.MessageTransferObject;
 import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.PaymentType;
 import com.fenghua.auto.backend.domain.user.ResetPassRequest;
@@ -51,6 +50,7 @@ import com.fenghua.auto.backend.service.user.UserForgetPassService;
 import com.fenghua.auto.backend.service.user.UserPaymentTypeService;
 import com.fenghua.auto.backend.service.user.UserService;
 import com.fenghua.auto.webapp.view.Result;
+import com.fenghua.auto.backend.core.utills.I18nMessageFetcher;
 
 /**
  * 用户功能模块
@@ -77,6 +77,26 @@ public class UserController {
 	
 	@Autowired
 	private PaymentTypeService paymentTypeService;
+	
+	@RequestMapping(value = "/login")
+	public String login(){
+		return "/user/login";
+	}
+	
+	/**
+	 * 
+	 * @author shang yang
+	 *
+	 * @version 
+	 * 
+	 * @createTime: 2015年11月25日 下午10:20:46
+	 *
+	 */
+	@RequestMapping(value = "/registration")
+	public String registration(){
+		return "/user/registration";
+	}		
+	
 	/**
 	 * @author chengbin
 	 * 增加一个个人用户注册
@@ -92,7 +112,7 @@ public class UserController {
 		if(new Date().getTime() - ((Date)request.getSession().getAttribute("date")).getTime()  > 1000*120) {
 			msg.setSuccess(false);
 			msg.setMsg("您输入的验证码已过期");
-		} else if(validateTel.equals(telcode) && verifyCode.equals(code)) {
+		} else if(validateTel.equals(telcode) && verifyCode.equalsIgnoreCase(code)) {
 			String userPwd = user.getPassword();
 			userService.insert(user);
 			msg.setSuccess(true);
@@ -100,6 +120,11 @@ public class UserController {
 			msg.setMsg("注册成功");
 			//把用户名和密码存入安全的session中
 			userService.autoLogin(user.getName(), userPwd, request);
+			try {
+				authService.binding(UserSecurityUtils.getCurrentUser());
+			} catch (AuthenticationException e) {
+				e.printStackTrace();
+			}
 				try {
 					authService.binding(UserSecurityUtils.getCurrentUser());
 				} catch (AuthenticationException e) {
@@ -129,32 +154,27 @@ public class UserController {
 	}
 	@RequestMapping(value = "/findPassByPhone", method = RequestMethod.POST)
 	public String findPassByPhone( HttpServletRequest request,Model model) {
-		 RequestContext requestContext = new RequestContext(request);
 		String path;
-		Result msg = new Result();
+		String message = null;
+		Locale zh_cn = new Locale("zh", "CN");
 		String validateTel = (String) request.getSession().getAttribute("validateTel");
 		String verifyCode = (String) request.getSession().getAttribute("rand");
 		if(new Date().getTime() - ((Date)request.getSession().getAttribute("date")).getTime()  > 1000*120) {
-			msg.setSuccess(false);
-			msg.setMsg(requestContext.getMessage("forgot.verificationexpire"));
-			path="/user/forgetPass/findPassbyphone";
-		} else if(validateTel.equals(request.getParameter("iPhone_code")) && verifyCode.equals(request.getParameter("code"))) {
-			msg.setSuccess(true);
-			msg.setMsg("成功");
-			path="/user/forgetPass/findPassbyphone_second";
+			message=I18nMessageFetcher.getMessage("forgot.verificationexpire", null, zh_cn);
+			path="forgot.findPassbyphoneOrEmail";
+		} else if(validateTel.equals(request.getParameter("iPhone_code")) && verifyCode.equalsIgnoreCase(request.getParameter("code"))) {
+			path="forgot.findPassbyphoneSecond";
 			//把用户名和密码存入安全的session中
 		} else {
 			if(!validateTel.equals(request.getParameter("iPhone_code"))) {
-				msg.setSuccess(false);
-				msg.setMsg("您输入的手机验证码有误");
-				path="/user/forgetPass/findPassbyphone";
+				message=I18nMessageFetcher.getMessage("forgot.phoneError", null, zh_cn);
+				path="forgot.findPassbyphoneOrEmail";
 			} else {
-				msg.setSuccess(false);
-				msg.setMsg("您输入的图形验证码有误");
-				path="/user/forgetPass/findPassbyphone";
+				message=I18nMessageFetcher.getMessage("forgot.verificationCodeError", null, zh_cn);
+				path="forgot.findPassbyphoneOrEmail";
 			}
 		}
-		model.addAttribute("message", msg);
+		model.addAttribute("message", message);
 		request.getSession().setAttribute("phone",request.getParameter("mobile"));
 		return path;
 	}
@@ -165,17 +185,18 @@ public class UserController {
 	 * @createTime 2015.11.4
 	 */
 	@RequestMapping(value = "/regisUserCompany", method = RequestMethod.POST)
-	public Map<String,Result> addUserAndCompany(@Valid User user, @Valid Company company, @RequestParam String telcode, @Valid PaymentType paymenttype,HttpServletRequest request, Locale locale) {
+	public Map<String,Result> addUserAndCompany(@Valid User user, @Valid Company company, @RequestParam String telcode, @RequestParam String code, @Valid PaymentType paymenttype,HttpServletRequest request, Locale locale) {
 		Map<String,Result> model = new HashMap<String,Result>();
 		Result msg = new Result();
 		String validateTel = (String) request.getSession().getAttribute("validateTel");
+		String verifyCode = (String) request.getSession().getAttribute("rand");
 		String licence = request.getSession().getAttribute("licence").toString();
 		String certificate = request.getSession().getAttribute("certificate").toString();
 		if(licence != null && !licence.equals("")  && certificate != null && !certificate.equals("") ) {
 			if(new Date().getTime() - ((Date)request.getSession().getAttribute("date")).getTime()  > 1000*120) {
 				msg.setSuccess(false);
 				msg.setMsg("您输入的验证码已过期");
-			}else if(validateTel.equals(telcode)) {
+			}else if(validateTel.equals(telcode) && verifyCode.equalsIgnoreCase(code)) {
 				String userPwd = user.getPassword();
 				company.setBusinessLicence(licence);
 				company.setTaxpayerLicence(certificate);
@@ -207,11 +228,32 @@ public class UserController {
 	 * @param name
 	 * @param req
 	 * @param res
+	 * @deprecated - because it is not restful and it doesn't use Spring Validation 
 	 */
 	@RequestMapping(value = "/validateName", method = RequestMethod.GET)
 	public @ResponseBody User validateName(@RequestParam String name,  HttpServletRequest req, HttpServletResponse res) {
 		return userService.getUserByName(name);
 	}
+	
+	/**
+	 * 重构
+	 * 
+	 * 使用 restful、Spring Validation 框架
+	 * 
+	 * @author shang yang
+	 *
+	 * @version 
+	 * 
+	 * @createTime: 2015年11月26日 下午8:07:46
+	 *
+	 */
+	@RequestMapping(value = "/validator/username/{value}", method = RequestMethod.GET)
+	public @ResponseBody MessageTransferObject validateName(@PathVariable("value") String name ){
+		
+		return SpringValidationHelper.validate(User.class, name, "name");
+	
+	}
+	
 	/**
 	 * 通过用户名获取对应的信息
 	 * @param model
@@ -219,7 +261,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/sellerInformation", method = RequestMethod.GET)
-	public ModelAndView getInformation(Model model,HttpServletRequest request, HttpServletResponse response) {
+	public String getInformation(Model model,HttpServletRequest request, HttpServletResponse response) {
 		response.setCharacterEncoding("UTF-8");
 		JSONObject json =new JSONObject(); 
 		String name = UserSecurityUtils.getCurrentUserName();
@@ -247,7 +289,7 @@ public class UserController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return new ModelAndView("/user/userCenter/sellerInformation");
+		return "personal.information";
 	}
 	/**
 	 * 通过name判断是否应该显示图形验证码
@@ -311,11 +353,33 @@ public class UserController {
 	 * @param email
 	 * @param req
 	 * @param res
+	 * @deprecated - because it is not restful and it doesn't use Spring Validation
 	 */
 	@RequestMapping(value = "/validateEmail", method = RequestMethod.GET)
 	public @ResponseBody User validateEmail(@RequestParam String email,  HttpServletRequest req, HttpServletResponse res) {
 		return userService.getUserByEmail(email);
 	}
+	
+	/**
+	 * 重构
+	 * 
+	 * 使用 restful、Spring Validation 框架
+	 *  
+	 * @author shang yang
+	 *
+	 * @version 
+	 * 
+	 * @createTime: 2015年11月26日 下午9:07:53
+	 *
+	 */
+	@RequestMapping(value = "/validator/email/{value}", method = RequestMethod.GET)
+	public @ResponseBody MessageTransferObject validateEmail(@PathVariable("value") String email ){
+		
+		return SpringValidationHelper.validate(User.class, email, "email");
+	
+	}
+	
+	
 	/**
 	 * 获取图片验证码
 	 * @param email
@@ -461,21 +525,24 @@ public class UserController {
 	public  ModelAndView  updatePasswordByPhone(  HttpServletRequest request,Model model) {
 		Map<String,Result> model1 = new HashMap<String,Result>();
 		Long id=null;
-		String path;
+		String path="";
+		Locale zh_cn = new Locale("zh", "CN");
 		String phone = (String) request.getSession().getAttribute("phone");
 		id=userService.updatePasswordByPhone(request.getParameter("pwd_new"),phone);
 		Result msg = new Result();
-		if(id != null && id!=0) {
-			msg.setSuccess(true);
-			msg.setMsg("修改成功");
-			msg.setCode(phone);
-			path="/user/forgetPass/findPassbyphone_last";
-		} else {
-			msg.setSuccess(false);
-			msg.setMsg("修改失败");
-			path="/user/forgetPass/findPassbyphone_second";
-			
+		if(request.getParameter("pwd_new_agin").equals(request.getParameter("pwd_new"))){
+			if(id != null && id!=0) {
+				msg.setCode(phone);
+				path="forgot.findPassbyphoneLast";
+			} else {
+				msg.setMsg("修改失败");
+				path="forgot.findPassbyphoneSecond";		
+			}
+		}else{
+			msg.setMsg(I18nMessageFetcher.getMessage("forgot.passDisagree", null, zh_cn));
+			path="forgot.findPassbyphoneSecond";
 		}
+		
 		model1.put("message", msg);
 		 return new ModelAndView(path,model1);
 	}
@@ -486,23 +553,26 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/updatePasswordByUserId",method=RequestMethod.POST)
-	public @ResponseBody Map<String,Result> updatePasswordByUserId(@RequestParam String pwdNew,@RequestParam Long userId, Model model) {
+	public ModelAndView updatePasswordByUserId(HttpServletRequest request, Model model) {
 		Map<String,Result> model1 = new HashMap<String,Result>();
 		Long id=null;
-		id=userService.updatePasswordByUserId(pwdNew, userId);
+		String path="";
+		Long userId = (Long) request.getSession().getAttribute("userId");
+		User user=null;
+		user= userService.getUserByuserId(userId);
+		id=userService.updatePasswordByUserId(request.getParameter("email_pwd"), userId);
 		Result msg = new Result();
 		if(id != null && id!=0) {
-			User user=userService.getUserByuserId(userId);
 			msg.setSuccess(true);
-			msg.setMsg("修改成功");
-			msg.setCode(user.getEmail());
+			msg.setMsg(user.getEmail());
+			path="forgot.findPassbyEmailLast";
 		} else {
 			msg.setSuccess(false);
 			msg.setMsg("修改失败");
-			
+			path="forgot.findPassbyEmailThired";
 		}
 		model1.put("message", msg);
-		return model1;
+		return new ModelAndView(path,model1);
 	}
 
 	/**
@@ -512,10 +582,22 @@ public class UserController {
 	 * @param model
 	 */
 	@RequestMapping(value = "/forGotPassword",method=RequestMethod.POST)
-	public ModelAndView forGotPassword( HttpServletRequest request, Model model) {
+	public String forGotPassword( HttpServletRequest request, Model model) {
 		userForgetPassService.insert(request.getParameter("email"));
-		Map<String,Result> model1 = new HashMap<String,Result>();
-		 return new ModelAndView("/user/forgetPass/findPssByEamil_Second",model1);
+		request.getSession().setAttribute("email",request.getParameter("email"));
+		return "forgot.findPassbyEmailSecond";
+	}
+	/**
+	 * 查询发送邮件
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/ReSendPass",method=RequestMethod.POST)
+	public void ReSendPass( HttpServletRequest request, Model model) {
+		String email = (String) request.getSession().getAttribute("email");//session获取email
+		userForgetPassService.insert(email);
+		
 	}
 	/**
 	 * 验证找回密码邮箱链接
@@ -526,24 +608,24 @@ public class UserController {
 	 */
 	@SuppressWarnings("unused")
 	@RequestMapping(value ="/checkResetLink") 
-	public  ModelAndView checkResetLink(@RequestParam String token, @RequestParam Long userId, Model model){
+	public  ModelAndView checkResetLink(@RequestParam String token,HttpServletRequest request, Model model){
 		List<ResetPassRequest> list=null;
-	    list =userForgetPassService.selectByCodeAndUser(token, userId);
+		list =userForgetPassService.selectByCodeAndUser(token);	  
 	    Calendar c = Calendar.getInstance();
 		//现在的时间(单位：毫秒)
 		long curtime = c.getTimeInMillis();
 		Map<String,String> map = new HashMap<String, String>();
 		if(list!=null && list.size()>0){
 			ResetPassRequest resetPassRequest=list.get(0);
+			request.getSession().setAttribute("userId",resetPassRequest.getUserId());
 			Timestamp token_exptime=resetPassRequest.getValidTo();
 			if( System.currentTimeMillis()>token_exptime.getTime() ){
 				//激活码过期，先删除该用户记录，然后重新发送邮件
-				userForgetPassService.deleteByUserId(userId);
+				userForgetPassService.deleteByUserId(resetPassRequest.getUserId());
 				return new ModelAndView("/user/forgetPass/findPassFail",map);
 			}else{
-				userForgetPassService.deleteByUserId(userId);
-				map.put("userId", userId.toString());
-				return new ModelAndView("/user/forgetPass/findPassbyemail",map);
+					userForgetPassService.deleteByUserId(resetPassRequest.getUserId());
+				return new ModelAndView("forgot.findPassbyEmailThired",map);
 			}
 		}else{
 			return new ModelAndView("/user/forgetPass/findPassFail",map);

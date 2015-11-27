@@ -39,58 +39,15 @@
         }
     </style>
 </head>
-<%
-String userId = request.getParameter("userId");
-%>
+
 <body>
 <!--头部-->
-<div class="header_login">
-    <div class="header_ul clearfix">
-        <ul class="header_ul_left clearfix">
-            <li class="city_div clearfix"><label>所在地 :<span>成都</span></label><img src="<%=request.getContextPath() %>/resources/imgs/arrow.png"/>
-                <div id="show_div">
-                    <ul class="clearfix">
-                        <li><a href="javascript:void(0)">四川</a></li>
-                        <li><a href="javascript:void(0)" class="active">四川</a></li>
-                        <li><a href="javascript:void(0)">四川川</a></li>
-                        <li><a href="javascript:void(0)">四川川</a></li>
-                        <li><a href="javascript:void(0)">四川</a></li>
-                        <li><a href="javascript:void(0)">四川</a></li>
-                        <li><a href="javascript:void(0)">四川川</a></li>
-                        <li><a href="javascript:void(0)">四川</a></li>
-                        <li><a href="javascript:void(0)">四川</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="ipone_li">
-                400-616-6666
-            </li>
-        </ul>
-        <ul class="header_ul_right clearfix">
-            <li><a href="">首页</a></li>
-            <li class="li">|</li>
-            <li><a href="">原厂目录</a></li>
-            <li class="li">|</li>
-            <li><a href="">品牌件</a></li>
-            <li class="li">|</li>
-            <li><a href="">帮助中心</a></li>
-        </ul>
-    </div>
-    <div class="logo_div">
-        <div class="logo_img clearfix">
-            <a href="" class="clearfix">
-                <img src="<%=request.getContextPath() %>/resources/imgs/icon.png" alt=""/>
-            </a>
-        </div>
-    </div>
-</div>
 <div class="Retrieve_password clearfix">
     <p class="clearfix">
-       <!-- <a class="a_tab" style="margin-left: 10px" href="javascript:void(0)">邮箱找回密码</a>-->
         <label>已有账号？<a href="/login.jsp">马上登录</a></label>
     </p>
     <!--手机找回密码-->
-    
+    ${message.msg }
     <!--邮箱找回密码-->
     <div  ng-controller="email_ctr">
         
@@ -101,21 +58,23 @@ String userId = request.getParameter("userId");
                 <li class="left_li active_color">修改密码</li>
                 <li class="progress_li last_il">找回成功</li>
             </ul>
+          <form action="/user/updatePasswordByUserId/" method="post" id="secondformByEmail">
             <div class="form_div clearfix" style="width: 460px">
             <input type="hidden" value="${userId}" id="userId"  >
                 <div class="clearfix left_div">
                     <label>设置密码 :</label>
-                    <input class="email_pwd" ng-model="pwd_new1" type="password" placeholder="请输入密码"/>
+                    <input class="email_pwd" name="email_pwd" ng-model="pwd_new1" type="password" placeholder="请输入密码"/>
                 </div>
                 <label class="error_lab clearfix email_pwd_error "><img src="<%=request.getContextPath() %>/resources/imgs/error.png"><span></span></label>
                 <div class="clearfix left_div">
                     <label>确定密码 :</label>
-                    <input class="email_new_agin" ng-model="pwd_new_agin1" type="password" placeholder="请在次输入密码"/>
+                    <input class="email_new_agin" name="email_new_agin" ng-model="pwd_new_agin1" type="password" placeholder="请在次输入密码"/>
                 </div>
                 <label class="error_lab clearfix email_agin_error"><img src="<%=request.getContextPath() %>/resources/imgs/error.png"><span></span></label>
                 <input type="hidden" class="boolen2" value="1"/>
-                <button class="btn_login btn_login1" style="margin-left: 130px" ng-click="second()">下一步</button>
+                <button class="btn_login btn_login1" style="margin-left: 130px" onClick="secondByEmail()">下一步</button>
             </div>
+            </form>
         </div>
         <div class="email_three" style="display: none;">
             <span class="progress_bar progress_bar1 progress_bar2"></span>

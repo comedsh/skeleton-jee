@@ -886,7 +886,8 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
         num:'',
         areaCode:'',
         type_name:'',
-        telcode:''
+        telcode:'',
+        code:''
     };
   //企业手机验证码
     $scope.validateTelTwo = function(s) {
@@ -944,7 +945,8 @@ Registered_app.controller('enterprise_ctr',['$scope','$http',function($scope,$ht
     					'detailAddress' : $scope.Enterprise.address,
     					'headcount' : $scope.Enterprise.num,
     					'typename' : $scope.Enterprise.type_name,
-    					'telcode' : $scope.Enterprise.telcode
+    					'telcode' : $scope.Enterprise.telcode,
+    					'code' : $scope.Enterprise.code,
     				},
     				{
     				    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},

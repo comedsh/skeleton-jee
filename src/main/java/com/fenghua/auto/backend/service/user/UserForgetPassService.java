@@ -10,7 +10,7 @@ public interface UserForgetPassService {
 	 * @param resetPassRequest
 	 */
 	public void insert(String email);
-	public List<ResetPassRequest> selectByCodeAndUser(String certificateCode,Long UserId); 
+	public List<ResetPassRequest> selectByCodeAndUser(String certificateCode); 
 	/**
 	 * 根据用户删除找回密码信息
 	 * @param UserId
