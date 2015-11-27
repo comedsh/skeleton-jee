@@ -1,10 +1,8 @@
 package com.fenghua.auto.webapp.controller.securtity;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,14 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.WebAttributes;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +23,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.fenghua.auto.backend.core.security.AuthenticationCodeException;
-import com.fenghua.auto.backend.core.security.AuthenticationLimitException;
 import com.fenghua.auto.webapp.view.Result;
 
 /** 
@@ -57,9 +48,9 @@ public class SecureController {
 	 * @return
 	 */
 	@RequestMapping(value="/session/invalid",method=RequestMethod.GET)
-	public ModelAndView invalid() {
+	public String invalid() {
 		logger.debug("会话 超时");
-		return new ModelAndView("/login");
+		return "web.login";
 	}
 	
 	
@@ -68,8 +59,8 @@ public class SecureController {
 	 * @return
 	 */
 	@RequestMapping(value="/logout")
-	public ModelAndView logout() {
-		return new ModelAndView(new RedirectView("/login.jsp"));
+	public String logout() {
+		return "web.login";
 	}
 		
 	/**
@@ -78,9 +69,12 @@ public class SecureController {
 	 * @return
 	 */
 	@RequestMapping(value = "/userCenter")
-	public @ResponseBody Map<String,Result> userCenter(HttpServletRequest request) {
+	@ResponseBody
+	public Map<String,Result> userCenter(HttpServletRequest request) {
 		Map<String,Result> model = new HashMap<String,Result>();
-		Result msg = new Result(true,"");
+		Result msg = new Result();
+		msg.setCode("1");
+		msg.setMsg("登录成功");
 		model.put("msg", msg);
 		return model;
 	}
@@ -93,17 +87,7 @@ public class SecureController {
 	 */
 	@RequestMapping(value = "/main")
 	public String main(Model model,HttpServletRequest request) {
-		return "/user/userCenter/userCenter";
-	}
-	/**
-	 * 跳转到个人中心页面
-	 * @param model
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(value = "/sellerInformation")
-	public String forwardInformation(Model model,HttpServletRequest request) {
-		return "/user/userCenter/sellerInformation";
+		return "user.center";
 	}
 	
 	/**
@@ -117,7 +101,7 @@ public class SecureController {
 	public ModelAndView showLoginPage(HttpServletRequest req, HttpServletResponse res, Model model) {
 		Map<String,String> map = new HashMap<String, String>();
 		map.put("userName", req.getParameter("userName"));
-		return new ModelAndView("/user/register/successRegister",map);
+		return new ModelAndView("register.success",map);
 	}
 	
 	/**
@@ -138,21 +122,25 @@ public class SecureController {
 		Result result = new Result();
 		//用户不存在
 	    if(e instanceof UsernameNotFoundException){
+	    	result.setCode("-1");
 	    	result.setMsg("用户名不存在");
 		}
 	    //用户名或密码错误
         if(e instanceof BadCredentialsException){
-        	result.setMsg("用户名或密码错误");
+        	result.setCode("-2");
+        	result.setMsg("用户名或密码输入错误");
 		}
 	    //输入验证码错误
         if(e instanceof AuthenticationCodeException){
+        	result.setCode("-3");
         	result.setMsg("验证码错误");
 		}  
         
         Object showVCode =  request.getAttribute("showVCode");
         boolean isShow = showVCode == null? false:(Boolean)showVCode;
         if(isShow){
-         	result.setCode("1001");
+         	result.setCode("-4");
+         	result.setMsg("已经错误三次，显示验证码");
         }  
        
         Map<String,Result> model = new HashMap<String,Result>();

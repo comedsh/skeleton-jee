@@ -6,11 +6,16 @@
 <tiles-definitions>
 
 <!-- defined for education -->
-
+    <definition name="forgot.findPassbyphoneOrEmail" extends="web.default_template">
+      <put-attribute name="body" value="/WEB-INF/user/forgetPass/findPassbyphone.jsp" />  
+      
+  </definition>
   <definition name="education.spittle_home" extends="education.default_template">
       <put-attribute name="body" value="/WEB-INF/views/education/home_body.jsp" />
   </definition>
-
+<definition name="forgot.findPassbyemail" >
+      <put-attribute name="body" value="/WEB-INF/views/user/forgetpass/findPassbyemail.jsp" />
+  </definition>
   <definition name="education.spittle_view" extends="education.default_template">
       <put-attribute name="body" value="/WEB-INF/views/education/view_body.jsp" />
   </definition>
@@ -47,6 +52,36 @@
 
       <put-attribute name="body" value="/WEB-INF/views/web/i18n_ru_RU.jsp" />  
       
+  </definition>
+  
+  
+   <definition name="web.product" extends="web.default_template">
+  
+      <put-attribute name="body" value="/WEB-INF/views/product/product.jsp" />  
+      
+  </definition>
+  
+    <definition name="web.product_list" extends="web.default_template">
+ 
+
+      <put-attribute name="body" value="/WEB-INF/views/product/product_list.jsp" />  
+      
+  </definition>
+  <!-- 登录页面 -->
+  <definition name="web.login" extends="web.default_template">
+      <put-attribute name="body" value="/login.jsp" />  
+  </definition>
+  <!-- 用户中心 -->
+  <definition name="user.center" extends="web.default_template">
+      <put-attribute name="body" value="/WEB-INF/views/user/userCenter/userCenter.jsp" />  
+  </definition>
+  <!-- 注册成功页面 -->
+  <definition name="register.success" extends="web.default_template">
+      <put-attribute name="body" value="/WEB-INF/views/user/register/successRegister.jsp" />  
+  </definition>
+  <!-- 个人修改信息页面 -->
+  <definition name="personal.information" extends="web.default_template">
+      <put-attribute name="body" value="/WEB-INF/views/user/userCenter/sellerInformation.jsp" />  
   </definition>
   
 </tiles-definitions>

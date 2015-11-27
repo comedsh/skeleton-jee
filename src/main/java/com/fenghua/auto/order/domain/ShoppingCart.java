@@ -4,7 +4,7 @@ import com.fenghua.auto.backend.domain.DomainObject;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class BuyCar implements DomainObject {
+public class ShoppingCart implements DomainObject {
 	private static final long serialVersionUID = 1L;
     private Long id;
 

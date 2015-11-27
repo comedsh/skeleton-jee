@@ -6,28 +6,33 @@ import javax.validation.constraints.Pattern;
 
 import com.fenghua.auto.backend.domain.AbstractDomainObject;
 import com.fenghua.auto.backend.domain.DomainObject;
-import com.fenghua.auto.backend.domain.MessageTransfer;
-import com.fenghua.auto.backend.domain.validation.NoDuplicated;
+import com.fenghua.auto.backend.domain.MessageTransferObject;
+import com.fenghua.auto.backend.domain.validation.NotDuplicated;
 
 /**
  * 用户实体类
  * @author chengbin
  * @createTime 2015.11.5
  */
-public class User extends AbstractDomainObject implements DomainObject, MessageTransfer {
+public class User extends AbstractDomainObject implements DomainObject, MessageTransferObject {
 	
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
 	
 	@Pattern(regexp="^[a-zA-Z\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5]{3,19}$")
-	@NoDuplicated( sql = "select count(*) from user where name = ?" )
+	@NotDuplicated( sql = "select count(*) from user where name = ?" )
 	private String name;
-
+	
+	@Pattern(regexp="^[a-zA-Z]\\w{5,19}$")
 	private String password;
 
+	@Pattern(regexp="^([a-zA-Z0-9_\\.\\-])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+$")
+	@NotDuplicated( sql = "select count(*) from user where email = ?" )
 	private String email;
-
+	
+	@Pattern(regexp="^1{1}[34578]{1}[0-9]{9}$")
+	@NotDuplicated( sql = "select count(*) from user where mobilephone = ?" )
 	private String mobilephone;
 
 	private String qqNumber;

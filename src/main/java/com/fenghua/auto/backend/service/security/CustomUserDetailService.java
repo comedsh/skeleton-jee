@@ -14,8 +14,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import com.fenghua.auto.backend.core.security.UserInfo;
 import com.fenghua.auto.backend.domain.user.Role;
 import com.fenghua.auto.backend.domain.user.User;
+import com.fenghua.auto.backend.service.user.AuthService;
 import com.fenghua.auto.backend.service.user.RoleService;
 import com.fenghua.auto.backend.service.user.UserService;
 
@@ -29,6 +31,8 @@ import com.fenghua.auto.backend.service.user.UserService;
   * @version 
   */
 public class CustomUserDetailService implements UserDetailsService{
+	@Autowired
+	private AuthService authService;
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(CustomUserDetailService.class);
@@ -43,10 +47,8 @@ public class CustomUserDetailService implements UserDetailsService{
 	@Autowired
 	private RoleService roleService;
 	
-	@SuppressWarnings("null")
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
         logger.debug("loadUserByUsername(String) - start"); //$NON-NLS-1$  
 		
 		Collection<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
@@ -66,7 +68,7 @@ public class CustomUserDetailService implements UserDetailsService{
 			
 			users = userService.getUserByName(username);
 		}
-
+		
 		if (users == null) {
 			String message = "用户" + username + "不存在";
 			logger.error(message);
@@ -84,12 +86,12 @@ public class CustomUserDetailService implements UserDetailsService{
 			logger.debug("用户：[" + users.getName() + "]拥有角色：["+ role.getName() + "],即spring security中的access");
 			auths.add(grantedAuthorityImpl);
 		}
-
-		org.springframework.security.core.userdetails.User user = new org.springframework.security.core.userdetails.User(
-				username, password, true, true, true, true, auths);
-	
+		UserInfo userInfo = new UserInfo(username, password, auths);
+		userInfo.setUserId(users.getId());
+		userInfo.setCompanyId(users.getCompanyId());
+		authService.binding(userInfo);
 		logger.debug("loadUserByUsername(String) - end");
-		return user;
+		return userInfo;
 	}
 
 	public void setAccountService(AccountService accountService) {

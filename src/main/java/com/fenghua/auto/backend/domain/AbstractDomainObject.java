@@ -1,7 +1,5 @@
 package com.fenghua.auto.backend.domain;
 
-import javax.mail.MethodNotSupportedException;
-
 import org.apache.commons.lang.ArrayUtils;
 
 /**
@@ -44,9 +42,9 @@ public class AbstractDomainObject {
 	 * @createTime: 2015年11月26日 下午6:52:27
 	 *
 	 */
-	public boolean hasMessage() throws MethodNotSupportedException{
+	public boolean hasMessage(){
 		
-		throw new MethodNotSupportedException();
+		return false;
 	
 	}
 	
@@ -60,9 +58,9 @@ public class AbstractDomainObject {
 	 * @createTime: 2015年11月26日 下午6:55:12
 	 *
 	 */
-	public String[] getMessages() throws MethodNotSupportedException{
+	public String[] getMessages(){
 		
-		throw new MethodNotSupportedException();
+		return null;
 	
 	}
 	

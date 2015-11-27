@@ -12,6 +12,8 @@ public class SkuStock implements DomainObject{
     private Long repertoryId;
 
     private Long skuId;
+    
+    private Long saledCount;
 
     public Long getId() {
         return id;
@@ -52,4 +54,14 @@ public class SkuStock implements DomainObject{
     public void setSkuId(Long skuId) {
         this.skuId = skuId;
     }
+
+	public Long getSaledCount() {
+		return saledCount;
+	}
+
+	public void setSaledCount(Long saledCount) {
+		this.saledCount = saledCount;
+	}
+    
+    
 }

@@ -52,7 +52,7 @@
 </head>
 <body>
 <!--头部-->
-<div class="header_login">
+<div style="display: none" class="header_login">
     <div class="header_ul clearfix">
         <ul class="header_ul_left clearfix">
             <li class="city_div clearfix"><label>所在地 :<span>成都</span></label><img src="<%=request.getContextPath() %>/resources/imgs/arrow.png"/>
@@ -122,7 +122,7 @@
         </ul>
         <ul>
             <li class="heder">设置</li>
-            <li><a ng-click="forwordInformation(<sec:authentication property="name"></sec:authentication>)">个人信息</a></li>
+            <li><a href="/user/sellerInformation">个人信息</a></li>
             <li>收货地址</li>
             <li>增票资质</li>
         </ul>
@@ -297,7 +297,7 @@
     
 </div>
 <!--尾部-->
-<div class="fooder">
+<div style="display: none" class="fooder">
     <div class="tail_description">
         <ul class="clearfix">
             <li><a href="">关于我们</a></li>

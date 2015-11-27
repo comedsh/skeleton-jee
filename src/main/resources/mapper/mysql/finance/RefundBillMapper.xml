@@ -36,6 +36,105 @@
     account_name, bank_code, account_no, payed_time, process_content, processor_id, audit_time, 
     submit_id, submit_time, remark, trade_no, refund_time
   </sql>
+  <sql id="Base_Where_Case" >
+    <where >
+      <if test="id != null" >
+         AND id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="rebillNo != null" >
+         AND rebill_no = #{rebillNo,jdbcType=VARCHAR}
+      </if>
+      <if test="retradeNo != null" >
+         AND retrade_no = #{retradeNo,jdbcType=VARCHAR}
+      </if>
+      <if test="refundId != null" >
+         AND refund_id = #{refundId,jdbcType=BIGINT}
+      </if>
+      <if test="refundNo != null" >
+         AND refund_no = #{refundNo,jdbcType=VARCHAR}
+      </if>
+      <if test="orderId != null" >
+         AND order_id = #{orderId,jdbcType=BIGINT}
+      </if>
+      <if test="orderNo != null" >
+         AND order_no = #{orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="buyerId != null" >
+         AND buyer_id = #{buyerId,jdbcType=BIGINT}
+      </if>
+      <if test="sellerId != null" >
+         AND seller_id = #{sellerId,jdbcType=BIGINT}
+      </if>
+      <if test="status != null" >
+         AND status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="refundAmount != null" >
+         AND refund_amount = #{refundAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="actRefundMount != null" >
+         AND act_refund_mount = #{actRefundMount,jdbcType=DECIMAL}
+      </if>
+      <if test="refundMethod != null" >
+         AND refund_method = #{refundMethod,jdbcType=INTEGER}
+      </if>
+      <if test="payMethod != null" >
+         AND pay_method = #{payMethod,jdbcType=INTEGER}
+      </if>
+      <if test="accountType != null" >
+         AND account_type = #{accountType,jdbcType=INTEGER}
+      </if>
+      <if test="accountName != null" >
+         AND account_name = #{accountName,jdbcType=INTEGER}
+      </if>
+      <if test="bankCode != null" >
+         AND bank_code = #{bankCode,jdbcType=VARCHAR}
+      </if>
+      <if test="accountNo != null" >
+         AND account_no = #{accountNo,jdbcType=INTEGER}
+      </if>
+      <if test="payedTime != null" >
+         AND payed_time = #{payedTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="processContent != null" >
+         AND process_content = #{processContent,jdbcType=VARCHAR}
+      </if>
+      <if test="processorId != null" >
+         AND processor_id = #{processorId,jdbcType=BIGINT}
+      </if>
+      <if test="auditTime != null" >
+         AND audit_time = #{auditTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="submitId != null" >
+         AND submit_id = #{submitId,jdbcType=BIGINT}
+      </if>
+      <if test="submitTime != null" >
+         AND submit_time = #{submitTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="remark != null" >
+         AND remark = #{remark,jdbcType=VARCHAR}
+      </if>
+      <if test="tradeNo != null" >
+         AND trade_no = #{tradeNo,jdbcType=VARCHAR}
+      </if>
+      <if test="refundTime != null" >
+         AND refund_time = #{refundTime,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </sql>
+  <select id="selectCount" resultType="java.lang.Long" parameterType="com.fenghua.auto.finance.domain.RefundBill" >
+    select count( id)
+     from refund_bill
+    <include refid="Base_Where_Case" />
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fenghua.auto.finance.domain.RefundBill" >
+    select 
+    <include refid="Base_Column_List" />
+     from refund_bill
+    <include refid="Base_Where_Case" />
+    <if test="limit > 0" >
+       limit #{offset},#{limit} 
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

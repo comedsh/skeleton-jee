@@ -22,6 +22,16 @@ public class CompanyServiceImpl implements CompanyService {
 	private CompanyDao companyDao;
 	
 	@Override
+	public Company getById(Long id) {
+		List<Company> company = companyDao.getById(id);
+		if (company.size() > 0) {
+			return company.get(0);
+		} else {
+			return null;
+		}
+	}
+	
+	@Override
 	public Company getUserByFixed(String fixed) {
 		List<Company> company = companyDao.selectByFixed(fixed);
 		if (company.size() > 0) {

@@ -7,7 +7,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
  <%@page import="java.util.Enumeration"%>   
 <!DOCTYPE html>
-<html ng-app="Registered_app">
+<html>
 <head lang="en">
     <title>注册</title>
     <meta charset="UTF-8">
@@ -20,7 +20,8 @@
 	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/javaScript/angular/angular.min.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/javaScript/jQuery/json2.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/script/user/placeholder.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/script/user/registered.js"></script>
+	<!-- <script type="text/javascript" src="<%=request.getContextPath() %>/resources/script/user/registered.js"></script> -->
+	<script type="text/javascript" src="/resources/script/user/register.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/javaScript/uploadify/ajaxfileupload.js"></script>
     <!--[if lt IE 9]>
     <script type="text/javascript" src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -49,7 +50,7 @@
         }
     </style>
 </head>
-<body>
+<body ng-app="Registered_app">
 <!--头部-->
 <div class="header_login">
     <div class="header_ul clearfix">
@@ -91,7 +92,7 @@
         </div>
     </div>
 </div>
-<div class="Retrieve_password clearfix" ng-controller="enterprise_ctr">
+<div class="Retrieve_password clearfix" >
     <p class="clearfix">
         <a class="a_tab active_tab" href="javascript:void(0)">个人注册</a>
         <a class="a_tab" style="margin-left: 10px" href="javascript:void(0)">企业注册</a>
@@ -490,18 +491,21 @@
             </div>
         </div>
     </div>
+    
     <!--个人注册-->
-    <div class="border_div1">
+    <div class="border_div1" ng-controller="personalRegisterCcontroller">
         <div class="name_pwd" style="height: 700px">
             <div class="clearfix chren_div">
                 <label><span style="color:red">*</span>用户名</label>
             	<input type="hidden" class="sub_name" value="1">
-                <div class="input_d">
-                    <input type="text" class="name" ng-model="Individual.name"  placeholder="请输入用户名"/>
+                <div class="input_d" style='{{input_style}}'>
+                    <input type="text" class="name" ng-model="formdata.name"  placeholder="请输入用户名" ng-blur="nameOnBlur()" ng-focus="nameOnFocus()"/>
                 </div>
                 <div class="remove_d">
                     <img src="<%=request.getContextPath() %>/resources/imgs/remove.jpg"/>
                 </div>
+                
+                <!-- 
                 <div class="user_error1">
                     4-20位字符,支持汉字、字母、数字的组合,不能以数字开头
                 </div>
@@ -511,6 +515,10 @@
                 <div class="user_error3">
                     输入正确
                 </div>
+                -->
+                 
+                <div ng-class='{tip: isTip, wrong: isWrong, correct: isCorrect}' ng-show="err_name">{{ err_name }}</div>
+                
             </div>
             <div class="clearfix chren_div">
             	<input type="hidden" class="sub_pws" value="1">
