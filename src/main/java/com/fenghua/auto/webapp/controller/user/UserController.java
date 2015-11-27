@@ -10,6 +10,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import javax.security.sasl.AuthenticationException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +41,7 @@ import com.fenghua.auto.backend.domain.user.PaymentType;
 import com.fenghua.auto.backend.domain.user.ResetPassRequest;
 import com.fenghua.auto.backend.domain.user.User;
 import com.fenghua.auto.backend.domain.user.UserPaymentType;
+import com.fenghua.auto.backend.service.user.AuthService;
 import com.fenghua.auto.backend.service.user.CompanyService;
 import com.fenghua.auto.backend.service.user.PaymentTypeService;
 import com.fenghua.auto.backend.service.user.UserForgetPassService;
@@ -56,7 +58,8 @@ import com.fenghua.auto.webapp.view.Result;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-	
+	@Autowired
+	private AuthService authService;
 	@Autowired
 	private UserService userService;
 	
@@ -86,7 +89,7 @@ public class UserController {
 		if(new Date().getTime() - ((Date)request.getSession().getAttribute("date")).getTime()  > 1000*120) {
 			msg.setSuccess(false);
 			msg.setMsg("您输入的验证码已过期");
-		} else if(validateTel.equals(telcode) && verifyCode.equals(code)) {
+		} else if(validateTel.equals(telcode) && verifyCode.equalsIgnoreCase(code)) {
 			String userPwd = user.getPassword();
 			userService.insert(user);
 			msg.setSuccess(true);
@@ -94,6 +97,11 @@ public class UserController {
 			msg.setMsg("注册成功");
 			//把用户名和密码存入安全的session中
 			userService.autoLogin(user.getName(), userPwd, request);
+			try {
+				authService.binding(UserSecurityUtils.getCurrentUser());
+			} catch (AuthenticationException e) {
+				e.printStackTrace();
+			}
 		} else {
 			if(!validateTel.equals(telcode)) {
 				msg.setSuccess(false);
@@ -127,7 +135,7 @@ public class UserController {
 			msg.setSuccess(false);
 			msg.setMsg(requestContext.getMessage("forgot.verificationexpire"));
 			path="/user/forgetPass/findPassbyphone";
-		} else if(validateTel.equals(request.getParameter("iPhone_code")) && verifyCode.equals(request.getParameter("code"))) {
+		} else if(validateTel.equals(request.getParameter("iPhone_code")) && verifyCode.equalsIgnoreCase(request.getParameter("code"))) {
 			msg.setSuccess(true);
 			msg.setMsg("成功");
 			path="/user/forgetPass/findPassbyphone_second";
@@ -154,17 +162,18 @@ public class UserController {
 	 * @createTime 2015.11.4
 	 */
 	@RequestMapping(value = "/regisUserCompany", method = RequestMethod.POST)
-	public Map<String,Result> addUserAndCompany(@Valid User user, @Valid Company company, @RequestParam String telcode, @Valid PaymentType paymenttype,HttpServletRequest request, Locale locale) {
+	public Map<String,Result> addUserAndCompany(@Valid User user, @Valid Company company, @RequestParam String telcode, @RequestParam String code, @Valid PaymentType paymenttype,HttpServletRequest request, Locale locale) {
 		Map<String,Result> model = new HashMap<String,Result>();
 		Result msg = new Result();
 		String validateTel = (String) request.getSession().getAttribute("validateTel");
+		String verifyCode = (String) request.getSession().getAttribute("rand");
 		String licence = request.getSession().getAttribute("licence").toString();
 		String certificate = request.getSession().getAttribute("certificate").toString();
 		if(licence != null && !licence.equals("")  && certificate != null && !certificate.equals("") ) {
 			if(new Date().getTime() - ((Date)request.getSession().getAttribute("date")).getTime()  > 1000*120) {
 				msg.setSuccess(false);
 				msg.setMsg("您输入的验证码已过期");
-			}else if(validateTel.equals(telcode)) {
+			}else if(validateTel.equals(telcode) && verifyCode.equalsIgnoreCase(code)) {
 				String userPwd = user.getPassword();
 				company.setBusinessLicence(licence);
 				company.setTaxpayerLicence(certificate);
@@ -208,7 +217,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/sellerInformation", method = RequestMethod.GET)
-	public ModelAndView getInformation(Model model,HttpServletRequest request, HttpServletResponse response) {
+	public String getInformation(Model model,HttpServletRequest request, HttpServletResponse response) {
 		response.setCharacterEncoding("UTF-8");
 		JSONObject json =new JSONObject(); 
 		String name = UserSecurityUtils.getCurrentUserName();
@@ -236,7 +245,7 @@ public class UserController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return new ModelAndView("/user/userCenter/sellerInformation");
+		return "personal.information";
 	}
 	/**
 	 * 通过name判断是否应该显示图形验证码

@@ -36,7 +36,7 @@
 </head>
 <body>
 <!--头部-->
-<div class="header" ng-controller="headerController">
+<div style="display: none" class="header" ng-controller="headerController">
     <div class="header_box clearfix">
         <ul class="header_left clearfix">
             <li class=" city_wrap clearfix" ng-class={'active':isCityActive} ng-mouseenter="mouseOver()" ng-mouseleave="mouseLeave()"><label>所在地 :<span>{{currentCity.cityName}}</span></label><img src="<%=request.getContextPath() %>/resources/imgs/arrow.png"/>
@@ -95,13 +95,13 @@
         <a class="login_btn" enter ng-click="logins()" ng-bind="loginBtnText">登 录</a>
         <div class="thirdparty-box">
             <label>使用合作网站账号登录</label>
-            <a href="###">QQ</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="/auth/qq.action">QQ</a>&nbsp;&nbsp;|&nbsp;&nbsp;
             <a href="###">微信</a>
         </div>
     </div>
 </div>
 <!--尾部-->
-<div class="footer">
+<div style="display: none" class="footer">
    <div class="tail_description">
        <ul class="clearfix">
            <li><a href="">关于我们</a></li>
