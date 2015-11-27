@@ -30,8 +30,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.support.RequestContext;
 
+import com.fenghua.auto.backend.core.utills.MessageHelper;
 import com.fenghua.auto.backend.core.utills.SpringValidationHelper;
 import com.fenghua.auto.backend.core.utills.UserSecurityUtils;
 import com.fenghua.auto.backend.core.utills.uploadPicture;
@@ -50,7 +50,6 @@ import com.fenghua.auto.backend.service.user.UserForgetPassService;
 import com.fenghua.auto.backend.service.user.UserPaymentTypeService;
 import com.fenghua.auto.backend.service.user.UserService;
 import com.fenghua.auto.webapp.view.Result;
-import com.fenghua.auto.backend.core.utills.I18nMessageFetcher;
 
 /**
  * 用户功能模块
@@ -156,21 +155,20 @@ public class UserController {
 	public String findPassByPhone( HttpServletRequest request,Model model) {
 		String path;
 		String message = null;
-		Locale zh_cn = new Locale("zh", "CN");
 		String validateTel = (String) request.getSession().getAttribute("validateTel");
 		String verifyCode = (String) request.getSession().getAttribute("rand");
 		if(new Date().getTime() - ((Date)request.getSession().getAttribute("date")).getTime()  > 1000*120) {
-			message=I18nMessageFetcher.getMessage("forgot.verificationexpire", null, zh_cn);
+			message=MessageHelper.getMessage("forgot.verificationexpire");
 			path="forgot.findPassbyphoneOrEmail";
 		} else if(validateTel.equals(request.getParameter("iPhone_code")) && verifyCode.equalsIgnoreCase(request.getParameter("code"))) {
 			path="forgot.findPassbyphoneSecond";
 			//把用户名和密码存入安全的session中
 		} else {
 			if(!validateTel.equals(request.getParameter("iPhone_code"))) {
-				message=I18nMessageFetcher.getMessage("forgot.phoneError", null, zh_cn);
+				message=MessageHelper.getMessage("forgot.phoneError");
 				path="forgot.findPassbyphoneOrEmail";
 			} else {
-				message=I18nMessageFetcher.getMessage("forgot.verificationCodeError", null, zh_cn);
+				message=MessageHelper.getMessage("forgot.verificationCodeError");
 				path="forgot.findPassbyphoneOrEmail";
 			}
 		}
@@ -539,7 +537,7 @@ public class UserController {
 				path="forgot.findPassbyphoneSecond";		
 			}
 		}else{
-			msg.setMsg(I18nMessageFetcher.getMessage("forgot.passDisagree", null, zh_cn));
+			msg.setMsg(MessageHelper.getMessage("forgot.passDisagree"));
 			path="forgot.findPassbyphoneSecond";
 		}
 		
