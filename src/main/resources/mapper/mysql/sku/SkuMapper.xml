@@ -30,9 +30,6 @@
     
   </resultMap>
 
-  <resultMap type="java.util.List" id="BaseResultList">
-    
-  </resultMap>
   
   <sql id="Base_Column_List" >
     id, code, seller_id, name, title, status, type, shelf_time, under_time, produce_time, 

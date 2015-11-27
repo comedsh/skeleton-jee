@@ -290,6 +290,24 @@ forgotpwd_app.controller('ipone',['$scope','$http',function($scope,$http){
             }
         }
 }]);
+//手机验证找回密码第一步
+function nextstepByPhone(){
+	  if($("#sub_tel").val()==0 && $("#sub_code").val()==0 && $("#sub_tel_code").val()==0){
+		  $('#firstformByPhone').submit();
+	  }
+}
+//手机找回密码第二步提交
+function secondByPhone(){
+	 if($('.second').val()==0){
+		 $('#secondformByPhone').submit();
+	 }
+}
+//邮箱找回密码第一步提交
+function nextstepByEmail(){
+	  if($('.boolen1').val()==0){
+		  $('#firstformByEmail').submit();
+	  }
+}
 //邮箱找回密码
 forgotpwd_app.controller('email',['$scope','$http',function($scope,$http){
         $scope.boolen1=false;

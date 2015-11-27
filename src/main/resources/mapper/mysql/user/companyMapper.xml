@@ -6,7 +6,7 @@
     <result column="Compnay_Name" property="compnayName" jdbcType="VARCHAR" />
     <result column="City_Area_ID" property="cityAreaId" jdbcType="BIGINT" />
     <result column="Detail_Address" property="detailAddress" jdbcType="VARCHAR" />
-    <result column="Headcount" property="headcount" jdbcType="INTEGER" />
+    <result column="Headcount" property="headcount" jdbcType="VARCHAR" />
     <result column="Business_Licence" property="businessLicence" jdbcType="VARCHAR" />
     <result column="Taxpayer_Licence" property="taxpayerLicence" jdbcType="VARCHAR" />
     <result column="Taxpayer_Number" property="taxpayerNumber" jdbcType="VARCHAR" />
@@ -43,7 +43,7 @@
       Contacts_Email, Created_TS, Created_by, 
       Last_Modified_TS, Last_Modified_By)
     values (#{id,jdbcType=BIGINT}, #{compnayName,jdbcType=VARCHAR}, #{cityAreaId,jdbcType=BIGINT}, 
-      #{detailAddress,jdbcType=VARCHAR}, #{headcount,jdbcType=INTEGER}, #{businessLicence,jdbcType=VARCHAR}, 
+      #{detailAddress,jdbcType=VARCHAR}, #{headcount,jdbcType=VARCHAR}, #{businessLicence,jdbcType=VARCHAR}, 
       #{taxpayerLicence,jdbcType=VARCHAR}, #{taxpayerNumber,jdbcType=VARCHAR}, #{contactsName,jdbcType=VARCHAR}, 
       #{contactsPhone,jdbcType=VARCHAR}, #{contactsMobile,jdbcType=VARCHAR}, #{contactsDept,jdbcType=VARCHAR}, 
       #{contactsEmail,jdbcType=VARCHAR}, #{createdTs,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, 
@@ -118,7 +118,7 @@
         #{detailAddress,jdbcType=VARCHAR},
       </if>
       <if test="headcount != null" >
-        #{headcount,jdbcType=INTEGER},
+        #{headcount,jdbcType=VARCHAR},
       </if>
       <if test="businessLicence != null" >
         #{businessLicence,jdbcType=VARCHAR},
@@ -171,7 +171,7 @@
         Detail_Address = #{detailAddress,jdbcType=VARCHAR},
       </if>
       <if test="headcount != null" >
-        Headcount = #{headcount,jdbcType=INTEGER},
+        Headcount = #{headcount,jdbcType=VARCHAR},
       </if>
       <if test="businessLicence != null" >
         Business_Licence = #{businessLicence,jdbcType=VARCHAR},
@@ -217,7 +217,7 @@
     set Compnay_Name = #{compnayName,jdbcType=VARCHAR},
       City_Area_ID = #{cityAreaId,jdbcType=BIGINT},
       Detail_Address = #{detailAddress,jdbcType=VARCHAR},
-      Headcount = #{headcount,jdbcType=INTEGER},
+      Headcount = #{headcount,jdbcType=VARCHAR},
       Business_Licence = #{businessLicence,jdbcType=VARCHAR},
       Taxpayer_Licence = #{taxpayerLicence,jdbcType=VARCHAR},
       Taxpayer_Number = #{taxpayerNumber,jdbcType=VARCHAR},
