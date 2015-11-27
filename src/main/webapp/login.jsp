@@ -85,7 +85,7 @@
         </div>
         <div class="remember_box clearfix">
             <div class="remember_pwd" ng-class="{'checked':user.isRememberPwd}" ng-model="user.isRememberPwd" ng-click="toggleRemenmmberPwd()">记住密码</div>
-            <a ng-href="Forgot password.html">忘记密码</a>
+            <a ng-href="/user/findPassbyphoneOrEmail/">忘记密码</a>
         </div>
         <div class="imgcode-box">
             <input type="text" ng-model="user.code">
