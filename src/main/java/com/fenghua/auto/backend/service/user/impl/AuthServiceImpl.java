@@ -1,6 +1,4 @@
-package com.fenghua.auto.backend.service.user.impl;
-
-import java.util.Locale;
+ package com.fenghua.auto.backend.service.user.impl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -42,11 +40,7 @@ public class AuthServiceImpl implements AuthService {
 			throw new QQConnectException("qq登陆异常异常！");
 		} else {
 			accessToken = accessTokenObj.getAccessToken();
-			request.getSession().setAttribute("qq_access_token", accessToken);
-
-			// request.getSession().setAttribute("demo_token_expirein",String.valueOf(tokenExpireIn));
-
-			// 利用获取到的accessToken 去获取当前用的openid
+			request.getSession().setAttribute("qqOpenID", accessToken);
 			OpenID openIDObj = new OpenID(accessToken);
 			openID = openIDObj.getUserOpenID();
 			User user = userService.getUserByQQ(openID);
@@ -56,14 +50,14 @@ public class AuthServiceImpl implements AuthService {
 	@Override
 	public void binding(UserInfo userInfo) {
 		HttpSession session = UserSecurityUtils.getSession();
-		String qqtoken = (String) session.getAttribute("qqtoken");
-		if (qqtoken != null) {
-			binding(qqtoken,userInfo);
+		String qqOpenID = (String) session.getAttribute("qqOpenID");
+		if (qqOpenID != null) {
+			binding(qqOpenID,userInfo);
 		}
 	}
-	public void binding(String qqtoken,UserInfo userInfo) {
+	public void binding(String qqOpenID,UserInfo userInfo) {
 		User user = userService.getUserById(userInfo.getUserId());
-		user.setQqNumber(qqtoken);
+		user.setQqNumber(qqOpenID);
 		userService.update(user);
 	}
 }
