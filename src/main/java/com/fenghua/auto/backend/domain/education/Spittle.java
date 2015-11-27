@@ -8,6 +8,7 @@ import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fenghua.auto.backend.domain.AbstractDomainObject;
+import com.fenghua.auto.backend.domain.MessageTransferObject;
 
 /**
  * Spittle 唾沫，同时也翻译为碎语
@@ -20,7 +21,7 @@ import com.fenghua.auto.backend.domain.AbstractDomainObject;
  *
  */
 
-public class Spittle extends AbstractDomainObject{
+public class Spittle extends AbstractDomainObject implements MessageTransferObject{
 
 	/**
 	 * to enable spring MVC Form validation, First, needs javax.validation jar; Second, needs <mvc:annotation-driven /> enabled. 
@@ -30,12 +31,12 @@ public class Spittle extends AbstractDomainObject{
 	// remember, if you want to use @valid, to use its Object
 	Long id;
 	
+	@NotNull	
 	@Size(min=4, max=20)
-	@NotNull
 	String username;
 	
+	@NotNull	
 	@Size(min=8, max=30)
-	@NotNull
 	String text;
 	
 	// allows empty, if empty, it will be calculated by the system automatically

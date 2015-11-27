@@ -48,7 +48,7 @@ a {
     display: block;
     width: 270px;
     height: 60px;
-    background: transparent url("resources/image/logo.png") no-repeat scroll 0px 0px;
+    background: transparent url("./../../../resources/image/logo.png") no-repeat scroll 0px 0px;
     text-indent: -20000px;
 }
 

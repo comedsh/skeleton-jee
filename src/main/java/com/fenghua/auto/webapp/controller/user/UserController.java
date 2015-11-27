@@ -197,6 +197,26 @@ public class UserController {
 	public @ResponseBody User validateName(@RequestParam String name,  HttpServletRequest req, HttpServletResponse res) {
 		return userService.getUserByName(name);
 	}
+	
+	/**
+	 * 重构
+	 * 
+	 * 使用 restful、Spring Validation 框架
+	 * 
+	 * @author shang yang
+	 *
+	 * @version 
+	 * 
+	 * @createTime: 2015年11月26日 下午8:07:46
+	 *
+	 */
+	@RequestMapping(value = "/validator/username/{value}", method = RequestMethod.GET)
+	public @ResponseBody MessageTransferObject validateName(@PathVariable("value") String name ){
+		
+		return RpringValidationHelper.validate(User.class, name, "name");
+	
+	}
+	
 	/**
 	 * 通过用户名获取对应的信息
 	 * @param model

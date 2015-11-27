@@ -20,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
+import com.fenghua.auto.backend.core.utills.LabelErrorTranslator;
+import com.fenghua.auto.backend.domain.LabelError;
 import com.fenghua.auto.backend.domain.education.Spittle;
 import com.fenghua.auto.backend.domain.user.User;
 import com.fenghua.auto.backend.service.education.SpittleService;
@@ -42,6 +45,9 @@ public class SpittleRestfulController {
 
 	@Autowired
 	SpittleService spittleService;
+	
+	@Autowired
+	LocaleChangeInterceptor localeChangeInterceptor;
 
 	@RequestMapping("/home")
 	public String home(Model model) {
@@ -218,7 +224,9 @@ public class SpittleRestfulController {
 		
 		if(result.hasErrors()){
 			
-			spittle.addErrors( result.getFieldErrors() );
+			LabelError[] errprs = {};
+			
+			spittle.addErrors( LabelErrorTranslator.translate2LabelError( result.getFieldErrors() ).toArray(errprs) );
 			
 			return spittle;
 			

@@ -54,7 +54,7 @@
 
    <!-- 定义登录界面-->
   <beans:bean id="loginUrlAuthenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
-		<beans:constructor-arg name="loginFormUrl" value="/login.jsp"></beans:constructor-arg>
+		<beans:constructor-arg name="loginFormUrl" value="/user/login"></beans:constructor-arg>
   </beans:bean>
   
   <!-- 登录表单Filter -->

@@ -48,9 +48,9 @@ public class SecureController {
 	 * @return
 	 */
 	@RequestMapping(value="/session/invalid",method=RequestMethod.GET)
-	public ModelAndView invalid() {
+	public String invalid() {
 		logger.debug("会话 超时");
-		return new ModelAndView("/login");
+		return "web.login";
 	}
 	
 	
@@ -59,8 +59,8 @@ public class SecureController {
 	 * @return
 	 */
 	@RequestMapping(value="/logout")
-	public ModelAndView logout() {
-		return new ModelAndView(new RedirectView("/login.jsp"));
+	public String logout() {
+		return "web.login";
 	}
 		
 	/**
@@ -87,7 +87,7 @@ public class SecureController {
 	 */
 	@RequestMapping(value = "/main")
 	public String main(Model model,HttpServletRequest request) {
-		return "/user/userCenter/userCenter";
+		return "user.center";
 	}
 	
 	/**
@@ -101,7 +101,7 @@ public class SecureController {
 	public ModelAndView showLoginPage(HttpServletRequest req, HttpServletResponse res, Model model) {
 		Map<String,String> map = new HashMap<String, String>();
 		map.put("userName", req.getParameter("userName"));
-		return new ModelAndView("/user/register/successRegister",map);
+		return new ModelAndView("register.success",map);
 	}
 	
 	/**
