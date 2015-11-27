@@ -100,19 +100,16 @@ public class UserController {
 			msg.setMsg("注册成功");
 			//把用户名和密码存入安全的session中
 			userService.autoLogin(user.getName(), userPwd, request);
-<<<<<<< HEAD
 			try {
 				authService.binding(UserSecurityUtils.getCurrentUser());
 			} catch (AuthenticationException e) {
 				e.printStackTrace();
 			}
-=======
 				try {
 					authService.binding(UserSecurityUtils.getCurrentUser());
 				} catch (AuthenticationException e) {
 					e.printStackTrace();
 				}
->>>>>>> branch 'master' of http://218.244.137.212:8080/dev/fenghua.git
 		} else {
 			if(!validateTel.equals(telcode)) {
 				msg.setSuccess(false);
