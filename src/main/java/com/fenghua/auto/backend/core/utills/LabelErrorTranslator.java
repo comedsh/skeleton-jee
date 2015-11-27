@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.ConstraintViolation;
-import javax.validation.metadata.ConstraintDescriptor;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -102,11 +101,7 @@ public class LabelErrorTranslator {
 		
 		String field = violation.getPropertyPath().toString();
 		
-		Object[] object = violation.getExecutableParameters();
-		
-		ConstraintDescriptor d = violation.getConstraintDescriptor();
-		
-		Annotation ann = d.getAnnotation();
+		Annotation ann = violation.getConstraintDescriptor().getAnnotation();
 		
 		String validator = ann.annotationType().getSimpleName();
 		
