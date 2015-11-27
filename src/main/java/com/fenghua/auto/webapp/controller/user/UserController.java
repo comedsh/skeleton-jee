@@ -10,6 +10,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import javax.security.sasl.AuthenticationException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,15 +32,18 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContext;
 
+import com.fenghua.auto.backend.core.utills.SpringValidationHelper;
 import com.fenghua.auto.backend.core.utills.UserSecurityUtils;
 import com.fenghua.auto.backend.core.utills.uploadPicture;
 import com.fenghua.auto.backend.core.utills.graphValidate.PictureCheckCode;
 import com.fenghua.auto.backend.core.utills.message.SMSMessage;
+import com.fenghua.auto.backend.domain.MessageTransferObject;
 import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.PaymentType;
 import com.fenghua.auto.backend.domain.user.ResetPassRequest;
 import com.fenghua.auto.backend.domain.user.User;
 import com.fenghua.auto.backend.domain.user.UserPaymentType;
+import com.fenghua.auto.backend.service.user.AuthService;
 import com.fenghua.auto.backend.service.user.CompanyService;
 import com.fenghua.auto.backend.service.user.PaymentTypeService;
 import com.fenghua.auto.backend.service.user.UserForgetPassService;
@@ -57,7 +61,8 @@ import com.fenghua.auto.backend.core.utills.I18nMessageFetcher;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-	
+	@Autowired
+	private AuthService authService;
 	@Autowired
 	private UserService userService;
 	
@@ -72,6 +77,26 @@ public class UserController {
 	
 	@Autowired
 	private PaymentTypeService paymentTypeService;
+	
+	@RequestMapping(value = "/login")
+	public String login(){
+		return "/user/login";
+	}
+	
+	/**
+	 * 
+	 * @author shang yang
+	 *
+	 * @version 
+	 * 
+	 * @createTime: 2015年11月25日 下午10:20:46
+	 *
+	 */
+	@RequestMapping(value = "/registration")
+	public String registration(){
+		return "/user/registration";
+	}		
+	
 	/**
 	 * @author chengbin
 	 * 增加一个个人用户注册
@@ -87,7 +112,7 @@ public class UserController {
 		if(new Date().getTime() - ((Date)request.getSession().getAttribute("date")).getTime()  > 1000*120) {
 			msg.setSuccess(false);
 			msg.setMsg("您输入的验证码已过期");
-		} else if(validateTel.equals(telcode) && verifyCode.equals(code)) {
+		} else if(validateTel.equals(telcode) && verifyCode.equalsIgnoreCase(code)) {
 			String userPwd = user.getPassword();
 			userService.insert(user);
 			msg.setSuccess(true);
@@ -95,6 +120,16 @@ public class UserController {
 			msg.setMsg("注册成功");
 			//把用户名和密码存入安全的session中
 			userService.autoLogin(user.getName(), userPwd, request);
+			try {
+				authService.binding(UserSecurityUtils.getCurrentUser());
+			} catch (AuthenticationException e) {
+				e.printStackTrace();
+			}
+				try {
+					authService.binding(UserSecurityUtils.getCurrentUser());
+				} catch (AuthenticationException e) {
+					e.printStackTrace();
+				}
 		} else {
 			if(!validateTel.equals(telcode)) {
 				msg.setSuccess(false);
@@ -127,7 +162,7 @@ public class UserController {
 		if(new Date().getTime() - ((Date)request.getSession().getAttribute("date")).getTime()  > 1000*120) {
 			message=I18nMessageFetcher.getMessage("forgot.verificationexpire", null, zh_cn);
 			path="forgot.findPassbyphoneOrEmail";
-		} else if(validateTel.equals(request.getParameter("iPhone_code")) && verifyCode.equals(request.getParameter("code"))) {
+		} else if(validateTel.equals(request.getParameter("iPhone_code")) && verifyCode.equalsIgnoreCase(request.getParameter("code"))) {
 			path="forgot.findPassbyphoneSecond";
 			//把用户名和密码存入安全的session中
 		} else {
@@ -150,17 +185,18 @@ public class UserController {
 	 * @createTime 2015.11.4
 	 */
 	@RequestMapping(value = "/regisUserCompany", method = RequestMethod.POST)
-	public Map<String,Result> addUserAndCompany(@Valid User user, @Valid Company company, @RequestParam String telcode, @Valid PaymentType paymenttype,HttpServletRequest request, Locale locale) {
+	public Map<String,Result> addUserAndCompany(@Valid User user, @Valid Company company, @RequestParam String telcode, @RequestParam String code, @Valid PaymentType paymenttype,HttpServletRequest request, Locale locale) {
 		Map<String,Result> model = new HashMap<String,Result>();
 		Result msg = new Result();
 		String validateTel = (String) request.getSession().getAttribute("validateTel");
+		String verifyCode = (String) request.getSession().getAttribute("rand");
 		String licence = request.getSession().getAttribute("licence").toString();
 		String certificate = request.getSession().getAttribute("certificate").toString();
 		if(licence != null && !licence.equals("")  && certificate != null && !certificate.equals("") ) {
 			if(new Date().getTime() - ((Date)request.getSession().getAttribute("date")).getTime()  > 1000*120) {
 				msg.setSuccess(false);
 				msg.setMsg("您输入的验证码已过期");
-			}else if(validateTel.equals(telcode)) {
+			}else if(validateTel.equals(telcode) && verifyCode.equalsIgnoreCase(code)) {
 				String userPwd = user.getPassword();
 				company.setBusinessLicence(licence);
 				company.setTaxpayerLicence(certificate);
@@ -192,6 +228,7 @@ public class UserController {
 	 * @param name
 	 * @param req
 	 * @param res
+	 * @deprecated - because it is not restful and it doesn't use Spring Validation 
 	 */
 	@RequestMapping(value = "/validateName", method = RequestMethod.GET)
 	public @ResponseBody User validateName(@RequestParam String name,  HttpServletRequest req, HttpServletResponse res) {
@@ -213,7 +250,7 @@ public class UserController {
 	@RequestMapping(value = "/validator/username/{value}", method = RequestMethod.GET)
 	public @ResponseBody MessageTransferObject validateName(@PathVariable("value") String name ){
 		
-		return RpringValidationHelper.validate(User.class, name, "name");
+		return SpringValidationHelper.validate(User.class, name, "name");
 	
 	}
 	
@@ -224,7 +261,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/sellerInformation", method = RequestMethod.GET)
-	public ModelAndView getInformation(Model model,HttpServletRequest request, HttpServletResponse response) {
+	public String getInformation(Model model,HttpServletRequest request, HttpServletResponse response) {
 		response.setCharacterEncoding("UTF-8");
 		JSONObject json =new JSONObject(); 
 		String name = UserSecurityUtils.getCurrentUserName();
@@ -252,7 +289,7 @@ public class UserController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return new ModelAndView("/user/userCenter/sellerInformation");
+		return "personal.information";
 	}
 	/**
 	 * 通过name判断是否应该显示图形验证码
@@ -316,11 +353,33 @@ public class UserController {
 	 * @param email
 	 * @param req
 	 * @param res
+	 * @deprecated - because it is not restful and it doesn't use Spring Validation
 	 */
 	@RequestMapping(value = "/validateEmail", method = RequestMethod.GET)
 	public @ResponseBody User validateEmail(@RequestParam String email,  HttpServletRequest req, HttpServletResponse res) {
 		return userService.getUserByEmail(email);
 	}
+	
+	/**
+	 * 重构
+	 * 
+	 * 使用 restful、Spring Validation 框架
+	 *  
+	 * @author shang yang
+	 *
+	 * @version 
+	 * 
+	 * @createTime: 2015年11月26日 下午9:07:53
+	 *
+	 */
+	@RequestMapping(value = "/validator/email/{value}", method = RequestMethod.GET)
+	public @ResponseBody MessageTransferObject validateEmail(@PathVariable("value") String email ){
+		
+		return SpringValidationHelper.validate(User.class, email, "email");
+	
+	}
+	
+	
 	/**
 	 * 获取图片验证码
 	 * @param email
@@ -379,15 +438,82 @@ public class UserController {
 		return userService.getUserById(id);
 	}
 	/**
-	 * 更新用户
-	 * @param User
-	 * @param model
-	 * @return
+	 * @author chengbin
+	 * 修改一个个人用户注册
+	 * @return 
+	 * @createTime 2015.11.4
 	 */
-	@RequestMapping(value = "/{id}",method=RequestMethod.PUT)
-	public String updateUser(@Valid User user, Model model) {
-		userService.update(user);
-		return "";
+	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+	public @ResponseBody Map<String,Result> update(@Valid User user, @RequestParam String telcode, @RequestParam String code, HttpServletRequest request,Locale locale) {
+		Map<String,Result> model = new HashMap<String,Result>();
+		Result msg = new Result();
+		String validateTel = (String) request.getSession().getAttribute("validateTel");
+		String verifyCode = (String) request.getSession().getAttribute("rand");
+		if(new Date().getTime() - ((Date)request.getSession().getAttribute("date")).getTime()  > 1000*120) {
+			msg.setSuccess(false);
+			msg.setMsg("您输入的验证码已过期");
+		} else if(validateTel.equals(telcode) && verifyCode.equals(code)) {
+			String userPwd = user.getPassword();
+			userService.insert(user);
+			msg.setSuccess(true);
+			msg.setCode(user.getName());
+			msg.setMsg("注册成功");
+			//把用户名和密码存入安全的session中
+			userService.autoLogin(user.getName(), userPwd, request);
+		} else {
+			if(!validateTel.equals(telcode)) {
+				msg.setSuccess(false);
+				msg.setMsg("您输入的手机验证码有误");
+			} else {
+				msg.setSuccess(false);
+				msg.setMsg("您输入的图形验证码有误");
+			}
+		}
+		model.put("message", msg);
+		return model; 
+	}
+	/**
+	 * @author chengbin
+	 * 修改一个企业用户注册
+	 * @return 
+	 * @createTime 2015.11.4
+	 */
+	@RequestMapping(value = "/upadateUserCompany", method = RequestMethod.POST)
+	public Map<String,Result> upadateUserAndCompany(@Valid User user, @Valid Company company, @RequestParam String telcode, @Valid PaymentType paymenttype,HttpServletRequest request, Locale locale) {
+		Map<String,Result> model = new HashMap<String,Result>();
+		Result msg = new Result();
+		String validateTel = (String) request.getSession().getAttribute("validateTel");
+		String licence = request.getSession().getAttribute("licence").toString();
+		String certificate = request.getSession().getAttribute("certificate").toString();
+		if(licence != null && !licence.equals("")  && certificate != null && !certificate.equals("") ) {
+			if(new Date().getTime() - ((Date)request.getSession().getAttribute("date")).getTime()  > 1000*120) {
+				msg.setSuccess(false);
+				msg.setMsg("您输入的验证码已过期");
+			}else if(validateTel.equals(telcode)) {
+				String userPwd = user.getPassword();
+				company.setBusinessLicence(licence);
+				company.setTaxpayerLicence(certificate);
+				userService.insert(user,company,paymenttype);
+				msg.setSuccess(true);
+				msg.setCode(user.getName());
+				msg.setMsg("注册成功");
+				//把用户名和密码存入安全的session中
+				userService.autoLogin(user.getName(), userPwd, request);
+			} else {
+				if(!validateTel.equals(telcode)) {
+					msg.setSuccess(false);
+					msg.setMsg("您输入的手机验证码有误");
+				} else {
+					msg.setSuccess(false);
+					msg.setMsg("您输入的图形验证码有误");
+				}
+			}
+		} else {
+			msg.setSuccess(false);
+			msg.setMsg("您的图片没有上传成功");
+		}
+		model.put("message", msg);
+		return model;
 	}
 	/**
 	 * 根据电话号码跟新密码
