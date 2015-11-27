@@ -33,6 +33,7 @@
         document.execCommand("BackgroundImageCache", false, true);
     </script>
     <![endif]-->
+    <meta property="qc:admins" content="24133276336154700063757477166230" />
 </head>
 <body>
 <!--头部-->
@@ -95,8 +96,9 @@
         <a class="login_btn" enter ng-click="logins()" ng-bind="loginBtnText">登 录</a>
         <div class="thirdparty-box">
             <label>使用合作网站账号登录</label>
-            <a href="/auth/qq.action">QQ</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-            <a href="###">微信</a>
+            <a href="/auth/qq">QQ</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="https://open.weixin.qq.com/connect/qrconnect?appid=wx6b9f7b5ad12d533e&redirect_uri=http%3A%2F%2Fwww.auto007.com%2Fauth%2Fwechat%2F&response_type=code&scope=snsapi_login&state=c5bb88d64571ca433c1409787726cb35#wechat_redirect">
+            	微信</a>
         </div>
     </div>
 </div>
