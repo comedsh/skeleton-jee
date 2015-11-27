@@ -83,9 +83,6 @@
   <definition name="personal.information" extends="web.default_template">
       <put-attribute name="body" value="/WEB-INF/views/user/userCenter/sellerInformation.jsp" />  
   </definition>
-  
-<<<<<<< HEAD
+
 </tiles-definitions>
-=======
-</tiles-definitions>
->>>>>>> branch 'master' of http://218.244.137.212:8080/dev/fenghua.git
+
