@@ -224,9 +224,9 @@ public class SpittleRestfulController {
 		
 		if(result.hasErrors()){
 			
-			LabelError[] errprs = {};
+			LabelError[] errors = {};
 			
-			spittle.addErrors( LabelErrorTranslator.translate2LabelError( result.getFieldErrors() ).toArray(errprs) );
+			spittle.addErrors( LabelErrorTranslator.translate2LabelError( result.getFieldErrors() ).toArray(errors) );
 			
 			return spittle;
 			

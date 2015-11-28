@@ -7,24 +7,19 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
  <%@page import="java.util.Enumeration"%>
 <!DOCTYPE html>
-<html ng-app="login_app">
+<html ng-app="loginApp">
 <head lang="en">
     <title></title>
     <meta charset="UTF-8">
     <meta name="keywords" content="" />
     <meta name="description" content=""/>
     <!--<meta http-equiv="X-UA-Compatible" content="IE=7"/>-->
-    <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/common/Common_top_tail.css"/>
-    <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/user/Login_style.css"/>
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/common/base.css">
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/common/head.css"/>
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/common/simpleFooter.css">
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/user/login.css"/>
     <link rel="icon" href=""/>
-    <script type="text/javascript" src="<%=request.getContextPath() %>/resources/javaScript/jQuery/jquery-1.8.3.min.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/javaScript/angular/angular.min.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/javaScript/jQuery/json2.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/script/user/placeholder.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/script/user/login.js"></script>
-	<script type="text/javascript">
-	
-	</script>
+    
     <!--<link rel="icon" href="http://www.jd.com/favicon.ico" mce_href="http://www.jd.com/favicon.ico" type="image/x-icon">-->
     <!--[if lt IE 9]>
     <script type="text/javascript" src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -38,39 +33,25 @@
         document.execCommand("BackgroundImageCache", false, true);
     </script>
     <![endif]-->
-    <style type="text/css">
-        *{
-            margin:0;
-            padding:0;
-            font-family: 'microsoft yahei',Verdana,Arial,Helvetica,sans-serif;
-        }
-    </style>
+    <meta property="qc:admins" content="24133276336154700063757477166230" />
 </head>
 <body>
 <!--头部-->
-<div class="header_login">
-    <div class="header_ul clearfix">
-        <ul class="header_ul_left clearfix">
-            <li class="city_div clearfix"><label>所在地 :<span>成都</span></label><img src="<%=request.getContextPath() %>/resources/imgs/arrow.png"/>
-                <div id="show_div">
+<div style="display: none" class="header" ng-controller="headerController">
+    <div class="header_box clearfix">
+        <ul class="header_left clearfix">
+            <li class=" city_wrap clearfix" ng-class={'active':isCityActive} ng-mouseenter="mouseOver()" ng-mouseleave="mouseLeave()"><label>所在地 :<span>{{currentCity.cityName}}</span></label><img src="<%=request.getContextPath() %>/resources/imgs/arrow.png"/>
+                <div class="city-wrap-allcity">
                     <ul class="clearfix">
-                        <li><a href="javascript:void(0)">四川</a></li>
-                        <li><a href="javascript:void(0)" class="active">四川</a></li>
-                        <li><a href="javascript:void(0)">四川川</a></li>
-                        <li><a href="javascript:void(0)">四川川</a></li>
-                        <li><a href="javascript:void(0)">四川</a></li>
-                        <li><a href="javascript:void(0)">四川</a></li>
-                        <li><a href="javascript:void(0)">四川川</a></li>
-                        <li><a href="javascript:void(0)">四川</a></li>
-                        <li><a href="javascript:void(0)">四川</a></li>
+                        <li ng-repeat="item in allCity"><a ng-class={'current':currentCity.id==item.id} href="javascript:void(0)" ng-click="changCurrentCity($index)">{{item.cityName}}</a></li>
                     </ul>
                 </div>
             </li>
-            <li class="ipone_li">
+            <li class="phone">
                 400-616-6666
             </li>
         </ul>
-        <ul class="header_ul_right clearfix">
+        <ul class="header_right clearfix">
             <li><a href="">首页</a></li>
             <li class="li">|</li>
             <li><a href="">原厂目录</a></li>
@@ -80,7 +61,7 @@
             <li><a href="">帮助中心</a></li>
         </ul>
     </div>
-    <div class="logo_div">
+    <div class="logo_wrap">
         <div class="logo_img clearfix">
            <a href="" class="clearfix">
                <img src="<%=request.getContextPath() %>/resources/imgs/icon.png" alt=""/>
@@ -88,43 +69,41 @@
         </div>
     </div>
 </div>
-<div class="content_login clearfix" ng-controller="login_ctr">
+<div class="content_login clearfix" ng-controller="loginController">
     <div class="img_login clearfix">
         <img src="<%=request.getContextPath() %>/resources/imgs/img_login.png" alt=""/>
     </div>
     <div class="right_login">
         <h1>欢迎登录<span>还没有账号？<a href="/registered.jsp">免费注册</a></span></h1>
-        <div class="error1">
-            <div class="error">手机账号错误</div>	
+        <div class="prompt-box">
+            <div ng-show="errorMessage.isError" class="prompt" ng-bind="errorMessage.errorDesc"></div>
         </div>
-        <div class="input_li">
-            <input ng-model="user.name" ng-blur="validateName()" type="text" class="name" placeholder="用户名/手机/邮箱号"/>
+        <div class="text-box">
+            <input ng-model="user.name" ng-focus="setError()" ng-blur="validateName()" type="text" class="name" placeholder="用户名/手机/邮箱号"/>
         </div>
-        <div class="input_li pwd">
-            <input ng-model="user.pwd" type="password" placeholder="请输入你的密码"/>
+        <div class="text-box pwd">
+            <input ng-model="user.pwd"  ng-focus="setError()" type="password" placeholder="请输入你的密码"/>
         </div>
-        <div class="Keep_div clearfix">
-            <div class="Remember_pwd" data="0">记住密码</div>
-            <a ng-href="Forgot password.html">忘记密码</a>
+        <div class="remember_box clearfix">
+            <div class="remember_pwd" ng-class="{'checked':user.isRememberPwd}" ng-model="user.isRememberPwd" ng-click="toggleRemenmmberPwd()">记住密码</div>
+            <a ng-href="/user/findPassbyphoneOrEmail/">忘记密码</a>
         </div>
-        <div class="code_d">
+        <div class="imgcode-box">
             <input type="text" ng-model="user.code">
-            <img title="换一张" class="img_code" src="<%=request.getContextPath() %>/user/validatePicCheck"
-                 style="margin-left: 5px;margin-top: 1px;width: 80px;height: 30px;;display:block;"
-                 alt="" clstag="regist|keycount|personalreg|06"
-                 onclick="this.src= document.location.protocol +'//authcode.jd.com/verify/image?a=0&amp;acid=feaaa1e7-e645-4dff-b702-679e5ebf70a2&amp;uid=feaaa1e7-e645-4dff-b702-679e5ebf70a2&amp;srcid=reg&amp;is=e69a14665f94d73d9ceb265005b78452&amp;yys='+new Date().getTime()" ver_colorofnoisepoint="#888888" id="JD_Verification1">
-            <a style="cursor: pointer;" class="validatePicCheck">看不清楚换一张</a>
+            <img title="换一张"  ng-click="changeImgeCode()" class="img_code" ng-src="{{imgeCodeSrc}}">
+            <a href="javascript:void(0)" ng-click="changeImgeCode()">看不清楚换一张</a>
         </div>
-        <button class="login_btn" enter ng-click="logins()">登 录</button>
-        <div class="san_d">
+        <a class="login_btn" enter ng-click="logins()" ng-bind="loginBtnText">登 录</a>
+        <div class="thirdparty-box">
             <label>使用合作网站账号登录</label>
-            <a href="###">QQ</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-            <a href="###">微信</a>
+            <a href="/auth/qq">QQ</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="https://open.weixin.qq.com/connect/qrconnect?appid=wx6b9f7b5ad12d533e&redirect_uri=http%3A%2F%2Fwww.auto007.com%2Fauth%2Fwechat%2F&response_type=code&scope=snsapi_login&state=c5bb88d64571ca433c1409787726cb35#wechat_redirect">
+            	微信</a>
         </div>
     </div>
 </div>
 <!--尾部-->
-<div class="fooder">
+<div style="display: none" class="footer">
    <div class="tail_description">
        <ul class="clearfix">
            <li><a href="">关于我们</a></li>
@@ -136,5 +115,11 @@
        <p>备案号： 新ICP备12057998号-1 新疆丰华神州汽车配件有限公司版权所有</p>
    </div>
 </div>
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/javaScript/jQuery/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/javaScript/angular/angular.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/javaScript/jQuery/json2.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/script/user/placeholder.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/script/user/login.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/script/user/head.js"></script>
 </body>
 </html>
