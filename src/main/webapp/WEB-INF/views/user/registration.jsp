@@ -18,12 +18,6 @@
     <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/common/simpleFooter.css">
     <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/user/register.css"/>
     <link rel="icon" href=""/>
-    <script type="text/javascript" src="<%=request.getContextPath() %>/resources/javaScript/jQuery/jquery-1.8.3.min.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/javaScript/angular/angular.min.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/javaScript/jQuery/json2.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/script/user/placeholder.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/script/user/register.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/javaScript/uploadify/ajaxfileupload.js"></script>
     <!--[if lt IE 9]>
     <script type="text/javascript" src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script type="text/javascript" src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
