@@ -84,7 +84,7 @@
   </definition>
   <!-- 登录页面 -->
   <definition name="web.login" extends="web.default_template">
-      <put-attribute name="body" value="/login.jsp" />  
+      <put-attribute name="body" value="/WEB-INF/views/user/login.jsp" />  
   </definition>
   <!-- 用户中心 -->
   <definition name="user.center" extends="web.default_template">
@@ -107,5 +107,8 @@
  	  <put-attribute name="title" value="商品已成功加入购物车" />
       <put-attribute name="body" value="/WEB-INF/views/order/cart/add.jsp" />  
   </definition>
-  
+  <!-- 注册页面 -->
+  <definition name="register.information" extends="web.default_template">
+      <put-attribute name="body" value="/WEB-INF/views/user/registration.jsp" />  
+  </definition>
 </tiles-definitions>
