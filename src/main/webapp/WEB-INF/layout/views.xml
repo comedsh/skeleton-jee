@@ -98,7 +98,7 @@
   <definition name="personal.information" extends="web.default_template">
       <put-attribute name="body" value="/WEB-INF/views/user/userCenter/sellerInformation.jsp" />  
   </definition>
-  
+
   <definition name="web.order.shoppingCart_list" extends="web.default_template">
  	  <put-attribute name="title" value="我的购物车" />
       <put-attribute name="body" value="/WEB-INF/views/order/cart/list.jsp" />  
@@ -107,10 +107,5 @@
  	  <put-attribute name="title" value="商品已成功加入购物车" />
       <put-attribute name="body" value="/WEB-INF/views/order/cart/add.jsp" />  
   </definition>
-  <!-- 注册页面 -->
-  <definition name="register.information" extends="web.default_template">
-      <put-attribute name="body" value="/registered.jsp" />  
-  </definition>
-
+  
 </tiles-definitions>
-
