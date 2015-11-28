@@ -51,7 +51,7 @@
 </head>
 <body>
 <!--头部-->
-<div class="header_login">
+<div style="display: none" class="header_login">
     <div class="header_ul clearfix">
         <ul class="header_ul_left clearfix">
             <li class="city_div clearfix"><label>所在地 :<span>成都</span></label><img src="<%=request.getContextPath() %>/resources/imgs/arrow.png"/>
@@ -975,7 +975,7 @@
     </div>
 </div>
 <!--尾部-->
-<div class="fooder">
+<div style="display: none" class="fooder">
     <div class="tail_description">
         <ul class="clearfix">
             <li><a href="">关于我们</a></li>

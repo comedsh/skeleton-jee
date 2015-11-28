@@ -73,7 +73,7 @@
         <img src="<%=request.getContextPath() %>/resources/imgs/img_login.png" alt=""/>
     </div>
     <div class="right_login">
-        <h1>欢迎登录<span>还没有账号？<a href="/registered.jsp">免费注册</a></span></h1>
+        <h1>欢迎登录<span>还没有账号？<a href="/secure/register">免费注册</a></span></h1>
         <div class="prompt-box">
             <div ng-show="errorMessage.isError" class="prompt" ng-bind="errorMessage.errorDesc"></div>
         </div>
