@@ -52,6 +52,23 @@ public class SecureController {
 		logger.debug("会话 超时");
 		return "web.login";
 	}
+	
+	@RequestMapping(value = "/login")
+	public String login(){
+		return "web.login";
+	}
+	
+	/**
+	 * @author shang yang
+	 * @version 
+	 * @createTime: 2015年11月25日 下午10:20:46
+	 *
+	 */
+	@RequestMapping(value = "/registration")
+	public String registration(){
+		return "register.information";
+	}
+	
 	/** 跳转到注册页面
 	 * @return
 	 */

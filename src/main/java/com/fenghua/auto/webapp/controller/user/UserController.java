@@ -77,25 +77,6 @@ public class UserController {
 	@Autowired
 	private PaymentTypeService paymentTypeService;
 	
-	@RequestMapping(value = "/login")
-	public String login(){
-		return "/user/login";
-	}
-	
-	/**
-	 * 
-	 * @author shang yang
-	 *
-	 * @version 
-	 * 
-	 * @createTime: 2015年11月25日 下午10:20:46
-	 *
-	 */
-	@RequestMapping(value = "/registration")
-	public String registration(){
-		return "/user/registration";
-	}		
-	
 	/**
 	 * @author chengbin
 	 * 增加一个个人用户注册
@@ -247,9 +228,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/validator/username/{value}", method = RequestMethod.GET)
 	public @ResponseBody MessageTransferObject validateName(@PathVariable("value") String name ){
-		
 		return SpringValidationHelper.validate(User.class, name, "name");
-	
 	}
 	
 	/**
