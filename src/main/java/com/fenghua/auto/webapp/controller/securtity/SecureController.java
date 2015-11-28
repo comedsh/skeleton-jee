@@ -52,7 +52,13 @@ public class SecureController {
 		logger.debug("会话 超时");
 		return "web.login";
 	}
-	
+	/** 跳转到注册页面
+	 * @return
+	 */
+	@RequestMapping(value="/register",method=RequestMethod.GET)
+	public String forwordRegister() {
+		return "register.information";
+	}
 	
 	/**
 	 * 退出系统

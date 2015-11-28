@@ -2,6 +2,7 @@ package com.fenghua.auto.backend.domain.user;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import com.fenghua.auto.backend.domain.AbstractDomainObject;
@@ -20,10 +21,12 @@ public class User extends AbstractDomainObject implements DomainObject, MessageT
 
 	private Long id;
 	
+	@NotNull
 	@Pattern(regexp="^[a-zA-Z\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5]{3,19}$")
 	@NotDuplicated( sql = "select count(*) from user where name = ?" )
 	private String name;
 	
+	@NotNull
 	@Pattern(regexp="^[a-zA-Z]\\w{5,19}$")
 	private String password;
 
@@ -34,7 +37,7 @@ public class User extends AbstractDomainObject implements DomainObject, MessageT
 	@Pattern(regexp="^1{1}[34578]{1}[0-9]{9}$")
 	@NotDuplicated( sql = "select count(*) from user where mobilephone = ?" )
 	private String mobilephone;
-
+	
 	private String qqNumber;
 
 	private String wechat;
