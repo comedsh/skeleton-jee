@@ -132,6 +132,12 @@ public class UserController {
 	public String findPassbyphoneOrEmail( HttpServletRequest request,Model model) {
 		return "forgot.findPassbyphoneOrEmail";
 	}
+	/**
+	 * 手机找回密码第一步
+	 * @param request
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/findPassByPhone", method = RequestMethod.POST)
 	public String findPassByPhone( HttpServletRequest request,Model model) {
 		String path;
@@ -553,16 +559,29 @@ public class UserController {
 	}
 
 	/**
-	 * 忘记密码  发送邮件链接
+	 * 忘记密码  发送邮件链接(邮箱找回密码第一步)
 	 * @param email
 	 * @param phone
 	 * @param model
 	 */
 	@RequestMapping(value = "/forGotPassword",method=RequestMethod.POST)
 	public String forGotPassword( HttpServletRequest request, Model model) {
-		userForgetPassService.insert(request.getParameter("email"));
-		request.getSession().setAttribute("email",request.getParameter("email"));
-		return "forgot.findPassbyEmailSecond";
+		User user=null;
+		user =userService.getUserByEmail(request.getParameter("email"));
+		String message="";
+		String path="";
+		if(user==null){
+			message=MessageHelper.getMessage("forgot.noEmail");
+			model.addAttribute("message", message);
+			model.addAttribute("lab", "email");
+			path="forgot.findPassbyphoneOrEmail";
+		}else{
+			userForgetPassService.insert(request.getParameter("email"));
+			request.getSession().setAttribute("email",request.getParameter("email"));
+			path="forgot.findPassbyEmailSecond";
+		}
+		
+		return path;
 	}
 	/**
 	 * 查询发送邮件
@@ -598,10 +617,10 @@ public class UserController {
 			Timestamp token_exptime=resetPassRequest.getValidTo();
 			if( System.currentTimeMillis()>token_exptime.getTime() ){
 				//激活码过期，先删除该用户记录，然后重新发送邮件
-				userForgetPassService.deleteByUserId(resetPassRequest.getUserId());
+				userForgetPassService.deleteByUserId(resetPassRequest.getUserId(),token);
 				return new ModelAndView("/user/forgetPass/findPassFail",map);
 			}else{
-					userForgetPassService.deleteByUserId(resetPassRequest.getUserId());
+					userForgetPassService.deleteByUserId(resetPassRequest.getUserId(),token);
 				return new ModelAndView("forgot.findPassbyEmailThired",map);
 			}
 		}else{

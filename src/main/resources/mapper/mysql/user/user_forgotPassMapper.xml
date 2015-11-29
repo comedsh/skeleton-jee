@@ -24,8 +24,8 @@
 			from Reset_Password_Request where certificate_code=#{certificateCode} 
 	</select>
 	<!-- 根据用户id删除一条忘记密码数据 -->
-	<delete id="deleteByUserId" parameterType="java.lang.Long" >
+	<delete id="deleteByUserId" parameterType="java.util.HashMap" >
 		delete from Reset_Password_Request
-		where User_ID=#{UserId}
+		where User_ID=#{UserId} and certificate_code=#{token}
 </delete>
 </mapper>

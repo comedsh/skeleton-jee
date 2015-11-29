@@ -43,7 +43,7 @@
 <!--头部-->
 <div class="Retrieve_password clearfix">
     <p class="clearfix">
-        <label>已有账号？<a href="/login.jsp">马上登录</a></label>
+        <label>已有账号？<a href="/secure/login/">马上登录</a></label>
     </p>
   
     <!--手机找回密码-->
@@ -68,7 +68,7 @@
                     </span>
                     <span style="font-size: 12px;color: #989898">立即开始您的汽车零件选购吧！</span>
                 </div>
-                <a href="/login.jsp" class="btn_login btn_login2">立即去登录</a>
+                <a href="/secure/login/" class="btn_login btn_login2">立即去登录</a>
             </div>
         </div>
     </div>
