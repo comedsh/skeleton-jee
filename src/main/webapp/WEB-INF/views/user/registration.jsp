@@ -7,7 +7,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
  <%@page import="java.util.Enumeration"%>   
 <!DOCTYPE html>
-<html>
+<html ng-app="registerApp">
 <head lang="en">
     <title>注册</title>
     <meta charset="UTF-8">
@@ -467,7 +467,7 @@
                     <input text  name="phone" type="text" name="phone" class="telephone" ng-model="user.phone"  placeholder="请输入手机号" tip="请输入手机号"/>
                     <i class="clear-ico">clear</i>
                 </div>
-                <a class="phone-code-btn" href="javascript:void(0)" ng-click="$parent.getPhoneCode(peCtrl.user.phone)">获取手机验证码</a>
+                <a class="phone-code-btn" href="javascript:void(0)" ng-click="getPhoneCode()">获取手机验证码</a>
                 <div ng-class="{'tip': isTip.phone, 'wrong': isWrong.phone, 'correct': isCorrect.phone}" ng-show="isShowMsg.phone">{{ err_name.phone }}</div>
             </div>
             <div class="clearfix text-item">

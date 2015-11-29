@@ -1,212 +1,289 @@
-$(function() {
 
-//    //所有input获得焦点时的状态
-//    $('.chren_div .input_d input').focus(function(event){
-//        $(this).parent().css({
-//            border:'1px solid blue'
-//        })
-//        $(this).parent().parent().find('.remove_d').css({
-//        	display:'block'
-//        });
-//        $(this).parent().parent().children('.user_error1').show();
-//        $(this).parent().parent().children('.user_error2').hide();
-//        $(this).parent().parent().children('.user_error3').hide();
-//    });
-//    //清除输入内容  有bug
-//    $('.remove_d').on('click',function(){
-//        if($(this).prev().find('input').val().length>0){
-//            $(this).prev().find('input').val('');
-//            $(this).prev().css({
-//                border:'1px solid red'
-//            });
-//            $(this).parent().children('.user_error1').hide();
-//            $(this).parent().children('.user_error3').hide();
-//            $(this).parent().children('.user_error2').show().html("不能为空");
-//        }else{
-//            return false;
-//        }
-//    });
+/**
+ * Created by yangzhi on 2015/11/26.
+ */
+
+var app=angular.module('registerApp',[]);
+app.controller('registerController',['$scope','$http',function($scope,$http){
+    //当前注册类型(0个人,1企业，2商家)
+    $scope.currentRegisterType=0;
+    //切换注册panel
+    $scope.changePanel=function(type){
+        $scope.currentRegisterType=type;
+    }
     
-    //user_name验证
-//    $('.name').blur(function(){
-//    	var str = $(this).parent();
-//        $(this).parent().parent().children('.user_error1').hide();
-//        $(this).parent().parent().children('.user_error3').hide();
-//        if($(this).val() == ""){
-//            $(this).parent().css({
-//                border:'1px solid red'
-//            });
-//            $(this).parent().parent().children('.user_error2').show().html("用户名不能为空");
-//            $(this).parent().parent().children('sub_name').val('1');
-//            return false;
-//        }
-//        var re =/^[a-zA-Z\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5]{3,19}$/;
-//        if(!re.test($(this).val())){
-//            $(this).parent().css({
-//                border:'1px solid red'
-//            });
-//            $(this).parent().parent().children('.user_error2').show().html("用户名格式不正确");
-//            $(this).parent().parent().children('sub_name').val('1');
-//            return false;
-//        }else{
-//        	$.ajax({
-//                type: "GET",
-//                url: "/validator/username/"+$(this).val(),                
-//                dataType: "json",
-//                success: function (data) {
-//                    if(data != null) {
-//                    	$(str).css({
-//                            border:'1px solid red'
-//                        });
-//                    	$(str).parent().children('.user_error2').show().html("该用户名已经被注册，请更换用户名");
-//                    	$(str).parent().children('.sub_name').val('1');
-//                    } else {
-//                    	$(str).css({
-//                            border:'1px solid #2FA840'
-//                        });
-//                    	$(str).parent().children('.sub_name').val('0');
-//                        $(str).parent().children('.user_error2').hide();
-//                        $(str).parent().children('.user_error3').show();
-//                        //失去焦点时，隐藏X图标
-//                        var as= $(str).parent().children('.user_error3').css('display');
-//                        if(as=='block'){
-//                            $(str).parent().children('.remove_d').hide();
-//                        
-//                        }
-//                    }
-//                }
-//            });
-//        }
-//    });
+    //检查用户名的唯一性
+    $scope.$on('UserNameCheck',function (event,userName) {
+        var url="/user/validator/username/"+userName;
+        $http.post(url).success(function (response) {
+            switch($scope.currentRegisterType){
+                case 0:
+                    $scope.$broadcast("userNameCheckPersonal", response);
+                    break;
+                case 1:
+                    $scope.$broadcast("userNameCheckEnterprise", response);
+                    break;
+                case 2:
+                    $scope.$broadcast("userNameCheckMerchant", response);
+                    break;
+                default:
+                    break;
+            }
+        }).error(function(){
+            switch($scope.currentRegisterType){
+                case 0:
+                    $scope.$broadcast("userNameCheckPersonal", -1);
+                    break;
+                case 1:
+                    $scope.$broadcast("userNameCheckEnterprise", -1);
+                    break;
+                case 2:
+                    $scope.$broadcast("userNameCheckMerchant", -1);
+                    break;
+                default:
+                    break;
+            }
+        });
+    });
+    //发送手机验证码
+    $scope.$on('getPhoneCodeCommon',function (event,phone) {
+        $http.post('url').success(function(){});
+    });
+    
+
+}]).controller('personalRegisterController',['$scope','$http',function($scope,$http){
+    $scope.user={
+        name:'',
+        pwd:'',
+        pwdRepeat:'',
+        email:'',
+        phone:'',
+        phoneCode:'',
+        code:'',
+        isAgreeProtol:false
+    };
+    //初始化错误提示model
+    $scope.isTip = {};
+    $scope.isWrong = {};
+    $scope.isCorrect = {};
+    $scope.isShowMsg={};
+    $scope.err_name={};
+
+    //图片验证码地址(后台须在此处绑定正确的图片地址)
+    $scope.imageCodeSrc="../imgs/code.png?a=124124";
+    //改变图片验证码
+    $scope.changeImageCode=function () {
+        $scope.imageCodeSrc=$scope.imageCodeSrc.split('?')[0]+"?a="+Math.random();
+    }
+    //用户名验证
+    $scope.$on('userNameCheckPersonal',function(event,code){
+        if(code>0){
+            //用户名可用
+            $scope.addCorrectEffects("name");
+        }else{
+            //用户名不可用
+            $scope.addWrongEffects("name","用户名已被注册");
+        }
+    });
+    //用户名格式验证
+    $scope.checkUserName=function(){
+        if(!$scope.user.name.t_userNameCheck()){
+            //用户名格式错误
+            return "用户名格式错误";
+        }else{
+            $scope.$emit("UserNameCheck", $scope.user.name);
+            $scope.addCorrectEffects("name","用户名检测中...");
+            return "";
+        }
+    }
+    //密码格式验证
+    $scope.checkPassWord=function(){
+        if(!$scope.user.pwd.t_passWordCheck()){
+            //密码格式错误
+            return "密码格式错误";
+        }else if ($scope.user.pwdRepeat!="" && $scope.user.pwd!=$scope.user.pwdRepeat) {
+            return "两次输入密码不一致";
+        };
+        return "";
+    }
+    //确认密码验证
+    $scope.checkPassWordRepeat=function(){
+        if ($scope.user.pwd===$scope.user.pwdRepeat) {
+            //两次输入密码不一致
+            return "两次输入密码不一致";
+        };
+        return "";
+    }
+    //邮箱格式验证
+    $scope.checkEmail=function(){
+        if(!$scope.user.email.t_isEmail()){
+            return "邮箱格式错误";
+        }
+        return "";
+    }
+    //手机号验证
+    $scope.checkMobile=function(){
+        if($scope.user.phone.t_isMobile()){
+            return "手机号格式错误";
+        }
+        return "";
+    }
+    //文本框获得焦点事件
+    $scope.onFocus=function (itemName,message) {
+        $scope.resetEffects(itemName);
+        $scope.isTip[itemName] = true;
+        $scope.err_name[itemName] =  message;
+        $scope.isShowMsg[itemName] = true;
+    }
+    //鼠标失去焦点事件
+    $scope.onBlur=function(itemName,elment){
+        $scope.resetEffects(itemName);
+        var thisElment=$(elment);
+        if(!thisElment.val()){
+            $scope.addWrongEffects(itemName,thisElment.attr('tip'));
+            return false;
+        }
+        if(thisElment.attr("othercheck")){
+           var errorMsg=eval(thisElment.attr("othercheck"));
+           if (errorMsg) {
+                $scope.addWrongEffects(itemName,errorMsg);
+                return false;
+           };
+        }
+        $scope.addCorrectEffects(itemName);  
+    }
+    //重置提示信息
+    $scope.resetEffects = function(itemName){
+        $scope.isTip[itemName] = false;
+        $scope.isWrong[itemName] = false;
+        $scope.isCorrect[itemName] = false;
+        //$scope.input_style[itemName] = "";
+    }
+    //显示正确提示
+    $scope.addCorrectEffects=function(itemName,message){
+        $scope.resetEffects(itemName);
+        //$scope.input_style[itemName] = "border: 1px solid red";
+        $scope.isCorrect[itemName] = true;
+        $scope.err_name[itemName] =  message||"输入正确";
+    }
+    //显示错误提示
+    $scope.addWrongEffects = function(itemName,message){
+        $scope.resetEffects(itemName);
+        //$scope.input_style[itemName] = "border: 1px solid red";
+        $scope.isWrong[itemName] = true;
+        $scope.err_name[itemName] =  message||"不能为空";
+    }
+    //获取手机验证码
+    $scope.getPhoneCode=function(){
+        if (!$scope.user.phone.t_isMobile()) {
+            $scope.addWrongEffects('phone','手机号格式错误');
+        }else{
+            $scope.sendPhoneCodeTimeOutCount=300;
+            $scope.sendPhoneCodeTimeOut();
+            $(".content-personal .phone-code-btn").css("background-color","#aaa");
+            $scope.$emit("getPhoneCodeCommon", $scope.user.phone);
+        }
+    }
+    //获取手机验证码倒计时秒数
+    $scope.sendPhoneCodeTimeOutCount=0;
+    //获取手机验证码倒计时
+    $scope.sendPhoneCodeTimeOut=function () {
+        if($scope.sendPhoneCodeTimeOutCount<=0){
+            $(".content-personal .phone-code-btn").html("获取手机验证码");
+            $(".content-personal .phone-code-btn").css("background-color","");
+        }else{
+            $(".content-personal .phone-code-btn").html($scope.sendPhoneCodeTimeOutCount+"秒后重发");
+            $scope.sendPhoneCodeTimeOutCount--;
+            setTimeout(function(){
+                $scope.sendPhoneCodeTimeOut();
+            }, 1000);
+            
+        }
+    }
+
+    //提交注册
+    $scope.submit=function(){
+        //是否同意用户协议
+        if (!$scope.user.isAgreeProtol) {
+            return false;
+        };
+        var isAllCorrect=true;
+        //遍历对象，判断是否所有属性都没有错误
+        for(var name in $scope.user){
+            if(!$scope.isCorrect[name]===true){
+                if(document.getElementsByName(name)[0]){
+                    document.getElementsByName(name)[0].focus();
+                    document.getElementsByName(name)[0].blur();
+                }
+                isAllCorrect=false;
+            }
+        }
+        if (!isAllCorrect) {
+            return false;
+        };
+        $http({                   
+            method  : 'POST',
+            
+            url     : '/spittle',
+            
+            data    : $scope.user,  // pass in data as strings
+        
+            headers : { 'Content-Type':'application/json' }  
+        
+        }).success(function(data){
+            
+            // 重置 errors 信息
+            // $scope.err_username="";
+            // $scope.err_text="";
+            
+            // handles the errors message
+            if( data.errors.length > 0 ){
+                
+                angular.forEach( data.errors, function(value, key){ // value -> labelError class
+                    
+                    eval("$scope.addWrongEffects('"+value.field+"','"+value.error+"')");
+                });
+            
+            }
+            
+        });
+        alert(1);
+    }
+
+
+}]).controller('merchantRegisterController',['$scope','$http',function($scope,$http){
 
     
+}]).controller('enterpriseRegisterController',['$scope','$http',function($scope,$http){
+    
+    
+}]);
+
+app.directive('text',function(){
+    return function(scope,element,attrs){
+        element.bind('focus',function(){
+            //$(this).parent().addClass('focus').removeClass('error').removeClass('correct').siblings('.warning-prompt').show();
+            scope.onFocus(attrs['name'],attrs['tip']);
+            scope.$digest();
+
+        });
+        element.bind('blur',function(){
+            //$(this).parent().removeClass('focus').siblings('.warning-prompt').hide().find('.clear-ico').hide();
+            scope.onBlur(attrs['name'],element);
+            scope.$digest();
+
+        });
+    }
 });
 
-angular.module('Registered_app',[])
-
-.controller("personalRegisterCcontroller", function personalRegisterController($scope, $http) {
-								
-								$scope.formdata = {};							
-								
-								$scope.regexp = /^[a-zA-Z\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5]{3,19}$/;
-								
-								$scope.nameOnFocus = function(){
-									$scope.resetEffects();
-									$scope.isTip = true;
-									$scope.err_name =  "4-20位字符,支持汉字、字母、数字的组合,不能以数字开头";									
-								}
-								
-								$scope.resetEffects = function(){
-									$scope.isTip = false;
-									$scope.isWrong = false;
-									$scope.isCorrect = false;
-									$scope.input_styple = "";
-								}
-								
-								$scope.addWrongEffects = function(){
-									$scope.resetEffects();
-									$scope.input_style = "border: 1px solid red";
-									$scope.isWrong = true;									
-								}
-								
-								$scope.nameOnBlur = function(){
-									
-									if( $scope.formdata.name == "" || typeof($scope.formdata.name) == "undefined") {
-										
-										$scope.addWrongEffects();
-										
-										$scope.err_name = "用户名不能为空";
-										
-									}else if( !$scope.regexp.test( $scope.formdata.name ) ){
-										
-										$scope.addWrongEffects();
-										
-										$scope.err_name = "用户名格式不正确";
-										
-									}else{
-										
-										// validate by angular js through database validation.
-										// restful invoke, /user/validator/username/{value}
-										var url = "/user/validator/username/"+$scope.formdata.name;
-										
-		   								$http.get(url).success( function( mto ) { // message transfer object
-		   									
-		   									// if errors, handles it -> @TODO below part codes can be re-used; 
-	   										if( mto.errors != null && mto.errors.length > 0 ){
-	   											
-	   											$scope.addWrongEffects();
-	   											
-	   											angular.forEach( mto.errors, function(value, key){ // value -> labelError class
-	   												
-	   												console.log( value.field +";"+ value.error );	
-
-	   												// * 下面这段代码就可以自动帮你回显错误了 ~ 统一处理错误信息*
-	   												eval("$scope.err_"+value.field+"='"+value.error+"'"); 
-	   												
-	   											});
-	   										
-	   										}else{
-	   											
-	   											$scope.resetEffects();
-	   											
-	   											$scope.isCorrect = true
-	   											
-	   											$scope.err_name = "用户名输入正确";	
-	   											
-	   										}
-	   										
-	   										
-		   								});
-		   																	
-										
-									}
-								
-								}
-								
-							    $scope.addSpittle = function(){
-							    	
-							    	console.log("post 2~");
-							    	
-   									$http({
-	   									
-   										method  : 'POST',
-	   							        
-	   									url     : '/spittle',
-	   							        
-	   							        data    : $scope.formdata,  // pass in data as strings
-	   							    
-	   							        headers : { 'Content-Type':'application/json' }  
-   									
-   									}).success(function(data){
-   										
-   										console.log("recall success"+data);
-   										
-   										// 重置 errors 信息
-   										$scope.err_username="";
-   										$scope.err_text="";
-   										
-   										// handles the errors message
-   										if( data.errors.length > 0 ){
-   											
-   											angular.forEach( data.errors, function(value, key){ // value -> labelError class
-   												
-   												console.log( value.field +";"+ value.error );	
-   												
-   												// eval("$scope.err_username = '错啦'");  |  $scope.err_username = '错啦'
-   												// * 下面这段代码就可以自动帮你回显错误了 ~ *
-   												eval("$scope.err_"+value.field+"='"+value.error+"'"); 
-   												
-   											});
-   										
-   										}
-   										
-   										console.log( "add success ~ " );
-   										
-   									});
-   									
-							    }
-								
-							}
-); 
-
-
+//Jquery代码
+$(function(){
+　　$(".js-protocol").click(function(){
+　　　　$(".js-protocol-layer").fadeIn(200);
+        return false;
+　　});
+    $(".js-close-protocol-btn").click(function(){
+        $(".js-protocol-layer").fadeOut(200);
+        return false;
+    });
+}); 
