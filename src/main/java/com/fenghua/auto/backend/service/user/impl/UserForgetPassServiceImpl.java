@@ -104,8 +104,11 @@ public class UserForgetPassServiceImpl implements UserForgetPassService {
 		return userForgetPassDao.selectByCodeAndUser(map);
 	}
 	@Override
-	public void deleteByUserId(Long UserId) {
-		userForgetPassDao.deleteByUserId(UserId);
+	public void deleteByUserId(Long UserId,String token) {
+		Map<String,Object> map = new HashMap<String,Object>();	
+		map.put("UserId", UserId);
+		map.put("token", token);
+		userForgetPassDao.deleteByUserId(map);
 	}
 
 }

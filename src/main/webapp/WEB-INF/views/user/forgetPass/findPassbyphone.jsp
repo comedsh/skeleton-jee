@@ -45,10 +45,18 @@
 
 <div class="Retrieve_password clearfix">
     <p class="clearfix">
+    <c:if test="${lab ne 'email' }">
         <a class="a_tab active_tab" href="javascript:void(0)">手机找回密码</a>
         <a class="a_tab" style="margin-left: 10px" href="javascript:void(0)">邮箱找回密码</a>
-        <label>已有账号？<a href="/login.jsp">马上登录</a></label>
+     </c:if>
+       <c:if test="${lab eq 'email' }">
+       <a class="a_tab " href="javascript:void(0)">手机找回密码</a>
+        <a class="a_tab active_tab" style="margin-left: 10px" href="javascript:void(0)">邮箱找回密码</a>
+       </c:if>
+        <label>已有账号？<a href="/secure/login/">马上登录</a></label>
     </p>
+    <input type="hidden" name="lab" value="${lab}" id="lab">
+    ${message}
     <!--手机找回密码-->
     <div class="border_div" ng-controller="ipone_ctr" >
         <div class="ipone_one" >
@@ -58,7 +66,6 @@
                 <li class="left_li">修改密码</li>
                 <li class="progress_li last_il">找回成功</li>
             </ul>
-       ${message}
             <td><form:errors path="*"/></td>
              
 
@@ -145,7 +152,7 @@
         </div>
     </div>
     <!--邮箱找回密码-->
-    <div class="border_div1" ng-controller="email_ctr">
+    <div class="border_div1" ng-controller="">
     <form id="firstformByEmail" method="post" action="/user/forGotPassword/">
         <div class="email_one" ng-hide="boolen1">
             <span class="progress_bar"></span>

@@ -39,10 +39,10 @@ public class UserForgetPassDaoImpl extends BaseDaoImpl<ResetPassRequest> impleme
 		return resetPassRequest;
 	}
 	@Override
-	public void deleteByUserId(Long UserId) {
-		Assert.notNull(UserId);
+	public void deleteByUserId(Map<String,Object> map) {
+		Assert.notNull(map);
 		try {
-			sqlSessionTemplate.delete(getSqlName(SqlId.SQL_DELETE_BY_USERID), UserId);
+			sqlSessionTemplate.delete(getSqlName(SqlId.SQL_DELETE_BY_USERID), map);
 		} catch (Exception e) {
 			throw new DaoException(String.format("删除对象出错！语句：%s", getSqlName(SqlId.SQL_DELETE_BY_USERID)), e);
 		}

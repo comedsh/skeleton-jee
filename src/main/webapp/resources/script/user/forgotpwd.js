@@ -1,3 +1,13 @@
+$(document).ready(function(){
+	var value=$('#lab').val();
+	if(value=='email'){
+		$('.border_div').hide();
+        $('.border_div1').show();
+	}else{
+		$('.border_div').show();
+        $('.border_div1').hide();
+	}
+});
 /**
  * Created by think on 2015/11/2.
  */
@@ -426,6 +436,8 @@ function secondByPhone(){
 function firstByEmail(){
 	if($('.boolen1').val()==0){
 		 $('#firstformByEmail').submit();
+	 }else{
+		 return false;
 	 }
 }
 function secondByEmail(){
