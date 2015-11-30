@@ -60,6 +60,7 @@ public class ShoppingCartServiceImpl extends BaseServiceImpl<ShoppingCart> imple
 					scart = new ShoppingCart();
 					scart.setBuyerId(UserSecurityUtils.getCurrentUserId());
 					scart.setSkuId(sku.getId());
+					scart.setSellerId(sku.getSellerId());
 				}
 				scart.addQty(qty);
 				scart.setAddTime(new Date());
