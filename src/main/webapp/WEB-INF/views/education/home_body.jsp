@@ -159,11 +159,9 @@ angular.module("spittle-ng-app", [])
 					<span style="margin-right:4px;"><a href="${spittle_rest_id_url}" target="_blank">查看</a></span>
 				</td>
 				<td valign="middle">	
-					<span style="margin-right:4px;">
-						<sf:form method="delete" modelAttribute="spittle" action="${spittle_rest_id_url}">
-							<a href="javascript:void(document.getElementById('spittle').submit())">删除</a>
-						</sf:form>
-					</span>
+					<sf:form method="delete" modelAttribute="spittle" action="${spittle_rest_id_url}">
+						<a href="javascript:void(document.getElementById('spittle').submit())">删除</a>
+					</sf:form>
 				</td>		
 			  </tr>			
 			</c:forEach>
