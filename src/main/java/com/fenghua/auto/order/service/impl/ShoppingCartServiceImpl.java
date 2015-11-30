@@ -119,6 +119,17 @@ public class ShoppingCartServiceImpl extends BaseServiceImpl<ShoppingCart> imple
 	}
 
 	@Override
+	public boolean removeCart(Long[] sids) {
+		if(sids != null && sids.length > 0) {
+			for (Long sid : sids) {
+				removeCart(sid);
+			}
+			return true;
+		}
+		return false;
+	}
+
+	@Override
 	public List<ShoppingCartGroupVO> loadByBuyerId(Long buyerId) {
 		ShoppingCart query = new ShoppingCart();
 		if(buyerId == null) {
