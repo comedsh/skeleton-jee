@@ -6,8 +6,8 @@
     <result column="code" property="code" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="BIT" />
-    <result column="type" property="type" jdbcType="BIT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
     <result column="shelf_time" property="shelfTime" jdbcType="TIMESTAMP" />
     <result column="under_time" property="underTime" jdbcType="TIMESTAMP" />
     <result column="produce_time" property="produceTime" jdbcType="DATE" />
@@ -64,7 +64,7 @@
       sale_price, create_time, update_time, 
       url, introduce)
     values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{sellerId,jdbcType=BIGINT}, 
-      #{name,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, #{type,jdbcType=BIT}, 
+      #{name,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
       #{shelfTime,jdbcType=TIMESTAMP}, #{underTime,jdbcType=TIMESTAMP}, #{produceTime,jdbcType=DATE}, 
       #{downTime,jdbcType=DATE}, #{minQuantity,jdbcType=INTEGER}, #{grossWeight,jdbcType=DOUBLE}, 
       #{weight,jdbcType=DOUBLE}, #{unit,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR}, 
@@ -89,10 +89,10 @@
         title = #{title,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
-        status = #{status,jdbcType=BIT},
+        status = #{status,jdbcType=INTEGER},
       </if>
       <if test="type != null" >
-        type = #{type,jdbcType=BIT},
+        type = #{type,jdbcType=INTEGER},
       </if>
       <if test="shelfTime != null" >
         shelf_time = #{shelfTime,jdbcType=TIMESTAMP},

@@ -1,6 +1,8 @@
 package com.fenghua.auto.sku.domain;
 
-public class SkuImageHtml {
+import com.fenghua.auto.backend.domain.DomainObject;
+
+public class SkuImageHtml  implements DomainObject{
     private Long id;
 
     private Long skuId;

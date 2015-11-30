@@ -1057,8 +1057,8 @@ CREATE TABLE `sku` (
   `title` varchar(200) DEFAULT NULL,
   `url` text COMMENT '商品缩略图',
   `introduce` text,
-  `status` bit(1) DEFAULT NULL COMMENT '1,待上架，2.已上架 3。已下架，默认 待上架',
-  `type` bit(1) DEFAULT NULL COMMENT '1.品牌件 , 2 原厂件',
+  `status` int DEFAULT NULL COMMENT '1,待上架，2.已上架 3。已下架，默认 待上架',
+  `type` int DEFAULT NULL COMMENT '1.品牌件 , 2 原厂件',
   `shelf_time` datetime DEFAULT CURRENT_TIMESTAMP,
   `under_time` datetime DEFAULT NULL,
   `produce_time` date DEFAULT NULL,
@@ -1126,12 +1126,12 @@ CREATE TABLE `sku_comment` (
   `sku_id` bigint(20) DEFAULT NULL,
   `order_id` bigint(20) DEFAULT NULL,
   `order_detail_id` bigint(20) DEFAULT NULL,
-  `star` bit(1) DEFAULT NULL COMMENT '1到5个星，>=4,好评  ，3< 差评，3 中评',
+  `star` int DEFAULT NULL COMMENT '1到5个星，>=4,好评  ，3< 差评，3 中评',
   `comtent` text,
   `user_id` varchar(20) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   `status` int(11) DEFAULT '1' COMMENT '1 显示，2不显示，默认显示',
-  `comment_origin` bit(1) DEFAULT NULL COMMENT '0, pc ,1.android 2. iphone  ;',
+  `comment_origin` int DEFAULT NULL COMMENT '0, pc ,1.android 2. iphone  ;',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1210,6 +1210,8 @@ CREATE TABLE `sku_images` (
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime DEFAULT NULL,
   `sku_id` bigint(20) DEFAULT NULL,
+   `small_url` text,
+  
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

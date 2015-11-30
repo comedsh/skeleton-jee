@@ -131,8 +131,8 @@ create table sku
    title                varchar(200),
    url                  text comment '商品缩略图',
    introduce            text,
-   status               bit comment '1,待上架，2.已上架 3。已下架，默认 待上架',
-   type                 bit comment '1.品牌件 , 2 原厂件',
+   status               int comment '1,待上架，2.已上架 3。已下架，默认 待上架',
+   type                 int comment '1.品牌件 , 2 原厂件',
    shelf_time           datetime default CURRENT_TIMESTAMP,
    under_time           datetime,
    produce_time         date,
@@ -174,12 +174,12 @@ create table sku_comment
    sku_id               bigint,
    order_id             bigint,
    order_detail_id      bigint,
-   star                 bit comment '1到5个星，>=4,好评  ，3< 差评，3 中评',
+   star                 int comment '1到5个星，>=4,好评  ，3< 差评，3 中评',
    comtent              text,
    user_id              varchar(20),
    create_time          datetime,
    status               int default 1 comment '1 显示，2不显示，默认显示',
-   comment_origin       bit comment '0, pc ,1.android 2. iphone  ;',
+   comment_origin       int comment '0, pc ,1.android 2. iphone  ;',
    primary key (id)
 );
 
@@ -219,6 +219,7 @@ create table sku_images
    create_time          datetime default CURRENT_TIMESTAMP,
    update_time          datetime,
    sku_id               bigint,
+   small_url			text,
    primary key (id)
 );
 

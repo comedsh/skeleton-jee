@@ -107,14 +107,38 @@ div.zoomMask {
 	cursor: move;
 	z-index: 1;
 }
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+li {
+    float: left;
+    border: 1px solid #000;
+    border-bottom-width: 0;
+    margin: 3px 3px 0px 3px;
+    padding: 5px 5px 0px 5px;
+    background-color: #CCC;
+    color: #696969;
+}
+#mainView {
+    border: 1px solid black;
+	clear: both;
+	padding: 0 1em;
+}
+.active {
+    background-color: #FFF;
+    color: #000;
+}
 </style>
 	<script type="text/javascript"src="/resources/javaScript/jQuery/jquery-1.8.3.min.js"></script>
 	<script type="text/javascript"src="/resources/javaScript/angular/angular.min.js"></script>
 	<script type="text/javascript"src="/resources/javaScript/JQuery/jquery.imagezoom.js"></script>
 </head>
-<body>
+<body ng-app="productApp"  ng-controller="productController">
 
-  <div ng-app="productApp" ng-controller="productController">
+  <div  >
   <table>
 		<tr>
 			<td>
@@ -156,7 +180,20 @@ div.zoomMask {
 	</table>
   </div>
 
-	
+ <div><h3>商品描述</h3></div>
+  <div><h3>商品属性</h3></div>
+     <div ng-repeat="item in attrs">	        
+		  {{item.name}}    {{item.contents}}
+	</div>    
+		  
+  <div><h3>适配车型OE</h3></div>
+  <div><h3>商品评论</h3></h3>
+  <div>
+    <p>好评度:
+  </div>
+  <div>
+  </div>
+  </div>
 
 	<script type="text/javascript">
 	   angular.module('productApp', [])
@@ -185,6 +222,12 @@ div.zoomMask {
     	   $scope.getPro("/comment/"+id,function(data){
     		   $scope.comment=data;
     	   });
+    	   
+    	   //attrs
+    	      $scope.getPro("/skuExtendAttrs/product/"+id,function(data){
+    	    	  alert(data.attrs);
+    		   $scope.attrs=data.attrs;
+    	   });
     	  
     	   $scope.imgClick = function(){
     	   };
@@ -198,6 +241,10 @@ div.zoomMask {
         	  $scope.nums =   parseInt($scope.nums) +1;
     	   } 	   
        });
+	   
+	   
 	</script>
+	
+	
 </body>
 </html>

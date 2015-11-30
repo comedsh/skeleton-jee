@@ -32,7 +32,7 @@ public class SkuStockController {
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	@ResponseBody
-	public SkuStock queryStockBySkuId(@PathVariable("id") Long id,Model model){
+	public SkuStock queryStockBySkuId(@PathVariable("id") Long id){
 		SkuStock stock = skuStockService.queryStockBySkuId(id);
 		if(stock != null){
 			long saledCount = (stock.getStockCount()-stock.getStockAvailability());

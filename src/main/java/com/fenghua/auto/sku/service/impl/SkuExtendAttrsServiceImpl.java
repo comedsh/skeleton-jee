@@ -3,6 +3,8 @@
  */
 package com.fenghua.auto.sku.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,5 +31,15 @@ public class SkuExtendAttrsServiceImpl extends BaseServiceImpl<SkuExtendAttrs> i
 	protected BaseDao<SkuExtendAttrs> getBaseDao() {
 		return dao;
 	}
+
+	@Override
+	public List<SkuExtendAttrs> queryInfoBySkuId(Long skuId) {
+		SkuExtendAttrs skuExtendAttrs = new SkuExtendAttrs();
+		skuExtendAttrs.setSkuId(skuId);
+		
+		return selectList(skuExtendAttrs);
+	}
+	
+	
 
 }
