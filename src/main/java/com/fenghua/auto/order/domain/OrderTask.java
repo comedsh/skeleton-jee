@@ -2,35 +2,64 @@ package com.fenghua.auto.order.domain;
 
 import com.fenghua.auto.backend.domain.DomainObject;
 import java.util.Date;
-
+/**
+ * 订单定时任务
+ *
+ */
 public class OrderTask implements DomainObject {
 	private static final long serialVersionUID = 1L;
     private Long taskId;
-
+    /**
+     * 订单id
+     */
     private Long orderId;
-
+    /**
+     * 订单编号
+     */
     private String orderNo;
-
+    /**
+     * 任务类型
+     */
     private Integer type;
-
+    /**
+     * 任务状态
+     */
     private Integer status;
-
+    /**
+     * 开始时间
+     */
     private Date beginTime;
-
+    /**
+     * 过期时间
+     */
     private Date expireTime;
-
+    /**
+     * 处理类型
+     */
     private Integer handleType;
-
+    /**
+     * 处理器
+     */
     private String handler;
-
+    /**
+     * 执行次数
+     */
     private Integer handleTimes;
-
+    /**
+     * 创建人
+     */
     private Long entryId;
-
+    /**
+     * 创建时间
+     */
     private Date entryTime;
-
+    /**
+     * 执行人
+     */
     private Long processorId;
-
+    /**
+     * 执行时间
+     */
     private Date processTime;
 
     public Long getTaskId() {

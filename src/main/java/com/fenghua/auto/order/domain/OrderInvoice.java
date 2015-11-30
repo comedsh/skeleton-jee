@@ -2,39 +2,75 @@ package com.fenghua.auto.order.domain;
 
 import com.fenghua.auto.backend.domain.DomainObject;
 import java.util.Date;
-
+/**
+ * 订单发票
+ *
+ */
 public class OrderInvoice implements DomainObject {
 	private static final long serialVersionUID = 1L;
     private Long id;
-
+    /**
+     * 订单id
+     */
     private Long orderId;
-
+    /**
+     * 增值税id
+     */
     private Long valueAddId;
-
+    /**
+     * 发票类型
+     */
     private Integer invoiceType;
-
+    /**
+     * 发票抬头
+     */
     private String title;
-
+    /**
+     * 内容类型（如：汽车配件，
+     * 			 或： 配件明细xx
+     * 						yy
+     * 						。。。）
+     */
     private Integer contentType;
-
+    /**
+     * 发票内容
+     */
     private String content;
-
+    /**
+     * 收票人
+     */
     private String recContact;
-
+    /**
+     * 收票人电话
+     */
     private String recContactPhone;
-
+    /**
+     * 收票人地址（发票将邮寄）
+     */
     private String recAddress;
-
+    /**
+     * 收票人邮编
+     */
     private String recZipcode;
-
+    /**
+     * 状态
+     */
     private Integer status;
-
+    /**
+     * 创建时间
+     */
     private Date entryTime;
-
+    /**
+     * 答应人id
+     */
     private Long printerId;
-
+    /**
+     * 打印人姓名
+     */
     private String printerName;
-
+    /**
+     * 打印时间
+     */
     private Date printTime;
 
     public Long getId() {

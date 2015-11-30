@@ -3,49 +3,90 @@ package com.fenghua.auto.order.domain;
 import com.fenghua.auto.backend.domain.DomainObject;
 import java.math.BigDecimal;
 import java.util.Date;
-
+/**
+ * 商品明细
+ *
+ */
 public class OrderItem implements DomainObject {
 	private static final long serialVersionUID = 1L;
     private Long id;
-
+    /**
+     * 订单id
+     */
     private Long orderId;
-
+    /**
+     * 卖家id
+     */
     private Long sellerId;
-
+    /**
+     * 买家id
+     */
     private Long buyerId;
-
+    /**
+     * 商品id
+     */
     private Long skuId;
-
+    /**
+     * 商品编码
+     */
     private String skuCode;
-
+    /**
+     * 商品名称
+     */
     private String skuName;
-
+    /**
+     * 原价
+     */
     private BigDecimal originalPrice;
-
+    /**
+     * 卖价
+     */
     private BigDecimal salePrice;
-
+    /**
+     * 交易价
+     */
     private BigDecimal tradePrice;
-
+    /**
+     * 数量
+     */
     private Integer qty;
-
+    /**
+     * 状态
+     */
     private Integer status;
-
+    /**
+     * 分支状态
+     */
     private Integer forkStatus;
-
+    /**
+     * 备注
+     */
     private String note;
-
+    /**
+     * 是否评价
+     */
     private Integer evaluatedFlag;
-
+    /**
+     * 评价时间
+     */
     private Date evaluatedTime;
-
+    /**
+     * 创建人
+     */
     private Long entryId;
-
+    /**
+     * 创建时间
+     */
     private Date entryDate;
-
+    /**
+     * 修改人
+     */
     private Long editId;
-
+    /**
+     * 修改时间
+     */
     private Date editDate;
-
+    
     public Long getId() {
         return id;
     }

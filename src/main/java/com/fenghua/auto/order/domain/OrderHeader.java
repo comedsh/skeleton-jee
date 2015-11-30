@@ -3,77 +3,148 @@ package com.fenghua.auto.order.domain;
 import com.fenghua.auto.backend.domain.DomainObject;
 import java.math.BigDecimal;
 import java.util.Date;
-
+/**
+ * 订单
+ *
+ */
 public class OrderHeader implements DomainObject {
 	private static final long serialVersionUID = 1L;
     private Long id;
-
+    /**
+     * 订单编号
+     */
     private String orderNo;
-
+    /**
+     * 订单状态
+     */
     private Integer status;
-
+    /**
+     * 分支状态
+     */
     private Integer forkStatus;
-
+    /**
+     * 买家id
+     */
     private Long buyerId;
-
+    /**
+     * 卖家id
+     */
     private Long sellerId;
-
+    /**
+     * 仓库id
+     */
     private Long warehouseId;
-
+    /**
+     * 主订单id
+     */
     private Long masterOrderId;
-
+    /**
+     * 订单总金额
+     */
     private BigDecimal totalAmount;
-
+    /**
+     * 优惠金额
+     */
     private BigDecimal discountAmount;
-
+    /**
+     * 需支付金额
+     */
     private BigDecimal needPayAmount;
-
+    /**
+     * 运费
+     */
     private BigDecimal transportAmount;
-
+    /**
+     * 已支付金额
+     */
     private BigDecimal payedAmount;
-
+    /**
+     * 支付方式
+     */
     private Integer payMethod;
-
+    /**
+     * 支付状态
+     */
     private Integer payStatus;
-
+    /**
+     * 配送方式
+     */
     private Integer deliveryMethod;
-
+    /**
+     * 下单时间
+     */
     private Date createTime;
-
+    /**
+     * 付款时间
+     */
     private Date payTime;
-
+    /**
+     * 卖家审核时间
+     */
     private Date confirmTime;
-
+    /**
+     * 发货时间
+     */
     private Date sendTime;
-
+    /**
+     * 收货延期次数
+     */
     private Integer receiveDelayTimes;
-
+    /**
+     * 收货过期时间
+     */
     private Date receiveExpireTime;
-
+    /**
+     * 收货时间
+     */
     private Date receivedTime;
-
+    /**
+     * 城市
+     */
     private Long cityId;
-
+    /**
+     * 发货人
+     */
     private String sender;
-
+    /**
+     * 发货地址
+     */
     private String senderAddress;
-
+    /**
+     * 收货人
+     */
     private String receiver;
-
+    /**
+     * 收货人电话
+     */
     private String receiverPhone;
-
+    /**
+     * 收货人证件号码
+     */
     private String receiverIdcard;
-
+    /**
+     * 收货人地址
+     */
     private String receiverAddress;
-
+    /**
+     * 是否开发票
+     */
     private Integer invoiceFlag;
-
+    /**
+     * 单据来源
+     */
     private Integer comeFrom;
-
+    /**
+     * 是否评价
+     */
     private Integer evaluatedFlag;
-
+    /**
+     * 订单备注
+     */
     private String remark;
-
+    /**
+     * 评价时间
+     */
     private Date evaluatedTime;
 
     public Long getId() {
