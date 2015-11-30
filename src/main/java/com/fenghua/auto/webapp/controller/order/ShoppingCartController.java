@@ -51,7 +51,7 @@ public class ShoppingCartController {
 			@RequestParam(value="num", required=true) int num) throws AuthenticationException{
 		boolean addOk = false;
 		if(pid != null && pid > 0 && num > 0) {
-			addOk = shoppingCartService.addToCart(pid, num);
+			addOk = shoppingCartService.addToCart(pid, num, UserSecurityUtils.getCurrentUserId());
 		}
 		model.addAttribute("addOk",addOk);
 		return "web.order.addSkuToCart";
@@ -63,7 +63,7 @@ public class ShoppingCartController {
 			@RequestParam(value="num", required=true) int num) throws AuthenticationException{
 		boolean putOk = false;
 		if(pid != null && pid > 0) {
-			putOk = shoppingCartService.putToCart(pid, num);
+			putOk = shoppingCartService.putToCart(pid, num, UserSecurityUtils.getCurrentUserId());
 		}
 		if(putOk) {
 			List<ShoppingCartGroupVO> list = shoppingCartService.loadByBuyerId(UserSecurityUtils.getCurrentUserId());

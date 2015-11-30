@@ -80,6 +80,7 @@ create table bill_order
 CREATE TABLE `shopping_cart` (
   `ID` bigint(20) NOT NULL AUTO_INCREMENT,
   `buyer_id` bigint(20) NOT NULL,
+  `seller_id` bigint(20) NOT NULL,
   `sku_id` bigint(20) NOT NULL,
   `original_price` decimal(18,4) NOT NULL,
   `sale_price` decimal(18,4) NOT NULL,
