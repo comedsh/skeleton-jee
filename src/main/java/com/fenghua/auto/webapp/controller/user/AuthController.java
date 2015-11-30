@@ -59,7 +59,8 @@ public class AuthController {
 				//跳转到首页
 				return "redirect:/";
 			}else {
-				return "redirect:/secure/registered";
+				//跳转到注册页面
+				return "redirect:/secure/register";
 			}
 		} catch (QQConnectException e) {
 			e.printStackTrace();
