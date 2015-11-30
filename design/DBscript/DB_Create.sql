@@ -44,7 +44,7 @@ create table Company
    Compnay_Name         varchar(200) not null,
    City_Area_ID         bigint,
    Detail_Address       varchar(200) not null,
-   Headcount            int,
+   Headcount            varchar(20),
    Business_Licence     varchar(200) not null,
    Taxpayer_Licence     varchar(200) not null,
    Taxpayer_Number      varchar(20),
