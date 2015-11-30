@@ -9,7 +9,6 @@ import com.fenghua.auto.backend.domain.DomainObject;
  *
  */
 public class UserAddress implements DomainObject {
-	
 	private static final long serialVersionUID = 1L;
     private Long id;
 
@@ -99,7 +98,7 @@ public class UserAddress implements DomainObject {
         this.defaultAddr = defaultAddr;
     }
 
-	public Date getCreatedTs() {
+    public Date getCreatedTs() {
         return createdTs;
     }
 
