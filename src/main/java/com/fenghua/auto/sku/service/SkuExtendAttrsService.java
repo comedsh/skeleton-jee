@@ -3,6 +3,8 @@
  */
 package com.fenghua.auto.sku.service;
 
+import java.util.List;
+
 import com.fenghua.auto.backend.service.BaseService;
 import com.fenghua.auto.sku.domain.SkuExtendAttrs;
 
@@ -15,4 +17,5 @@ import com.fenghua.auto.sku.domain.SkuExtendAttrs;
  */
 public interface SkuExtendAttrsService extends BaseService<SkuExtendAttrs> {
 
+	public List<SkuExtendAttrs> queryInfoBySkuId(Long skuId);
 }

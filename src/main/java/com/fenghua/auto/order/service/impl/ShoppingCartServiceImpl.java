@@ -47,19 +47,20 @@ public class ShoppingCartServiceImpl extends BaseServiceImpl<ShoppingCart> imple
 
 	@Override
 	@Transactional
-	public boolean addToCart(Long pid, int qty) {
+	public boolean addToCart(Long pid, int qty, Long buyerId) {
 		boolean added = false;
 		try {
 			Sku sku = skuService.selectById(pid);
 			if(sku != null) {
 				ShoppingCart query = new ShoppingCart();
-				query.setBuyerId(UserSecurityUtils.getCurrentUserId());
+				query.setBuyerId(buyerId);
 				query.setSkuId(sku.getId());
 				ShoppingCart scart = dao.selectOne(query);
 				if(scart == null) {
 					scart = new ShoppingCart();
-					scart.setBuyerId(UserSecurityUtils.getCurrentUserId());
+					scart.setBuyerId(buyerId);
 					scart.setSkuId(sku.getId());
+					scart.setSellerId(sku.getSellerId());
 				}
 				scart.addQty(qty);
 				scart.setAddTime(new Date());
@@ -82,7 +83,7 @@ public class ShoppingCartServiceImpl extends BaseServiceImpl<ShoppingCart> imple
 	}
 	
 	@Transactional
-	public boolean putToCart(Long pid, int qty) {
+	public boolean putToCart(Long pid, int qty, Long buyerId) {
 		if(pid == null || pid <= 0 || qty <= 0) {
 			return false;
 		}
@@ -91,7 +92,7 @@ public class ShoppingCartServiceImpl extends BaseServiceImpl<ShoppingCart> imple
 			Sku sku = skuService.selectById(pid);
 			if(sku != null) {
 				ShoppingCart query = new ShoppingCart();
-				query.setBuyerId(UserSecurityUtils.getCurrentUserId());
+				query.setBuyerId(buyerId);
 				query.setSkuId(sku.getId());
 				ShoppingCart scart = dao.selectOne(query);
 				if(scart != null) {

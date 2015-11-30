@@ -3926,9 +3926,9 @@ VALUES
 
 
 
-insert into Role (Name, Description, Created_TS, Created_By, Last_Modified_TS, last_Modified_By)
+insert into Role (ID, Name, Description, Created_TS, Created_By, Last_Modified_TS, last_Modified_By)
 values
-('private_buyer','个体买家','私人买家或者是个体经营户',CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 'system'),
-('company_buyer','企业买家','企业和公司买家',CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 'system'),
-('seller','卖家','卖家',CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 'system'),
-('admin','管理员','平台的管理员',CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 'system');
+(1,'private_buyer','私人买家或者是个体经营户',CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 'system'),
+(2, 'company_buyer','企业和公司买家',CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 'system'),
+(3, 'seller','卖家',CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 'system'),
+(4, 'admin','平台的管理员',CURRENT_TIMESTAMP, 'system', CURRENT_TIMESTAMP, 'system');

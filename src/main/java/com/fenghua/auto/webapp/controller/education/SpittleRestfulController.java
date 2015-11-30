@@ -3,7 +3,6 @@ package com.fenghua.auto.webapp.controller.education;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
@@ -25,7 +23,6 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import com.fenghua.auto.backend.core.utills.LabelErrorTranslator;
 import com.fenghua.auto.backend.domain.LabelError;
 import com.fenghua.auto.backend.domain.education.Spittle;
-import com.fenghua.auto.backend.domain.user.User;
 import com.fenghua.auto.backend.service.education.SpittleService;
 
 /**
@@ -63,11 +60,6 @@ public class SpittleRestfulController {
 		return "education.spittle_home";
 
 	}
-	@RequestMapping(value = "/home1", method = RequestMethod.GET
-			 ) 
-	public @ResponseBody List<Spittle> home1() {
-		return spittleService.getAllSpittles();
-	}
 	
 	/**
 	 * 
@@ -104,12 +96,7 @@ public class SpittleRestfulController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, 
 					headers = {"Accept=text/xml, application/json"} ) // indicates, the server only accept the xml or json request.
 	public @ResponseBody Spittle getSpittle(@PathVariable("id") long id ){
-		Spittle s=new Spittle();
-		s.setId(1001L);
-		s.setUsername("hangsan");
-		s.setText("dddd");
-		return s;
-		//return spittleService.getSpittleById(id);
+		return spittleService.getSpittleById(id);
 	}	
 	
 	/**

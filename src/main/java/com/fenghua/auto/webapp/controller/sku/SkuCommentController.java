@@ -33,8 +33,10 @@ public class SkuCommentController {
 		long counts = skuCommentService.countBySkuId(id);
 		Map<String,String> maps = new HashMap<String,String>();
 		maps.put("comtotal", counts+"");
-		return maps;
-		
-		
+		skuCommentService.countComentBySkuId(id);
+		return maps;	
 	}
+	
+	
+	
 }

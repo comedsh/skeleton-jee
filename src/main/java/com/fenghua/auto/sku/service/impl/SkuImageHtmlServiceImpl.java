@@ -1,4 +1,3 @@
-
 /**
  * 
  */
@@ -8,26 +7,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fenghua.auto.backend.dao.BaseDao;
-import com.fenghua.auto.sku.dao.VehicleOeSkuDao;
-import com.fenghua.auto.sku.domain.VehicleOeSku;
+import com.fenghua.auto.sku.dao.SkuImageHtmlDao;
+import com.fenghua.auto.sku.domain.SkuImageHtml;
 import com.fenghua.auto.backend.service.impl.BaseServiceImpl;
-import com.fenghua.auto.sku.service.VehicleOeSkuService;
+import com.fenghua.auto.sku.service.SkuImageHtmlService;
 
 /**
  * Service实现类
  *
  * @author lijie
- * @createTime 2015-11-27 16:00:19
+ * @createTime 2015-11-30 15:37:15
  *
  */
 @Service
-public class VehicleOeSkuServiceImpl extends BaseServiceImpl<VehicleOeSku> implements VehicleOeSkuService {
+public class SkuImageHtmlServiceImpl extends BaseServiceImpl<SkuImageHtml> implements SkuImageHtmlService {
 
 	@Autowired
-	private VehicleOeSkuDao dao;
+	private SkuImageHtmlDao dao;
 	
 	@Override
-	protected BaseDao<VehicleOeSku> getBaseDao() {
+	protected BaseDao<SkuImageHtml> getBaseDao() {
 		return dao;
 	}
 

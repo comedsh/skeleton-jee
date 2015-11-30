@@ -13,7 +13,7 @@ public class SkuComment implements DomainObject{
 
     private Long orderDetailId;
 
-    private Boolean star;
+    private Byte star;
 
     private String userId;
 
@@ -21,7 +21,7 @@ public class SkuComment implements DomainObject{
 
     private Integer status;
 
-    private Boolean commentOrigin;
+    private Byte commentOrigin;
 
     private String comtent;
 
@@ -57,11 +57,11 @@ public class SkuComment implements DomainObject{
         this.orderDetailId = orderDetailId;
     }
 
-    public Boolean getStar() {
+    public Byte getStar() {
         return star;
     }
 
-    public void setStar(Boolean star) {
+    public void setStar(Byte star) {
         this.star = star;
     }
 
@@ -89,11 +89,11 @@ public class SkuComment implements DomainObject{
         this.status = status;
     }
 
-    public Boolean getCommentOrigin() {
+    public Byte getCommentOrigin() {
         return commentOrigin;
     }
 
-    public void setCommentOrigin(Boolean commentOrigin) {
+    public void setCommentOrigin(Byte commentOrigin) {
         this.commentOrigin = commentOrigin;
     }
 

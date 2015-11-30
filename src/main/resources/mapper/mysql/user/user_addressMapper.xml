@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fenghua.auto.backend.domain.user.UserAddress" >
-  <resultMap id="BaseResultMap" type="com.fenghua.auto.backend.domain.vo.user.UserAddressVo" >
+  <resultMap id="BaseResultMap" type="com.fenghua.auto.backend.domain.user.UserAddress" >
     <id column="ID" property="id" jdbcType="BIGINT" />
     <result column="User_ID" property="userId" jdbcType="BIGINT" />
     <result column="City_Area_ID" property="cityAreaId" jdbcType="BIGINT" />
@@ -19,6 +19,60 @@
     ID, User_ID, City_Area_ID, Alias, Detail_Addr, Receiver_Name, Receiver_Mobile, Default_Addr, 
     created_ts, created_by, last_Modified_ts, last_Modified_by
   </sql>
+  <sql id="Base_Where_Case" >
+    <where >
+      <if test="id != null" >
+         AND ID = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="userId != null" >
+         AND User_ID = #{userId,jdbcType=BIGINT}
+      </if>
+      <if test="cityAreaId != null" >
+         AND City_Area_ID = #{cityAreaId,jdbcType=BIGINT}
+      </if>
+      <if test="alias != null" >
+         AND Alias = #{alias,jdbcType=VARCHAR}
+      </if>
+      <if test="detailAddr != null" >
+         AND Detail_Addr = #{detailAddr,jdbcType=VARCHAR}
+      </if>
+      <if test="receiverName != null" >
+         AND Receiver_Name = #{receiverName,jdbcType=VARCHAR}
+      </if>
+      <if test="receiverMobile != null" >
+         AND Receiver_Mobile = #{receiverMobile,jdbcType=VARCHAR}
+      </if>
+      <if test="defaultAddr != null" >
+         AND Default_Addr = #{defaultAddr,jdbcType=BIT}
+      </if>
+      <if test="createdTs != null" >
+         AND created_ts = #{createdTs,jdbcType=TIMESTAMP}
+      </if>
+      <if test="createdBy != null" >
+         AND created_by = #{createdBy,jdbcType=VARCHAR}
+      </if>
+      <if test="lastModifiedTs != null" >
+         AND last_Modified_ts = #{lastModifiedTs,jdbcType=TIMESTAMP}
+      </if>
+      <if test="lastModifiedBy != null" >
+         AND last_Modified_by = #{lastModifiedBy,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+  <select id="selectCount" resultType="java.lang.Long" parameterType="com.fenghua.auto.backend.domain.user.UserAddress" >
+    select count( ID)
+     from user_address
+    <include refid="Base_Where_Case" />
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fenghua.auto.backend.domain.user.UserAddress" >
+    select 
+    <include refid="Base_Column_List" />
+     from user_address
+    <include refid="Base_Where_Case" />
+    <if test="limit > 0" >
+       limit #{offset},#{limit} 
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

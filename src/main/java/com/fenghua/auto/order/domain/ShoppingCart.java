@@ -26,12 +26,13 @@ public class ShoppingCart implements DomainObject {
 
     private Date addTime;
 
+    private Long sellerId;
+
     public void addQty(int qty) {
     	if(this.qty == null) {
     		this.qty = qty;
-    	} else {
-    		this.qty += qty;
     	}
+    	this.qty += qty;
     }
     
     public Long getId() {
@@ -112,5 +113,13 @@ public class ShoppingCart implements DomainObject {
 
     public void setAddTime(Date addTime) {
         this.addTime = addTime;
+    }
+
+    public Long getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(Long sellerId) {
+        this.sellerId = sellerId;
     }
 }

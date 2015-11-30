@@ -6,11 +6,11 @@
     <result column="sku_id" property="skuId" jdbcType="BIGINT" />
     <result column="order_id" property="orderId" jdbcType="BIGINT" />
     <result column="order_detail_id" property="orderDetailId" jdbcType="BIGINT" />
-    <result column="star" property="star" jdbcType="BIT" />
+    <result column="star" property="star" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="staus" property="staus" jdbcType="INTEGER" />
-    <result column="comment_origin" property="commentOrigin" jdbcType="BIT" />
+    <result column="comment_origin" property="commentOrigin" jdbcType="INTEGER" />
       <result column="comtent" property="comtent" jdbcType="LONGVARCHAR" />
   </resultMap>
 
@@ -32,7 +32,7 @@
      order by create_time desc
   </select>
   
- <select id="selectCount" resultType="java.lang.Long" parameterType="com.fenghua.auto.sku.domain.SkuStock" >
+ <select id="selectCount" resultType="java.lang.Long" parameterType="com.fenghua.auto.sku.domain.SkuComment" >
     select  count(1)
     from sku_comment
     where 1=1
@@ -41,6 +41,9 @@
     </if>
     <if test="id != null" >
        and id = #{id,jdbcType=BIGINT}
+    </if>
+    <if test="star !=null">
+       and star >= #{star,jdbcType=INTEGER}
     </if>
   </select>
  
