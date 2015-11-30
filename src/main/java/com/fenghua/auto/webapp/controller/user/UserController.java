@@ -105,11 +105,6 @@ public class UserController {
 			} catch (AuthenticationException e) {
 				e.printStackTrace();
 			}
-				try {
-					authService.binding(UserSecurityUtils.getCurrentUser());
-				} catch (AuthenticationException e) {
-					e.printStackTrace();
-				}
 		} else {
 			if(!validateTel.equals(telcode)) {
 				msg.setSuccess(false);
