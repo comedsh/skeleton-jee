@@ -74,7 +74,8 @@
 	  		<th align="left">已选择{{selectSkuCount}}件商品 </th>
 	  		<th align="left">
 	  			<strong>商品总金额(不含运费)：</strong>￥{{totalOrignAmount}}<br>
-	  			<strong>优惠金额：</strong>￥{{totalAmount}}
+	  			<strong>优惠金额：</strong>￥{{totalAmount}}<br>
+	  			<font color="red"><strong>需支付金额：</strong>￥{{needPayAmount}}</font>
 	  		</th>
 	  		<th align="left" colspan="2">
 	  			<a href="#">
@@ -104,6 +105,7 @@
            $scope.totalOrignAmount = 0.0000;
            $scope.totalAmount = 0.0000;
            $scope.selectSkuCount = 0;
+           $scope.needPayAmount = 0.0000;
            angular.forEach($scope.shopCartGroups, function(data){
         	   angular.forEach(data.cartList, function(datai) {
 				   if(datai.selected == true) {
@@ -113,6 +115,7 @@
 				   }
     		   });
            });
+           $scope.needPayAmount = $scope.totalOrignAmount - $scope.totalAmount;
        };
        $scope.initData = function(data) {
     	   $scope.shopCartGroups = data;
