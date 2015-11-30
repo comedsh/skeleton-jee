@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <div class="cw-icon">
-	<a target="_blank" href="http://cart.jd.com/cart/cart.html">
+	<a target="_blank" href="/shoppingCart/list">
 		<spring:message code="index.buycar" />
 	</a>
 </div>

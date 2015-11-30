@@ -24,5 +24,7 @@ public interface ShoppingCartService extends BaseService<ShoppingCart> {
 	
 	public boolean removeCart(Long sid);
 	
+	public boolean removeCart(Long[] sids);
+	
 	public List<ShoppingCartGroupVO> loadByBuyerId(Long buyerId);
 }

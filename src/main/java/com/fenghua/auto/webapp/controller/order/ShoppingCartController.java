@@ -36,7 +36,7 @@ public class ShoppingCartController {
 	@RequestMapping(value="/list", method=RequestMethod.GET)
 	public String list(Model model) throws AuthenticationException{
 		List<ShoppingCartGroupVO> list = shoppingCartService.loadByBuyerId(UserSecurityUtils.getCurrentUserId());
-		model.addAttribute("shopCartGroupList",list);
+//		model.addAttribute("shopCartGroupList",list);
 		if(list == null || list.isEmpty()) {
 			model.addAttribute("shopCart","empty");
 		}
@@ -80,6 +80,21 @@ public class ShoppingCartController {
 		boolean putOk = false;
 		if(sid != null && sid > 0) {
 			putOk = shoppingCartService.removeCart(sid);
+		}
+		if(putOk) {
+			List<ShoppingCartGroupVO> list = shoppingCartService.loadByBuyerId(UserSecurityUtils.getCurrentUserId());
+			return list;
+		} else {
+			return new ArrayList<ShoppingCartGroupVO>(0);
+		}
+	}
+	@ResponseBody
+	@RequestMapping(value="/del", method=RequestMethod.POST)
+	public List<ShoppingCartGroupVO> delete(Model model,
+			@RequestParam(value="sids", required=true) Long[] sids) throws AuthenticationException{
+		boolean putOk = false;
+		if(sids != null && sids.length > 0) {
+			putOk = shoppingCartService.removeCart(sids);
 		}
 		if(putOk) {
 			List<ShoppingCartGroupVO> list = shoppingCartService.loadByBuyerId(UserSecurityUtils.getCurrentUserId());

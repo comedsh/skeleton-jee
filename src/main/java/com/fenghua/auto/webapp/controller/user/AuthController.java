@@ -57,14 +57,15 @@ public class AuthController {
 				//登陆
 				userService.autoLogin(user.getName(), user.getPassword(), request);
 				//跳转到首页
-				return "redirect:/.action";
+				return "redirect:/";
 			}else {
-				return "redirect:/registered.jsp?xx=";
+				//跳转到注册页面
+				return "redirect:/secure/register";
 			}
 		} catch (QQConnectException e) {
 			e.printStackTrace();
 			model.addAttribute("msg", new Result(false,"xx","操作失败！请重新登陆！"));
-			return "redirect:/login.jsp?xx=";
+			return "redirect:/secure/login";
 		}
 	}
 }
