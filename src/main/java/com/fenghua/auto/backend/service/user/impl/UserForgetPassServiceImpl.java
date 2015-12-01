@@ -1,7 +1,6 @@
 package com.fenghua.auto.backend.service.user.impl;
 
 import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,10 +10,11 @@ import javax.mail.MessagingException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.fenghua.auto.backend.core.utills.mail.MailSenderInfo;
+
 import com.fenghua.auto.backend.core.utills.mail.SimpleMailSender;
 import com.fenghua.auto.backend.dao.ConfigDao;
 import com.fenghua.auto.backend.dao.user.UserDao;
@@ -39,6 +39,10 @@ public class UserForgetPassServiceImpl implements UserForgetPassService {
 	private BCryptPasswordEncoder encoder;
 	@Autowired
 	private ConfigDao configDao;
+	@Test
+	public void test(){
+		insert("fdasf@dads.hdfh");
+	}
 	@Override
 	public void insert(String email) {
 		String encodeString=encoder.encode(email+UUID.randomUUID().toString());
@@ -64,10 +68,7 @@ public class UserForgetPassServiceImpl implements UserForgetPassService {
 		resetPassRequest.setValidTo(token_exptime);
 		//保存找回密码链接信息
 		userForgetPassDao.insert(resetPassRequest);
-		MailSenderInfo mailInfo = new MailSenderInfo();
-	
-		mailInfo.setValidate(true);
-		this.sendResetPasswordEmail(mailInfo,userId,encodeString,email);
+		this.sendResetPasswordEmail(encodeString,email);
 		
 	}
 	/**
@@ -75,23 +76,14 @@ public class UserForgetPassServiceImpl implements UserForgetPassService {
 	 * @param mailInfo
 	 */
 	
-	private void sendResetPasswordEmail(MailSenderInfo mailInfo,Long userId,String encodeString,String email) {
-		mailInfo.setMailServerHost("smtp.mxhichina.com");
-		mailInfo.setMailServerPort("25");
-		mailInfo.setUserName("noreply@auto007.com"); // 实际发送者
-		mailInfo.setPassword("WXQP123.");// 您的邮箱密码
-		mailInfo.setFromAddress("noreply@auto007.com"); // 设置发送人邮箱地址
-		mailInfo.setToAddress(email);
-		mailInfo.setSubject("找回您的账户密码");
+	private void sendResetPasswordEmail(String encodeString,String email) {
          String resetPassHref = "http://localhost:8080/user/checkResetLink?token="
                  + encodeString;
 		 String emailContent = "请勿回复本邮件.点击下面的链接,重设密码<br/><a href="
                  + resetPassHref + " target='_BLANK'>" + resetPassHref
                  + "</a>";
-		mailInfo.setContent(emailContent);
-		SimpleMailSender sms = new SimpleMailSender();
 		try {
-			sms.sendHtmlMail(mailInfo);
+			SimpleMailSender.sendHtmlMail(email, "找回您的账户密码", emailContent);
 		} catch (MessagingException e) {
 			LOG.error("doBasicProfiling Exception:", e);
 			e.printStackTrace();

@@ -49,22 +49,6 @@ public class PerformanceListener {
 	private void aspect() {
 	}
 
-//	@Before("aspect() && args(name)")
-//	public void doAccessCheck(String name) {
-//	}
-//
-//	@AfterReturning("aspect()")
-//	public void doAfter() {
-//	}
-//
-//	@After("aspect()")
-//	public void after() {
-//	}
-//
-//	@AfterThrowing("aspect()")
-//	public void doAfterThrow() {
-//	}
-
 	@Around("aspect()")
 	public Object doBasicProfiling(ProceedingJoinPoint pjp) throws Throwable {
 		
@@ -115,8 +99,7 @@ public class PerformanceListener {
 					mailInfo.setContent(params.toString());
 					
 					try {
-						SimpleMailSender sms = new SimpleMailSender();
-						sms.sendHtmlMail(mailInfo);
+						SimpleMailSender.sendHtmlMail(mailInfo);
 					} catch (Exception e) {
 						LOG.error("doBasicProfiling Exception:", e);
 					}
