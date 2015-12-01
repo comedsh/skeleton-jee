@@ -103,4 +103,10 @@ public interface UserService {
 	 * @return
 	 */
 	public User getUserByQQ(String openID);
+	/**
+	 * 根据用户id更新其qq账号
+	 * @param qqOpenID
+	 * @param userId
+	 */
+	public void updateQQNumberByUserID(String qqOpenID, Long userId);
 }

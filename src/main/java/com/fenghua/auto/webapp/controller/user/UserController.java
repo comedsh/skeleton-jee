@@ -100,6 +100,7 @@ public class UserController {
 			msg.setMsg("注册成功");
 			//把用户名和密码存入安全的session中
 			userService.autoLogin(user.getName(), userPwd, request);
+			//尝试绑定qq（如果存在）
 			try {
 				authService.binding(UserSecurityUtils.getCurrentUser());
 			} catch (AuthenticationException e) {

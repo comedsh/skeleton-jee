@@ -9,15 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fenghua.auto.backend.core.security.UserInfo;
+import com.fenghua.auto.backend.core.utills.QQtokenUtils;
 import com.fenghua.auto.backend.core.utills.UserSecurityUtils;
 import com.fenghua.auto.backend.dao.user.UserDao;
 import com.fenghua.auto.backend.domain.user.User;
 import com.fenghua.auto.backend.service.user.AuthService;
 import com.fenghua.auto.backend.service.user.UserService;
 import com.qq.connect.QQConnectException;
-import com.qq.connect.api.OpenID;
-import com.qq.connect.javabeans.AccessToken;
-import com.qq.connect.oauth.Oauth;
 
 /**
  * qq登陆验证实现
@@ -35,41 +33,37 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public User isUser(HttpServletRequest request) throws QQConnectException {
-		logger.debug("判断是否为qq绑定用户----start");
-		AccessToken accessTokenObj = (new Oauth())
-				.getAccessTokenByRequest(request);
-		String accessToken = null, openID = null;
-		long tokenExpireIn = 0L;
-		if (accessTokenObj.getAccessToken().equals("")) {
-			logger.debug("判断是否为qq绑定用户----qq账号异常");
-			throw new QQConnectException("qq登陆异常异常！");
-		} else {
-			accessToken = accessTokenObj.getAccessToken();
-			request.getSession().setAttribute("qqOpenID", accessToken);
-			OpenID openIDObj = new OpenID(accessToken);
-			openID = openIDObj.getUserOpenID();
-			User user = userService.getUserByQQ(openID);
+			String QQtoken=QQtokenUtils.getAccessTokenFromQQ(request);
+			if(QQtoken==null){
+				throw new QQConnectException("qq绑定异常！");
+			}
+			String QQopenID=QQtokenUtils.getOpenID(QQtoken);
+			request.getSession().setAttribute("QQtoken", QQtoken);
+			request.getSession().setAttribute("QQopenID", QQopenID);
+			User user = userService.getUserByQQ(QQopenID);
 			if(user==null){
-				logger.debug("判断是否为qq绑定用户----账户未绑定--end");
+				logger.debug("判断是否为qq绑定用户:账户未绑定  --end");
 			}
 			return user;
 		}
-	}
+	
 	@Override
 	public void binding(UserInfo userInfo) {
-		HttpSession session = UserSecurityUtils.getSession();
-		String qqOpenID = (String) session.getAttribute("qqOpenID");
-		logger.debug("当前qqOpenID为:"+qqOpenID);
-		if (qqOpenID != null) {
+		String QQopenID = (String) UserSecurityUtils.getSession().getAttribute("QQopenID");
+		if (QQopenID != null) {
 			logger.debug("开始绑定qq账户----start");
-			binding(qqOpenID,userInfo);
+			binding(QQopenID,userInfo);
+			UserSecurityUtils.getSession().removeAttribute("QQopenID");
 			logger.debug("成功绑定qq账户----end");
 		}
 	}
+	/**
+	 * 根据用户id更新用户绑定的qq号
+	 * @param qqOpenID
+	 * @param userInfo
+	 */
 	private void binding(String qqOpenID,UserInfo userInfo) {
-		User user = userService.getUserById(userInfo.getUserId());
-		user.setQqNumber(qqOpenID);
-		userService.update(user);
-		logger.debug("当前账户绑定的qq号为----"+user.getQqNumber());
+		userService.updateQQNumberByUserID(qqOpenID,userInfo.getUserId());
+		logger.debug("当前账户绑定的qq号为----"+qqOpenID);
 	}
 }

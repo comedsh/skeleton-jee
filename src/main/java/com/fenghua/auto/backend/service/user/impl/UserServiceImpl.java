@@ -215,4 +215,12 @@ public class UserServiceImpl implements UserService {
 	public User getUserByuserId(Long userId) {
 		return userDao.selectByUserId(userId);
 	}
+
+	@Override
+	public void updateQQNumberByUserID(String qqOpenID, Long userId) {
+		User user=new User();
+		user.setQqNumber(qqOpenID);
+		user.setId(userId);
+		userDao.updateQQNumberByUserID(user);
+	}
 }

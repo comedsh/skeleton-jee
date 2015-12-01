@@ -140,4 +140,14 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 		}
 		return user;
 	}
+
+	@Override
+	public void updateQQNumberByUserID(User user) {
+		Long str = null;
+		try {
+			sqlSessionTemplate.insert(getSqlName(SqlId.SQL_UPDATEQQNUMBER_BY_USERID), user);
+		} catch (Exception e) {
+			throw new DaoException(String.format("绑定qq账号出错出错！语句：%s", getSqlName(SqlId.SQL_UPDATEQQNUMBER_BY_USERID)), e);
+		}
+	}
 }

@@ -75,6 +75,13 @@
       Password = #{password,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=BIGINT}
   </update>
+  <!-- 更新qq账号 -->
+  <update id="updateQqNumberByUserId" parameterType="com.fenghua.auto.backend.domain.user.User">
+  	update user set
+      QQ_Number = #{qqNumber,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  
   <delete id="deleteById" parameterType="java.lang.Long" >
     delete from user
     where ID = #{id,jdbcType=BIGINT}
