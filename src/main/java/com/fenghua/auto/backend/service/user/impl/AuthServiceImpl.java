@@ -59,14 +59,14 @@ public class AuthServiceImpl implements AuthService {
 	public void binding(UserInfo userInfo) {
 		HttpSession session = UserSecurityUtils.getSession();
 		String qqOpenID = (String) session.getAttribute("qqOpenID");
-		logger.debug("+++++++++++++++++当前qqOpenID为:"+qqOpenID);
+		logger.debug("当前qqOpenID为:"+qqOpenID);
 		if (qqOpenID != null) {
 			logger.debug("开始绑定qq账户----start");
 			binding(qqOpenID,userInfo);
 			logger.debug("成功绑定qq账户----end");
 		}
 	}
-	public void binding(String qqOpenID,UserInfo userInfo) {
+	private void binding(String qqOpenID,UserInfo userInfo) {
 		User user = userService.getUserById(userInfo.getUserId());
 		user.setQqNumber(qqOpenID);
 		userService.update(user);

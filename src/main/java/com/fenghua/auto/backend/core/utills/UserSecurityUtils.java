@@ -27,7 +27,7 @@ import com.fenghua.auto.backend.core.security.UserInfo;
 public final class UserSecurityUtils {
 	
 	/**
-	 * 获取全局request
+	 * 获取session
 	 * @return
 	 */
 	public static HttpSession getSession() {
