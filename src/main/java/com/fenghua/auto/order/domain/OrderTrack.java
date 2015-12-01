@@ -2,23 +2,40 @@ package com.fenghua.auto.order.domain;
 
 import com.fenghua.auto.backend.domain.DomainObject;
 import java.util.Date;
-
+/**
+ * 订单跟踪
+ *
+ */
 public class OrderTrack implements DomainObject {
 	private static final long serialVersionUID = 1L;
     private Long id;
-
+    /**
+     * 订单id
+     */
     private Long orderId;
-
+    /**
+     * 订单编号
+     */
     private String orderNo;
-
+    /**
+     * 订单状态
+     */
     private Integer orderStatus;
-
+    /**
+     * 订单内容
+     */
     private String content;
-
+    /**
+     * 跟踪时间
+     */
     private Date trackTime;
-
+    /**
+     * 跟单人id
+     */
     private Long operatorId;
-
+    /**
+     * 跟单人姓名
+     */
     private String operatorName;
 
     public Long getId() {

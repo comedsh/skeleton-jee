@@ -3,11 +3,16 @@ package com.fenghua.auto.order.domain;
 import com.fenghua.auto.backend.domain.DomainObject;
 import java.math.BigDecimal;
 import java.util.Date;
-
+/**
+ * 主订单（付款前采购的全部商品，付款后将会）
+ *
+ */
 public class OrderMaster implements DomainObject {
 	private static final long serialVersionUID = 1L;
     private Long id;
-
+    /**
+     * 
+     */
     private String masterOrderNo;
 
     private Integer status;

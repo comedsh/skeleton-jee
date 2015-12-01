@@ -6,14 +6,13 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
  <%@page import="java.util.Enumeration"%>
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html ng-app="loginApp">
 <head lang="en">
     <title></title>
     <meta charset="UTF-8">
     <meta name="keywords" content="" />
-    <meta name="description" content=""/>
-	<meta property="qc:admins" content="24133275126154700763757353525747716" />
+    <meta name="description" content=""/> -->
     <!--<meta http-equiv="X-UA-Compatible" content="IE=7"/>-->
     <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/common/base.css">
     <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/common/head.css"/>
@@ -34,7 +33,7 @@
         document.execCommand("BackgroundImageCache", false, true);
     </script>
     <![endif]-->
-</head>
+<!-- </head> -->
 <body>
 <!--头部-->
 <div style="display: none" class="header" ng-controller="headerController">
