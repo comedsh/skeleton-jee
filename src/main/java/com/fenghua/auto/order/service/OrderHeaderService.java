@@ -14,5 +14,5 @@ import com.fenghua.auto.order.domain.OrderHeader;
  *
  */
 public interface OrderHeaderService extends BaseService<OrderHeader> {
-
+	
 }

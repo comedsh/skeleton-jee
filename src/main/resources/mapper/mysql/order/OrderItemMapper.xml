@@ -22,11 +22,12 @@
     <result column="entry_date" property="entryDate" jdbcType="TIMESTAMP" />
     <result column="edit_id" property="editId" jdbcType="BIGINT" />
     <result column="edit_date" property="editDate" jdbcType="TIMESTAMP" />
+    <result column="sku_icon" property="skuIcon" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, order_id, seller_id, buyer_id, sku_id, sku_code, sku_name, original_price, sale_price, 
     trade_price, qty, status, fork_status, note, evaluated_flag, evaluated_time, entry_id, 
-    entry_date, edit_id, edit_date
+    entry_date, edit_id, edit_date, sku_icon
   </sql>
   <sql id="Base_Where_Case" >
     <where >
@@ -90,6 +91,9 @@
       <if test="editDate != null" >
          AND edit_date = #{editDate,jdbcType=TIMESTAMP}
       </if>
+      <if test="skuIcon != null" >
+         AND sku_icon = #{skuIcon,jdbcType=VARCHAR}
+      </if>
     </where>
   </sql>
   <select id="selectCount" resultType="java.lang.Long" parameterType="com.fenghua.auto.order.domain.OrderItem" >
@@ -123,14 +127,16 @@
       trade_price, qty, status, 
       fork_status, note, evaluated_flag, 
       evaluated_time, entry_id, entry_date, 
-      edit_id, edit_date)
+      edit_id, edit_date, sku_icon
+      )
     values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{sellerId,jdbcType=BIGINT}, 
       #{buyerId,jdbcType=BIGINT}, #{skuId,jdbcType=BIGINT}, #{skuCode,jdbcType=VARCHAR}, 
       #{skuName,jdbcType=VARCHAR}, #{originalPrice,jdbcType=DECIMAL}, #{salePrice,jdbcType=DECIMAL}, 
       #{tradePrice,jdbcType=DECIMAL}, #{qty,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
       #{forkStatus,jdbcType=INTEGER}, #{note,jdbcType=VARCHAR}, #{evaluatedFlag,jdbcType=INTEGER}, 
       #{evaluatedTime,jdbcType=TIMESTAMP}, #{entryId,jdbcType=BIGINT}, #{entryDate,jdbcType=TIMESTAMP}, 
-      #{editId,jdbcType=BIGINT}, #{editDate,jdbcType=TIMESTAMP})
+      #{editId,jdbcType=BIGINT}, #{editDate,jdbcType=TIMESTAMP}, #{skuIcon,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.fenghua.auto.order.domain.OrderItem" >
     insert into order_item
@@ -195,6 +201,9 @@
       <if test="editDate != null" >
         edit_date,
       </if>
+      <if test="skuIcon != null" >
+        sku_icon,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -256,6 +265,9 @@
       </if>
       <if test="editDate != null" >
         #{editDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="skuIcon != null" >
+        #{skuIcon,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -319,6 +331,9 @@
       <if test="editDate != null" >
         edit_date = #{editDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="skuIcon != null" >
+        sku_icon = #{skuIcon,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -342,7 +357,8 @@
       entry_id = #{entryId,jdbcType=BIGINT},
       entry_date = #{entryDate,jdbcType=TIMESTAMP},
       edit_id = #{editId,jdbcType=BIGINT},
-      edit_date = #{editDate,jdbcType=TIMESTAMP}
+      edit_date = #{editDate,jdbcType=TIMESTAMP},
+      sku_icon = #{skuIcon,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

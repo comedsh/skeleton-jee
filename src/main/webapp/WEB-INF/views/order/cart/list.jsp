@@ -116,6 +116,7 @@
     		   });
            });
            $scope.needPayAmount = $scope.totalOrignAmount - $scope.totalAmount;
+           $scope.needPayAmount = $scope.needPayAmount.toFixed(2);
        };
        $scope.initData = function(data) {
     	   $scope.shopCartGroups = data;
