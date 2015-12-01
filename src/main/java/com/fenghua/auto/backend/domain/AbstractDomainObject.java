@@ -44,7 +44,7 @@ public class AbstractDomainObject {
 	 */
 	public boolean hasMessage(){
 		
-		return false;
+		throw new UnsupportedOperationException();		
 	
 	}
 	
@@ -60,8 +60,8 @@ public class AbstractDomainObject {
 	 */
 	public String[] getMessages(){
 		
-		return null;
-	
+		throw new UnsupportedOperationException();
+		
 	}
 	
 }
