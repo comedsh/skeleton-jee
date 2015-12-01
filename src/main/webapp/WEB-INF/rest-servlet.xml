@@ -54,6 +54,7 @@
 			<list>
 				<value>/WEB-INF/layout/layouts.xml</value>
 				<value>/WEB-INF/layout/views.xml</value>
+				<value>/WEB-INF/layout/orderViews.xml</value>
 			</list>
 		</property>
 	

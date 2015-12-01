@@ -86,7 +86,9 @@ public class OrderItem implements DomainObject {
      * 修改时间
      */
     private Date editDate;
-    
+
+    private String skuIcon;
+
     public Long getId() {
         return id;
     }
@@ -245,5 +247,13 @@ public class OrderItem implements DomainObject {
 
     public void setEditDate(Date editDate) {
         this.editDate = editDate;
+    }
+
+    public String getSkuIcon() {
+        return skuIcon;
+    }
+
+    public void setSkuIcon(String skuIcon) {
+        this.skuIcon = skuIcon == null ? null : skuIcon.trim();
     }
 }

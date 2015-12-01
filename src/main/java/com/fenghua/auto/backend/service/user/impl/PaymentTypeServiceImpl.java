@@ -3,8 +3,10 @@ package com.fenghua.auto.backend.service.user.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fenghua.auto.backend.dao.BaseDao;
 import com.fenghua.auto.backend.dao.user.PaymentTypeDao;
 import com.fenghua.auto.backend.domain.user.PaymentType;
+import com.fenghua.auto.backend.service.impl.BaseServiceImpl;
 import com.fenghua.auto.backend.service.user.PaymentTypeService;
 
 /**
@@ -14,11 +16,16 @@ import com.fenghua.auto.backend.service.user.PaymentTypeService;
  *
  */
 @Service
-public class PaymentTypeServiceImpl implements PaymentTypeService {
+public class PaymentTypeServiceImpl extends BaseServiceImpl<PaymentType> implements PaymentTypeService {
 	
 	@Autowired
 	private PaymentTypeDao paymentTypeDao;
 	
+	@Override
+	protected BaseDao<PaymentType> getBaseDao() {
+		return paymentTypeDao;
+	}
+
 	@Override
 	public PaymentType getById(Long id) {
 		return paymentTypeDao.getById(id).get(0);

@@ -4,7 +4,6 @@
   <resultMap id="BaseResultMap" type="com.fenghua.auto.backend.domain.user.UserAddress" >
     <id column="ID" property="id" jdbcType="BIGINT" />
     <result column="User_ID" property="userId" jdbcType="BIGINT" />
-    <result column="City_Area_ID" property="cityAreaId" jdbcType="BIGINT" />
     <result column="Alias" property="alias" jdbcType="VARCHAR" />
     <result column="Detail_Addr" property="detailAddr" jdbcType="VARCHAR" />
     <result column="Receiver_Name" property="receiverName" jdbcType="VARCHAR" />
@@ -14,10 +13,17 @@
     <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
     <result column="last_Modified_ts" property="lastModifiedTs" jdbcType="TIMESTAMP" />
     <result column="last_Modified_by" property="lastModifiedBy" jdbcType="VARCHAR" />
+    <result column="province_id" property="provinceId" jdbcType="BIGINT" />
+    <result column="city_id" property="cityId" jdbcType="BIGINT" />
+    <result column="area_id" property="areaId" jdbcType="BIGINT" />
+    <result column="province_name" property="provinceName" jdbcType="VARCHAR" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="area_name" property="areaName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    ID, User_ID, City_Area_ID, Alias, Detail_Addr, Receiver_Name, Receiver_Mobile, Default_Addr, 
-    created_ts, created_by, last_Modified_ts, last_Modified_by
+    ID, User_ID, Alias, Detail_Addr, Receiver_Name, Receiver_Mobile, Default_Addr, created_ts, 
+    created_by, last_Modified_ts, last_Modified_by, province_id, city_id, area_id, province_name, 
+    city_name, area_name
   </sql>
   <sql id="Base_Where_Case" >
     <where >
@@ -26,9 +32,6 @@
       </if>
       <if test="userId != null" >
          AND User_ID = #{userId,jdbcType=BIGINT}
-      </if>
-      <if test="cityAreaId != null" >
-         AND City_Area_ID = #{cityAreaId,jdbcType=BIGINT}
       </if>
       <if test="alias != null" >
          AND Alias = #{alias,jdbcType=VARCHAR}
@@ -57,6 +60,24 @@
       <if test="lastModifiedBy != null" >
          AND last_Modified_by = #{lastModifiedBy,jdbcType=VARCHAR}
       </if>
+      <if test="provinceId != null" >
+         AND province_id = #{provinceId,jdbcType=BIGINT}
+      </if>
+      <if test="cityId != null" >
+         AND city_id = #{cityId,jdbcType=BIGINT}
+      </if>
+      <if test="areaId != null" >
+         AND area_id = #{areaId,jdbcType=BIGINT}
+      </if>
+      <if test="provinceName != null" >
+         AND province_name = #{provinceName,jdbcType=VARCHAR}
+      </if>
+      <if test="cityName != null" >
+         AND city_name = #{cityName,jdbcType=VARCHAR}
+      </if>
+      <if test="areaName != null" >
+         AND area_name = #{areaName,jdbcType=VARCHAR}
+      </if>
     </where>
   </sql>
   <select id="selectCount" resultType="java.lang.Long" parameterType="com.fenghua.auto.backend.domain.user.UserAddress" >
@@ -84,16 +105,18 @@
     where ID = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.fenghua.auto.backend.domain.user.UserAddress" >
-    insert into user_address (ID, User_ID, City_Area_ID, 
-      Alias, Detail_Addr, Receiver_Name, 
-      Receiver_Mobile, Default_Addr, created_ts, 
-      created_by, last_Modified_ts, last_Modified_by
-      )
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{cityAreaId,jdbcType=BIGINT}, 
-      #{alias,jdbcType=VARCHAR}, #{detailAddr,jdbcType=VARCHAR}, #{receiverName,jdbcType=VARCHAR}, 
-      #{receiverMobile,jdbcType=VARCHAR}, #{defaultAddr,jdbcType=BIT}, #{createdTs,jdbcType=TIMESTAMP}, 
-      #{createdBy,jdbcType=VARCHAR}, #{lastModifiedTs,jdbcType=TIMESTAMP}, #{lastModifiedBy,jdbcType=VARCHAR}
-      )
+    insert into user_address (ID, User_ID, Alias, 
+      Detail_Addr, Receiver_Name, Receiver_Mobile, 
+      Default_Addr, created_ts, created_by, 
+      last_Modified_ts, last_Modified_by, province_id, 
+      city_id, area_id, province_name, 
+      city_name, area_name)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{alias,jdbcType=VARCHAR}, 
+      #{detailAddr,jdbcType=VARCHAR}, #{receiverName,jdbcType=VARCHAR}, #{receiverMobile,jdbcType=VARCHAR}, 
+      #{defaultAddr,jdbcType=BIT}, #{createdTs,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, 
+      #{lastModifiedTs,jdbcType=TIMESTAMP}, #{lastModifiedBy,jdbcType=VARCHAR}, #{provinceId,jdbcType=BIGINT}, 
+      #{cityId,jdbcType=BIGINT}, #{areaId,jdbcType=BIGINT}, #{provinceName,jdbcType=VARCHAR}, 
+      #{cityName,jdbcType=VARCHAR}, #{areaName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fenghua.auto.backend.domain.user.UserAddress" >
     insert into user_address
@@ -103,9 +126,6 @@
       </if>
       <if test="userId != null" >
         User_ID,
-      </if>
-      <if test="cityAreaId != null" >
-        City_Area_ID,
       </if>
       <if test="alias != null" >
         Alias,
@@ -134,6 +154,24 @@
       <if test="lastModifiedBy != null" >
         last_Modified_by,
       </if>
+      <if test="provinceId != null" >
+        province_id,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="areaId != null" >
+        area_id,
+      </if>
+      <if test="provinceName != null" >
+        province_name,
+      </if>
+      <if test="cityName != null" >
+        city_name,
+      </if>
+      <if test="areaName != null" >
+        area_name,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -141,9 +179,6 @@
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=BIGINT},
-      </if>
-      <if test="cityAreaId != null" >
-        #{cityAreaId,jdbcType=BIGINT},
       </if>
       <if test="alias != null" >
         #{alias,jdbcType=VARCHAR},
@@ -172,6 +207,24 @@
       <if test="lastModifiedBy != null" >
         #{lastModifiedBy,jdbcType=VARCHAR},
       </if>
+      <if test="provinceId != null" >
+        #{provinceId,jdbcType=BIGINT},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=BIGINT},
+      </if>
+      <if test="provinceName != null" >
+        #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.fenghua.auto.backend.domain.user.UserAddress" >
@@ -179,9 +232,6 @@
     <set >
       <if test="userId != null" >
         User_ID = #{userId,jdbcType=BIGINT},
-      </if>
-      <if test="cityAreaId != null" >
-        City_Area_ID = #{cityAreaId,jdbcType=BIGINT},
       </if>
       <if test="alias != null" >
         Alias = #{alias,jdbcType=VARCHAR},
@@ -210,13 +260,30 @@
       <if test="lastModifiedBy != null" >
         last_Modified_by = #{lastModifiedBy,jdbcType=VARCHAR},
       </if>
+      <if test="provinceId != null" >
+        province_id = #{provinceId,jdbcType=BIGINT},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="areaId != null" >
+        area_id = #{areaId,jdbcType=BIGINT},
+      </if>
+      <if test="provinceName != null" >
+        province_name = #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        area_name = #{areaName,jdbcType=VARCHAR},
+      </if>
     </set>
     where ID = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.fenghua.auto.backend.domain.user.UserAddress" >
     update user_address
     set User_ID = #{userId,jdbcType=BIGINT},
-      City_Area_ID = #{cityAreaId,jdbcType=BIGINT},
       Alias = #{alias,jdbcType=VARCHAR},
       Detail_Addr = #{detailAddr,jdbcType=VARCHAR},
       Receiver_Name = #{receiverName,jdbcType=VARCHAR},
@@ -225,7 +292,13 @@
       created_ts = #{createdTs,jdbcType=TIMESTAMP},
       created_by = #{createdBy,jdbcType=VARCHAR},
       last_Modified_ts = #{lastModifiedTs,jdbcType=TIMESTAMP},
-      last_Modified_by = #{lastModifiedBy,jdbcType=VARCHAR}
+      last_Modified_by = #{lastModifiedBy,jdbcType=VARCHAR},
+      province_id = #{provinceId,jdbcType=BIGINT},
+      city_id = #{cityId,jdbcType=BIGINT},
+      area_id = #{areaId,jdbcType=BIGINT},
+      province_name = #{provinceName,jdbcType=VARCHAR},
+      city_name = #{cityName,jdbcType=VARCHAR},
+      area_name = #{areaName,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

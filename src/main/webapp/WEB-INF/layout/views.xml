@@ -98,7 +98,7 @@
   <definition name="personal.information" extends="web.default_template">
       <put-attribute name="body" value="/WEB-INF/views/user/userCenter/sellerInformation.jsp" />  
   </definition>
-  
+
   <!-- 注册页面 -->
   <definition name="register.information" extends="web.default_template">
       <put-attribute name="body" value="/WEB-INF/views/user/registration.jsp" />  

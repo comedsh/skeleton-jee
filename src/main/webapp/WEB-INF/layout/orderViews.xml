@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+  
+<tiles-definitions>
+
+  <definition name="web.order.shoppingCart_list" extends="web.default_template">
+ 	  <put-attribute name="title" value="我的购物车" />
+      <put-attribute name="body" value="/WEB-INF/views/order/cart/list.jsp" />  
+  </definition>
+  <definition name="web.order.addSkuToCart" extends="web.default_template">
+ 	  <put-attribute name="title" value="商品已成功加入购物车" />
+      <put-attribute name="body" value="/WEB-INF/views/order/cart/add.jsp" />  
+  </definition>
+  
+</tiles-definitions>

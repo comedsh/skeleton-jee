@@ -11,38 +11,68 @@ public class OrderMaster implements DomainObject {
 	private static final long serialVersionUID = 1L;
     private Long id;
     /**
-     * 
+     * 主订单编号
      */
     private String masterOrderNo;
-
+    /**
+     * 主订单状态
+     */
     private Integer status;
-
+    /**
+     * 买家id
+     */
     private Long buyerId;
-
+    /**
+     * 卖家id
+     */
     private Long sellerId;
-
+    /**
+     * 总金额
+     */
     private BigDecimal totalAmount;
-
+    /**
+     * 折扣
+     */
     private BigDecimal discountAmount;
-
+    /**
+     * 物流费
+     */
     private BigDecimal transportAmount;
-
+    /**
+     * 需要支付金额
+     */
     private BigDecimal needPayAmount;
-
+    /**
+     * 已付金额
+     */
     private BigDecimal payedAmount;
-
+    /**
+     * 付款方式
+     */
     private Integer payMethod;
-
+    /**
+     * 付款状态
+     */
     private Integer payStatus;
-
+    /**
+     * 创建时间
+     */
     private Date createTime;
-
+    /**
+     * 付款时间
+     */
     private Date payTime;
-
+    /**
+     * 城市id
+     */
     private Long cityId;
-
+    /**
+     * 来源
+     */
     private Integer comeFrom;
-
+    /**
+     * 订单数量
+     */
     private Integer orderQty;
 
     public Long getId() {

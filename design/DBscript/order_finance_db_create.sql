@@ -912,5 +912,3 @@ create index idx_waybill_id on waybill_track
 (
    transport_id
 );
-
-
