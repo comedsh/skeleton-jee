@@ -14,8 +14,6 @@ public class UserAddress implements DomainObject {
 
     private Long userId;
 
-    private Long cityAreaId;
-
     private String alias;
 
     private String detailAddr;
@@ -34,6 +32,18 @@ public class UserAddress implements DomainObject {
 
     private String lastModifiedBy;
 
+    private Long provinceId;
+
+    private Long cityId;
+
+    private Long areaId;
+
+    private String provinceName;
+
+    private String cityName;
+
+    private String areaName;
+
     public Long getId() {
         return id;
     }
@@ -50,14 +60,6 @@ public class UserAddress implements DomainObject {
         this.userId = userId;
     }
 
-    public Long getCityAreaId() {
-        return cityAreaId;
-    }
-
-    public void setCityAreaId(Long cityAreaId) {
-        this.cityAreaId = cityAreaId;
-    }
-
     public String getAlias() {
         return alias;
     }
@@ -72,6 +74,10 @@ public class UserAddress implements DomainObject {
 
     public void setDetailAddr(String detailAddr) {
         this.detailAddr = detailAddr == null ? null : detailAddr.trim();
+    }
+    
+    public String getAddress() {
+    	return this.provinceName+this.cityName+this.areaName+this.detailAddr;
     }
 
     public String getReceiverName() {
@@ -128,5 +134,53 @@ public class UserAddress implements DomainObject {
 
     public void setLastModifiedBy(String lastModifiedBy) {
         this.lastModifiedBy = lastModifiedBy == null ? null : lastModifiedBy.trim();
+    }
+
+    public Long getProvinceId() {
+        return provinceId;
+    }
+
+    public void setProvinceId(Long provinceId) {
+        this.provinceId = provinceId;
+    }
+
+    public Long getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
+    }
+
+    public Long getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(Long areaId) {
+        this.areaId = areaId;
+    }
+
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName == null ? null : provinceName.trim();
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName == null ? null : cityName.trim();
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName == null ? null : areaName.trim();
     }
 }
