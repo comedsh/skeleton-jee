@@ -5,10 +5,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
  <%@page import="java.util.Enumeration"%>
 <!DOCTYPE html>
 <html ng-app="loginApp">
 <head lang="en">
+	<spring:message code="auto007.css_location"/>
     <title></title>
     <meta charset="UTF-8">
     <meta name="keywords" content="" />

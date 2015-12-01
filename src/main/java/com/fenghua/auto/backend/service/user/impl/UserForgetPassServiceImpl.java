@@ -39,10 +39,6 @@ public class UserForgetPassServiceImpl implements UserForgetPassService {
 	private BCryptPasswordEncoder encoder;
 	@Autowired
 	private ConfigDao configDao;
-	@Test
-	public void test(){
-		insert("fdasf@dads.hdfh");
-	}
 	@Override
 	public void insert(String email) {
 		String encodeString=encoder.encode(email+UUID.randomUUID().toString());

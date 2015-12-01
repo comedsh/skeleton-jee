@@ -67,14 +67,7 @@ public class PerformanceListener {
 			Executors.newCachedThreadPool().execute(new Thread(){
 				@Override
 				public void run() {
-					MailSenderInfo mailInfo = new MailSenderInfo();
-					mailInfo.setMailServerHost(smtpHost);
-					mailInfo.setMailServerPort(smtpPort);
-					mailInfo.setValidate(true);
-					mailInfo.setUserName(mailSender); // 实际发送者
-					mailInfo.setPassword(mailPwd);// 您的邮箱密码
-					mailInfo.setFromAddress(mailSender); // 设置发送人邮箱地址
-					mailInfo.setToAddress(performanceReceiver);
+					Address[] addrArray = null;
 					if(StringUtils.isNotBlank(performanceCclist)){
 						List<Address> addrList= new ArrayList<Address>();
 						for(String addr : performanceCclist.split(",")){
@@ -85,21 +78,18 @@ public class PerformanceListener {
 							}
 						}
 						
-						Address[] addrArray = new Address[addrList.size()];
+						addrArray = new Address[addrList.size()];
 						addrList.toArray(addrArray);
-						mailInfo.setCcList(addrArray);
 					}
 					
-					mailInfo.setSubject("【性能告警】"+(className+"."+method+"(..) : "+ excuteTime + "(ms)"));
 					StringBuilder params = new StringBuilder();
 					
 					for(int i=0;i<args.length;i++){
 						params.append(" 参数").append(i+1).append("： <br /> ").append(args[i]).append("<br /> ");
 					}
-					mailInfo.setContent(params.toString());
 					
 					try {
-						SimpleMailSender.sendHtmlMail(mailInfo);
+						SimpleMailSender.sendHtmlMail(addrArray,performanceReceiver, "【性能告警】"+(className+"."+method+"(..) : "+ excuteTime + "(ms)"), params.toString());
 					} catch (Exception e) {
 						LOG.error("doBasicProfiling Exception:", e);
 					}
