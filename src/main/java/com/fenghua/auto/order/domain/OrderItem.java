@@ -4,7 +4,7 @@ import com.fenghua.auto.backend.domain.DomainObject;
 import java.math.BigDecimal;
 import java.util.Date;
 /**
- * 商品明细
+ * 订单明细
  *
  */
 public class OrderItem implements DomainObject {

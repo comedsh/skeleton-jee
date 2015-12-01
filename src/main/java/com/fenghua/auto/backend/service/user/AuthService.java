@@ -10,7 +10,7 @@ import com.qq.connect.QQConnectException;
 
 /**
  * 第三方登陆验证
- * @author thinkpad
+ * @author zhangfr
  *
  */
 @Service

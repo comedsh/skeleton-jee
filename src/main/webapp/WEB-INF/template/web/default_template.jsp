@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta property="qc:admins" content="24133275126154700763757353525747716" />
 <title><tiles:getAsString name="title" /></title>
 <style type="text/css">
 body {
