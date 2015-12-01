@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fenghua.auto.backend.domain.user.User;
 import com.fenghua.auto.backend.service.user.AuthService;
@@ -49,23 +50,22 @@ public class AuthController {
 	 * @return
 	 */
 	@RequestMapping(value="/afterlogin")
-	public String afterlogin(HttpServletRequest request,Model model) {
-		
+	public ModelAndView afterlogin(HttpServletRequest request,Model model) {
 		try {
 			User user=authService.isUser(request);
 			if(user!=null){
 				//登陆
 				userService.autoLogin(user.getName(), user.getPassword(), request);
 				//跳转到首页
-				return "redirect:/";
+				return new ModelAndView("web.index_view");
 			}else {
 				//跳转到注册页面
-				return "redirect:/secure/register";
+				return new ModelAndView("register.information");
 			}
 		} catch (QQConnectException e) {
 			e.printStackTrace();
 			model.addAttribute("msg", new Result(false,"xx","操作失败！请重新登陆！"));
-			return "redirect:/secure/login";
+			return new ModelAndView("web.login");
 		}
 	}
 }
