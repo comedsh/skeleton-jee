@@ -22,7 +22,7 @@ public interface SqlId {
 	public String SQL_UPDATE_BY_NAME = "updateFailtimesByName";
 	public String SQL_UPDATEPASSWORD_BY_PHONE = "updatePasswordByPhone";
 	public String SQL_UPDATEPASSWORD_BY_USERID = "updatePasswordByUserId";
-
+	public String SQL_UPDATEQQNUMBER_BY_USERID = "updateQqNumberByUserId";
 	public String SQL_SELECT_BY_QQ_Number="selectByQQ_Number";
 
 	public String SQL_SELECT_BY_USERID="selectByUserId";

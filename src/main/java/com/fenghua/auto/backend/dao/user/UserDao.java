@@ -71,4 +71,9 @@ public interface UserDao extends BaseDao<User> {
 	 * @return
 	 */
 	public List<User> getUserByQQ(String accessToken);
+	/**
+	 * 根据用户id更新其qq账号
+	 * @param user
+	 */
+	public void updateQQNumberByUserID(User user);
 }

@@ -3,9 +3,11 @@ package com.fenghua.auto.webapp.controller.securtity;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.security.sasl.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.omg.CORBA.PRIVATE_MEMBER;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.fenghua.auto.backend.core.security.AuthenticationCodeException;
+import com.fenghua.auto.backend.core.utills.UserSecurityUtils;
+import com.fenghua.auto.backend.service.user.AuthService;
 import com.fenghua.auto.webapp.view.Result;
 
 /** 
@@ -39,7 +43,8 @@ import com.fenghua.auto.webapp.view.Result;
 @RequestMapping("/secure")
 public class SecureController {
 	private static final Logger logger = LoggerFactory.getLogger(SecureController.class);
-	
+	@Autowired
+	 private AuthService authService;
 	 @Autowired
      @Qualifier("org.springframework.security.authenticationManager")//编辑软件会提示错误
      private static AuthenticationManager authenticationManager;
@@ -94,11 +99,18 @@ public class SecureController {
 	@RequestMapping(value = "/userCenter")
 	@ResponseBody
 	public Map<String,Result> userCenter(HttpServletRequest request) {
+		
 		Map<String,Result> model = new HashMap<String,Result>();
 		Result msg = new Result();
 		msg.setCode("1");
 		msg.setMsg("登录成功");
 		model.put("msg", msg);
+		//尝试绑定qq（如果存在）
+		try {
+			authService.binding(UserSecurityUtils.getCurrentUser());
+		} catch (AuthenticationException e) {
+			e.printStackTrace();
+		}
 		return model;
 	}
 	
