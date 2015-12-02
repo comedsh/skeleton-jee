@@ -14,4 +14,10 @@
       <put-attribute name="body" value="/WEB-INF/views/order/cart/add.jsp" />  
   </definition>
   
+  
+  <definition name="web.order.buyerOrder_list" extends="web.default_template">
+ 	  <put-attribute name="title" value="订单列表" />
+      <put-attribute name="body" value="/WEB-INF/views/order/list/buyerOrderList.jsp" />  
+  </definition>
+  
 </tiles-definitions>

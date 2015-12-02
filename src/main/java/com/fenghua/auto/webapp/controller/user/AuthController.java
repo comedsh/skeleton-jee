@@ -50,7 +50,7 @@ public class AuthController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value="/afterlogin")
+	@RequestMapping(value="/qq_afterlogin")
 	public ModelAndView afterlogin(HttpServletRequest request,Model model) {
 		try {
 			User user=authService.isUser(request);
