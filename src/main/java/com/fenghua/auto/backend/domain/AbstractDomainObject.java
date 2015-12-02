@@ -2,6 +2,9 @@ package com.fenghua.auto.backend.domain;
 
 import org.apache.commons.lang.ArrayUtils;
 
+import com.fenghua.auto.backend.domain.mto.LabelError;
+import com.fenghua.auto.backend.domain.mto.LabelMessage;
+
 /**
  * 
  * super class provides common fields / attrs
@@ -17,7 +20,9 @@ import org.apache.commons.lang.ArrayUtils;
 public class AbstractDomainObject {
 	
 	LabelError[] errors;
-
+	
+	LabelMessage[] messages;
+	
 	public LabelError[] getErrors() {
 		return errors;
 	}
@@ -31,36 +36,20 @@ public class AbstractDomainObject {
 		return ArrayUtils.isEmpty( this.errors ) ? false : true;
 	
 	}
+
+	public void addMessages(LabelMessage... messages){
+		this.messages = messages;
+	}
 	
-	/**
-	 * @TODO Not supported yet
-	 * 
-	 * @author shang yang
-	 *
-	 * @version 
-	 * 
-	 * @createTime: 2015年11月26日 下午6:52:27
-	 *
-	 */
 	public boolean hasMessage(){
 		
-		throw new UnsupportedOperationException();		
+		return ArrayUtils.isEmpty( this.messages ) ? false : true;		
 	
 	}
 	
-	/**
-	 * @TODO Not supported yet 
-	 * 
-	 * @author shang yang
-	 *
-	 * @version 
-	 * 
-	 * @createTime: 2015年11月26日 下午6:55:12
-	 *
-	 */
-	public String[] getMessages(){
+	public LabelMessage[] getMessages(){
 		
-		throw new UnsupportedOperationException();
+		return messages;
 		
 	}
 	

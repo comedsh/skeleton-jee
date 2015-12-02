@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fenghua.auto.backend.domain.AbstractDomainObject;
-import com.fenghua.auto.backend.domain.MessageTransferObject;
+import com.fenghua.auto.backend.domain.mto.MessageTransferObject;
 
 /**
  * Spittle 唾沫，同时也翻译为碎语

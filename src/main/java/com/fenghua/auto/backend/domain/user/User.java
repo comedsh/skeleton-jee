@@ -7,7 +7,7 @@ import javax.validation.constraints.Pattern;
 
 import com.fenghua.auto.backend.domain.AbstractDomainObject;
 import com.fenghua.auto.backend.domain.DomainObject;
-import com.fenghua.auto.backend.domain.MessageTransferObject;
+import com.fenghua.auto.backend.domain.mto.MessageTransferObject;
 import com.fenghua.auto.backend.domain.validation.NotDuplicated;
 
 /**

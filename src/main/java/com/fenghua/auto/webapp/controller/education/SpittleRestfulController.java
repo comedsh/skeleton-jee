@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import com.fenghua.auto.backend.core.utills.LabelErrorTranslator;
-import com.fenghua.auto.backend.domain.LabelError;
 import com.fenghua.auto.backend.domain.education.Spittle;
+import com.fenghua.auto.backend.domain.mto.LabelError;
 import com.fenghua.auto.backend.service.education.SpittleService;
 
 /**

@@ -1,4 +1,4 @@
-package com.fenghua.auto.backend.domain;
+package com.fenghua.auto.backend.domain.mto;
 
 
 /**

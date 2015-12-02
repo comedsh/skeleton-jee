@@ -6,9 +6,9 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.fenghua.auto.backend.domain.CommonMessageTransferObject;
-import com.fenghua.auto.backend.domain.MessageTransferObject;
 import com.fenghua.auto.backend.domain.education.Spittle;
+import com.fenghua.auto.backend.domain.mto.CommonMessageTransferObject;
+import com.fenghua.auto.backend.domain.mto.MessageTransferObject;
 import com.fenghua.auto.backend.domain.user.User;
 
 /**

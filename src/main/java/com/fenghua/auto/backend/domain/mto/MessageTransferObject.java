@@ -1,4 +1,4 @@
-package com.fenghua.auto.backend.domain;
+package com.fenghua.auto.backend.domain.mto;
 
 
 /**
@@ -20,11 +20,9 @@ public interface MessageTransferObject {
 	public LabelError[] getErrors();
 	
 	public boolean hasError();
+
+	public LabelMessage[] getMessages();
 	
-	//TODO
-	public String[] getMessages();
-	
-	//TODO
 	public boolean hasMessage();
 	
 	

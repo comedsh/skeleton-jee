@@ -1,4 +1,6 @@
-package com.fenghua.auto.backend.domain;
+package com.fenghua.auto.backend.domain.mto;
+
+import com.fenghua.auto.backend.domain.AbstractDomainObject;
 
 /**
  * 

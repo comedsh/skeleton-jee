@@ -12,9 +12,9 @@ import javax.validation.groups.Default;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.fenghua.auto.backend.domain.CommonMessageTransferObject;
-import com.fenghua.auto.backend.domain.LabelError;
-import com.fenghua.auto.backend.domain.MessageTransferObject;
+import com.fenghua.auto.backend.domain.mto.CommonMessageTransferObject;
+import com.fenghua.auto.backend.domain.mto.LabelError;
+import com.fenghua.auto.backend.domain.mto.MessageTransferObject;
 import com.fenghua.auto.backend.domain.validation.DomainValidationException;
 
 /**

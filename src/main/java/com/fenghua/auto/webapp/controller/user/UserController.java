@@ -37,7 +37,7 @@ import com.fenghua.auto.backend.core.utills.UserSecurityUtils;
 import com.fenghua.auto.backend.core.utills.uploadPicture;
 import com.fenghua.auto.backend.core.utills.graphValidate.PictureCheckCode;
 import com.fenghua.auto.backend.core.utills.message.SMSMessage;
-import com.fenghua.auto.backend.domain.MessageTransferObject;
+import com.fenghua.auto.backend.domain.mto.MessageTransferObject;
 import com.fenghua.auto.backend.domain.user.Company;
 import com.fenghua.auto.backend.domain.user.PaymentType;
 import com.fenghua.auto.backend.domain.user.ResetPassRequest;
