@@ -57,6 +57,7 @@
             <list>
                 <value>classpath:i18n/messages</value>
                 <value>classpath:i18n/exceptions</value>
+                <value>classpath:properties/css_location</value>
                 <value>classpath:i18n/order</value>
             </list>
         </property>

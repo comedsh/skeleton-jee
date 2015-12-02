@@ -2,13 +2,22 @@ package com.fenghua.auto.backend.core.utills;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.metadata.ConstraintDescriptor;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 
 import com.fenghua.auto.backend.domain.LabelError;
 import com.fenghua.auto.backend.domain.validation.DomainValidationException;
@@ -26,6 +35,16 @@ import com.fenghua.auto.backend.domain.validation.DomainValidationException;
  */
 
 public class LabelErrorTranslator {
+	
+	private static Log log = LogFactory.getLog( LabelErrorTranslator.class.getName() );
+	
+	private static final Set<String> restraintAnnotationAttributes = new HashSet<String>(3);
+
+	static {
+		restraintAnnotationAttributes.add("message");
+		restraintAnnotationAttributes.add("groups");
+		restraintAnnotationAttributes.add("payload");
+	}	
 	
 	/**
 	 * 
@@ -50,6 +69,8 @@ public class LabelErrorTranslator {
 			// first argument was default to DefaultMessageSourceResolvable; we need the actual defined arguments
 			// Object[] arguments = error.getArguments().length == 1 ? null : ArrayUtils.remove(error.getArguments(), 0);
 			
+			// Why comments above out? because, that's the design for Spring Validation, see messages_zh_CN.properties, the arguments start from {1}
+			// Goal intents to meet the validator both for Spring POST validation and Manual GET validation
 			message = MessageHelper.getMessage(code, error.getArguments() );	
 			
 			// if found, break. because Field Error with a lot of guessing codes 
@@ -86,6 +107,10 @@ public class LabelErrorTranslator {
 	/**
 	 * translates the violation into LabelError
 	 * 
+	 * @TODO refactor the following code to use @link FieldError
+	 * 
+	 * @see SpringValidatorAdapter#getArgumentsForConstraint
+	 *  
 	 * @author shang yang
 	 *
 	 * @version 
@@ -107,16 +132,52 @@ public class LabelErrorTranslator {
 		
 		String code = validator +"." + StringUtils.lowerCase( classname ) + "." + StringUtils.lowerCase( field );
 		
-		String error = MessageHelper.getMessage(code);
+		Object[] params = getParameters( violation.getConstraintDescriptor() );
+		
+		String error = MessageHelper.getMessage(code, params);
+		
+		if( error == null ){ 
+			throw new DomainValidationException( MessageHelper.getMessage(MessageHelper.MESSAGE_SOURCE_NOTFOUND, code ) );
+		}		
 		
 		LabelError labelError = new LabelError();
 		
-		labelError.setField(field);
+		labelError.setField( field );
 		
 		labelError.setError( error );
 		
 		return labelError;
 		
+	}
+	
+	private static Object[] getParameters( ConstraintDescriptor<?> descriptor ){
+		
+		List<Object> arguments = new LinkedList<Object>();
+		
+		arguments.add(new Object());
+		
+		// Using a TreeMap for alphabetical ordering of attribute names --> also indicates error message order
+		Map<String, Object> attributes = new TreeMap<String, Object>();
+		
+		for (Map.Entry<String, Object> entry : descriptor.getAttributes().entrySet()) {
+		
+			String attributeName = entry.getKey();
+			
+			Object attributeValue = entry.getValue();
+			
+			if ( !restraintAnnotationAttributes.contains(attributeName) ) {
+			
+				log.info( "attributeName:" + attributeName + "; attributeValue:" + attributeValue);
+				
+				attributes.put(attributeName, attributeValue);
+			
+			}
+		}
+		
+		arguments.addAll(attributes.values());
+		
+		return arguments.toArray(new Object[arguments.size()]);
+	
 	}
 	
 }

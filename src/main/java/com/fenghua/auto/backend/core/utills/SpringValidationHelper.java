@@ -9,9 +9,12 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import javax.validation.groups.Default;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.fenghua.auto.backend.domain.CommonMessageTransferObject;
 import com.fenghua.auto.backend.domain.LabelError;
 import com.fenghua.auto.backend.domain.MessageTransferObject;
-import com.fenghua.auto.backend.domain.CommonMessageTransferObject;
 import com.fenghua.auto.backend.domain.validation.DomainValidationException;
 
 /**
@@ -25,9 +28,13 @@ import com.fenghua.auto.backend.domain.validation.DomainValidationException;
 
 public class SpringValidationHelper {
 	
+	private static Log log = LogFactory.getLog( SpringValidationHelper.class.getName() );
+	
 	private static final ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 	
 	public static <T> MessageTransferObject validate( Class<T> objectClass, String value, String field ){
+		
+		log.info("Spring Validation Helper start validate against Class:" + objectClass.getName() + "; Field:" + field + "; Value:" + value );
 		
 		Validator validator = factory.getValidator();
 		
@@ -49,7 +56,7 @@ public class SpringValidationHelper {
 			throw new DomainValidationException( e.getMessage(), e.getCause() );
 			
 		}
-
+		
 		Set<ConstraintViolation<T>> violations = validator.validateProperty( o, field, Default.class );
 		
 		ConstraintViolation<T> violation = ( violations.iterator().hasNext() ? violations.iterator().next() : null ); // always fetch the first one only
