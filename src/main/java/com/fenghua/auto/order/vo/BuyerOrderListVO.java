@@ -11,10 +11,7 @@ public class BuyerOrderListVO {
 	 * 主订单
 	 */
 	private OrderMaster orderMaster;
-	/**
-	 * 订单图片
-	 */
-	private OrderImage orderImage;
+	
 	/**
 	 * 订单
 	 */
